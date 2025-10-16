@@ -3,34 +3,28 @@
 
 # Complexity: 8/10 (within master.json ≤10 limit)
 
-#
-
 # Purpose: Single entry point for complete beat generation with MAXIMUM VARIETY
 
-# Workflow: chord_theory_expanded.json → chords + bass → drums → VARIED final mixes
-
-#
+# Workflow: master.json → chords + bass → drums → VARIED final mixes
 
 # Usage:
-
 #   ruby master.rb               # Full render (all progressions, drums, varied mixes)
-
-#   ruby master.rb --chords-only # Just render chord progressions
-
-#   ruby master.rb --drums-only  # Just render drum patterns
-
+#   ruby master.rb --chords      # Just render chord progressions
+#   ruby master.rb --drums       # Just render drum patterns
+#   ruby master.rb --mix         # Just create final mixes
 #   ruby master.rb --quick       # Render only 5 progressions for testing
+#   ruby master.rb --list        # List all available progressions
+#   ruby master.rb --play        # Generate + play random progression
 
 require "json"
+require_relative "lib/synthesis"
+
 # ============================================================================
 # CONFIGURATION
-
 # ============================================================================
 
 SOX = "G:/pub/dilla/effects/sox/sox.exe"
-CHORD_JSON = "chord_theory_expanded.json"
-
-DRUM_JSON = "drum_patterns.json"
+DATA_JSON = File.expand_path("dilla_data.json", __dir__)
 
 # Note frequencies (A4 = 440Hz)
 NOTES = {
@@ -100,149 +94,27 @@ def cleanup(*files)
 end
 
 # ============================================================================
-# CHORD SYNTHESIS (7 SYNTH TYPES - FIXED chorus syntax)
-
+# CHORD SYNTHESIS (Using lib/synthesis.rb)
 # ============================================================================
-
-def synth_rhodes(i, freq, gain, duration)
-  sox("-n sin1_#{i}.wav synth #{duration} sine #{freq} fade h 0.01 #{duration} 0.5 gain #{gain}")
-
-  sox("-n sin2_#{i}.wav synth #{duration} sine #{freq * 2} fade h 0.01 #{duration} 0.5 gain #{gain - 8}")
-
-  sox("-n sin3_#{i}.wav synth #{duration} sine #{freq * 3} fade h 0.01 #{duration} 0.5 gain #{gain - 12}")
-
-  sox("-m sin1_#{i}.wav sin2_#{i}.wav sin3_#{i}.wav rhodes_raw_#{i}.wav")
-
-  sox("rhodes_raw_#{i}.wav voice_#{i}.wav tremolo 5.5 30 chorus 0.6 0.9 45 0.4 2 -t")
-
-  cleanup("sin1_#{i}.wav", "sin2_#{i}.wav", "sin3_#{i}.wav", "rhodes_raw_#{i}.wav")
-
-end
-
-def synth_fm(i, freq, gain, duration)
-  sox("-n saw#{i}.wav synth #{duration} sawtooth #{freq} gain #{gain}")
-
-  sox("-n sqr#{i}.wav synth #{duration} square #{freq} gain #{gain - 2}")
-
-  sox("-n sin#{i}.wav synth #{duration} sine #{freq} gain #{gain + 2}")
-
-  sox("-m saw#{i}.wav sqr#{i}.wav sin#{i}.wav voice_#{i}.wav")
-
-  cleanup("saw#{i}.wav", "sqr#{i}.wav", "sin#{i}.wav")
-
-end
-
-def synth_cs80(i, freq, gain, duration)
-  detune = freq * 1.0091
-
-  sox("-n saw1_#{i}.wav synth #{duration} sawtooth #{freq} fade h 3 #{duration} 4 gain #{gain}")
-
-  sox("-n saw2_#{i}.wav synth #{duration} sawtooth #{detune} fade h 3 #{duration} 4 gain #{gain - 2}")
-
-  sox("-m saw1_#{i}.wav saw2_#{i}.wav cs80_raw_#{i}.wav")
-
-  sox("cs80_raw_#{i}.wav voice_#{i}.wav lowpass 600 chorus 0.7 0.9 50 0.4 2 -t")
-
-  cleanup("saw1_#{i}.wav", "saw2_#{i}.wav", "cs80_raw_#{i}.wav")
-
-end
-
-def synth_minimoog(i, freq, gain, duration)
-  detune = freq * 1.0029
-
-  sox("-n saw#{i}.wav synth #{duration} sawtooth #{freq} fade h 1 #{duration} 4 gain #{gain}")
-
-  sox("-n sqr#{i}.wav synth #{duration} square #{detune} fade h 1 #{duration} 4 gain #{gain - 3}")
-
-  sox("-m saw#{i}.wav sqr#{i}.wav moog_raw_#{i}.wav")
-
-  sox("moog_raw_#{i}.wav voice_#{i}.wav lowpass 1200 overdrive 5 chorus 0.6 0.9 40 0.4 2 -t")
-
-  cleanup("saw#{i}.wav", "sqr#{i}.wav", "moog_raw_#{i}.wav")
-
-end
-
-def synth_strings(i, freq, gain, duration)
-  detune1 = freq * 1.0012
-
-  detune2 = freq * 1.0023
-
-  sox("-n saw1_#{i}.wav synth #{duration} sawtooth #{freq} fade h 0.5 #{duration} 2 gain #{gain}")
-
-  sox("-n saw2_#{i}.wav synth #{duration} sawtooth #{detune1} fade h 0.5 #{duration} 2 gain #{gain - 1}")
-
-  sox("-n saw3_#{i}.wav synth #{duration} sawtooth #{detune2} fade h 0.5 #{duration} 2 gain #{gain - 2}")
-
-  sox("-m saw1_#{i}.wav saw2_#{i}.wav saw3_#{i}.wav strings_raw_#{i}.wav")
-
-  sox("strings_raw_#{i}.wav strings_chorus_#{i}.wav lowpass 3000 chorus 0.7 0.9 55 0.5 2 -t")
-
-  sox("strings_chorus_#{i}.wav voice_#{i}.wav overdrive 3")
-
-  cleanup("saw1_#{i}.wav", "saw2_#{i}.wav", "saw3_#{i}.wav", "strings_raw_#{i}.wav", "strings_chorus_#{i}.wav")
-
-end
-
-def synth_ambient(i, freq, gain, duration)
-  detune = freq * 1.0006
-
-  sox("-n sine#{i}.wav synth #{duration} sine #{freq} fade h 5 #{duration} 6 gain #{gain}")
-
-  sox("-n saw#{i}.wav synth #{duration} sawtooth #{detune} fade h 5 #{duration} 6 gain #{gain - 8}")
-
-  sox("-m sine#{i}.wav saw#{i}.wav voice_#{i}.wav highpass 80")
-
-  cleanup("sine#{i}.wav", "saw#{i}.wav")
-
-end
-
-def synth_oberheim(i, freq, gain, duration)
-  detune = freq * 1.0046
-
-  sox("-n saw1_#{i}.wav synth #{duration} sawtooth #{freq} fade h 1.5 #{duration} 3.5 gain #{gain}")
-
-  sox("-n saw2_#{i}.wav synth #{duration} sawtooth #{detune} fade h 1.5 #{duration} 3.5 gain #{gain - 2}")
-
-  sox("-m saw1_#{i}.wav saw2_#{i}.wav ob_raw_#{i}.wav")
-
-  sox("ob_raw_#{i}.wav voice_#{i}.wav lowpass 1500 chorus 0.7 0.85 48 0.5 2 -t")
-
-  cleanup("saw1_#{i}.wav", "saw2_#{i}.wav", "ob_raw_#{i}.wav")
-
-end
 
 def generate_chord(freqs, duration, instrument)
   freqs.each_with_index do |freq, i|
-
     case instrument
-
-    when "rhodes" then synth_rhodes(i, freq, -10, duration)
-
-    when "fm" then synth_fm(i, freq, -10, duration)
-
-    when "cs80" then synth_cs80(i, freq, -10, duration)
-
-    when "minimoog" then synth_minimoog(i, freq, -10, duration)
-
-    when "strings" then synth_strings(i, freq, -10, duration)
-
-    when "ambient" then synth_ambient(i, freq, -10, duration)
-
-    when "oberheim" then synth_oberheim(i, freq, -10, duration)
-
-    else synth_fm(i, freq, -10, duration)
-
+    when "rhodes" then Dilla::Synthesis.rhodes(i, freq, -10, duration, SOX)
+    when "fm" then Dilla::Synthesis.fm(i, freq, -10, duration, SOX)
+    when "cs80" then Dilla::Synthesis.cs80(i, freq, -10, duration, SOX)
+    when "minimoog" then Dilla::Synthesis.minimoog(i, freq, -10, duration, SOX)
+    when "strings" then Dilla::Synthesis.strings(i, freq, -10, duration, SOX)
+    when "ambient" then Dilla::Synthesis.ambient(i, freq, -10, duration, SOX)
+    when "oberheim" then Dilla::Synthesis.oberheim(i, freq, -10, duration, SOX)
+    else Dilla::Synthesis.fm(i, freq, -10, duration, SOX)
     end
-
   end
 
   voices = freqs.size.times.map { |i| "voice_#{i}.wav" }
   sox("-m #{voices.join(' ')} chord_out.wav gain -n")
-
   cleanup(*voices)
-
   "chord_out.wav"
-
 end
 
 def generate_bass(root_freq, duration)
@@ -526,39 +398,62 @@ end
 
 # ============================================================================
 
+def load_data
+  JSON.parse(File.read(DATA_JSON))
+end
+
+def list_progressions(data)
+  puts "\n📋 AVAILABLE PROGRESSIONS:"
+  puts "=" * 70
+  ['neo_soul', 'jazz', 'funk_soul'].each do |category|
+    progs = data['progressions'][category]
+    next unless progs
+    puts "\n#{category.upcase.gsub('_', ' ')}:"
+    progs.each do |name, prog|
+      puts "  - #{name}: #{prog['name'] || name}"
+    end
+  end
+  puts
+end
+
 if __FILE__ == $0
   puts "\n" + ("=" * 70)
-
   puts "🎹 J DILLA AUDIO GENERATOR - MASTER ORCHESTRATOR"
-
   puts "=" * 70
 
   mode = ARGV[0] || "--full"
+  
+  # Handle --list mode
+  if mode == "--list"
+    data = load_data
+    list_progressions(data)
+    exit 0
+  end
+  
   # Load JSON
-  theory = JSON.parse(File.read(CHORD_JSON))
+  data = load_data
+  theory = {
+    'neo_soul_progressions' => data['progressions']['neo_soul'],
+    'jazz_progressions' => data['progressions']['jazz'],
+    'funk_soul_progressions' => data['progressions']['funk_soul']
+  }
 
   # Create directories
   system("mkdir -p chords bass drums final 2>/dev/null")
 
   # CHORDS & BASS
-  unless mode == "--drums-only"
-
+  unless mode == "--drums"
     puts "\n📊 RENDERING CHORD PROGRESSIONS + BASS"
-
     puts "-" * 70
 
     progressions_to_render = []
     ["neo_soul", "jazz", "funk_soul"].each do |cat|
       key = "#{cat}_progressions"
-
       next unless theory[key]
 
       theory[key].each do |name, data|
-
         progressions_to_render << [name, data] if data["freqs"]
-
       end
-
     end
 
     # Quick mode: only 5 progressions
@@ -568,7 +463,7 @@ if __FILE__ == $0
   end
 
   # DRUMS
-  unless mode == "--chords-only"
+  unless mode == "--chords" || mode == "--mix"
 
     puts "\n📊 RENDERING INTRICATE DRUMS"
 
@@ -590,7 +485,7 @@ if __FILE__ == $0
   end
 
   # FINAL MIXES - ROTATE THROUGH ALL DRUMS FOR MAXIMUM VARIETY
-  unless mode == "--chords-only" || mode == "--drums-only"
+  unless mode == "--chords" || mode == "--drums"
 
     puts "\n📊 CREATING FINAL MIXES (ROTATING DRUMS FOR VARIETY)"
 
