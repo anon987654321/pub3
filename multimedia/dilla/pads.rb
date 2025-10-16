@@ -7,7 +7,10 @@
 
 require "json"
 SOX = "G:/pub/dilla/effects/sox/sox.exe"
-CHORD_THEORY = JSON.parse(File.read("G:/pub/dilla/chord_theory.json"))
+
+# Load unified data from dilla_data.json (consolidation>fragmentation per master.json)
+DILLA_DATA = JSON.parse(File.read(File.join(__dir__, "dilla_data.json")))
+CHORD_THEORY = DILLA_DATA["chords"]
 
 def sox(cmd)
   system("#{SOX} #{cmd}")
