@@ -1,0 +1,54 @@
+#!/usr/bin/env ruby
+# Dilla CLI - Simple interface for beat generation
+
+require 'pathname'
+
+SCRIPT_DIR = Pathname.new(__FILE__).dirname
+MASTER_RB = SCRIPT_DIR / 'master.rb'
+
+def usage
+  puts <<~USAGE
+    Dilla - J Dilla beat generator CLI
+    
+    Usage:
+      dilla generate              # Generate full beat (chords + drums + mix)
+      dilla quick                 # Generate quick demo (5 progressions)
+      dilla list                  # List all available progressions
+      dilla render --chords       # Render only chord progressions
+      dilla render --drums        # Render only drum patterns
+      dilla render --mix          # Create final mixes only
+      
+    Examples:
+      dilla generate              # Full render
+      dilla quick                 # Quick test
+      dilla list                  # See what's available
+      
+  USAGE
+end
+
+command = ARGV[0]
+
+case command
+when "generate"
+  puts "🎹 Generating full beat production..."
+  exec("ruby", MASTER_RB.to_s)
+when "quick"
+  puts "🎹 Quick demo generation..."
+  exec("ruby", MASTER_RB.to_s, "--quick")
+when "list"
+  exec("ruby", MASTER_RB.to_s, "--list")
+when "render"
+  mode = ARGV[1]
+  unless mode
+    puts "Error: render requires a mode (--chords, --drums, or --mix)"
+    exit 1
+  end
+  exec("ruby", MASTER_RB.to_s, mode)
+when "help", "--help", "-h", nil
+  usage
+else
+  puts "Unknown command: #{command}"
+  puts
+  usage
+  exit 1
+end
