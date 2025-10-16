@@ -1,94 +1,71 @@
 # J Dilla Music Generation
 **Pure Ruby + SoX synthesis** - No DAWs, no plugins. Generates J Dilla-style chord progressions, Berlin techno drums, and surreal atmospheric mixes with music theory analysis.
-## Quick Start (Cygwin)
+
+## Quick Start
 ```bash
-cd /g/pub/dilla
+cd /path/to/multimedia/dilla
 
-# 1. Generate Dilla chords with theory analysis
-ruby chords.rb                           # SoX synthesis (default)
+# List all available progressions
+./dilla list
 
-ruby chords_compare.rb --engine=both     # A/B test SoX vs FluidSynth
+# Generate complete production (chords + bass + drums + mixes)
+./dilla generate
 
-# 2. Generate Berlin techno drums (proper GoldBaby 808 integration)
-ruby drums.rb
+# Quick demo (5 progressions only)
+./dilla quick
 
-# 3. Create ultimate mix with surreal atmospheric effects
-ruby mix.rb          # Single ethereal mix
+# Render specific components
+./dilla render --chords      # Just chord progressions
+./dilla render --drums       # Just drum patterns  
+./dilla render --mix         # Just final mixes
 
-ruby mix.rb all      # All 5 atmospheric variations
+# Alternative: Use master.rb directly
+ruby master.rb               # Full render
+ruby master.rb --chords      # Chords only
+ruby master.rb --drums       # Drums only
+ruby master.rb --quick       # Quick test
 
+# Create atmospheric mixes
+ruby mix.rb                  # Single ethereal mix
+ruby mix.rb all              # All 5 atmospheric variations
 ```
 
-## Dual Audio Engine System (NEW!)
-Choose between two audio generation methods:
-### **SoX Synthesis** (Default - No Build Required)
-- Pure Ruby waveform synthesis (sawtooth, square, sine)
+## Consolidated Architecture (NEW!)
+Following master.json anti-fragmentation principles, all code and data have been consolidated:
 
-- 5 custom instruments: Rhodes, Wurlitzer, Dark Piano, Organ, Analog Pad
+### **Data Consolidation**
+- **dilla_data.json**: Single source of truth containing:
+  - 42 chord progressions (neo-soul, jazz, funk-soul)
+  - 15 iconic pad synthesis recipes
+  - 15 drum patterns (hip-hop, jazz, reggae, techno-house)
+  - Vintage FX chains and swing theory
 
-- Vintage analog character with microtonality
+### **Code Consolidation**  
+- **master.rb**: Single orchestrator for all generation
+- **lib/synthesis.rb**: DRY synthesis library with 7 synth types (rhodes, fm, cs80, minimoog, strings, ambient, oberheim)
+- **dilla CLI**: Simple command-line interface wrapper
+- **mix.rb**: Preserved for distinct atmospheric mixing purpose
 
-- Perfect for lofi/experimental/Flying Lotus aesthetics
-
-- **Command**: `ruby chords.rb`
-
-### **FluidSynth + Soundfonts** (Professional Quality)
-- Real sampled instruments via SoundFont 2/3 files
-
-- Multi-velocity layers for realistic dynamics
-
-- 3-5 velocity layers per note
-
-- Professional timbres (Rhodes MKII, Hammond B3, etc.)
-
-- **Command**: `ruby chords_compare.rb --engine=fluidsynth`
-
-### **A/B Comparison Mode**
-Generate both versions side-by-side to choose your preferred sound:
-
-```bash
-
-ruby chords_compare.rb --engine=both
-
-# Creates: chords.wav (SoX) + chords_fluidsynth.wav (FluidSynth)
-
-# Listen to both and decide which fits your aesthetic
-
-```
-
-**When to use each:**
-- **SoX**: Lofi, vintage warmth, J Dilla "imperfections", experimental
-
-- **FluidSynth**: Jazz, neo-soul, polished productions, realistic instruments
-
-- **Both**: A/B test to find the sweet spot for your track
+### **7 Synth Types Available**
+- **Rhodes**: Electric piano with tremolo and chorus
+- **FM**: Sawtooth + square + sine layering (warm, rich)
+- **CS-80**: Detuned saws (Blade Runner/Vangelis style)
+- **Minimoog**: Saw + square brass (Pink Floyd style)
+- **Strings**: 3-voice detuned ensemble (ARP Solina)
+- **Ambient**: Sine + saw blend (Brian Eno style)
+- **Oberheim**: Unison detuned (Frank Ocean/Van Halen)
 
 ## Output
-**chords.rb** creates:
-- 16 individual progressions (Ahmad Jamal, Isley Brothers, Ethiojazz)
-
-- `chords.wav` (all concatenated)
-
-- Music theory analysis (modal classification, voice leading scores, tension curves)
-
-- **FIXED**: No clipping warnings - proper gain staging with normalization
-
-**drums.rb** creates:
-- 5 Berlin techno patterns (8-16 bars, proper club length)
-
-- `drums.wav` (all concatenated)
-
-- **NEW**: Proper GoldBaby ROM808 sample selection + kick tuning
-
-- Styles: Berlin Minimal, Deep Hypnotic, Acid 303, Industrial Hard, Ambient Drift
+**master.rb** (or `./dilla generate`) creates:
+- **chords/**: 42 chord progressions with proper gain staging
+- **bass/**: Bass layers (root + sub-bass)
+- **drums/**: Intricate drum patterns with swing
+- **final/**: Complete mixed tracks (chords + bass + drums)
 
 **mix.rb** creates:
 - `ultimate.wav` - Combined chords + drums + surreal atmospheric pad
-
 - **5 atmospheric styles**: ethereal, cosmic, dreamy, dark_ambient, vocal_lush
-
-- **NEW vocal_lush**: Alternating vocal harmonies (ooh/aah) and lush synth pads every 8 seconds
-
+- **vocal_lush**: Alternating vocal harmonies (ooh/aah) and lush synth pads every 8 seconds
 - Spatial effects: huge reverb, dual echo, phasing, tremolo
 
 ## Features
@@ -231,42 +208,25 @@ Edit `PATTERNS` hash in `drums.rb` for custom techno rhythms.
 - **Total workflow**: ~10 minutes for complete production
 
 ## Workflow
-**Complete production in 3 steps:**
+**Complete production workflow:**
 ```bash
-# Step 1: Generate chords (~5-8 min)
+# One-command full generation
+./dilla generate              # Generates everything (chords + bass + drums + mixes)
 
-ruby chords.rb
+# Or step-by-step
+./dilla render --chords       # Step 1: Generate chord progressions
+./dilla render --drums        # Step 2: Generate drum patterns
+./dilla render --mix          # Step 3: Create final mixes
 
-# Output: 16 progression files + chords.wav + theory analysis
+# Quick testing
+./dilla quick                 # Generate only 5 progressions for testing
 
-# No clipping warnings = proper gain staging ✓
+# Browse available content
+./dilla list                  # See all 42 progressions
 
-# Step 2: Generate drums (~1-3 min)
-ruby drums.rb
-
-# Output: 5 pattern files + drums.wav
-
-# Proper Berlin techno with GoldBaby 808s ✓
-
-# Step 3: Create ultimate mix (~1-2 min)
-ruby mix.rb
-
-# Output: ultimate.wav (chords + drums + ethereal pad by default)
-
-# Deep, hypnotic, club-ready ✓
-
-# Optional: Create with vocal/lush alternating pads
-ruby mix.rb chords.wav drums.wav ultimate_vocal_lush.wav vocal_lush
-
-# Output: ultimate_vocal_lush.wav (with "Singers Unlimited" harmonies + lush synth pads)
-
-# Optional: Create all 5 atmospheric variations
-ruby mix.rb all
-
-# Output: ultimate_ethereal.wav, ultimate_cosmic.wav, ultimate_dreamy.wav,
-
-#         ultimate_dark_ambient.wav, ultimate_vocal_lush.wav
-
+# Atmospheric mixing (separate tool)
+ruby mix.rb                   # Create ethereal mix
+ruby mix.rb all               # Create all 5 atmospheric variations
 ```
 
 ## Troubleshooting
@@ -306,37 +266,31 @@ ls effects/sox/sox.exe
 
 **808 samples missing:** Script synthesizes drums automatically (fallback works fine).
 ## Directory Structure
-Following master.json anti-fragmentation principles, all audio tools are organized by domain:
+Following master.json anti-fragmentation principles, consolidated and DRY:
 ```
 dilla/
-
-├── instruments/          # Synthesis and instrument tools
-
-│   ├── fluidsynth/      # FluidSynth source (build with cmake)
-
-│   └── soundfonts/      # Professional SoundFont 2/3 files
-
-│       ├── FluidR3_GM.sf2 (3.3MB) - General MIDI
-
-│       ├── MuseScore_General.sf3 (9.3MB) - High-quality
-
-│       └── VintageDreamsWaves-v2.sf2/sf3 - Analog emulation
-
-├── effects/              # Audio processing tools
-
-│   └── sox/             # SoX audio processing suite
-
-├── chords.rb            # Main chord generator with 27 progressions
-
-├── drums.rb             # Berlin techno drum generator
-
-├── mix.rb               # Surreal atmospheric mixer
-
-├── CHORD_THEORY.md      # Music theory analysis documentation
-
-└── studio_master.sh     # Mastering chain scripts
-
+├── lib/
+│   └── synthesis.rb         # DRY synthesis library (7 synth types)
+├── dilla                    # CLI wrapper (executable)
+├── master.rb                # Main orchestrator (consolidated entry point)
+├── mix.rb                   # Atmospheric mixer (distinct purpose)
+├── dilla_data.json          # Consolidated data (progressions, drums, FX)
+├── README.md
+├── chords/                  # Generated chord progressions
+├── bass/                    # Generated bass layers
+├── drums/                   # Generated drum patterns
+└── final/                   # Complete mixed tracks
 ```
+
+**Removed files** (consolidated into master.rb + lib/):
+- ~~chords.rb~~ → `./dilla render --chords`
+- ~~pads.rb~~ → `master.rb` (using lib/synthesis.rb)
+- ~~drums.rb~~ → `./dilla render --drums`
+- ~~drums_fixed.rb~~ → `./dilla render --drums`
+- ~~create_final_mixes.rb~~ → `./dilla render --mix`
+- ~~chord_theory.json~~ → `dilla_data.json`
+- ~~chord_theory_expanded.json~~ (duplicate)
+- ~~drum_patterns.json~~ → `dilla_data.json`
 
 ## References
 - Music theory: Dorian/Phrygian modal analysis, voice leading optimization
