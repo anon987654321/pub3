@@ -1,13 +1,15 @@
 #!/usr/bin/env ruby
 # Comprehensive drum pattern generator - Evidence-based timing
-
+# Consolidated from drums.rb + drums_fixed.rb per master.json anti-fragmentation
 # Research: arXiv 1904.03442 - consistent swing ratios, not random jitter
-
-# Complexity: 8/10 (adheres to master.json ≤10 limit)
+# Complexity: 7/10 (adheres to master.json ≤10 limit)
 
 require "json"
 SOX = "G:/pub/dilla/effects/sox/sox.exe"
-DRUM_PATTERNS = JSON.parse(File.read("G:/pub/dilla/drum_patterns.json"))
+
+# Load unified data from dilla_data.json (consolidation>fragmentation)
+DILLA_DATA = JSON.parse(File.read(File.join(__dir__, "dilla_data.json")))
+DRUM_PATTERNS = DILLA_DATA["drums"]
 
 def sox(cmd)
   system("#{SOX} #{cmd}")

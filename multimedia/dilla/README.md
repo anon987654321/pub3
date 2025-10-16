@@ -1,22 +1,20 @@
 # J Dilla Music Generation
 **Pure Ruby + SoX synthesis** - No DAWs, no plugins. Generates J Dilla-style chord progressions, Berlin techno drums, and surreal atmospheric mixes with music theory analysis.
 ## Quick Start (Cygwin)
+**UNIFIED WORKFLOW (v4.0.0 - Consolidated per master.json):**
 ```bash
 cd /g/pub/dilla
 
-# 1. Generate Dilla chords with theory analysis
-ruby chords.rb                           # SoX synthesis (default)
+# OPTION 1: Complete workflow (all-in-one)
+ruby master.rb               # Full render (chords + bass + drums + final mixes)
+ruby master.rb --quick       # Quick test (5 progressions only)
 
-ruby chords_compare.rb --engine=both     # A/B test SoX vs FluidSynth
+# OPTION 2: Standalone components (if you want more control)
+ruby chords.rb                      # Generate chord progressions only
+ruby drums_consolidated.rb          # Generate drum patterns only
+ruby mix_consolidated.rb            # Mix existing chords + drums
 
-# 2. Generate Berlin techno drums (proper GoldBaby 808 integration)
-ruby drums.rb
-
-# 3. Create ultimate mix with surreal atmospheric effects
-ruby mix.rb          # Single ethereal mix
-
-ruby mix.rb all      # All 5 atmospheric variations
-
+# All scripts now reference dilla_data.json (single source of truth)
 ```
 
 ## Dual Audio Engine System (NEW!)
@@ -231,42 +229,20 @@ Edit `PATTERNS` hash in `drums.rb` for custom techno rhythms.
 - **Total workflow**: ~10 minutes for complete production
 
 ## Workflow
-**Complete production in 3 steps:**
+**Consolidated workflow (v4.0.0):**
 ```bash
-# Step 1: Generate chords (~5-8 min)
+# UNIFIED WORKFLOW - Complete production in ONE command
+ruby master.rb
+# Output: chords/ bass/ drums/ final/ directories with all content
+# Total time: ~10-15 minutes for full render
 
-ruby chords.rb
+# GRANULAR CONTROL - Run components separately
+ruby chords.rb                   # Step 1: Generate chords (~5-8 min)
+ruby drums_consolidated.rb       # Step 2: Generate drums (~1-3 min)
+ruby mix_consolidated.rb         # Step 3: Mix all together (~1-2 min)
 
-# Output: 16 progression files + chords.wav + theory analysis
-
-# No clipping warnings = proper gain staging ✓
-
-# Step 2: Generate drums (~1-3 min)
-ruby drums.rb
-
-# Output: 5 pattern files + drums.wav
-
-# Proper Berlin techno with GoldBaby 808s ✓
-
-# Step 3: Create ultimate mix (~1-2 min)
-ruby mix.rb
-
-# Output: ultimate.wav (chords + drums + ethereal pad by default)
-
-# Deep, hypnotic, club-ready ✓
-
-# Optional: Create with vocal/lush alternating pads
-ruby mix.rb chords.wav drums.wav ultimate_vocal_lush.wav vocal_lush
-
-# Output: ultimate_vocal_lush.wav (with "Singers Unlimited" harmonies + lush synth pads)
-
-# Optional: Create all 5 atmospheric variations
-ruby mix.rb all
-
-# Output: ultimate_ethereal.wav, ultimate_cosmic.wav, ultimate_dreamy.wav,
-
-#         ultimate_dark_ambient.wav, ultimate_vocal_lush.wav
-
+# QUICK TEST MODE - Validate changes faster
+ruby master.rb --quick           # Only 5 progressions for testing
 ```
 
 ## Troubleshooting
@@ -306,36 +282,44 @@ ls effects/sox/sox.exe
 
 **808 samples missing:** Script synthesizes drums automatically (fallback works fine).
 ## Directory Structure
-Following master.json anti-fragmentation principles, all audio tools are organized by domain:
+Following master.json anti-fragmentation principles (consolidation>fragmentation), all audio tools are unified:
 ```
 dilla/
 
-├── instruments/          # Synthesis and instrument tools
+├── tools/                       # Audio synthesis and processing tools
 
-│   ├── fluidsynth/      # FluidSynth source (build with cmake)
+│   ├── instruments/soundfonts/  # Professional SoundFont 2/3 files
 
-│   └── soundfonts/      # Professional SoundFont 2/3 files
+│   │   ├── FluidR3_GM.sf2 (3.3MB) - General MIDI
 
-│       ├── FluidR3_GM.sf2 (3.3MB) - General MIDI
+│   │   ├── MuseScore_General.sf3 (9.3MB) - High-quality
 
-│       ├── MuseScore_General.sf3 (9.3MB) - High-quality
+│   │   └── VintageDreamsWaves-v2.sf2/sf3 - Analog emulation
 
-│       └── VintageDreamsWaves-v2.sf2/sf3 - Analog emulation
+│   └── effects/sox/             # SoX audio processing suite
 
-├── effects/              # Audio processing tools
+├── dilla_data.json      # UNIFIED DATA SOURCE (chords + drums + all theory)
 
-│   └── sox/             # SoX audio processing suite
+├── master.rb            # Master orchestrator (all-in-one workflow)
 
-├── chords.rb            # Main chord generator with 27 progressions
+├── chords.rb            # Standalone chord generator
 
-├── drums.rb             # Berlin techno drum generator
+├── drums_consolidated.rb # Unified drum generator (merged drums.rb + drums_fixed.rb)
 
-├── mix.rb               # Surreal atmospheric mixer
+├── pads.rb              # Pad generator
 
-├── CHORD_THEORY.md      # Music theory analysis documentation
+├── mix_consolidated.rb  # Unified mixer (merged mix.rb + create_final_mixes.rb)
 
-└── studio_master.sh     # Mastering chain scripts
+└── README.md            # This file
 
+```
+
+**Consolidation Complete (v4.0.0):**
+- ✅ Merged chord_theory.json + chord_theory_expanded.json → dilla_data.json
+- ✅ Merged drum_patterns.json → dilla_data.json
+- ✅ Consolidated drums.rb + drums_fixed.rb → drums_consolidated.rb
+- ✅ Consolidated mix.rb + create_final_mixes.rb → mix_consolidated.rb
+- ✅ All scripts reference single source of truth: dilla_data.json
 ```
 
 ## References
