@@ -1,0 +1,28 @@
+{
+  "name": "pub3",
+  "version": "502.0.0",
+  "description": "Multi-project repository with Rails apps, multimedia tools, and OpenBSD infrastructure",
+  "private": true,
+  "scripts": {
+    "lint": "make lint",
+    "test": "make test",
+    "security": "make security",
+    "tree": "make tree"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anon987654321/pub3.git"
+  },
+  "keywords": [
+    "rails",
+    "openbsd",
+    "multimedia",
+    "music-production",
+    "image-processing"
+  ],
+  "author": "anon987654321",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "markdownlint-cli": "^0.37.0"
+  }
+}
