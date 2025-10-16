@@ -1,0 +1,78 @@
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.2
+  Exclude:
+    - 'node_modules/**/*'
+    - 'vendor/**/*'
+    - 'tmp/**/*'
+    - 'log/**/*'
+    - 'db/schema.rb'
+    - 'multimedia/dilla/effects/**/*'
+
+# Prefer double quotes (per master.json standards)
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+# Use Unix line endings
+Layout/EndOfLine:
+  EnforcedStyle: lf
+
+# 2-space indentation
+Layout/IndentationWidth:
+  Width: 2
+
+# Allow longer lines for readability
+Layout/LineLength:
+  Max: 120
+  AllowedPatterns: 
+    - '\A\s*#'  # Allow long comments
+
+# Allow longer methods for legitimate reasons
+Metrics/MethodLength:
+  Max: 25
+  Exclude:
+    - 'multimedia/**/*'
+    - 'rails/**/*.sh'
+
+# Allow larger classes
+Metrics/ClassLength:
+  Max: 200
+
+# Allow more complex methods in specific contexts
+Metrics/CyclomaticComplexity:
+  Max: 12
+
+Metrics/PerceivedComplexity:
+  Max: 12
+
+# Disable some opinionated rules
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/SymbolArray:
+  Enabled: false
+
+Style/WordArray:
+  Enabled: false
+
+# Allow trailing commas
+Style/TrailingCommaInArrayLiteral:
+  Enabled: false
+
+Style/TrailingCommaInHashLiteral:
+  Enabled: false
+
+# Prefer modern Hash syntax
+Style/HashSyntax:
+  EnforcedStyle: ruby19
+
+# Allow both and/or and &&/||
+Style/AndOr:
+  Enabled: false
+
+# Allow numbered variables
+Naming/VariableNumber:
+  Enabled: false

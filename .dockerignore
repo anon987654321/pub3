@@ -1,0 +1,46 @@
+# Git
+.git
+.gitignore
+.github
+
+# Documentation
+*.md
+!README.md
+LICENSE
+CHANGELOG.md
+
+# Dependencies
+node_modules
+vendor/bundle
+
+# Logs
+*.log
+log/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Build artifacts
+dist/
+build/
+target/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Test coverage
+coverage/

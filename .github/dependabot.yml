@@ -1,0 +1,43 @@
+version: 2
+updates:
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+      - "github-actions"
+
+  # Bundler (Ruby)
+  - package-ecosystem: "bundler"
+    directory: "/rails"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+      - "ruby"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  # npm (Node.js)
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+      - "javascript"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  # pip (Python)
+  - package-ecosystem: "pip"
+    directory: "/multimedia/repligen"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+      - "python"
