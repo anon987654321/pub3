@@ -24,13 +24,12 @@
 require "json"
 # ============================================================================
 # CONFIGURATION
-
 # ============================================================================
 
 SOX = "G:/pub/dilla/effects/sox/sox.exe"
-CHORD_JSON = "chord_theory_expanded.json"
 
-DRUM_JSON = "drum_patterns.json"
+# Load unified data from dilla_data.json (consolidation>fragmentation per master.json)
+DILLA_DATA = JSON.parse(File.read(File.join(__dir__, "dilla_data.json")))
 
 # Note frequencies (A4 = 440Hz)
 NOTES = {
@@ -534,8 +533,6 @@ if __FILE__ == $0
   puts "=" * 70
 
   mode = ARGV[0] || "--full"
-  # Load JSON
-  theory = JSON.parse(File.read(CHORD_JSON))
 
   # Create directories
   system("mkdir -p chords bass drums final 2>/dev/null")
@@ -551,9 +548,9 @@ if __FILE__ == $0
     ["neo_soul", "jazz", "funk_soul"].each do |cat|
       key = "#{cat}_progressions"
 
-      next unless theory[key]
+      next unless DILLA_DATA["chords"][key]
 
-      theory[key].each do |name, data|
+      DILLA_DATA["chords"][key].each do |name, data|
 
         progressions_to_render << [name, data] if data["freqs"]
 
