@@ -23,6 +23,6 @@
   "author": "anon987654321",
   "license": "UNLICENSED",
   "devDependencies": {
-    "markdownlint-cli": "^0.37.0"
+    "markdownlint-cli": "^0.45.0"
   }
 }
