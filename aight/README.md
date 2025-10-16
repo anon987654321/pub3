@@ -1,0 +1,1 @@
+AI^3 CLI documentation for the modular command-line interface built in Ruby. It integrates LangChain.rb for retrieval-augmented generation (RAG) and features 15 specialized assistants, UniversalScraper for web scraping, and adheres to OpenBSD security practices.
