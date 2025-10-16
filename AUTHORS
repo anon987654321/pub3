@@ -1,0 +1,35 @@
+# Authors and Contributors
+
+## Project Owner
+
+- anon987654321 <https://github.com/anon987654321>
+
+## Contributors
+
+This file lists contributors to the pub3 project. If you've contributed and aren't listed, please submit a PR to add yourself.
+
+### Code Contributors
+
+- anon987654321 - Original author, core infrastructure, all components
+
+### Documentation
+
+- anon987654321 - All documentation
+
+### Testing and QA
+
+- Contributors welcome
+
+### Special Thanks
+
+- OpenBSD project for excellent documentation and security-first design
+- Ruby on Rails community
+- Open source community
+
+## How to Contribute
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on contributing to this project.
+
+## License
+
+All contributions are subject to the project license. See [LICENSE](LICENSE) for details.

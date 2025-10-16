@@ -1,0 +1,188 @@
+# Operating System
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*~
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+.project
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# Ruby
+*.gem
+*.rbc
+.bundle/
+.config
+coverage/
+InstalledFiles
+lib/bundler/man/
+pkg/
+rdoc/
+spec/reports/
+test/tmp/
+test/version_tmp/
+tmp/
+vendor/bundle/
+.ruby-version
+.ruby-gemset
+
+# Rails
+*.log
+*.pid
+*.seed
+/log/*
+!/log/.keep
+/tmp/*
+!/tmp/.keep
+/storage/*
+!/storage/.keep
+/public/assets
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.eslintcache
+.node_repl_history
+*.tgz
+.yarn-integrity
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+*.manifest
+*.spec
+pip-log.txt
+pip-delete-this-directory.txt
+.pytest_cache/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Secrets and credentials
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+secrets.yml
+credentials.yml
+!config/credentials.yml.enc
+master.key
+!config/master.key
+
+# Database
+*.sqlite
+*.sqlite3
+*.db
+
+# Compiled files
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Archives
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs
+logs/
+*.log
+log/
+
+# Temporary files
+temp/
+*.tmp
+*.temp
+*.cache
+
+# Build artifacts
+dist/
+out/
+build/
+target/
+
+# OS generated files
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Editor backup files
+*~
+*.bak
+*.orig
+
+# Audio/Video work files
+*.wav.tmp
+*.mp3.tmp
+*.flac.tmp
+*.opus.tmp
+render_*.wav
+render_*.mp3
+
+# Image processing temp files
+*.tmp.jpg
+*.tmp.png
+*.processing
+
+# Local development overrides
+.local/
+local.config.json

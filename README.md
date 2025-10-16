@@ -1,6 +1,59 @@
-# Brgen - Multi-Tenant Rails Platform
+# pub3 - Multi-Project Repository
+
+A comprehensive repository containing Rails applications, multimedia tools, OpenBSD infrastructure, and shell utilities.
+
+[![CI](https://github.com/anon987654321/pub3/actions/workflows/ci.yml/badge.svg)](https://github.com/anon987654321/pub3/actions/workflows/ci.yml)
+[![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)](LICENSE)
+
+## 📚 Documentation
+
+- **[OVERVIEW.md](OVERVIEW.md)** - Comprehensive project overview
+- **[DEVELOPMENT.md](DEVELOPMENT.md)** - Complete development setup guide
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** - Contribution guidelines
+- **[SECURITY.md](SECURITY.md)** - Security policy and reporting
+- **[CHANGELOG.md](CHANGELOG.md)** - Version history
+- **[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)** - Community standards
+
+## 🏗️ Project Structure
+
+```
+pub3/
+├── master.json          # Central governance and configuration
+├── rails/               # Rails 8 application generators
+│   ├── brgen.sh        # Multi-tenant platform (40+ domains)
+│   ├── amber.sh        # Social amber alert system
+│   ├── blognet.sh      # Decentralized blogging
+│   └── ...             # 7+ Rails applications
+├── multimedia/          # Audio/video/image processing
+│   ├── dilla/          # Music production (Ruby)
+│   ├── postpro/        # Image post-processing (Ruby)
+│   └── repligen/       # AI image generation (Ruby)
+├── openbsd/            # OpenBSD deployment scripts
+├── sh/                 # Shell utilities (tree, lint, security)
+└── bplans/             # Business plans and documentation
+```
+
+## 🚀 Quick Start
+
+```bash
+# Clone repository
+git clone https://github.com/anon987654321/pub3.git
+cd pub3
+
+# Review project philosophy
+cat master.json
+
+# Explore structure
+sh/tree.sh .
+
+# See DEVELOPMENT.md for detailed setup
+```
+
+## 🌐 Rails Platform - Brgen
+
 A Rails 8 multi-tenant platform hosting specialized Norwegian web applications on OpenBSD infrastructure.
-## Architecture
+
+### Architecture
 **Platform**: OpenBSD 7.7 (GENERIC) #2 amd64
 **Web Server**: Puma (Rails 8)
 
@@ -243,21 +296,78 @@ VPS: /root/brgen/
 
 ```
 
-## Contributing
-This is a personal project for Norwegian web services. For deployment issues or bugs, see the issue tracker or deployment logs.
-## License
-Proprietary - All rights reserved
-## Contact
-**Domain**: brgen.no
-**Email**: [Contact via domain]
+## 🎯 Key Features
 
-**DNS**: ns.brgen.no (primary), ns.hyp.net (secondary)
+### Rails Applications
+- **Multi-tenant architecture** with `acts_as_tenant`
+- **7 production apps** on OpenBSD infrastructure
+- **40+ domain support** through brgen platform
+- **Zero-trust security** with comprehensive validation
+
+### Multimedia Tools
+- **dilla**: Music production with 808 synthesis, MIDI generation
+- **postpro**: Image post-processing with ruby-vips
+- **repligen**: AI image generation with LoRA workflow
+
+### Infrastructure
+- **OpenBSD 7.7** with pledge/unveil security
+- **DNSSEC** with ECDSAP256SHA256
+- **Let's Encrypt TLS** with automated renewal
+- **PF firewall** with synproxy and rate limiting
+- **Relayd** reverse proxy with OWASP headers
+
+### Development Tools
+- **Shell utilities** for tree listing, linting, security scans
+- **Zero-trust validation** for all inputs
+- **Continuous refactoring** built into workflow
+
+## 📖 Getting Started
+
+1. **Read**: [DEVELOPMENT.md](DEVELOPMENT.md) for complete setup
+2. **Explore**: Run `sh/tree.sh .` to see structure
+3. **Review**: Check `master.json` for project philosophy
+4. **Contribute**: See [CONTRIBUTING.md](CONTRIBUTING.md)
+
+## 🔒 Security
+
+This project follows zero-trust security principles. See [SECURITY.md](SECURITY.md) for:
+- Vulnerability reporting
+- Security measures
+- Cryptography standards
+- Authentication requirements
+
+**Never commit secrets or credentials!**
+
+## 🤝 Contributing
+
+We welcome contributions! Please:
+
+1. Read [CONTRIBUTING.md](CONTRIBUTING.md)
+2. Follow the development workflow
+3. Run tests and quality gates
+4. Submit focused pull requests
+
+See [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for community standards.
+
+## 📝 License
+
+Proprietary - All rights reserved. See [LICENSE](LICENSE) for details.
+
+## 📞 Contact
+
+- **GitHub**: [@anon987654321](https://github.com/anon987654321)
+- **Domain**: brgen.no
+- **DNS**: ns.brgen.no (primary), ns.hyp.net (secondary)
+
+## 🔗 Links
+
+- [Issue Tracker](https://github.com/anon987654321/pub3/issues)
+- [Security Advisories](https://github.com/anon987654321/pub3/security)
+- [Changelog](CHANGELOG.md)
 
 ---
-**Last Updated**: 2025-10-16
-**Rails Version**: 8.0.0
 
-**Ruby Version**: 3.3.0
-
-**OpenBSD Version**: 7.7 GENERIC #2 amd64
+**Version**: 502.0.0  
+**Last Updated**: 2025-10-16  
+**Rails**: 8.0.0 | **Ruby**: 3.3.0 | **OpenBSD**: 7.7
 
