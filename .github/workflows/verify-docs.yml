@@ -1,0 +1,58 @@
+name: Verify Documentation
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '**.md'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - '**.md'
+
+jobs:
+  verify-links:
+    name: Verify Documentation Links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Check internal links
+        run: |
+          echo "Checking internal documentation links..."
+          
+          # Check README.md links
+          for file in DEVELOPMENT.md CONTRIBUTING.md SECURITY.md CHANGELOG.md CODE_OF_CONDUCT.md LICENSE; do
+            if [ ! -f "$file" ]; then
+              echo "ERROR: $file referenced in README but not found"
+              exit 1
+            fi
+          done
+          
+          echo "✓ All referenced documentation files exist"
+      
+      - name: Verify documentation structure
+        run: |
+          echo "Verifying documentation structure..."
+          
+          required_files=(
+            "README.md"
+            "CONTRIBUTING.md"
+            "LICENSE"
+            "CODE_OF_CONDUCT.md"
+            "SECURITY.md"
+            "DEVELOPMENT.md"
+            "CHANGELOG.md"
+            ".gitignore"
+            ".editorconfig"
+          )
+          
+          for file in "${required_files[@]}"; do
+            if [ ! -f "$file" ]; then
+              echo "ERROR: Required file $file not found"
+              exit 1
+            fi
+            echo "✓ $file exists"
+          done
+          
+          echo "✓ All required documentation files present"
