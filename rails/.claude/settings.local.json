@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//g/pub/**)",
+      "Bash(chmod:*)",
+      "Bash(for:*)",
+      "Bash(do if [[ ! -f \"/g/pub/aight/lib/$file\" ]])",
+      "Bash(then echo \"MISSING: $file\")",
+      "Bash(fi)",
+      "Bash(done)",
+      "Bash(do echo \"=== $dir ===\")",
+      "Bash(ls:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(ssh:*)",
+      "Bash(cat:*)",
+      "Bash(scp:*)",
+      "Bash(curl:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

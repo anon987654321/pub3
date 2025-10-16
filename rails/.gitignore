@@ -1,0 +1,40 @@
+# Backups
+*.old
+*.bak
+*_OLD
+*_ANCIENT
+
+# Temporary
+__tmp/
+tmp/
+*.tmp
+*.log
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Rails (when apps are generated)
+*/log/*.log
+*/tmp/
+*/storage/
+*/.bundle/
+*/vendor/bundle/
+*/node_modules/
+*/public/assets/
+*/public/packs/
+
+# Credentials
+**/config/master.key
+**/config/credentials/*.key

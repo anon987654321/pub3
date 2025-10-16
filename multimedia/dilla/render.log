@@ -1,0 +1,510 @@
+======================================================================
+🎹 J DILLA AUDIO GENERATOR - MASTER ORCHESTRATOR
+
+======================================================================
+
+📊 RENDERING CHORD PROGRESSIONS + BASS
+----------------------------------------------------------------------
+
+🎹 dilla_life
+
+   → chords/dilla_life.wav + bass/dilla_life.wav
+
+🎹 neo_soul_classic
+
+   → chords/neo_soul_classic.wav + bass/neo_soul_classic.wav
+
+🎹 dilla_dreamscape
+
+   → chords/dilla_dreamscape.wav + bass/dilla_dreamscape.wav
+
+🎹 floating_rhodes
+
+   → chords/floating_rhodes.wav + bass/floating_rhodes.wav
+
+🎹 soulquarians_butter
+
+   → chords/soulquarians_butter.wav + bass/soulquarians_butter.wav
+
+🎹 donut_shop
+
+   → chords/donut_shop.wav + bass/donut_shop.wav
+
+🎹 slum_village
+
+   → chords/slum_village.wav + bass/slum_village.wav
+
+🎹 ethiojazz
+
+   → chords/ethiojazz.wav + bass/ethiojazz.wav
+
+🎹 ahmad_jamal
+
+   → chords/ahmad_jamal.wav + bass/ahmad_jamal.wav
+
+🎹 isley_brothers
+
+   → chords/isley_brothers.wav + bass/isley_brothers.wav
+
+🎹 organic_dilla
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `voice_3.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_out.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `voice_4.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_out.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `voice_3.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_out.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `voice_3.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_out.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_3.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chords_raw.wav': No such file or directory
+
+   → chords/organic_dilla.wav + bass/organic_dilla.wav
+
+🎹 vinyl_soul
+
+   → chords/vinyl_soul.wav + bass/vinyl_soul.wav
+
+🎹 flylo_space
+
+   → chords/flylo_space.wav + bass/flylo_space.wav
+
+🎹 blade_runner_dystopia
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `voice_2.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_out.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `voice_2.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_out.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `voice_2.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_out.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `voice_3.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_out.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_3.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chords_raw.wav': No such file or directory
+
+   → chords/blade_runner_dystopia.wav + bass/blade_runner_dystopia.wav
+
+🎹 shine_on_floyd
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `voice_3.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_out.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `voice_3.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_out.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `voice_3.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_out.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `voice_3.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_out.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_3.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chords_raw.wav': No such file or directory
+
+   → chords/shine_on_floyd.wav + bass/shine_on_floyd.wav
+
+🎹 vienna_strings
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `voice_3.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_out.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `voice_3.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_out.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `voice_3.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_out.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `voice_3.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_out.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_3.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chords_raw.wav': No such file or directory
+
+   → chords/vienna_strings.wav + bass/vienna_strings.wav
+
+🎹 eno_ascent
+
+G:\pub\dilla\effects\sox\sox.exe FAIL fade: fade-out overlaps fade-in
+
+G:\pub\dilla\effects\sox\sox.exe FAIL fade: fade-out overlaps fade-in
+
+G:\pub\dilla\effects\sox\sox.exe FAIL fade: fade-out overlaps fade-in
+
+G:\pub\dilla\effects\sox\sox.exe FAIL fade: fade-out overlaps fade-in
+
+G:\pub\dilla\effects\sox\sox.exe FAIL fade: fade-out overlaps fade-in
+
+G:\pub\dilla\effects\sox\sox.exe FAIL fade: fade-out overlaps fade-in
+
+G:\pub\dilla\effects\sox\sox.exe FAIL fade: fade-out overlaps fade-in
+
+G:\pub\dilla\effects\sox\sox.exe FAIL fade: fade-out overlaps fade-in
+
+G:\pub\dilla\effects\sox\sox.exe FAIL fade: fade-out overlaps fade-in
+
+G:\pub\dilla\effects\sox\sox.exe FAIL fade: fade-out overlaps fade-in
+
+G:\pub\dilla\effects\sox\sox.exe FAIL fade: fade-out overlaps fade-in
+
+G:\pub\dilla\effects\sox\sox.exe FAIL fade: fade-out overlaps fade-in
+
+G:\pub\dilla\effects\sox\sox.exe FAIL fade: fade-out overlaps fade-in
+
+G:\pub\dilla\effects\sox\sox.exe FAIL fade: fade-out overlaps fade-in
+
+G:\pub\dilla\effects\sox\sox.exe FAIL fade: fade-out overlaps fade-in
+
+G:\pub\dilla\effects\sox\sox.exe FAIL fade: fade-out overlaps fade-in
+
+G:\pub\dilla\effects\sox\sox.exe FAIL fade: fade-out overlaps fade-in
+
+G:\pub\dilla\effects\sox\sox.exe FAIL fade: fade-out overlaps fade-in
+
+G:\pub\dilla\effects\sox\sox.exe FAIL fade: fade-out overlaps fade-in
+
+G:\pub\dilla\effects\sox\sox.exe FAIL fade: fade-out overlaps fade-in
+
+G:\pub\dilla\effects\sox\sox.exe FAIL fade: fade-out overlaps fade-in
+
+G:\pub\dilla\effects\sox\sox.exe FAIL fade: fade-out overlaps fade-in
+
+G:\pub\dilla\effects\sox\sox.exe FAIL fade: fade-out overlaps fade-in
+
+G:\pub\dilla\effects\sox\sox.exe FAIL fade: fade-out overlaps fade-in
+
+   → chords/eno_ascent.wav + bass/eno_ascent.wav
+
+🎹 pyramids_ocean
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `voice_4.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_out.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `voice_4.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_out.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `voice_4.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_out.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `voice_4.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_out.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_3.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chords_raw.wav': No such file or directory
+
+   → chords/pyramids_ocean.wav + bass/pyramids_ocean.wav
+
+🎹 industrial_techno_dilla
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `voice_4.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_out.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `voice_3.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_out.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `voice_3.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_out.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `voice_4.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_out.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_3.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chords_raw.wav': No such file or directory
+
+   → chords/industrial_techno_dilla.wav + bass/industrial_techno_dilla.wav
+
+🎹 modal_jazz
+
+   → chords/modal_jazz.wav + bass/modal_jazz.wav
+
+🎹 erykah_badu_on_and_on
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `voice_2.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_out.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `voice_3.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_out.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `voice_2.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_out.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL chorus: usage: gain-in gain-out delay decay speed depth [ -s | -t ]
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `voice_3.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_out.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chord_3.wav': No such file or directory
+
+G:\pub\dilla\effects\sox\sox.exe FAIL formats: can't open input file `chords_raw.wav': No such file or directory
+
+   → chords/erykah_badu_on_and_on.wav + bass/erykah_badu_on_and_on.wav
+
+🎹 flylo_ethereal
+
