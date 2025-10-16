@@ -7,6 +7,7 @@ A comprehensive repository containing Rails applications, multimedia tools, Open
 
 ## 📚 Documentation
 
+- **[OVERVIEW.md](OVERVIEW.md)** - Comprehensive project overview
 - **[DEVELOPMENT.md](DEVELOPMENT.md)** - Complete development setup guide
 - **[CONTRIBUTING.md](CONTRIBUTING.md)** - Contribution guidelines
 - **[SECURITY.md](SECURITY.md)** - Security policy and reporting
