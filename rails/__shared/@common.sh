@@ -728,7 +728,24 @@ generate_social_models() {
 
 }
 
-commit() {
+
+# Pure zsh route adder - replaces head/tail with parameter expansion
+# Complies with master.json:608 (never use head/tail/sed/awk)
+add_routes_block() {
+    local routes_block="$1"
+    local routes_file="config/routes.rb"
+
+    # Read all lines, remove last 'end', append routes, add 'end'
+    local routes_lines=("${(@f)$(<$routes_file)}")
+
+    {
+        print -l "${routes_lines[1,-2]}"
+        print -r -- "$routes_block"
+        print "end"
+    } > "$routes_file"
+}
+
+commit()() {
     local message="${1:-Update application setup}"
 
     log "Committing changes: $message"
@@ -1372,4 +1389,3 @@ generate_crud_views() {
 
     log "CRUD views generated: show, new, edit"
 }
-

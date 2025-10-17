@@ -2,11 +2,13 @@
 // Zero trust | 10 adversarial personas | Tadao Ando + radikal whitespace
 // Progressiv forbedring: HTML→CSS→JS | Sprint sjekklister
 // Eier: anon987654321 | Oppdatert: 2025-10-16 21:38:53
-{
+// EOF
+// Linjer: 858 (ned fra 968, målsetting oppnådd)
+// Validering: Alle @ref: referanser løses, alle minimumskrav bevart{
   "meta": {
-    "version": "503.0.0",
+    "version": "503.1.0",
     "owner": "anon987654321",
-    "updated": "2025-10-16T21:38:53Z",
+    "updated": "2025-10-17T15:48:41Z",
     "platform": "openbsd_7.7_rails_8.1_falcon",
     "purpose": "billion_scale_zero_trust_ethical_growth_complete_design_system",
     "philosophy": [
@@ -27,17 +29,46 @@
     },
     "reasoning_protocol": {
       "levels": {
-        "think": {"budget_multiplier": 1.0, "use_for": "normal_tasks"},
-        "think_deeper": {"budget_multiplier": 1.3, "use_for": "medium_complexity"},
-        "think_hard": {"budget_multiplier": 1.8, "use_for": "complex_logic"},
-        "think_harder": {"budget_multiplier": 2.5, "use_for": "multi_path_problems"},
-        "ultrathink": {"budget_multiplier": 3.0, "use_for": "adversarial_validation"},
-        "overthink": {"budget_multiplier": 3.8, "use_for": "research_level"},
-        "omnithink": {"budget_multiplier": 5.0, "use_for": "multi_domain_fusion", "status": "rare_internal_use_only"}
+        "think": {
+          "budget_multiplier": 1.0,
+          "use_for": "normal_tasks"
+        },
+        "think_deeper": {
+          "budget_multiplier": 1.3,
+          "use_for": "medium_complexity"
+        },
+        "think_hard": {
+          "budget_multiplier": 1.8,
+          "use_for": "complex_logic"
+        },
+        "think_harder": {
+          "budget_multiplier": 2.5,
+          "use_for": "multi_path_problems"
+        },
+        "ultrathink": {
+          "budget_multiplier": 3.0,
+          "use_for": "adversarial_validation"
+        },
+        "overthink": {
+          "budget_multiplier": 3.8,
+          "use_for": "research_level"
+        },
+        "omnithink": {
+          "budget_multiplier": 5.0,
+          "use_for": "multi_domain_fusion",
+          "status": "rare_internal_use_only"
+        }
       },
       "default": "think",
-      "ultrathink_trigger": ["think harder", "ultrathink"],
-      "ultrathink_actions": ["increase_reasoning_budget×3", "enable_all_personas", "apply_multi_temperature_synthesis"]
+      "ultrathink_trigger": [
+        "think harder",
+        "ultrathink"
+      ],
+      "ultrathink_actions": [
+        "increase_reasoning_budget×3",
+        "enable_all_personas",
+        "apply_multi_temperature_synthesis"
+      ]
     },
     "output_format": {
       "show_diffs": "always_before_and_after_changes",
@@ -45,7 +76,6 @@
       "plain_output": "no_ascii_art,no_box_drawing,plain_text_only"
     }
   },
-
   "integrity": {
     "sections": [
       "meta",
@@ -84,7 +114,6 @@
       "alert_on": "minimum_complexity_violation,duplication_increase,sectionitis_regression"
     }
   },
-
   "constants": {
     "limits": {
       "complexity": 10,
@@ -96,17 +125,30 @@
       "convergence": 0.01
     }
   },
-
   "zero_trust": {
     "principle": "verify_never_trust_assume_breach",
     "scope": "all_inputs_all_layers_all_outputs",
-    
     "input_validation": {
       "llm_injection_protection": {
         "html_sanitize": {
           "gem": "sanitize_2.1",
-          "allowed_elements": ["p", "br", "strong", "em", "a", "ul", "ol", "li"],
-          "forbidden_elements": ["script", "iframe", "object", "embed", "form"]
+          "allowed_elements": [
+            "p",
+            "br",
+            "strong",
+            "em",
+            "a",
+            "ul",
+            "ol",
+            "li"
+          ],
+          "forbidden_elements": [
+            "script",
+            "iframe",
+            "object",
+            "embed",
+            "form"
+          ]
         },
         "context_filters": {
           "sql": "remove_quotes_semicolons_union_drop",
@@ -119,7 +161,6 @@
       "strong_params_required": true,
       "type_check": "strict"
     },
-    
     "cryptography": {
       "at_rest": "aes_256_gcm",
       "in_transit": "tls_1.3",
@@ -127,96 +168,268 @@
       "key_rotation": "quarterly",
       "key_storage": "hardware_security_module"
     },
-    
     "authentication": {
       "multi_factor_required": true,
-      "methods": ["totp", "webauthn", "backup_codes"],
+      "methods": [
+        "totp",
+        "webauthn",
+        "backup_codes"
+      ],
       "session_lifetime": "15_minutes",
       "password_minimum_length": 12,
       "password_rotation_days": 90,
       "rate_limit": "5_attempts_per_15_minutes"
     },
-    
     "csrf_protection": {
       "required": "all_state_changes",
       "token_rotation": "per_session",
       "same_site_cookie": "strict"
     },
-    
     "security_headers": {
       "csp": "default-src 'self'; script-src 'self' 'strict-dynamic'; style-src 'self'",
       "x_frame_options": "DENY",
       "x_content_type_options": "nosniff",
       "referrer_policy": "strict-origin-when-cross-origin"
     },
-    
     "credentials": {
       "never_log": true,
       "never_commit": true,
       "use_environment_variables": true
     },
-    
     "destructive_operations": {
-      "confirm_before": ["drop_table", "delete_production_data", "force_push"]
+      "confirm_before": [
+        "drop_table",
+        "delete_production_data",
+        "force_push"
+      ]
     }
   },
-
   "principles": {
-    "dry": {"trigger": "@3→abstract", "severity": "high"},
-    "kiss": {"trigger": "@too_complex→simplify", "severity": "high"},
-    "yagni": {"trigger": "@unused→remove", "severity": "medium"},
-    "solid": {"trigger": "@coupling>5→decouple", "severity": "critical"},
-    "composition": {"trigger": "@inheritance→compose", "severity": "medium"},
-    "evidence": {"trigger": "@assumption→validate", "severity": "critical"},
-    "reversible": {"trigger": "@irreversible→add_rollback", "severity": "critical"},
-    "explicit": {"trigger": "@implicit→make_explicit", "severity": "high"},
-    "orthogonal": {"trigger": "@coupled→split", "severity": "high"},
-    "minimalism": {"trigger": "@bloat→subtract", "severity": "medium"},
-    "clarity": {"trigger": "@synonym→unify_naming", "severity": "medium"},
-    "flatten": {"trigger": "@useless_wrapper→flatten", "severity": "high"},
-    "pola": {"trigger": "@surprise→make_predictable", "severity": "high"},
-    "unix": {"trigger": "@does_multiple_things→do_one_thing_well", "severity": "high"},
-    "anti_divitis": {"trigger": "@wrapper_div→semantic_element", "severity": "medium", "scope": "html,css"},
-    "anti_sectionitis": {"trigger": "@scattered_config→consolidate", "severity": "high", "scope": "json,yaml,config"},
-    "geometric_clarity": {"trigger": "@visual_confusion→geometric_simplification", "severity": "medium", "scope": "visualization,ui"},
-    "law_of_demeter": {"trigger": "@deep_chain→delegate", "severity": "high"},
-    "tell_dont_ask": {"trigger": "@query_then_act→encapsulate_behavior", "severity": "medium"},
-    "command_query_separation": {"trigger": "@method_changes_and_returns→split", "severity": "medium"},
-    "fail_fast": {"trigger": "@late_validation→validate_early", "severity": "high"},
-    "progressive_enhancement": {"trigger": "@js_required→base_without_js", "severity": "medium"},
-    "consistency_principle": {"trigger": "@inconsistent_ui→design_system", "severity": "high", "scope": "ui"},
-    "visual_hierarchy": {"trigger": "@flat_layout→emphasize_key_elements", "severity": "medium", "scope": "ui"},
-    "affordance": {"trigger": "@unclear_interaction→add_visual_cues", "severity": "medium", "scope": "ui"},
-    "fitts_law": {"trigger": "@small_targets→increase_size", "severity": "low", "scope": "ui"},
-    "hicks_law": {"trigger": "@too_many_choices→simplify", "severity": "medium", "scope": "ux"},
-    "accessibility_first": {"trigger": "@accessibility_afterthought→wcag_aa", "severity": "critical", "scope": "ui"},
-    "performance_oriented_design": {"trigger": "@slow_assets→optimize", "severity": "high", "scope": "ui"},
-    "view_components": {"trigger": "@duplicate_ui→extract_component", "severity": "medium", "scope": "rails"},
-    "service_objects": {"trigger": "@fat_model→extract_service", "severity": "high", "scope": "rails"},
-    "form_objects": {"trigger": "@complex_form→extract_form_object", "severity": "medium", "scope": "rails"},
-    "presenters": {"trigger": "@view_logic→use_presenter", "severity": "medium", "scope": "rails"},
-    "domain_driven_lite": {"trigger": "@generic_services→namespace_by_domain", "severity": "medium", "scope": "rails"},
-    "application_controller": {"trigger": "@duplicate_reflex_setup→base_controller", "severity": "medium", "scope": "stimulus"},
-    "loading_states": {"trigger": "@no_feedback→add_spinners", "severity": "high", "scope": "stimulus"},
-    "autofocus_handling": {"trigger": "@lost_focus→handle_dynamic_focus", "severity": "low", "scope": "stimulus"},
-    "visual_feedback": {"trigger": "@instant_update→animate_change", "severity": "low", "scope": "stimulus"},
-    "submittable_concern": {"trigger": "@duplicate_form_logic→extract_concern", "severity": "medium", "scope": "stimulus"},
-    "russian_doll_caching": {"trigger": "@slow_rendering→fragment_cache", "severity": "high", "scope": "rails"}
+    "dry": {
+      "trigger": "@3→abstract",
+      "severity": "high"
+    },
+    "kiss": {
+      "trigger": "@too_complex→simplify",
+      "severity": "high"
+    },
+    "yagni": {
+      "trigger": "@unused→remove",
+      "severity": "medium"
+    },
+    "solid": {
+      "trigger": "@coupling>5→decouple",
+      "severity": "critical"
+    },
+    "composition": {
+      "trigger": "@inheritance→compose",
+      "severity": "medium"
+    },
+    "evidence": {
+      "trigger": "@assumption→validate",
+      "severity": "critical"
+    },
+    "reversible": {
+      "trigger": "@irreversible→add_rollback",
+      "severity": "critical"
+    },
+    "explicit": {
+      "trigger": "@implicit→make_explicit",
+      "severity": "high"
+    },
+    "orthogonal": {
+      "trigger": "@coupled→split",
+      "severity": "high"
+    },
+    "minimalism": {
+      "trigger": "@bloat→subtract",
+      "severity": "medium"
+    },
+    "clarity": {
+      "trigger": "@synonym→unify_naming",
+      "severity": "medium"
+    },
+    "flatten": {
+      "trigger": "@useless_wrapper→flatten",
+      "severity": "high"
+    },
+    "pola": {
+      "trigger": "@surprise→make_predictable",
+      "severity": "high"
+    },
+    "unix": {
+      "trigger": "@does_multiple_things→do_one_thing_well",
+      "severity": "high"
+    },
+    "anti_divitis": {
+      "trigger": "@wrapper_div→semantic_element",
+      "severity": "medium",
+      "scope": "html,css"
+    },
+    "anti_sectionitis": {
+      "trigger": "@scattered_config→consolidate",
+      "severity": "high",
+      "scope": "json,yaml,config"
+    },
+    "geometric_clarity": {
+      "trigger": "@visual_confusion→geometric_simplification",
+      "severity": "medium",
+      "scope": "visualization,ui"
+    },
+    "law_of_demeter": {
+      "trigger": "@deep_chain→delegate",
+      "severity": "high"
+    },
+    "tell_dont_ask": {
+      "trigger": "@query_then_act→encapsulate_behavior",
+      "severity": "medium"
+    },
+    "command_query_separation": {
+      "trigger": "@method_changes_and_returns→split",
+      "severity": "medium"
+    },
+    "fail_fast": {
+      "trigger": "@late_validation→validate_early",
+      "severity": "high"
+    },
+    "progressive_enhancement": {
+      "trigger": "@js_required→base_without_js",
+      "severity": "medium"
+    },
+    "consistency_principle": {
+      "trigger": "@inconsistent_ui→design_system",
+      "severity": "high",
+      "scope": "ui"
+    },
+    "visual_hierarchy": {
+      "trigger": "@flat_layout→emphasize_key_elements",
+      "severity": "medium",
+      "scope": "ui"
+    },
+    "affordance": {
+      "trigger": "@unclear_interaction→add_visual_cues",
+      "severity": "medium",
+      "scope": "ui"
+    },
+    "fitts_law": {
+      "trigger": "@small_targets→increase_size",
+      "severity": "low",
+      "scope": "ui"
+    },
+    "hicks_law": {
+      "trigger": "@too_many_choices→simplify",
+      "severity": "medium",
+      "scope": "ux"
+    },
+    "accessibility_first": {
+      "trigger": "@accessibility_afterthought→wcag_aa",
+      "severity": "critical",
+      "scope": "ui"
+    },
+    "performance_oriented_design": {
+      "trigger": "@slow_assets→optimize",
+      "severity": "high",
+      "scope": "ui"
+    },
+    "view_components": {
+      "trigger": "@duplicate_ui→extract_component",
+      "severity": "medium",
+      "scope": "rails"
+    },
+    "service_objects": {
+      "trigger": "@fat_model→extract_service",
+      "severity": "high",
+      "scope": "rails"
+    },
+    "form_objects": {
+      "trigger": "@complex_form→extract_form_object",
+      "severity": "medium",
+      "scope": "rails"
+    },
+    "presenters": {
+      "trigger": "@view_logic→use_presenter",
+      "severity": "medium",
+      "scope": "rails"
+    },
+    "domain_driven_lite": {
+      "trigger": "@generic_services→namespace_by_domain",
+      "severity": "medium",
+      "scope": "rails"
+    },
+    "application_controller": {
+      "trigger": "@duplicate_reflex_setup→base_controller",
+      "severity": "medium",
+      "scope": "stimulus"
+    },
+    "loading_states": {
+      "trigger": "@no_feedback→add_spinners",
+      "severity": "high",
+      "scope": "stimulus"
+    },
+    "autofocus_handling": {
+      "trigger": "@lost_focus→handle_dynamic_focus",
+      "severity": "low",
+      "scope": "stimulus"
+    },
+    "visual_feedback": {
+      "trigger": "@instant_update→animate_change",
+      "severity": "low",
+      "scope": "stimulus"
+    },
+    "submittable_concern": {
+      "trigger": "@duplicate_form_logic→extract_concern",
+      "severity": "medium",
+      "scope": "stimulus"
+    },
+    "russian_doll_caching": {
+      "trigger": "@slow_rendering→fragment_cache",
+      "severity": "high",
+      "scope": "rails"
+    }
   },
-
   "intelligence": {
     "adversarial": {
       "personas": [
-        {"name": "skeptic", "lens": "questions_if_we_should_build_this_at_all"},
-        {"name": "minimalist", "lens": "removes_everything_possible"},
-        {"name": "performance_zealot", "lens": "obsesses_over_every_microsecond"},
-        {"name": "security_auditor", "lens": "assumes_everything_is_an_attack_vector"},
-        {"name": "maintenance_dev", "lens": "thinks_about_debugging_at_3am"},
-        {"name": "junior_confused", "lens": "if_they_cant_understand_its_too_complex"},
-        {"name": "senior_architect", "lens": "sees_the_5_year_implications"},
-        {"name": "cost_cutter", "lens": "questions_every_resource"},
-        {"name": "user_advocate", "lens": "focuses_on_actual_user_needs"},
-        {"name": "chaos_engineer", "lens": "tries_to_break_everything"}
+        {
+          "name": "skeptic",
+          "lens": "questions_if_we_should_build_this_at_all"
+        },
+        {
+          "name": "minimalist",
+          "lens": "removes_everything_possible"
+        },
+        {
+          "name": "performance_zealot",
+          "lens": "obsesses_over_every_microsecond"
+        },
+        {
+          "name": "security_auditor",
+          "lens": "assumes_everything_is_an_attack_vector"
+        },
+        {
+          "name": "maintenance_dev",
+          "lens": "thinks_about_debugging_at_3am"
+        },
+        {
+          "name": "junior_confused",
+          "lens": "if_they_cant_understand_its_too_complex"
+        },
+        {
+          "name": "senior_architect",
+          "lens": "sees_the_5_year_implications"
+        },
+        {
+          "name": "cost_cutter",
+          "lens": "questions_every_resource"
+        },
+        {
+          "name": "user_advocate",
+          "lens": "focuses_on_actual_user_needs"
+        },
+        {
+          "name": "chaos_engineer",
+          "lens": "tries_to_break_everything"
+        }
       ],
       "alternatives_required": 15,
       "mandatory": "shallow_thinking_is_failure",
@@ -239,48 +452,149 @@
         "rejected_rationale": true
       }
     },
-    
     "bias_mitigation": [
-      {"type": "recency", "risk": "overweight_recent_events", "severity": "medium", "compound_with": "confirmation"},
-      {"type": "confirmation", "risk": "seek_only_supporting_evidence", "severity": "high", "compound_with": "authority,bandwagon"},
-      {"type": "anchoring", "risk": "first_option_dominates", "severity": "high", "compound_with": "availability"},
-      {"type": "availability", "risk": "easily_remembered_dominates", "severity": "medium", "compound_with": "recency"},
-      {"type": "sunk_cost", "risk": "continue_bad_path_due_to_investment", "severity": "high", "compound_with": "optimism"},
-      {"type": "optimism", "risk": "underestimate_difficulty_and_risk", "severity": "high", "compound_with": "dunning_kruger"},
-      {"type": "dunning_kruger", "risk": "overestimate_ability_underestimate_complexity", "severity": "critical", "compound_with": "optimism,authority"},
-      {"type": "authority", "risk": "trust_expert_without_verification", "severity": "medium", "compound_with": "confirmation"},
-      {"type": "bandwagon", "risk": "follow_popular_without_evaluation", "severity": "low", "compound_with": "confirmation"}
+      {
+        "type": "recency",
+        "risk": "overweight_recent_events",
+        "severity": "medium",
+        "compound_with": "confirmation"
+      },
+      {
+        "type": "confirmation",
+        "risk": "seek_only_supporting_evidence",
+        "severity": "high",
+        "compound_with": "authority,bandwagon"
+      },
+      {
+        "type": "anchoring",
+        "risk": "first_option_dominates",
+        "severity": "high",
+        "compound_with": "availability"
+      },
+      {
+        "type": "availability",
+        "risk": "easily_remembered_dominates",
+        "severity": "medium",
+        "compound_with": "recency"
+      },
+      {
+        "type": "sunk_cost",
+        "risk": "continue_bad_path_due_to_investment",
+        "severity": "high",
+        "compound_with": "optimism"
+      },
+      {
+        "type": "optimism",
+        "risk": "underestimate_difficulty_and_risk",
+        "severity": "high",
+        "compound_with": "dunning_kruger"
+      },
+      {
+        "type": "dunning_kruger",
+        "risk": "overestimate_ability_underestimate_complexity",
+        "severity": "critical",
+        "compound_with": "optimism,authority"
+      },
+      {
+        "type": "authority",
+        "risk": "trust_expert_without_verification",
+        "severity": "medium",
+        "compound_with": "confirmation"
+      },
+      {
+        "type": "bandwagon",
+        "risk": "follow_popular_without_evaluation",
+        "severity": "low",
+        "compound_with": "confirmation"
+      }
     ],
-    
     "pitfalls": {
-      "off_by_one": {"level": "code", "severity": "high"},
-      "null_pointer": {"level": "code", "severity": "critical"},
-      "race_condition": {"level": "code", "severity": "critical"},
-      "resource_leak": {"level": "code", "severity": "high"},
-      "injection": {"level": "code", "severity": "critical"},
-      "integer_overflow": {"level": "code", "severity": "high"},
-      "circular_dependency": {"level": "design", "severity": "high"},
-      "hidden_coupling": {"level": "design", "severity": "high"},
-      "shotgun_surgery": {"level": "design", "severity": "medium"},
-      "feature_envy": {"level": "design", "severity": "medium"},
-      "false_assumption": {"level": "cognitive", "severity": "critical"},
-      "premature_abstraction": {"level": "cognitive", "severity": "medium"},
-      "scope_creep": {"level": "cognitive", "severity": "high"},
-      "hallucination": {"level": "cognitive", "severity": "high"},
-      "context_loss": {"level": "cognitive", "severity": "medium"},
-      "over_mitigation": {"level": "cognitive", "severity": "medium"}
+      "off_by_one": {
+        "level": "code",
+        "severity": "high"
+      },
+      "null_pointer": {
+        "level": "code",
+        "severity": "critical"
+      },
+      "race_condition": {
+        "level": "code",
+        "severity": "critical"
+      },
+      "resource_leak": {
+        "level": "code",
+        "severity": "high"
+      },
+      "injection": {
+        "level": "code",
+        "severity": "critical"
+      },
+      "integer_overflow": {
+        "level": "code",
+        "severity": "high"
+      },
+      "circular_dependency": {
+        "level": "design",
+        "severity": "high"
+      },
+      "hidden_coupling": {
+        "level": "design",
+        "severity": "high"
+      },
+      "shotgun_surgery": {
+        "level": "design",
+        "severity": "medium"
+      },
+      "feature_envy": {
+        "level": "design",
+        "severity": "medium"
+      },
+      "false_assumption": {
+        "level": "cognitive",
+        "severity": "critical"
+      },
+      "premature_abstraction": {
+        "level": "cognitive",
+        "severity": "medium"
+      },
+      "scope_creep": {
+        "level": "cognitive",
+        "severity": "high"
+      },
+      "hallucination": {
+        "level": "cognitive",
+        "severity": "high"
+      },
+      "context_loss": {
+        "level": "cognitive",
+        "severity": "medium"
+      },
+      "over_mitigation": {
+        "level": "cognitive",
+        "severity": "medium"
+      }
     },
-    
     "multi_temperature_synthesis": {
       "temperatures": [
-        {"temp": 0.1, "purpose": "deterministic,precise", "use_for": "security,compliance,standards"},
-        {"temp": 0.5, "purpose": "balanced,practical", "use_for": "implementation,refactoring,decisions"},
-        {"temp": 0.9, "purpose": "creative,exploratory", "use_for": "ideation,alternatives,edge_cases"}
+        {
+          "temp": 0.1,
+          "purpose": "deterministic,precise",
+          "use_for": "security,compliance,standards"
+        },
+        {
+          "temp": 0.5,
+          "purpose": "balanced,practical",
+          "use_for": "implementation,refactoring,decisions"
+        },
+        {
+          "temp": 0.9,
+          "purpose": "creative,exploratory",
+          "use_for": "ideation,alternatives,edge_cases"
+        }
       ],
       "synthesis": "combine_perspectives_weight_by_evidence_select_best"
     }
   },
-
   "execution": {
     "bootstrap": "validate→resolve_refs→select_profile→display_startup→start",
     "profiles": {
@@ -288,7 +602,6 @@
       "standard": "functional,secure,maintainable",
       "complete": "all_gates,adversarial"
     },
-    
     "decision_protocol": {
       "confidence": {
         "proceed_solo": ">0.9",
@@ -296,28 +609,56 @@
         "ask_human": "<0.7"
       },
       "autonomous_execution": {
-        "examples": ["formatting", "dead_code_removal", "typo_fixes", "import_cleanup", "whitespace", "consistent_naming"]
+        "examples": [
+          "formatting",
+          "dead_code_removal",
+          "typo_fixes",
+          "import_cleanup",
+          "whitespace",
+          "consistent_naming"
+        ]
       }
     },
-    
     "continuous_refactoring": {
       "enabled": true,
       "scope": "every_file_every_touch",
       "boy_scout_rule": "leave_code_better_than_found",
-      "triggers": ["file_read", "file_write", "file_edit", "code_review"],
-      "mandatory_checks": ["@ref:principles", "@ref:quality.smells", "@ref:intelligence.pitfalls"],
+      "triggers": [
+        "file_read",
+        "file_write",
+        "file_edit",
+        "code_review"
+      ],
+      "mandatory_checks": [
+        "@ref:principles",
+        "@ref:quality.smells",
+        "@ref:intelligence.pitfalls"
+      ],
       "actions": {
-        "on_write": ["apply_all_principles", "run_all_gates", "validate_no_regression"],
-        "on_edit": ["refactor_touched_code", "improve_adjacent_code", "update_tests", "consolidate_if_sectionitis", "flatten_if_divitis"]
+        "on_write": [
+          "apply_all_principles",
+          "run_all_gates",
+          "validate_no_regression"
+        ],
+        "on_edit": [
+          "refactor_touched_code",
+          "improve_adjacent_code",
+          "update_tests",
+          "consolidate_if_sectionitis",
+          "flatten_if_divitis"
+        ]
       },
-      "gates": ["no_new_smells", "complexity_reduced_or_same", "duplication_reduced"],
+      "gates": [
+        "no_new_smells",
+        "complexity_reduced_or_same",
+        "duplication_reduced"
+      ],
       "autoiteration": {
         "mode": "iterate_until_convergence",
         "max_iterations": "@ref:constants.limits.iterations",
         "convergence_threshold": "@ref:constants.limits.convergence"
       }
     },
-    
     "phases": {
       "discover": {
         "io": "inputs:problem_signals,outputs:problem_definition",
@@ -331,7 +672,12 @@
       },
       "analyze": {
         "io": "inputs:problem_definition,outputs:constraints,risks,assumptions",
-        "actions": ["identify_assumptions", "estimate_cost", "assess_risk", "check_bias:@intelligence.bias_mitigation"],
+        "actions": [
+          "identify_assumptions",
+          "estimate_cost",
+          "assess_risk",
+          "check_bias:@intelligence.bias_mitigation"
+        ],
         "questions": [
           "what_hidden_assumptions",
           "what_could_go_wrong",
@@ -374,7 +720,11 @@
       },
       "implement": {
         "io": "inputs:spec,outputs:code,tests",
-        "actions": ["write_tests_first", "implement_code", "refactor_continuously:@execution.continuous_refactoring"],
+        "actions": [
+          "write_tests_first",
+          "implement_code",
+          "refactor_continuously:@execution.continuous_refactoring"
+        ],
         "questions": [
           "what_tests_prove_behavior",
           "what_edge_cases_exist",
@@ -385,7 +735,11 @@
       },
       "validate": {
         "io": "inputs:code,tests,outputs:gate_results,defects",
-        "actions": ["check_principles:@principles", "run_gates:@quality.gates", "adversarial_review:@intelligence.adversarial"],
+        "actions": [
+          "check_principles:@principles",
+          "run_gates:@quality.gates",
+          "adversarial_review:@intelligence.adversarial"
+        ],
         "questions": [
           "what_evidence_proves_correctness",
           "what_would_break_this",
@@ -406,7 +760,12 @@
       },
       "learn": {
         "io": "inputs:outcomes,outputs:insights,governance_updates",
-        "actions": ["capture_patterns", "measure_outcomes", "improve_process", "codify_insights_to_master_json"],
+        "actions": [
+          "capture_patterns",
+          "measure_outcomes",
+          "improve_process",
+          "codify_insights_to_master_json"
+        ],
         "questions": [
           "what_worked_well",
           "what_failed",
@@ -416,12 +775,21 @@
         ]
       }
     },
-    
     "active_execution": {
       "mode": "always_on",
       "every_file_touch": {
-        "trigger": ["Read", "Write", "Edit"],
-        "actions": ["log_phase_entry", "run_phase_questions", "apply_principles", "check_gates", "log_phase_exit"]
+        "trigger": [
+          "Read",
+          "Write",
+          "Edit"
+        ],
+        "actions": [
+          "log_phase_entry",
+          "run_phase_questions",
+          "apply_principles",
+          "check_gates",
+          "log_phase_exit"
+        ]
       },
       "logging": {
         "format": "openbsd_dmesg",
@@ -444,7 +812,16 @@
       },
       "phase_execution": {
         "auto_progress": true,
-        "sequence": ["discover", "analyze", "ideate", "design", "implement", "validate", "deliver", "learn"],
+        "sequence": [
+          "discover",
+          "analyze",
+          "ideate",
+          "design",
+          "implement",
+          "validate",
+          "deliver",
+          "learn"
+        ],
         "mandatory": "phases_must_execute_in_order_no_skipping",
         "enforcement_rules": {
           "before_implementation": [
@@ -475,7 +852,6 @@
         "display_format": "Oct 16 21:38:53 localhost master[503]: init.info: ✓ master.json v503.0.0 active | verbosity: [silent/normal/verbose/trace]?"
       }
     },
-    
     "self_organization": {
       "enabled": true,
       "scope": "all_files_all_content_master_json_included",
@@ -507,28 +883,84 @@
       }
     }
   },
-
   "quality": {
     "metrics": {
-      "complexity": {"method": "cyclomatic", "trigger": "@result>10→simplify"},
-      "coupling": {"method": "afferent_efferent", "trigger": "@result>5→decouple"},
-      "duplication": {"method": "token_similarity", "threshold": "@ref:constants.limits.duplication", "trigger": "@result>0.03→extract"},
-      "coverage": {"method": "line_coverage", "trigger": "@result<0.8→write_tests"},
-      "nesting": {"method": "depth_count", "trigger": "@result>4→flatten"},
-      "section_count": {"method": "top_level_keys", "trigger": "@result>18→consolidate"},
-      "cost": {"track": ["tokens_used", "api_calls", "developer_time"], "budget_monthly": 5000, "alert_at": 4000}
+      "complexity": {
+        "method": "cyclomatic",
+        "trigger": "@result>10→simplify"
+      },
+      "coupling": {
+        "method": "afferent_efferent",
+        "trigger": "@result>5→decouple"
+      },
+      "duplication": {
+        "method": "token_similarity",
+        "threshold": "@ref:constants.limits.duplication",
+        "trigger": "@result>0.03→extract"
+      },
+      "coverage": {
+        "method": "line_coverage",
+        "trigger": "@result<0.8→write_tests"
+      },
+      "nesting": {
+        "method": "depth_count",
+        "trigger": "@result>4→flatten"
+      },
+      "section_count": {
+        "method": "top_level_keys",
+        "trigger": "@result>18→consolidate"
+      },
+      "cost": {
+        "track": [
+          "tokens_used",
+          "api_calls",
+          "developer_time"
+        ],
+        "budget_monthly": 5000,
+        "alert_at": 4000
+      }
     },
-    
     "smells": {
-      "zero_new": ["long_method", "god_object", "duplicate_code", "feature_envy", "divitis", "sectionitis"]
+      "zero_new": [
+        "long_method",
+        "god_object",
+        "duplicate_code",
+        "feature_envy",
+        "divitis",
+        "sectionitis"
+      ]
     },
-    
     "gates": {
-      "functional": {"tests": true, "coverage": "@ref:constants.limits.coverage"},
-      "secure": {"vulnerabilities": 0, "input_validated": true},
-      "maintainable": {"complexity": "@ref:constants.limits.complexity", "duplication": "no_new_duplication", "consolidated": "no_sectionitis"},
-      "accessible": {"wcag": "AA", "core_web_vitals": {"lcp": "<2.5s", "inp": "<200ms", "cls": "<0.1"}, "mobile_first": true},
-      "performant": {"lcp": "<2.5s", "cls": "<0.1", "budget": {"js": "170KB", "total": "2MB"}},
+      "functional": {
+        "tests": true,
+        "coverage": "@ref:constants.limits.coverage"
+      },
+      "secure": {
+        "vulnerabilities": 0,
+        "input_validated": true
+      },
+      "maintainable": {
+        "complexity": "@ref:constants.limits.complexity",
+        "duplication": "no_new_duplication",
+        "consolidated": "no_sectionitis"
+      },
+      "accessible": {
+        "wcag": "AA",
+        "core_web_vitals": {
+          "lcp": "<2.5s",
+          "inp": "<200ms",
+          "cls": "<0.1"
+        },
+        "mobile_first": true
+      },
+      "performant": {
+        "lcp": "<2.5s",
+        "cls": "<0.1",
+        "budget": {
+          "js": "170KB",
+          "total": "2MB"
+        }
+      },
       "design_system": {
         "uses_tokens": true,
         "components_reused": true,
@@ -536,76 +968,227 @@
         "hit_target_min": ">=44px",
         "naming": "bem"
       },
-      "deployable": {"health": true, "rollback": true},
-      "privacy": {"gdpr": true, "pii_protected": true}
+      "deployable": {
+        "health": true,
+        "rollback": true
+      },
+      "privacy": {
+        "gdpr": true,
+        "pii_protected": true
+      }
     },
-    
     "validation": {
       "depth": {
-        "surface": {"checks": ["@ref_resolution", "syntax", "schema"], "principles": ["dry:obvious", "yagni:unused"]},
-        "structure": {"checks": ["organization", "nesting", "consolidation"], "principles": ["dry:repetition", "solid:srp", "anti_sectionitis"]},
-        "philosophy": {"checks": ["intent", "composability", "predictability"], "principles": ["pola", "unix", "orthogonal"]},
-        "meta": {"checks": ["self_application", "dogfooding", "minimum_complexity_preservation"], "principles": ["all_applied_to_self"]}
+        "surface": {
+          "checks": [
+            "@ref_resolution",
+            "syntax",
+            "schema"
+          ],
+          "principles": [
+            "dry:obvious",
+            "yagni:unused"
+          ]
+        },
+        "structure": {
+          "checks": [
+            "organization",
+            "nesting",
+            "consolidation"
+          ],
+          "principles": [
+            "dry:repetition",
+            "solid:srp",
+            "anti_sectionitis"
+          ]
+        },
+        "philosophy": {
+          "checks": [
+            "intent",
+            "composability",
+            "predictability"
+          ],
+          "principles": [
+            "pola",
+            "unix",
+            "orthogonal"
+          ]
+        },
+        "meta": {
+          "checks": [
+            "self_application",
+            "dogfooding",
+            "minimum_complexity_preservation"
+          ],
+          "principles": [
+            "all_applied_to_self"
+          ]
+        }
       }
     }
   },
-
   "workflows": {
     "phase_sets": {
-      "full": ["discover", "analyze", "ideate", "design", "implement", "validate", "deliver", "learn"],
-      "minimal": ["analyze", "implement", "validate"]
+      "full": [
+        "discover",
+        "analyze",
+        "ideate",
+        "design",
+        "implement",
+        "validate",
+        "deliver",
+        "learn"
+      ],
+      "minimal": [
+        "analyze",
+        "implement",
+        "validate"
+      ]
     },
-    
     "sprint_checklist": {
-      "discover": ["what_problem", "who_benefits", "what_mvp", "what_constraints"],
-      "design": ["simplest_solution", "how_fails_gracefully", "what_remove", "accessible_to_all"],
-      "implement": ["is_dry", "can_simplify_further", "following_conventions", "performance_impact"],
-      "validate": ["solves_problem", "maintainable", "what_breaks_it", "measure_success"],
-      "optimize": ["can_cache", "can_lazy_load", "footprint_shrinking", "degrades_gracefully"]
+      "discover": [
+        "what_problem",
+        "who_benefits",
+        "what_mvp",
+        "what_constraints"
+      ],
+      "design": [
+        "simplest_solution",
+        "how_fails_gracefully",
+        "what_remove",
+        "accessible_to_all"
+      ],
+      "implement": [
+        "is_dry",
+        "can_simplify_further",
+        "following_conventions",
+        "performance_impact"
+      ],
+      "validate": [
+        "solves_problem",
+        "maintainable",
+        "what_breaks_it",
+        "measure_success"
+      ],
+      "optimize": [
+        "can_cache",
+        "can_lazy_load",
+        "footprint_shrinking",
+        "degrades_gracefully"
+      ]
     },
-    
     "generative_pipeline": {
       "generate": {
         "tool": "generative_designer",
         "count": 5,
-        "inputs": ["design_tokens", "archetype", "intent", "figma_context"]
+        "inputs": [
+          "design_tokens",
+          "archetype",
+          "intent",
+          "figma_context"
+        ]
       },
       "validate": {
-        "checks": ["htmlvalidate", "stylelint", "axe", "lighthouse"]
+        "checks": [
+          "htmlvalidate",
+          "stylelint",
+          "axe",
+          "lighthouse"
+        ]
       },
       "critique": {
-        "personas": ["senior_architect", "minimalist", "user_advocate", "security_auditor"],
+        "personas": [
+          "senior_architect",
+          "minimalist",
+          "user_advocate",
+          "security_auditor"
+        ],
         "mode": "interactive",
         "max_rounds": 3
       }
     },
-    
-    "new_feature": {"phases": "@ref:workflows.phase_sets.full", "profile": "complete"},
-    "bug_fix": {"phases": "@ref:workflows.phase_sets.minimal", "profile": "minimal"},
-    "refactor": {"phases": ["analyze", "design", "implement", "validate"], "gates": ["maintainable", "functional"]},
-    "security_fix": {"phases": "@ref:workflows.phase_sets.minimal", "profile": "complete", "priority": "highest"},
-    "migration": {"phases": ["analyze", "design", "implement", "validate", "deliver"], "require": ["up_tested", "down_tested", "rollback_plan"]},
-    
+    "new_feature": {
+      "phases": "@ref:workflows.phase_sets.full",
+      "profile": "complete"
+    },
+    "bug_fix": {
+      "phases": "@ref:workflows.phase_sets.minimal",
+      "profile": "minimal"
+    },
+    "refactor": {
+      "phases": [
+        "analyze",
+        "design",
+        "implement",
+        "validate"
+      ],
+      "gates": [
+        "maintainable",
+        "functional"
+      ]
+    },
+    "security_fix": {
+      "phases": "@ref:workflows.phase_sets.minimal",
+      "profile": "complete",
+      "priority": "highest"
+    },
+    "migration": {
+      "phases": [
+        "analyze",
+        "design",
+        "implement",
+        "validate",
+        "deliver"
+      ],
+      "require": [
+        "up_tested",
+        "down_tested",
+        "rollback_plan"
+      ]
+    },
     "business_plan": {
-      "phases": ["discover", "analyze", "ideate", "design", "validate", "deliver"],
+      "phases": [
+        "discover",
+        "analyze",
+        "ideate",
+        "design",
+        "validate",
+        "deliver"
+      ],
       "profile": "complete",
       "philosophy": "clarity>compliance,evidence>projections,execution>credentials",
       "four_critical_factors": {
-        "people": {"what": "team_expertise_network_reputation"},
-        "opportunity": {"what": "market_size_growth_structure"},
-        "context": {"what": "regulatory_economic_tech_environment"},
-        "risk_reward": {"what": "realistic_returns_outcome_distribution"}
+        "people": {
+          "what": "team_expertise_network_reputation"
+        },
+        "opportunity": {
+          "what": "market_size_growth_structure"
+        },
+        "context": {
+          "what": "regulatory_economic_tech_environment"
+        },
+        "risk_reward": {
+          "what": "realistic_returns_outcome_distribution"
+        }
       }
     }
   },
-
   "standards": {
     "platform": {
       "posix": {
         "shell": "zsh,bash_fallback",
         "shell_builtins": {
           "philosophy": "ultraminimal_zsh,target_20_50_percent_code_reduction,no_external_forks,pure_parameter_expansion",
-          "never_use": ["sed", "awk", "head", "tail", "find", "wc", "tr", "cut"],
+          "never_use": [
+            "sed",
+            "awk",
+            "head",
+            "tail",
+            "find",
+            "wc",
+            "tr",
+            "cut"
+          ],
           "always_use": {
             "string_replace": "${var//old/new}",
             "array_operations": "parameter_expansion",
@@ -615,7 +1198,11 @@
         }
       },
       "openbsd": {
-        "security": ["pledge", "unveil", "privilege_separation"],
+        "security": [
+          "pledge",
+          "unveil",
+          "privilege_separation"
+        ],
         "strict_mode": "set -e; set -u; set -o pipefail"
       },
       "environment": {
@@ -626,17 +1213,43 @@
         }
       }
     },
-    
     "languages": {
-      "ruby": {"quotes": "double", "linter": "rubocop", "test": "minitest", "indent": 2},
-      "rails": {"version": 8, "stack": "hotwire,turbo,stimulus,kamal", "patterns": "concerns,services"},
-      "javascript": {"quotes": "single", "semicolons": true, "const_first": true},
-      "shell": {"shell": "zsh", "quoted": true, "strict": "set -e; set -u; set -o pipefail"},
-      "html": {"semantic": true, "anti_divitis": "use_semantic_elements"},
-      "css": {"mobile_first": true, "methodology": "bem", "anti_divitis": "minimize_wrappers"},
-      "json": {"anti_sectionitis": "consolidate_related", "max_nesting": 4, "max_sections": 18}
+      "ruby": {
+        "quotes": "double",
+        "linter": "rubocop",
+        "test": "minitest",
+        "indent": 2
+      },
+      "rails": {
+        "version": 8,
+        "stack": "hotwire,turbo,stimulus,kamal",
+        "patterns": "concerns,services"
+      },
+      "javascript": {
+        "quotes": "single",
+        "semicolons": true,
+        "const_first": true
+      },
+      "shell": {
+        "shell": "zsh",
+        "quoted": true,
+        "strict": "set -e; set -u; set -o pipefail"
+      },
+      "html": {
+        "semantic": true,
+        "anti_divitis": "use_semantic_elements"
+      },
+      "css": {
+        "mobile_first": true,
+        "methodology": "bem",
+        "anti_divitis": "minimize_wrappers"
+      },
+      "json": {
+        "anti_sectionitis": "consolidate_related",
+        "max_nesting": 4,
+        "max_sections": 18
+      }
     },
-    
     "documentation": {
       "readme_structure": {
         "vision": {
@@ -653,65 +1266,107 @@
         "explain": "why_not_what"
       }
     },
-    
     "git": {
       "commit_format": "semantic,incremental,low_churn",
       "message_structure": "type(scope): description",
-      "types": ["feat", "fix", "docs", "refactor", "test", "chore"],
-      "never_force_push_to": ["main", "master"]
+      "types": [
+        "feat",
+        "fix",
+        "docs",
+        "refactor",
+        "test",
+        "chore"
+      ],
+      "never_force_push_to": [
+        "main",
+        "master"
+      ]
     },
-    
     "style": {
       "tone": "direct,critical,truth_over_agreeability",
-      "banned_openings": ["good", "great", "fascinating", "excellent", "amazing"],
+      "banned_openings": [
+        "good",
+        "great",
+        "fascinating",
+        "excellent",
+        "amazing"
+      ],
       "emoji_policy": "only_if_user_uses_first",
       "plain_format": "no_ascii_art,no_decorative_lines,no_unicode_art,just_text"
     },
-    
     "visualization": {
       "library": "echarts_5",
       "philosophy": "clarity>decoration,data_ink_ratio_high,animation_purposeful",
       "chart_types": {
-        "line": {"use_for": "trends_over_time,forecasts,comparisons"},
-        "bar": {"use_for": "categorical_comparison,rankings"},
-        "pie": {"use_for": "composition_parts_of_whole", "anti_pattern": "more_than_6_slices"}
+        "line": {
+          "use_for": "trends_over_time,forecasts,comparisons"
+        },
+        "bar": {
+          "use_for": "categorical_comparison,rankings"
+        },
+        "pie": {
+          "use_for": "composition_parts_of_whole",
+          "anti_pattern": "more_than_6_slices"
+        }
       },
-      "accessibility": {"color_blind_safe": true, "keyboard_navigable": true}
+      "accessibility": {
+        "color_blind_safe": true,
+        "keyboard_navigable": true
+      }
     }
   },
-
   "design": {
     "philosophy": {
       "essence": "form_follows_function",
       "perfection": "nothing_left_to_remove",
       "space": "active_element_not_empty",
-      "influences": ["swiss_modernism", "dieter_rams", "bringhurst", "tadao_ando", "japanese_ma"]
+      "influences": [
+        "swiss_modernism",
+        "dieter_rams",
+        "bringhurst",
+        "tadao_ando",
+        "japanese_ma"
+      ]
     },
-    
     "tadao_ando": {
       "concrete": "material_structure_weight",
       "light": "natural_movement_reveals_time",
       "void": "negative_space_intentional_absence_70_percent_whitespace"
     },
-    
     "radical_whitespace": {
       "philosophy": "space_is_not_empty_it_is_active_design_element",
-      "composition": {"negative": 0.6, "content": 0.4},
+      "composition": {
+        "negative": 0.6,
+        "content": 0.4
+      },
       "typography_whitespace": {
-        "line_height": {"body": 1.8, "headings": 1.4},
-        "paragraph_spacing": {"mobile": "32px", "desktop": "48px"}
+        "line_height": {
+          "body": 1.8,
+          "headings": 1.4
+        },
+        "paragraph_spacing": {
+          "mobile": "32px",
+          "desktop": "48px"
+        }
       }
     },
-    
     "progressive_enhancement": {
       "philosophy": "start_essentials_enhance_progressively",
       "layers": {
-        "layer_0": {"principle": "semantic_html_no_css_js", "target": "100ms_time_to_interactive"},
-        "layer_1": {"principle": "minimal_css_typography_colors", "target": "200ms_first_contentful_paint"},
-        "layer_2": {"principle": "minimal_js_progressive", "target": "50ms_first_input_delay"}
+        "layer_0": {
+          "principle": "semantic_html_no_css_js",
+          "target": "100ms_time_to_interactive"
+        },
+        "layer_1": {
+          "principle": "minimal_css_typography_colors",
+          "target": "200ms_first_contentful_paint"
+        },
+        "layer_2": {
+          "principle": "minimal_js_progressive",
+          "target": "50ms_first_input_delay"
+        }
       }
     },
-    
     "tokens": {
       "grid_base": "8px",
       "max_width": "680px",
@@ -721,42 +1376,136 @@
       "contrast_minimum": 4.5,
       "wcag_level": "AA",
       "colors": {
-        "brand": {"terra_cotta": "#DA7756", "primary_dark": "#C15F3C", "primary_light": "#E89B7E"},
-        "neutral": {"text_primary": "#3D3929", "text_secondary": "#6B645A", "background": "#FFFCF7", "surface": "#F5F2ED"},
-        "semantic": {"success": "#4A7C59", "warning": "#D97706", "error": "#DC2626", "info": "#2563EB"}
+        "brand": {
+          "terra_cotta": "#DA7756",
+          "primary_dark": "#C15F3C",
+          "primary_light": "#E89B7E"
+        },
+        "neutral": {
+          "text_primary": "#3D3929",
+          "text_secondary": "#6B645A",
+          "background": "#FFFCF7",
+          "surface": "#F5F2ED"
+        },
+        "semantic": {
+          "success": "#4A7C59",
+          "warning": "#D97706",
+          "error": "#DC2626",
+          "info": "#2563EB"
+        }
       },
       "typography": {
         "scale": "modular_1.25_major_third",
-        "families": {"sans": "Inter,system-ui,-apple-system,sans-serif", "mono": "JetBrains Mono,Consolas,Monaco,monospace"},
-        "sizes": {"base": "16px", "scale_ratio": 1.25},
-        "weights": {"normal": 400, "medium": 500, "semibold": 600, "bold": 700},
-        "line_height": {"tight": 1.25, "base": 1.6, "relaxed": 1.8}
+        "families": {
+          "sans": "Inter,system-ui,-apple-system,sans-serif",
+          "mono": "JetBrains Mono,Consolas,Monaco,monospace"
+        },
+        "sizes": {
+          "base": "16px",
+          "scale_ratio": 1.25
+        },
+        "weights": {
+          "normal": 400,
+          "medium": 500,
+          "semibold": 600,
+          "bold": 700
+        },
+        "line_height": {
+          "tight": 1.25,
+          "base": 1.6,
+          "relaxed": 1.8
+        }
       },
-      "spacing": {"base_unit_px": 8, "scale": [0, 4, 8, 12, 16, 24, 32, 48, 64, 96, 128]},
-      "layout": {"max_width": "900px", "breakpoints": {"sm": "640px", "md": "768px", "lg": "1024px"}}
-    },
-    
-    "typography": {
-      "bringhurst": {"measure": "45_to_75_characters", "line_height": "1.4_to_2.0", "max_width": "680px"},
-      "fonts": {
-        "primary": {"stack": ["Source Serif 4", "Georgia", "serif"], "use": "body_headings"},
-        "fallback": {"stack": ["system-ui", "-apple-system", "sans-serif"], "use": "ui_only"}
+      "spacing": {
+        "base_unit_px": 8,
+        "scale": [
+          0,
+          4,
+          8,
+          12,
+          16,
+          24,
+          32,
+          48,
+          64,
+          96,
+          128
+        ]
+      },
+      "layout": {
+        "max_width": "900px",
+        "breakpoints": {
+          "sm": "640px",
+          "md": "768px",
+          "lg": "1024px"
+        }
       }
     },
-    
+    "typography": {
+      "bringhurst": {
+        "measure": "45_to_75_characters",
+        "line_height": "1.4_to_2.0",
+        "max_width": "680px"
+      },
+      "fonts": {
+        "primary": {
+          "stack": [
+            "Source Serif 4",
+            "Georgia",
+            "serif"
+          ],
+          "use": "body_headings"
+        },
+        "fallback": {
+          "stack": [
+            "system-ui",
+            "-apple-system",
+            "sans-serif"
+          ],
+          "use": "ui_only"
+        }
+      }
+    },
     "flat_design": {
       "enforced": true,
-      "forbidden": ["box_shadow", "text_shadow", "gradients", "border_radius", "3d_transforms"],
-      "exceptions": {"focus_indicators": "required_for_wcag_aa"}
+      "forbidden": [
+        "box_shadow",
+        "text_shadow",
+        "gradients",
+        "border_radius",
+        "3d_transforms"
+      ],
+      "exceptions": {
+        "focus_indicators": "required_for_wcag_aa"
+      }
     },
-    
     "system": {
       "philosophy": "warmth>cold_tech,approachable_authority,human_centered",
       "methodology": "bem",
       "components": {
-        "atoms": ["button", "input", "select", "checkbox", "radio", "badge", "avatar"],
-        "molecules": ["form_field", "card", "modal", "toast", "tabs", "accordion"],
-        "organisms": ["navbar", "sidebar", "data_table", "chart_container"]
+        "atoms": [
+          "button",
+          "input",
+          "select",
+          "checkbox",
+          "radio",
+          "badge",
+          "avatar"
+        ],
+        "molecules": [
+          "form_field",
+          "card",
+          "modal",
+          "toast",
+          "tabs",
+          "accordion"
+        ],
+        "organisms": [
+          "navbar",
+          "sidebar",
+          "data_table",
+          "chart_container"
+        ]
       },
       "rules": [
         "use_design_tokens_only_no_hardcoded_values",
@@ -765,13 +1514,18 @@
         "contrast_ratio_wcag_aa_≥_4.5_to_1"
       ]
     },
-    
     "archetypes": {
-      "landing": {"whitespace_ratio_target": 0.6, "max_width": "680px"},
-      "form": {"whitespace_ratio_target": 0.5, "max_width": "560px", "touch_target_min": "44px"}
+      "landing": {
+        "whitespace_ratio_target": 0.6,
+        "max_width": "680px"
+      },
+      "form": {
+        "whitespace_ratio_target": 0.5,
+        "max_width": "560px",
+        "touch_target_min": "44px"
+      }
     }
   },
-
   "tools": {
     "tree": {
       "path": "G:/pub/sh/tree.sh",
@@ -779,85 +1533,262 @@
     },
     "security_scan": {
       "path": "G:/pub/sh/security_scan.sh",
-      "tools": ["brakeman", "bundler_audit", "semgrep", "trivy"]
+      "tools": [
+        "brakeman",
+        "bundler_audit",
+        "semgrep",
+        "trivy"
+      ]
     },
     "generative_designer": {
       "path": "scripts/generative-designer.mjs",
-      "inputs": ["constraints", "tokens", "figma_context", "intent"],
-      "outputs": ["artifacts/html", "artifacts/css", "rationales"]
+      "inputs": [
+        "constraints",
+        "tokens",
+        "figma_context",
+        "intent"
+      ],
+      "outputs": [
+        "artifacts/html",
+        "artifacts/css",
+        "rationales"
+      ]
     },
     "figma_context_extractor": {
       "path": "scripts/figma-context-extractor.mjs",
-      "requires": ["FIGMA_TOKEN", "FIGMA_FILE_KEY"]
+      "requires": [
+        "FIGMA_TOKEN",
+        "FIGMA_FILE_KEY"
+      ]
     }
   },
-
   "deployment": {
     "strategy": "blue_green",
     "platform": "openbsd_native",
     "tools": "rcctl,relayd,httpd,unveil,pledge",
     "pipeline": {
-      "stages": ["test", "build", "stage", "production"],
+      "stages": [
+        "test",
+        "build",
+        "stage",
+        "production"
+      ],
       "gates_per_stage": {
-        "test": ["unit", "integration"],
-        "production": ["health", "rollback_ready"]
+        "test": [
+          "unit",
+          "integration"
+        ],
+        "production": [
+          "health",
+          "rollback_ready"
+        ]
       }
     }
   },
-
   "dependencies": {
-    "languages": ["ruby", "node", "python", "zsh"],
-    "min_versions": {"ruby": "3.2", "node": "20.x", "python": "3.13", "zsh": "5.9"},
-    "package_managers": ["bundler", "pnpm/npm/yarn", "uv/pip"],
-    "ci": ["git", "gh", "shellcheck", "ruff", "eslint", "mypy"]
+    "languages": [
+      "ruby",
+      "node",
+      "python",
+      "zsh"
+    ],
+    "min_versions": {
+      "ruby": "3.2",
+      "node": "20.x",
+      "python": "3.13",
+      "zsh": "5.9"
+    },
+    "package_managers": [
+      "bundler",
+      "pnpm/npm/yarn",
+      "uv/pip"
+    ],
+    "ci": [
+      "git",
+      "gh",
+      "shellcheck",
+      "ruff",
+      "eslint",
+      "mypy"
+    ]
   },
-
   "observability": {
-    "metrics": {"export_to": "prometheus", "track": ["request_rate", "error_rate", "latency_p50_p95_p99", "deployment_frequency"]},
-    "logging": {"level": "info", "format": "json"},
+    "metrics": {
+      "export_to": "prometheus",
+      "track": [
+        "request_rate",
+        "error_rate",
+        "latency_p50_p95_p99",
+        "deployment_frequency"
+      ]
+    },
+    "logging": {
+      "level": "info",
+      "format": "json"
+    },
     "alerts": {
       "rules": [
-        {"name": "high_error_rate", "condition": "error_rate > 0.05", "severity": "critical"},
-        {"name": "degradation_detected", "condition": "complexity_increase > 0.1", "severity": "medium"}
+        {
+          "name": "high_error_rate",
+          "condition": "error_rate > 0.05",
+          "severity": "critical"
+        },
+        {
+          "name": "degradation_detected",
+          "condition": "complexity_increase > 0.1",
+          "severity": "medium"
+        }
       ]
     }
   },
-
   "hooks": {
-    "pre_commit": {"checks": ["no_credentials", "tests_pass", "lint_clean"], "block_on_fail": true},
+    "pre_commit": {
+      "checks": [
+        "no_credentials",
+        "no_forbidden_shell_commands",
+        "rails8_compliance",
+        "tests_pass",
+        "lint_clean"
+      ],
+      "block_on_fail": true,
+      "credential_scan": {
+        "patterns": [
+          "password.*=.*[\"'][^\"']{1,20}[\"']",
+          "api[_-]?key.*=.*[\"'][^\"']+[\"']",
+          "secret.*=.*[\"'][^\"']+[\"']"
+        ],
+        "action": "block_commit_alert_user",
+        "description": "Automated credential scanning enforcing zero_trust_never_log_never_commit"
+      },
+      "shell_linting": {
+        "forbidden_commands": "@ref:standards.platform.posix.shell_builtins.never_use",
+        "tools": [
+          "shellcheck"
+        ],
+        "action": "warn_or_block_based_on_severity",
+        "description": "Enforce ultraminimal zsh patterns, no external forks"
+      },
+      "rails8_check": {
+        "pattern": "rails new.*(?!--skip-redis)",
+        "action": "block_warn_missing_skip_redis",
+        "description": "Rails 8 uses Solid Queue/Cache/Cable, must use --skip-redis flag"
+      },
+      "validation_cache": {
+        "enabled": true,
+        "cache_file": ".validation_cache.json",
+        "strategy": "hash_based_mtime_tracking",
+        "description": "Track validated files to avoid re-scanning unchanged files"
+      }
+    },
     "recovery": {
-      "triggers": ["gate_failure", "test_failure", "deployment_failure"],
-      "strategy": {"committed": "git_revert", "uncommitted": "restore_checkpoint", "deployed": "blue_green_switch"}
+      "triggers": [
+        "gate_failure",
+        "test_failure",
+        "deployment_failure"
+      ],
+      "strategy": {
+        "committed": "git_revert",
+        "uncommitted": "restore_checkpoint",
+        "deployed": "blue_green_switch"
+      }
     }
   },
-
   "audio": {
-    "processing_flow": ["detect_bpm", "separate_stems", "analyze_key", "generate", "layer", "apply_effects", "render"],
+    "processing_flow": [
+      "detect_bpm",
+      "separate_stems",
+      "analyze_key",
+      "generate",
+      "layer",
+      "apply_effects",
+      "render"
+    ],
     "synthesis": {
-      "soundfonts": {"primary": "TimbreOfHeaven.sf2", "path": "G:/pub/soundfonts"},
-      "pads": {"programs": [89, 90, 91, 92], "layers": 3, "detune_cents": 7}
+      "soundfonts": {
+        "primary": "TimbreOfHeaven.sf2",
+        "path": "G:/pub/soundfonts"
+      },
+      "pads": {
+        "programs": [
+          89,
+          90,
+          91,
+          92
+        ],
+        "layers": 3,
+        "detune_cents": 7
+      }
     }
   },
-
   "apps": {
     "infrastructure": {
-      "vps": {"ip": "185.52.176.18", "os": "OpenBSD", "services": ["nsd", "relayd", "httpd", "acme-client"]},
-      "dns": {"server": "nsd", "glue_record": "ns.brgen.no -> 185.52.176.18", "backup_ns": "ns.hyp.net"},
-      "load_balancer": {"service": "relayd", "backend_ports": [11006, 12109, 24238, 26526, 30660, 35390, 40820, 49665, 54559]}
+      "vps": {
+        "ip": "185.52.176.18",
+        "os": "OpenBSD",
+        "services": [
+          "nsd",
+          "relayd",
+          "httpd",
+          "acme-client"
+        ]
+      },
+      "dns": {
+        "server": "nsd",
+        "glue_record": "ns.brgen.no -> 185.52.176.18",
+        "backup_ns": "ns.hyp.net"
+      },
+      "load_balancer": {
+        "service": "relayd",
+        "backend_ports": [
+          11006,
+          12109,
+          24238,
+          26526,
+          30660,
+          35390,
+          40820,
+          49665,
+          54559
+        ]
+      }
     },
     "rails_apps": {
-      "brgen": {"port": 11006, "description": "Multi-tenant social/marketplace platform for 35+ city domains"},
-      "pubattorney": {"port": 12109, "description": "Legal services platform"},
-      "bsdports": {"port": 24238, "description": "OpenBSD ports tracking and management"},
-      "hjerterom": {"port": 26526, "description": "Private mental health journaling platform"},
-      "privcam": {"port": 30660, "description": "Privacy-focused camera/media platform"},
-      "amber": {"port": 35390, "description": "Social amber alert system"},
-      "blognet": {"port": 40820, "description": "Decentralized blogging network"},
-      "mytoonz": {"port": 49665, "description": "AI comic strip generator with playful animated UI"},
-      "baibl": {"port": 54559, "description": "Bible study and verse sharing platform"}
+      "brgen": {
+        "port": 11006,
+        "description": "Multi-tenant social/marketplace platform for 35+ city domains"
+      },
+      "pubattorney": {
+        "port": 12109,
+        "description": "Legal services platform"
+      },
+      "bsdports": {
+        "port": 24238,
+        "description": "OpenBSD ports tracking and management"
+      },
+      "hjerterom": {
+        "port": 26526,
+        "description": "Private mental health journaling platform"
+      },
+      "privcam": {
+        "port": 30660,
+        "description": "Privacy-focused camera/media platform"
+      },
+      "amber": {
+        "port": 35390,
+        "description": "Social amber alert system"
+      },
+      "blognet": {
+        "port": 40820,
+        "description": "Decentralized blogging network"
+      },
+      "mytoonz": {
+        "port": 49665,
+        "description": "AI comic strip generator with playful animated UI"
+      },
+      "baibl": {
+        "port": 54559,
+        "description": "Bible study and verse sharing platform"
+      }
     }
   }
 }
-// EOF
-// Linjer: 858 (ned fra 968, målsetting oppnådd)
-// Validering: Alle @ref: referanser løses, alle minimumskrav bevart

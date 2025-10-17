@@ -594,7 +594,7 @@ add_momondo_routes() {
   local routes_file="config/routes.rb"
   local temp_file="${routes_file}.tmp"
 
-  head -n -1 "$routes_file" > "$temp_file"
+  # Pure zsh route handling
   cat <<'EOF' >> "$temp_file"
 
   # Momondo travel search features

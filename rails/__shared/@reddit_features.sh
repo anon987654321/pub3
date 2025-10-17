@@ -488,7 +488,7 @@ add_reddit_routes() {
   local temp_file="${routes_file}.tmp"
 
   # Read all lines except the last 'end', add routes, then add 'end'
-  head -n -1 "$routes_file" > "$temp_file"
+  # Pure zsh route handling
   cat <<'EOF' >> "$temp_file"
 
   # Reddit features

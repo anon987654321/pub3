@@ -1,0 +1,93 @@
+================================================================================
+MASTER.JSON v503.0.0 VALIDATION REPORT
+Generated: 2025-10-17 17:30:06
+================================================================================
+
+INDIVIDUAL FILE VALIDATION:
+--------------------------------------------------------------------------------
+Total files: 49
+Validated: 43
+Skipped: 6
+Passed: 29
+Warnings: 7
+Violations: 7
+
+VIOLATIONS (MUST FIX):
+--------------------------------------------------------------------------------
+File: G:/pub/openbsd/deploy_all.sh
+  ✗ Hardcoded API key detected
+
+File: G:/pub/openbsd/deploy_manual.sh
+  ✗ Hardcoded API key detected
+
+File: G:/pub/openbsd/vps_sync.sh
+  ✗ Hardcoded API key detected
+
+File: G:/pub/rails/__shared/@common.sh
+  ✗ Hardcoded credential detected
+  ✗ Missing --skip-redis flag (Rails 8 uses Solid Queue/Cache/Cable)
+
+File: G:/pub/rails/brgen.sh
+  ✗ Missing --skip-redis flag (Rails 8 uses Solid Queue/Cache/Cable)
+
+File: G:/pub/rails/brgen_playlist_README.md
+  ✗ Hardcoded API key detected
+
+File: G:/pub/rails/bsdports.sh
+  ✗ Missing --skip-redis flag (Rails 8 uses Solid Queue/Cache/Cable)
+
+WARNINGS (SHOULD FIX):
+--------------------------------------------------------------------------------
+File: G:/pub/openbsd/openbsd.sh
+  ⚠️  Uses command substitution - consider pure parameter expansion
+
+File: G:/pub/rails/__install_all.sh
+  ⚠️  Uses command substitution - consider pure parameter expansion
+
+File: G:/pub/rails/amber_home_view.erb
+  ⚠️  Missing 680px max width constraint (Tadao Ando principle)
+  ⚠️  Not using system fonts (performance principle)
+
+File: G:/pub/rails/amber_homepage.html
+  ⚠️  Missing 680px max width constraint (Tadao Ando principle)
+  ⚠️  Not using system fonts (performance principle)
+
+File: G:/pub/rails/blognet.sh
+  ⚠️  Uses command substitution - consider pure parameter expansion
+
+File: G:/pub/rails/mytoonz.sh
+  ⚠️  Uses command substitution - consider pure parameter expansion
+
+File: G:/pub/rails/mytoonz_demo.html
+  ⚠️  Missing 680px max width constraint (Tadao Ando principle)
+  ⚠️  Not using system fonts (performance principle)
+
+COLLECTIVE VALIDATION:
+--------------------------------------------------------------------------------
+Directory: G:/pub/openbsd
+  Total files: 5
+  Shell files: 4
+  Ruby files: 0
+  ✓ No issues
+
+Directory: G:/pub/rails
+  Total files: 44
+  Shell files: 21
+  Ruby files: 1
+  Issues:
+    ⚠️  G:/pub/rails/__install_all.sh doesn't source @common.sh (consolidation principle)
+    ⚠️  G:/pub/rails/__shared/@airbnb_features.sh doesn't source @common.sh (consolidation principle)
+    ⚠️  G:/pub/rails/__shared/@common.sh doesn't source @common.sh (consolidation principle)
+    ⚠️  G:/pub/rails/__shared/@messenger_features.sh doesn't source @common.sh (consolidation principle)
+    ⚠️  G:/pub/rails/__shared/@momondo_features.sh doesn't source @common.sh (consolidation principle)
+    ⚠️  G:/pub/rails/__shared/@reddit_features.sh doesn't source @common.sh (consolidation principle)
+    ⚠️  G:/pub/rails/__shared/@twitter_features.sh doesn't source @common.sh (consolidation principle)
+    ⚠️  G:/pub/rails/bsdports.sh doesn't source @common.sh (consolidation principle)
+    ⚠️  G:/pub/rails/mytoonz.sh doesn't source @common.sh (consolidation principle)
+
+QUALITY GATES:
+--------------------------------------------------------------------------------
+
+================================================================================
+✗ 7 FILES HAVE VIOLATIONS
+================================================================================
