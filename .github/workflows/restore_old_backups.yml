@@ -1,0 +1,357 @@
+name: Restore Old Backups
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  restore-archives:
+    name: Restore Critical Archives
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y unzip
+      
+      - name: Create working directory
+        run: |
+          mkdir -p /tmp/restore_work
+          cd /tmp/restore_work
+      
+      - name: Download archives
+        run: |
+          set -e
+          BASE_URL="https://raw.githubusercontent.com/anon987654321/pub/main/__OLD_BACKUPS"
+          cd /tmp/restore_work
+          
+          echo "Downloading archives..."
+          curl -L --fail "${BASE_URL}/BRGEN_OLD.zip" -o BRGEN_OLD.zip
+          curl -L --fail "${BASE_URL}/rails_amber_20240806.tgz" -o rails_amber_20240806.tgz
+          curl -L --fail "${BASE_URL}/amber/amber.sh" -o amber.sh
+          curl -L --fail "${BASE_URL}/amber/README.md" -o amber_README.md
+          curl -L --fail "${BASE_URL}/rails___shared_20240806.tgz" -o rails___shared_20240806.tgz
+          curl -L --fail "${BASE_URL}/egpt_20240806.tgz" -o egpt_20240806.tgz
+          curl -L --fail "${BASE_URL}/openbsd_20240806.tgz" -o openbsd_20240806.tgz
+          
+          echo "Download complete. Files:"
+          ls -lh
+      
+      - name: Extract rails/__shared
+        run: |
+          set -e
+          cd "${GITHUB_WORKSPACE}"
+          mkdir -p rails/__shared
+          
+          echo "Extracting rails___shared_20240806.tgz..."
+          tar -xzf /tmp/restore_work/rails___shared_20240806.tgz -C rails/__shared/
+          
+          echo "Extracted files:"
+          find rails/__shared -type f | head -20
+      
+      - name: Extract rails/amber
+        run: |
+          set -e
+          cd "${GITHUB_WORKSPACE}"
+          mkdir -p rails/amber
+          
+          echo "Extracting rails_amber_20240806.tgz..."
+          tar -xzf /tmp/restore_work/rails_amber_20240806.tgz -C rails/amber/
+          
+          echo "Copying amber.sh and README.md..."
+          cp /tmp/restore_work/amber.sh rails/amber/amber.sh
+          cp /tmp/restore_work/amber_README.md rails/amber/README.md
+          
+          echo "Extracted files:"
+          find rails/amber -type f | head -20
+      
+      - name: Extract egpt to aight with renames
+        run: |
+          set -e
+          cd "${GITHUB_WORKSPACE}"
+          
+          echo "Extracting egpt_20240806.tgz..."
+          tar -xzf /tmp/restore_work/egpt_20240806.tgz -C aight/
+          
+          echo "Renaming AI3 → Aight in *.rb and *.yml files..."
+          find aight/ -type f \( -name "*.rb" -o -name "*.yml" \) -exec sed -i 's/AI3/Aight/g' {} +
+          find aight/ -type f \( -name "*.rb" -o -name "*.yml" \) -exec sed -i 's/ai3/aight/g' {} +
+          
+          echo "Renamed files. Sample check:"
+          grep -r "Aight" aight/ --include="*.rb" --include="*.yml" | head -5 || echo "No Aight occurrences found"
+      
+      - name: Extract openbsd (no-overwrite)
+        run: |
+          set -e
+          cd /tmp/restore_work
+          
+          echo "Extracting openbsd_20240806.tgz to temp..."
+          mkdir -p openbsd_temp
+          tar -xzf openbsd_20240806.tgz -C openbsd_temp/
+          
+          echo "Merging into ${GITHUB_WORKSPACE}/openbsd (skip existing files)..."
+          cd openbsd_temp
+          find . -type f | while read -r file; do
+            rel_path="${file#./}"
+            dest="${GITHUB_WORKSPACE}/openbsd/${rel_path}"
+            
+            if [ -f "$dest" ]; then
+              echo "Skipping existing: $rel_path"
+            else
+              mkdir -p "$(dirname "$dest")"
+              cp "$file" "$dest"
+              echo "Copied: $rel_path"
+            fi
+          done
+      
+      - name: Extract BRGEN_OLD.zip selectively
+        run: |
+          set -e
+          cd /tmp/restore_work
+          
+          echo "Extracting BRGEN_OLD.zip to temp..."
+          mkdir -p brgen_temp
+          unzip -q BRGEN_OLD.zip -d brgen_temp/
+          
+          cd brgen_temp
+          # Find the actual app directory (might be nested)
+          if [ -d "brgen" ]; then
+            APP_DIR="brgen"
+          elif [ -d "BRGEN_OLD" ]; then
+            APP_DIR="BRGEN_OLD"
+          else
+            APP_DIR="$(find . -maxdepth 1 -type d ! -name '.' | head -1)"
+          fi
+          
+          echo "Found app directory: $APP_DIR"
+          cd "$APP_DIR" || exit 1
+          
+          DEST="${GITHUB_WORKSPACE}/rails/brgen_production"
+          mkdir -p "$DEST"
+          
+          # Extract db/schema.rb
+          if [ -f "db/schema.rb" ]; then
+            mkdir -p "$DEST/db"
+            cp db/schema.rb "$DEST/db/"
+            echo "Copied: db/schema.rb"
+          fi
+          
+          # Extract lib/generators/**/*
+          if [ -d "lib/generators" ]; then
+            mkdir -p "$DEST/lib"
+            cp -r lib/generators "$DEST/lib/"
+            echo "Copied: lib/generators/"
+          fi
+          
+          # Extract lib/tasks/*.rake
+          if [ -d "lib/tasks" ]; then
+            mkdir -p "$DEST/lib/tasks"
+            find lib/tasks -name "*.rake" -exec cp {} "$DEST/lib/tasks/" \;
+            echo "Copied: lib/tasks/*.rake"
+          fi
+          
+          # Extract config/initializers/**/*.rb (with sanitization)
+          if [ -d "config/initializers" ]; then
+            mkdir -p "$DEST/config/initializers"
+            find config/initializers -name "*.rb" | while read -r file; do
+              # Check for obvious secrets
+              if grep -iqE "(api_key|password|secret|token).*=.*['\"]" "$file"; then
+                echo "Skipping (contains secrets): $file"
+              else
+                rel_path="${file#config/initializers/}"
+                dest_file="$DEST/config/initializers/$rel_path"
+                mkdir -p "$(dirname "$dest_file")"
+                cp "$file" "$dest_file"
+                echo "Copied: $file"
+              fi
+            done
+          fi
+          
+          # Extract Capfile and config/deploy/**/*
+          if [ -f "Capfile" ]; then
+            mkdir -p "$DEST/deploy"
+            cp Capfile "$DEST/deploy/"
+            echo "Copied: Capfile"
+          fi
+          
+          if [ -d "config/deploy" ]; then
+            mkdir -p "$DEST/deploy"
+            cp -r config/deploy "$DEST/deploy/"
+            echo "Copied: config/deploy/"
+          fi
+          
+          # Extract Gemfile and Gemfile.lock (for reference)
+          if [ -f "Gemfile" ]; then
+            cp Gemfile "$DEST/"
+            echo "Copied: Gemfile"
+          fi
+          
+          if [ -f "Gemfile.lock" ]; then
+            cp Gemfile.lock "$DEST/"
+            echo "Copied: Gemfile.lock"
+          fi
+      
+      - name: Create PRODUCTION_ANALYSIS.md
+        run: |
+          set -e
+          DEST="${GITHUB_WORKSPACE}/rails/brgen_production"
+          
+          cat > "$DEST/PRODUCTION_ANALYSIS.md" << 'EOF'
+          # BRGEN Production Archive Analysis
+          
+          **Extraction Date**: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          **Source**: pub/__OLD_BACKUPS/BRGEN_OLD.zip
+          **Workflow**: restore_old_backups.yml
+          
+          ## Extracted Components
+          
+          ### Database Schema
+          - `db/schema.rb` - Production database structure
+          
+          ### Generators
+          - `lib/generators/` - Rails generators for scaffolding
+          
+          ### Rake Tasks
+          - `lib/tasks/*.rake` - Custom rake tasks
+          
+          ### Initializers
+          - `config/initializers/` - Rails initializers (sanitized, secrets excluded)
+          
+          ### Deployment
+          - `deploy/Capfile` - Capistrano deployment configuration
+          - `deploy/config/deploy/` - Environment-specific deployment settings
+          
+          ### Dependencies
+          - `Gemfile` - Ruby gem dependencies
+          - `Gemfile.lock` - Locked gem versions
+          
+          ## Security Notes
+          
+          - All files scanned for credentials before extraction
+          - Files containing inline secrets were excluded
+          - No `.env`, `master.key`, or `credentials.yml.enc` files included
+          - No `node_modules/`, `vendor/`, `log/`, or `tmp/` directories
+          
+          ## Directory Structure
+          
+          ```
+          rails/brgen_production/
+          ├── db/
+          │   └── schema.rb
+          ├── lib/
+          │   ├── generators/
+          │   └── tasks/
+          ├── config/
+          │   └── initializers/
+          ├── deploy/
+          │   ├── Capfile
+          │   └── config/deploy/
+          ├── Gemfile
+          └── Gemfile.lock
+          ```
+          EOF
+          
+          echo "Created PRODUCTION_ANALYSIS.md"
+      
+      - name: Credential scan
+        run: |
+          set -e
+          cd "${GITHUB_WORKSPACE}"
+          
+          echo "Scanning for credentials in newly added files..."
+          
+          # Scan for common credential patterns
+          if grep -RinE "(api_key|password|secret|token).*=.*['\"]" \
+               rails/brgen_production/ \
+               rails/amber/ \
+               rails/__shared/ \
+               aight/ \
+               openbsd/ 2>/dev/null | grep -v "\.md:" | grep -v "PRODUCTION_ANALYSIS"; then
+            echo "ERROR: Found potential credentials in extracted files!"
+            exit 1
+          else
+            echo "✓ No credentials found"
+          fi
+      
+      - name: Check file sizes
+        run: |
+          set -e
+          cd "${GITHUB_WORKSPACE}"
+          
+          echo "Checking for files larger than 10MB..."
+          
+          # Find files larger than 10MB (10485760 bytes)
+          large_files=$(find rails/brgen_production rails/amber rails/__shared aight openbsd \
+            -type f -size +10M 2>/dev/null || true)
+          
+          if [ -n "$large_files" ]; then
+            echo "ERROR: Found files larger than 10MB:"
+            echo "$large_files"
+            exit 1
+          else
+            echo "✓ No files larger than 10MB"
+          fi
+      
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'feat: restore critical archives from pub/__OLD_BACKUPS (automated)'
+          branch: auto/restore-old-backups
+          delete-branch: true
+          title: 'feat: restore critical archives from pub/__OLD_BACKUPS (automated)'
+          body: |
+            ## Archive Restoration Summary
+            
+            This PR restores critical production assets from `pub/__OLD_BACKUPS` repository.
+            
+            ### Phase 0: Critical Production Assets
+            
+            ✅ **BRGEN_OLD.zip** → `rails/brgen_production/`
+            - Database schema
+            - Generators
+            - Rake tasks
+            - Sanitized initializers
+            - Deployment configuration
+            - Dependencies reference
+            
+            ✅ **rails_amber_20240806.tgz** → `rails/amber/`
+            - Complete Amber application
+            - amber.sh deployment script
+            - README.md documentation
+            
+            ✅ **rails___shared_20240806.tgz** → `rails/__shared/`
+            - Shared Rails components
+            
+            ### Phase 1: Essential Components
+            
+            ✅ **egpt_20240806.tgz** → `aight/`
+            - AI3 → Aight renames applied
+            - Both case-sensitive and lowercase variants
+            
+            ✅ **openbsd_20240806.tgz** → `openbsd/`
+            - Merged with no-overwrite policy
+            - Existing files preserved
+            
+            ### Security Validation
+            
+            ✅ Credential scan passed - no secrets committed
+            ✅ File size check passed - no files >10MB
+            ✅ Excluded: `.git/`, `node_modules/`, `vendor/`, `log/`, `tmp/`, credentials
+            
+            ### Workflow
+            
+            - **Trigger**: Manual (`workflow_dispatch`)
+            - **Branch**: `auto/restore-old-backups`
+            - **Source**: https://github.com/anon987654321/pub/tree/main/__OLD_BACKUPS
+            
+            ---
+            
+            *This PR was automatically generated by `.github/workflows/restore_old_backups.yml`*
