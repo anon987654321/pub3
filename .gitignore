@@ -69,6 +69,7 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
+package-lock.json
 
 # Python
 __pycache__/
