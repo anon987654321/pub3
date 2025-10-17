@@ -7,12 +7,11 @@ A comprehensive repository containing Rails applications, multimedia tools, Open
 
 ## 📚 Documentation
 
-- **[OVERVIEW.md](OVERVIEW.md)** - Comprehensive project overview
-- **[DEVELOPMENT.md](DEVELOPMENT.md)** - Complete development setup guide
-- **[CONTRIBUTING.md](CONTRIBUTING.md)** - Contribution guidelines
-- **[SECURITY.md](SECURITY.md)** - Security policy and reporting
-- **[CHANGELOG.md](CHANGELOG.md)** - Version history
-- **[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)** - Community standards
+**Docs consolidated: master.json is authoritative; legacy docs moved to docs/archive/ for reference.**
+
+- **[master.json](master.json)** - Primary governance, security policies, and project philosophy
+- **[docs/archive/](docs/archive/)** - Archived documentation (OVERVIEW, DEVELOPMENT, CONTRIBUTING, SECURITY, CHANGELOG,
+  CODE_OF_CONDUCT, AUTHORS)
 
 ## 🏗️ Project Structure
 
@@ -46,7 +45,7 @@ cat master.json
 # Explore structure
 sh/tree.sh .
 
-# See DEVELOPMENT.md for detailed setup
+# See docs/archive/DEVELOPMENT.md for detailed setup
 ```
 
 ## 🌐 Rails Platform - Brgen
@@ -323,14 +322,14 @@ VPS: /root/brgen/
 
 ## 📖 Getting Started
 
-1. **Read**: [DEVELOPMENT.md](DEVELOPMENT.md) for complete setup
+1. **Read**: [docs/archive/DEVELOPMENT.md](docs/archive/DEVELOPMENT.md) for complete setup
 2. **Explore**: Run `sh/tree.sh .` to see structure
 3. **Review**: Check `master.json` for project philosophy
-4. **Contribute**: See [CONTRIBUTING.md](CONTRIBUTING.md)
+4. **Contribute**: See [docs/archive/CONTRIBUTING.md](docs/archive/CONTRIBUTING.md)
 
 ## 🔒 Security
 
-This project follows zero-trust security principles. See [SECURITY.md](SECURITY.md) for:
+This project follows zero-trust security principles. See [docs/archive/SECURITY.md](docs/archive/SECURITY.md) for:
 - Vulnerability reporting
 - Security measures
 - Cryptography standards
@@ -342,12 +341,12 @@ This project follows zero-trust security principles. See [SECURITY.md](SECURITY.
 
 We welcome contributions! Please:
 
-1. Read [CONTRIBUTING.md](CONTRIBUTING.md)
+1. Read [docs/archive/CONTRIBUTING.md](docs/archive/CONTRIBUTING.md)
 2. Follow the development workflow
 3. Run tests and quality gates
 4. Submit focused pull requests
 
-See [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for community standards.
+See [docs/archive/CODE_OF_CONDUCT.md](docs/archive/CODE_OF_CONDUCT.md) for community standards.
 
 ## 📝 License
 
@@ -363,7 +362,7 @@ Proprietary - All rights reserved. See [LICENSE](LICENSE) for details.
 
 - [Issue Tracker](https://github.com/anon987654321/pub3/issues)
 - [Security Advisories](https://github.com/anon987654321/pub3/security)
-- [Changelog](CHANGELOG.md)
+- [Changelog](docs/archive/CHANGELOG.md)
 
 ---
 
