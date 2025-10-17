@@ -19,6 +19,11 @@ A comprehensive repository containing Rails applications, multimedia tools, Open
 ```
 pub3/
 ├── master.json          # Central governance and configuration
+├── aight/               # Interactive Ruby REPL with LLM integration
+│   ├── aight.rb        # Main CLI (REPL, Starship, completions)
+│   ├── lib/            # REPL and Starship integration
+│   ├── config/         # Starship configuration templates
+│   └── completions/    # Modern zsh completions
 ├── rails/               # Rails 8 application generators
 │   ├── brgen.sh        # Multi-tenant platform (40+ domains)
 │   ├── amber.sh        # Social amber alert system
@@ -46,8 +51,39 @@ cat master.json
 # Explore structure
 sh/tree.sh .
 
+# Try the aight REPL (Interactive Ruby with LLM)
+cd aight
+./aight.rb --help
+./test_aight.rb
+
 # See DEVELOPMENT.md for detailed setup
 ```
+
+## 🤖 Aight - Interactive Ruby REPL
+
+An intelligent Ruby REPL with LLM-powered code assistance and Starship prompt integration.
+
+**Features:**
+- Interactive Ruby evaluation with syntax highlighting
+- LLM-powered code explanation, refactoring, and testing
+- Starship prompt integration (model, cognitive load, security)
+- Modern zsh completions
+- OpenBSD pledge/unveil security
+- Cognitive load tracking (7±2 items)
+
+**Quick Start:**
+```bash
+cd aight
+./aight.rb                    # Start REPL
+./aight.rb --starship         # Configure Starship prompt
+./aight.rb --completions      # Install zsh completions
+```
+
+**Documentation:**
+- [aight/README.md](aight/README.md) - Complete documentation
+- [aight/EXAMPLES.md](aight/EXAMPLES.md) - 10 detailed usage examples
+
+
 
 ## 🌐 Rails Platform - Brgen
 
