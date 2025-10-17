@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:;">
+  <title>SYRE™ - Forretningsplan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600&family=Inter:wght@400;500;700&family=Black+Han+Sans&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
+  <style>
+    /* CSS Variables - Tadao Ando Design System */
+    :root {
+      --terra-cotta: #DA7756;
+      --primary-dark: #C15F3C;
+      --primary-light: #E89B7E;
+      --text-primary: #3D3929;
+      --text-secondary: #6B645A;
+      --bg: #FFFCF7;
+      --surface: #F5F2ED;
+      --font-serif: 'Source Serif 4', Georgia, serif;
+      --font-sans: 'Inter', system-ui, sans-serif;
+      --font-logo: 'Black Han Sans', sans-serif;
+      --base-unit: 8px;
+      --max-width: 680px;
+      --spacing-sm: 16px;
+      --spacing-md: 24px;
+      --spacing-lg: 48px;
+      --spacing-xl: 64px;
+    }
+
+    /* Reset & Base - Progressive Enhancement Layer 0 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 16px;
+    }
+
+    body {
+      font-family: var(--font-serif);
+      background-color: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.8;
+      padding: 0;
+      margin: 0;
+    }
+
+    /* Typography - Bringhurst principles */
+    h1, h2, h3, h4 {
+      font-family: var(--font-sans);
+      font-weight: 600;
+      line-height: 1.4;
+      color: var(--text-primary);
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-top: var(--spacing-xl);
+      margin-bottom: var(--spacing-md);
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      margin-top: var(--spacing-lg);
+      margin-bottom: var(--spacing-sm);
+    }
+
+    p {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: var(--spacing-md);
+      max-width: var(--max-width);
+    }
+
+    ul, ol {
+      margin-left: 1.5rem;
+      margin-bottom: var(--spacing-md);
+    }
+
+    li {
+      margin-bottom: calc(var(--base-unit) * 1.5);
+      color: var(--text-secondary);
+    }
+
+    /* Logo - Psychedelic Gradient Animation */
+    header {
+      text-align: center;
+      padding: var(--spacing-lg) var(--spacing-md);
+      background-color: var(--bg);
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .logo-wrapper {
+      position: relative;
+      display: inline-block;
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .logo-container {
+      font-family: var(--font-logo);
+      font-size: 70px;
+      color: transparent;
+      background: linear-gradient(45deg, #ff007f, #00c9ff, #ffcc00, #ff007f);
+      background-size: 400%;
+      background-clip: text;
+      -webkit-background-clip: text;
+      animation: gradientMove 5s infinite linear;
+    }
+
+    .trademark-symbol {
+      position: absolute;
+      top: 10px;
+      right: -11px;
+      font-size: 16px;
+      color: var(--text-primary);
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .header-text {
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      max-width: var(--max-width);
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Main Content - Radical Whitespace (60% negative space) */
+    main {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 var(--spacing-md) var(--spacing-xl);
+    }
+
+    article {
+      background-color: var(--bg);
+    }
+
+    section {
+      margin-bottom: var(--spacing-xl);
+      padding-bottom: var(--spacing-lg);
+      border-bottom: 1px solid var(--surface);
+    }
+
+    section:last-child {
+      border-bottom: none;
+    }
+
+    /* Swiper Carousel - Material Honesty */
+    .swiper-container {
+      width: 100%;
+      max-width: var(--max-width);
+      margin: var(--spacing-xl) auto;
+      height: 300px;
+    }
+
+    .swiper {
+      width: 100%;
+      height: 100%;
+    }
+
+    .swiper-slide {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: var(--surface);
+    }
+
+    .swiper-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .swiper-pagination-bullet {
+      background: var(--terra-cotta);
+    }
+
+    /* Chart Container - Minimal Design */
+    .chart-container {
+      width: 100%;
+      height: 400px;
+      margin: var(--spacing-lg) 0;
+      background-color: var(--bg);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: var(--spacing-lg) var(--spacing-md);
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      background-color: var(--bg);
+      border-top: 1px solid var(--surface);
+    }
+
+    /* Accessibility - WCAG AA */
+    a {
+      color: var(--terra-cotta);
+      text-decoration: underline;
+      min-height: 44px;
+      display: inline-block;
+    }
+
+    a:focus {
+      outline: 2px solid var(--terra-cotta);
+      outline-offset: 2px;
+    }
+
+    button {
+      min-height: 44px;
+      min-width: 44px;
+      font-family: var(--font-sans);
+      cursor: pointer;
+    }
+
+    /* Responsive - Mobile First */
+    @media (max-width: 768px) {
+      :root {
+        --spacing-lg: 32px;
+        --spacing-xl: 48px;
+      }
+
+      .logo-container {
+        font-size: 50px;
+      }
+
+      h2 {
+        font-size: 1.75rem;
+      }
+
+      h3 {
+        font-size: 1.25rem;
+      }
+
+      .swiper-container {
+        height: 200px;
+      }
+
+      .chart-container {
+        height: 300px;
+      }
+    }
+
+    /* Print Styles */
+    @media print {
+      body {
+        background: white;
+        color: black;
+      }
+
+      .swiper-pagination,
+      .swiper-button-next,
+      .swiper-button-prev {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header role="banner">
+    <div class="logo-wrapper">
+      <div class="logo-container" aria-label="SYRE™ Logo">
+        SYRE
+      </div>
+      <div class="trademark-symbol">™</div>
+    </div>
+    <div class="header-text">
+      Ultramoderne 3D-printede sko med bærekraftig teknologi<br>
+      Teknologideling med SPEIS for aerospace og gratis sko til trengende
+    </div>
+  </header>
+
+  <!-- Image Carousel - Swiper.js -->
+  <div class="swiper-container">
+    <div class="swiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <img src="ivaar_fkyeah1.png" alt="Bærekraftig, 3D-printet skomodell av SYRE™" loading="lazy">
+        </div>
+        <div class="swiper-slide">
+          <img src="ivaar_fkyeah2.png" alt="SYRE™ modell 2 - Ultramoderne design" loading="lazy">
+        </div>
+        <div class="swiper-slide">
+          <img src="ivaar_fkyeah3.png" alt="SYRE™ modell 3 - Parametrisk tilpasning" loading="lazy">
+        </div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+
+  <main role="main">
+    <article>
+      <!-- Executive Summary -->
+      <section id="sammendrag">
+        <h2>Sammendrag</h2>
+        <h3>Visjon</h3>
+        <p>Å revolusjonere fottøyindustrien ved å tilby ultramoderne, skreddersydde, bærekraftige sko som kombinerer avansert 3D-printing teknologi, nordisk estetikk og sosial inkludering. SYRE™ skal gjøre kvalitetsfottøy tilgjengelig for alle, uavhengig av økonomisk situasjon.</p>
+        
+        <h3>Misjon</h3>
+        <p>Å bruke SYRE™ 3D-printing og parametrisk design for å skape sko som oppfyller kundens behov for komfort og stil, samtidig som vi bidrar positivt til miljøet og samfunnet gjennom vårt 1:1 donasjonsproram og teknologideling med SPEIS aerospace.</p>
+      </section>
+
+      <!-- Technology Innovation -->
+      <section id="teknologi">
+        <h2>Ultramoderne SYRE™ Teknologi</h2>
+        <h3>Revolusjonerende 3D-Printing</h3>
+        <p>SYRE™ teknologien representerer det fremste innen additive manufacturing for fottøy. Vi bruker multi-material 3D-printing som muliggjør komplekse geometrier og materialkombinasjonser som ikke er mulig med tradisjonelle produksjonsmetoder.</p>
+        
+        <h3>Avanserte Funksjoner</h3>
+        <ul>
+          <li><strong>Multi-material printing</strong>: Kombinerer forskjellige materialer i ett print for optimal ytelse</li>
+          <li><strong>Parametrisk AI-drevet tilpasning</strong>: AI-basert design tilpasset individuelle fotformer og gangmønster</li>
+          <li><strong>Nano-tekstiler</strong>: Integrerte smarte materialer for temperaturregulering og fuktighetsavledning</li>
+          <li><strong>Biometrisk optimalisering</strong>: Tilpasset trykkedistribusjon basert på brukerens biomekkanikk</li>
+          <li><strong>100% bærekraftige materialer</strong>: Resirkulerbare og biologisk nedbrytbare komponenter</li>
+        </ul>
+      </section>
+
+      <!-- Social Impact -->
+      <section id="sosial-impact">
+        <h2>Sosial Impact: 1:1 Donasjonsprogram</h2>
+        <h3>Gratis Sko til Trengende</h3>
+        <p>For hvert par sko som selges, donerer SYRE™ ett gratis par til mennesker i økonomisk nød. Dette programmet sikrer at vår avanserte teknologi kommer hele samfunnet til gode, ikke bare de som har råd til det.</p>
+        
+        <h3>Programdetaljer</h3>
+        <ul>
+          <li><strong>1:1 Donasjonsprogram</strong>: Ett gratis par for hvert solgte par - ingen kompromisser</li>
+          <li><strong>Målgrupper</strong>: Hjemløse, lavinntektsfamilier, flyktninger og asylsøkere</li>
+          <li><strong>Lokal distribusjon</strong>: Partnerskap med Kirkens Bymisjon, Frelsesarmeen og lokale organisasjoner</li>
+          <li><strong>Kvalitet uten kompromiss</strong>: Samme teknologi og materialer som kommersielle produkter</li>
+          <li><strong>Måling av impact</strong>: Årlig 2,500 → 6,000 → 12,500 par donerte sko</li>
+        </ul>
+        
+        <div class="chart-container" id="donationChart" role="img" aria-label="Donasjonsprogram fordeling: 50% solgte sko, 50% donerte sko"></div>
+      </section>
+
+      <!-- SPEIS Aerospace Technology Sharing -->
+      <section id="speis-samarbeid">
+        <h2>SPEIS Aerospace Teknologideling</h2>
+        <h3>Synergieffekter mellom Fottøy og Aerospace</h3>
+        <p>SYRE™ 3D-printing teknologien deles strategisk mellom fottøy- og aerospace-divisjonene. Dette skaper unike synergieffekter hvor presisjonsproduksjon og materialvitenskap fra skoproduksjon forbedrer aerospace-komponenter, og omvendt.</p>
+        
+        <h3>Delt Teknologiplatform</h3>
+        <ul>
+          <li><strong>3D-printing infrastruktur</strong>: Samme produksjonslinjer for både sko og aerospace-komponenter</li>
+          <li><strong>Materialforskning</strong>: Felles utvikling av avanserte komposittmaterialer for Aurora-skip interiør</li>
+          <li><strong>AI parametrisk design</strong>: Algoritmer brukes for både sko og aerospace-komponenter</li>
+          <li><strong>Kostnadsoptimalisering</strong>: Felles FoU reduserer utviklingskostnader med 40%</li>
+        </ul>
+        
+        <h3>Cross-Innovation Benefits</h3>
+        <ul>
+          <li><strong>Fra sko til aerospace</strong>: Lette, fleksible materialer for komfortable skip-interiører</li>
+          <li><strong>Fra aerospace til sko</strong>: Høy-styrke materialer for premium skomodeller</li>
+          <li><strong>Produksjonseffektivitet</strong>: Rapid prototyping teknikker deles mellom divisjoner</li>
+          <li><strong>Teknologioverføring</strong>: Kontinuerlig innovasjon på tvers av domener</li>
+        </ul>
+      </section>
+
+      <!-- Market Analysis -->
+      <section id="marked">
+        <h2>Markedsanalyse</h2>
+        <h3>Markedsstørrelse og Vekst</h3>
+        <p>Det norske fottøymarkedet er verdt ca. <strong>NOK 5 milliarder årlig</strong>. Skreddersydd og premium fottøy utgjør 10% av dette markedet (NOK 500 millioner), med en forventet årlig vekst på 7%.</p>
+        
+        <h3>SYRE™ Posisjonering</h3>
+        <p>Vi målretter det høyverdige segmentet for kunder som setter pris på:</p>
+        <ul>
+          <li><strong>Personlig tilpasning</strong>: AI-drevet design for perfekt passform</li>
+          <li><strong>Bærekraft</strong>: Miljøbevisste konsumenter som vil ha 100% resirkulerbare produkter</li>
+          <li><strong>Teknologiledelse</strong>: Early adopters av 3D-printing teknologi</li>
+          <li><strong>Sosial impact</strong>: Kjøpere som vil bidra til 1:1 donasjonsprogrammet</li>
+        </ul>
+        
+        <h3>Markedsandel Mål</h3>
+        <p>SYRE™ sikter mot å oppnå <strong>12% markedsandel</strong> i det skreddersydde fottøy-segmentet innen år 3, tilsvarende NOK 60 millioner i årlig omsetning.</p>
+        
+        <div class="chart-container" id="marketChart" role="img" aria-label="Markedsvekst projeksjon: År 1: NOK 500M, År 2: NOK 535M, År 3: NOK 575M"></div>
+      </section>
+
+      <!-- Financial Projections -->
+      <section id="finans">
+        <h2>Finansielle Prognoser</h2>
+        <h3>Kapitalbehov</h3>
+        <p>Vi søker <strong>NOK 2 millioner fra Innovasjon Norge</strong> som en del av et totalt kapitalbehov på NOK 6 millioner over to år. Midlene skal brukes til:</p>
+        <ul>
+          <li><strong>3D-printing utstyr</strong>: NOK 3M - Industrielle printere for høyvolum produksjon</li>
+          <li><strong>Materialforskning</strong>: NOK 1.5M - Utvikling av bærekraftige materialer</li>
+          <li><strong>AI-utvikling</strong>: NOK 1M - Parametrisk design-software</li>
+          <li><strong>Markedsføring</strong>: NOK 0.5M - Lansering og merkevarebygging</li>
+        </ul>
+        
+        <h3>Inntektsprognoser</h3>
+        <ul>
+          <li><strong>År 1</strong>: NOK 5M omsetning - 2,500 par solgt, 2,500 par donert</li>
+          <li><strong>År 2</strong>: NOK 12M omsetning - 6,000 par solgt, 6,000 par donert</li>
+          <li><strong>År 3</strong>: NOK 25M omsetning - 12,500 par solgt, 12,500 par donert</li>
+        </ul>
+        
+        <h3>Lønnsomhet</h3>
+        <ul>
+          <li><strong>Bruttomargin</strong>: 60% (år 1) → 68% (år 2) → 72% (år 3)</li>
+          <li><strong>Netto resultat</strong>: -NOK 1M (år 1) → NOK 2M (år 2) → NOK 6M (år 3)</li>
+          <li><strong>Break-even</strong>: Kvartal 3, år 2</li>
+        </ul>
+        
+        <div class="chart-container" id="financeChart" role="img" aria-label="Økonomiske prognoser: År 1-3 omsetning, netto resultat og antall donerte sko"></div>
+      </section>
+
+      <!-- Investment & Future Outlook -->
+      <section id="investering">
+        <h2>Investering og Fremtidige Utsikter</h2>
+        <h3>Investeringsrisiko</h3>
+        <p>SYRE™ representerer en <strong>moderat risiko med høy oppside</strong>. Risikofaktorer inkluderer:</p>
+        <ul>
+          <li><strong>Teknologirisiko</strong>: Moderat - 3D-printing er bevist teknologi, men kontinuerlig innovasjon kreves</li>
+          <li><strong>Markedsrisiko</strong>: Lav - Sterk etterspørsel etter bærekraftige og personlige produkter</li>
+          <li><strong>Konkurranserisiko</strong>: Moderat - First-mover fordel i Norge, men internasjonale aktører kan komme inn</li>
+        </ul>
+        
+        <h3>Konkurransefordeler</h3>
+        <ul>
+          <li><strong>Teknologisynergier</strong>: Unik integrasjon med SPEIS aerospace for kostnadsdeling</li>
+          <li><strong>Sosial impact</strong>: 1:1 donasjonsprogram gir sterk merkevare-differensiering</li>
+          <li><strong>Diversifiserte inntekter</strong>: Både B2C (sko) og B2B (aerospace komponenter)</li>
+          <li><strong>First-mover</strong>: Første i Norge med AI-drevet parametrisk 3D-printing for fottøy</li>
+        </ul>
+        
+        <h3>Fremtidige Utsikter</h3>
+        <p>Den kombinerte verdiskapingen fra fottøy- og aerospace-divisjonene skaper en unik konkurransefordel. Vi ser et sterkt potensial for:</p>
+        <ul>
+          <li><strong>Nordisk ekspansjon</strong>: Sverige, Danmark, Finland (år 3-4)</li>
+          <li><strong>Produktlinje-utvidelse</strong>: Sportssko, arbeidssko, ortopediske sko</li>
+          <li><strong>B2B partnerskap</strong>: Bedriftskunder for uniformerte sko med perfekt passform</li>
+          <li><strong>Teknologilisens</strong>: Lisensiere SYRE™ teknologi til internasjonale produsenter</li>
+        </ul>
+      </section>
+
+      <!-- Conclusion -->
+      <section id="konklusjon">
+        <h2>Konklusjon</h2>
+        <p>SYRE™ er posisjonert for å bli en ledende aktør innen bærekraftig, ultramoderne skreddersydd fottøy i Norge. Med støtte fra Innovasjon Norge kan vi realisere våre mål om å:</p>
+        <ul>
+          <li>Etablere Norge som en global leder innen 3D-printet fottøy</li>
+          <li>Skape positive sosiale endringer gjennom vårt 1:1 donasjonsprogram</li>
+          <li>Bygge synergieffekter mellom fottøy- og aerospace-industrien</li>
+          <li>Oppnå 12% markedsandel og NOK 25M omsetning innen år 3</li>
+        </ul>
+        
+        <p>Gjennom kombinasjonen av avansert teknologi, sosial inkludering og strategisk samarbeid med SPEIS, representerer SYRE™ en unik mulighet for investorer som ønsker å støtte både kommersiell suksess og samfunnsansvar.</p>
+        
+        <p><strong>Takk for deres tid og vurdering. Vi ser frem til muligheten for samarbeid og utvikling av bærekraftige, innovative løsninger sammen.</strong></p>
+      </section>
+
+      <!-- Confidentiality -->
+      <section id="konfidensialitet">
+        <h2>Konfidensialitet</h2>
+        <p>Denne forretningsplanen inneholder konfidensiell og eiendomsbeskyttet informasjon. Informasjonen er kun ment for Innovasjon Norge og eventuelle autoriserte representanter. Uautorisert distribusjon, reproduksjon eller deling av dette dokumentet er strengt forbudt.</p>
+      </section>
+    </article>
+  </main>
+
+  <footer role="contentinfo">
+    © 2025 SYRE™ | Ultramoderne 3D-printet fottøy | Teknologideling med SPEIS
+  </footer>
+
+  <!-- Scripts - Progressive Enhancement Layer 2 -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+  <script>
+    // Swiper Carousel Initialization
+    if (typeof Swiper !== 'undefined') {
+      var swiper = new Swiper('.swiper', {
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+        autoplay: {
+          delay: 3000,
+          disableOnInteraction: false,
+        },
+        loop: true,
+        keyboard: {
+          enabled: true,
+        },
+        a11y: {
+          enabled: true,
+          prevSlideMessage: 'Forrige bilde',
+          nextSlideMessage: 'Neste bilde',
+        },
+      });
+    }
+
+    // ECharts Initialization
+    if (typeof echarts !== 'undefined') {
+      // Donation Impact Chart - Doughnut
+      var donationChartElement = document.getElementById('donationChart');
+      if (donationChartElement) {
+        var donationChart = echarts.init(donationChartElement);
+        donationChart.setOption({
+          title: {
+            text: '1:1 Donasjonsprogram',
+            left: 'center',
+            textStyle: {
+              fontFamily: 'Inter, system-ui, sans-serif',
+              fontSize: 18,
+              fontWeight: 600,
+              color: '#3D3929'
+            }
+          },
+          tooltip: {
+            trigger: 'item',
+            formatter: '{b}: {c} ({d}%)'
+          },
+          legend: {
+            orient: 'horizontal',
+            bottom: 'bottom',
+            textStyle: {
+              fontFamily: 'Inter, system-ui, sans-serif',
+              color: '#6B645A'
+            }
+          },
+          series: [{
+            name: 'Donasjonsprogram',
+            type: 'pie',
+            radius: ['40%', '70%'],
+            avoidLabelOverlap: false,
+            itemStyle: {
+              borderRadius: 0,
+              borderColor: '#FFFCF7',
+              borderWidth: 2
+            },
+            label: {
+              show: true,
+              formatter: '{b}\n{d}%',
+              fontFamily: 'Inter, system-ui, sans-serif',
+              color: '#3D3929'
+            },
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: 16,
+                fontWeight: 'bold'
+              }
+            },
+            data: [
+              {value: 50, name: 'Solgte sko', itemStyle: {color: '#DA7756'}},
+              {value: 50, name: 'Donerte sko', itemStyle: {color: '#C15F3C'}}
+            ]
+          }],
+          aria: {
+            enabled: true,
+            decal: {
+              show: true
+            }
+          }
+        });
+
+        // Responsive resize
+        window.addEventListener('resize', function() {
+          donationChart.resize();
+        });
+      }
+
+      // Market Growth Chart - Bar
+      var marketChartElement = document.getElementById('marketChart');
+      if (marketChartElement) {
+        var marketChart = echarts.init(marketChartElement);
+        marketChart.setOption({
+          title: {
+            text: 'Norsk Skreddersydd Fottøy Marked',
+            left: 'center',
+            textStyle: {
+              fontFamily: 'Inter, system-ui, sans-serif',
+              fontSize: 18,
+              fontWeight: 600,
+              color: '#3D3929'
+            }
+          },
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'shadow'
+            },
+            formatter: '{b}: NOK {c}M'
+          },
+          legend: {
+            data: ['Markedsstørrelse'],
+            bottom: 'bottom',
+            textStyle: {
+              fontFamily: 'Inter, system-ui, sans-serif',
+              color: '#6B645A'
+            }
+          },
+          xAxis: {
+            type: 'category',
+            data: ['År 1', 'År 2', 'År 3'],
+            axisLabel: {
+              fontFamily: 'Inter, system-ui, sans-serif',
+              color: '#6B645A'
+            }
+          },
+          yAxis: {
+            type: 'value',
+            name: 'NOK Millioner',
+            nameTextStyle: {
+              fontFamily: 'Inter, system-ui, sans-serif',
+              color: '#6B645A'
+            },
+            axisLabel: {
+              fontFamily: 'Inter, system-ui, sans-serif',
+              color: '#6B645A',
+              formatter: '{value}M'
+            }
+          },
+          series: [{
+            name: 'Markedsstørrelse',
+            type: 'bar',
+            data: [500, 535, 575],
+            itemStyle: {
+              color: '#DA7756'
+            },
+            label: {
+              show: true,
+              position: 'top',
+              formatter: '{c}M',
+              fontFamily: 'Inter, system-ui, sans-serif',
+              color: '#3D3929'
+            }
+          }],
+          aria: {
+            enabled: true,
+            decal: {
+              show: true
+            }
+          }
+        });
+
+        window.addEventListener('resize', function() {
+          marketChart.resize();
+        });
+      }
+
+      // Financial Projections Chart - Multi-axis
+      var financeChartElement = document.getElementById('financeChart');
+      if (financeChartElement) {
+        var financeChart = echarts.init(financeChartElement);
+        financeChart.setOption({
+          title: {
+            text: 'Økonomiske Prognoser og Samfunnsimpakt',
+            left: 'center',
+            textStyle: {
+              fontFamily: 'Inter, system-ui, sans-serif',
+              fontSize: 18,
+              fontWeight: 600,
+              color: '#3D3929'
+            }
+          },
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'cross'
+            }
+          },
+          legend: {
+            data: ['Omsetning', 'Netto Resultat', 'Donerte sko'],
+            bottom: 'bottom',
+            textStyle: {
+              fontFamily: 'Inter, system-ui, sans-serif',
+              color: '#6B645A'
+            }
+          },
+          xAxis: {
+            type: 'category',
+            data: ['År 1', 'År 2', 'År 3'],
+            axisLabel: {
+              fontFamily: 'Inter, system-ui, sans-serif',
+              color: '#6B645A'
+            }
+          },
+          yAxis: [
+            {
+              type: 'value',
+              name: 'NOK Millioner',
+              position: 'left',
+              nameTextStyle: {
+                fontFamily: 'Inter, system-ui, sans-serif',
+                color: '#6B645A'
+              },
+              axisLabel: {
+                fontFamily: 'Inter, system-ui, sans-serif',
+                color: '#6B645A',
+                formatter: '{value}M'
+              }
+            },
+            {
+              type: 'value',
+              name: 'Antall par',
+              position: 'right',
+              nameTextStyle: {
+                fontFamily: 'Inter, system-ui, sans-serif',
+                color: '#6B645A'
+              },
+              axisLabel: {
+                fontFamily: 'Inter, system-ui, sans-serif',
+                color: '#6B645A',
+                formatter: '{value}'
+              }
+            }
+          ],
+          series: [
+            {
+              name: 'Omsetning',
+              type: 'bar',
+              data: [5, 12, 25],
+              itemStyle: {
+                color: '#DA7756'
+              }
+            },
+            {
+              name: 'Netto Resultat',
+              type: 'bar',
+              data: [-1, 2, 6],
+              itemStyle: {
+                color: '#C15F3C'
+              }
+            },
+            {
+              name: 'Donerte sko',
+              type: 'line',
+              yAxisIndex: 1,
+              data: [2500, 6000, 12500],
+              itemStyle: {
+                color: '#E89B7E'
+              },
+              lineStyle: {
+                width: 3
+              }
+            }
+          ],
+          aria: {
+            enabled: true,
+            decal: {
+              show: true
+            }
+          }
+        });
+
+        window.addEventListener('resize', function() {
+          financeChart.resize();
+        });
+      }
+    }
+  </script>
+</body>
+</html>
