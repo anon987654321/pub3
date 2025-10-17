@@ -88,8 +88,18 @@ bin/rails generate model Community name:string description:text
 
 bin/rails generate model Post title:string content:text user:references community:references
 
-# Reddit features: Comments, Votes, Karma (from @reddit_features.sh)
+# Social features: Comments, Votes, Karma, Retweets, Follows, Timeline
 setup_reddit_features
+setup_twitter_features
+
+# Marketplace features: Bookings, Reviews, Host Profiles
+setup_airbnb_features
+
+# Travel search features: Flights, Hotels, Price Alerts
+setup_momondo_features
+
+# Messenger features: DMs, Typing Indicators, Read Receipts
+setup_messenger_features
 
 # Now generate City scaffold (no user dependency)
 log "Generating City scaffold"
