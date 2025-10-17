@@ -260,7 +260,7 @@ def generate_bass(root_freq, duration)
 end
 
 def render_progression(prog_name, prog_data)
-  puts "🎹 #{prog_name}"
+  puts "[*] #{prog_name}"
 
   chords = prog_data["chords"]
   freqs_list = prog_data["freqs"]
@@ -387,7 +387,7 @@ def generate_techno(tempo, bars)
   sox("-m _kicks.wav _hats.wav drums/techno_intricate_#{tempo}bpm.wav gain -n -3")
 
   cleanup(*kick_seq, *hat_seq, "_kicks.wav", "_hats.wav", kick, hat)
-  puts "✓ drums/techno_intricate_#{tempo}bpm.wav"
+  puts "[+] drums/techno_intricate_#{tempo}bpm.wav"
 
 end
 
@@ -477,7 +477,7 @@ def generate_hiphop(tempo, swing_pct, bars)
   sox("-m _kicks.wav _snares.wav _hats.wav drums/hiphop_intricate_#{tempo}bpm_#{swing_pct}swing.wav gain -n -3")
 
   cleanup(*kick_seq, *snare_seq, *hat_seq, "_kicks.wav", "_snares.wav", "_hats.wav", kick, snare, hat)
-  puts "✓ drums/hiphop_intricate_#{tempo}bpm_#{swing_pct}swing.wav"
+  puts "[+] drums/hiphop_intricate_#{tempo}bpm_#{swing_pct}swing.wav"
 
 end
 
@@ -493,7 +493,7 @@ def create_final_mix(name, drum_file)
 
   return unless File.exist?(chord_file) && File.exist?(bass_file)
   unless File.exist?(drum_file)
-    puts "⚠ No drums for #{name} (#{drum_file} missing)"
+    puts "[!] No drums for #{name} (#{drum_file} missing)"
 
     return
 
@@ -516,7 +516,7 @@ def create_final_mix(name, drum_file)
   sox("-m #{chord_file} #{bass_file} _drums_loop.wav final/#{name}_#{drum_name}.wav gain -n -2 compand 0.02,0.20 -60,-60,-30,-24,-20,-18,-4,-12,-2,-9,0,-6 -6 0 0.05 overdrive 5 reverb 18 10 equalizer 80 0.5q +2 equalizer 3000 1.2q +1.5 equalizer 10000 0.6q +1.5 gain -n -0.5")
 
   cleanup("_drums_loop.wav")
-  puts "✓ final/#{name}_#{drum_name}.wav"
+  puts "[+] final/#{name}_#{drum_name}.wav"
 
 end
 
@@ -528,7 +528,7 @@ end
 if __FILE__ == $0
   puts "\n" + ("=" * 70)
 
-  puts "🎹 J DILLA AUDIO GENERATOR - MASTER ORCHESTRATOR"
+  puts "J DILLA AUDIO GENERATOR - MASTER ORCHESTRATOR"
 
   puts "=" * 70
 
@@ -540,7 +540,7 @@ if __FILE__ == $0
   # CHORDS & BASS
   unless mode == "--drums-only"
 
-    puts "\n📊 RENDERING CHORD PROGRESSIONS + BASS"
+    puts "\nRENDERING CHORD PROGRESSIONS + BASS"
 
     puts "-" * 70
 
@@ -567,7 +567,7 @@ if __FILE__ == $0
   # DRUMS
   unless mode == "--chords-only"
 
-    puts "\n📊 RENDERING INTRICATE DRUMS"
+    puts "\nRENDERING INTRICATE DRUMS"
 
     puts "-" * 70
 
@@ -589,7 +589,7 @@ if __FILE__ == $0
   # FINAL MIXES - ROTATE THROUGH ALL DRUMS FOR MAXIMUM VARIETY
   unless mode == "--chords-only" || mode == "--drums-only"
 
-    puts "\n📊 CREATING FINAL MIXES (ROTATING DRUMS FOR VARIETY)"
+    puts "\nCREATING FINAL MIXES (ROTATING DRUMS FOR VARIETY)"
 
     puts "-" * 70
 
@@ -597,7 +597,7 @@ if __FILE__ == $0
     drum_files = Dir.glob("drums/*.wav").sort
 
     if drum_files.empty?
-      puts "⚠ No drum files found - skipping final mixes"
+      puts "[!] No drum files found - skipping final mixes"
 
     else
 
@@ -622,11 +622,11 @@ if __FILE__ == $0
   end
 
   puts "\n" + ("=" * 70)
-  puts "✅ RENDER COMPLETE"
+  puts "RENDER COMPLETE"
 
   puts "=" * 70
 
-  puts "\n📁 Outputs:"
+  puts "\nOutputs:"
 
   puts "  chords/ - Chord progressions (#{Dir.glob('chords/*.wav').size} files)"
 
