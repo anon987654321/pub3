@@ -3,7 +3,7 @@
 
 require 'pathname'
 
-SCRIPT_DIR = Pathname.new(__FILE__).dirname
+SCRIPT_DIR = Pathname.new(__FILE__).realpath.dirname
 MASTER_RB = SCRIPT_DIR / 'master.rb'
 
 def usage
