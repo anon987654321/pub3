@@ -12,9 +12,23 @@ if [[ -f "${SCRIPT_DIR}/@stimulus_controllers.sh" ]]; then
 fi
 
 if [[ -f "${SCRIPT_DIR}/@reddit_features.sh" ]]; then
-
     source "${SCRIPT_DIR}/@reddit_features.sh"
+fi
 
+if [[ -f "${SCRIPT_DIR}/@twitter_features.sh" ]]; then
+    source "${SCRIPT_DIR}/@twitter_features.sh"
+fi
+
+if [[ -f "${SCRIPT_DIR}/@airbnb_features.sh" ]]; then
+    source "${SCRIPT_DIR}/@airbnb_features.sh"
+fi
+
+if [[ -f "${SCRIPT_DIR}/@momondo_features.sh" ]]; then
+    source "${SCRIPT_DIR}/@momondo_features.sh"
+fi
+
+if [[ -f "${SCRIPT_DIR}/@messenger_features.sh" ]]; then
+    source "${SCRIPT_DIR}/@messenger_features.sh"
 fi
 
 # Logging function
