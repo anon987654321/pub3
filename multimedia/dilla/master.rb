@@ -5,7 +5,7 @@
 
 # Purpose: Single entry point for complete beat generation with MAXIMUM VARIETY
 
-# Workflow: master.json → chords + bass → drums → VARIED final mixes
+# Workflow: dilla_data.json → chords + bass → drums → VARIED final mixes
 
 # Usage:
 #   ruby master.rb               # Full render (all progressions, drums, varied mixes)
