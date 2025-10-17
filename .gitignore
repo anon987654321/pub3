@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Operating System
 .DS_Store
 .DS_Store?
@@ -188,6 +187,4 @@ render_*.mp3
 # Local development overrides
 .local/
 local.config.json
-=======
-multimedia/dilla/drones/*.wav
->>>>>>> cf53912 (TMP)
+*.wav
