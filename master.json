@@ -8,7 +8,7 @@
   "meta": {
     "version": "503.1.0",
     "owner": "anon987654321",
-    "updated": "2025-10-17T15:48:41Z",
+    "updated": "2025-10-17T17:01:32Z",
     "platform": "openbsd_7.7_rails_8.1_falcon",
     "purpose": "billion_scale_zero_trust_ethical_growth_complete_design_system",
     "philosophy": [
@@ -92,9 +92,6 @@
       "tools",
       "deployment",
       "dependencies",
-      "observability",
-      "hooks",
-      "audio",
       "apps"
     ],
     "validate_before_output": true,
@@ -385,6 +382,62 @@
       "trigger": "@slow_rendering→fragment_cache",
       "severity": "high",
       "scope": "rails"
+    },
+    "principles_summary": {
+      "code": [
+        "dry",
+        "kiss",
+        "yagni",
+        "solid",
+        "composition",
+        "explicit",
+        "orthogonal",
+        "minimalism",
+        "clarity",
+        "flatten",
+        "pola",
+        "unix",
+        "law_of_demeter",
+        "tell_dont_ask",
+        "command_query_separation",
+        "fail_fast"
+      ],
+      "design": [
+        "geometric_clarity",
+        "progressive_enhancement"
+      ],
+      "ui": [
+        "anti_divitis",
+        "consistency_principle",
+        "visual_hierarchy",
+        "affordance",
+        "fitts_law",
+        "hicks_law",
+        "accessibility_first",
+        "performance_oriented_design"
+      ],
+      "rails": [
+        "view_components",
+        "service_objects",
+        "form_objects",
+        "presenters",
+        "domain_driven_lite",
+        "russian_doll_caching"
+      ],
+      "stimulus": [
+        "application_controller",
+        "loading_states",
+        "autofocus_handling",
+        "visual_feedback",
+        "submittable_concern"
+      ],
+      "config": [
+        "anti_sectionitis"
+      ],
+      "core": [
+        "evidence",
+        "reversible"
+      ]
     }
   },
   "intelligence": {
@@ -871,15 +924,93 @@
         "tools",
         "deployment",
         "dependencies",
-        "observability",
-        "hooks",
-        "audio",
         "apps"
       ],
       "continuous_reorganization": {
         "trigger": "every_modification",
         "action": "validate_structure_matches_ideal",
         "on_mismatch": "suggest_reorganization_or_auto_apply"
+      }
+    },
+    "observability": {
+      "metrics": {
+        "export_to": "prometheus",
+        "track": [
+          "request_rate",
+          "error_rate",
+          "latency_p50_p95_p99",
+          "deployment_frequency"
+        ]
+      },
+      "logging": {
+        "level": "info",
+        "format": "json"
+      },
+      "alerts": {
+        "rules": [
+          {
+            "name": "high_error_rate",
+            "condition": "error_rate > 0.05",
+            "severity": "critical"
+          },
+          {
+            "name": "degradation_detected",
+            "condition": "complexity_increase > 0.1",
+            "severity": "medium"
+          }
+        ]
+      }
+    },
+    "hooks": {
+      "pre_commit": {
+        "checks": [
+          "no_credentials",
+          "no_forbidden_shell_commands",
+          "rails8_compliance",
+          "tests_pass",
+          "lint_clean"
+        ],
+        "block_on_fail": true,
+        "credential_scan": {
+          "patterns": [
+            "password.*=.*[\"'][^\"']{1,20}[\"']",
+            "api[_-]?key.*=.*[\"'][^\"']+[\"']",
+            "secret.*=.*[\"'][^\"']+[\"']"
+          ],
+          "action": "block_commit_alert_user",
+          "description": "Automated credential scanning enforcing zero_trust_never_log_never_commit"
+        },
+        "shell_linting": {
+          "forbidden_commands": "@ref:standards.platform.posix.shell_builtins.never_use",
+          "tools": [
+            "shellcheck"
+          ],
+          "action": "warn_or_block_based_on_severity",
+          "description": "Enforce ultraminimal zsh patterns, no external forks"
+        },
+        "rails8_check": {
+          "pattern": "rails new.*(?!--skip-redis)",
+          "action": "block_warn_missing_skip_redis",
+          "description": "Rails 8 uses Solid Queue/Cache/Cable, must use --skip-redis flag"
+        },
+        "validation_cache": {
+          "enabled": true,
+          "cache_file": ".validation_cache.json",
+          "strategy": "hash_based_mtime_tracking",
+          "description": "Track validated files to avoid re-scanning unchanged files"
+        }
+      },
+      "recovery": {
+        "triggers": [
+          "gate_failure",
+          "test_failure",
+          "deployment_failure"
+        ],
+        "strategy": {
+          "committed": "git_revert",
+          "uncommitted": "restore_checkpoint",
+          "deployed": "blue_green_switch"
+        }
       }
     }
   },
@@ -917,7 +1048,21 @@
           "developer_time"
         ],
         "budget_monthly": 5000,
-        "alert_at": 4000
+        "alert_at": 4000,
+        "alert_actions": [
+          {
+            "name": "notify_owner",
+            "type": "email",
+            "threshold": 4000,
+            "description": "Notify owner when approaching budget limit"
+          },
+          {
+            "name": "reduce_api_calls",
+            "type": "auto_throttle",
+            "threshold": 4500,
+            "description": "Throttle non-critical API calls to preserve budget"
+          }
+        ]
       }
     },
     "smells": {
@@ -1537,7 +1682,9 @@
         "brakeman",
         "bundler_audit",
         "semgrep",
-        "trivy"
+        "trivy",
+        "owasp_top_10",
+        "semgrep_owasp_rules"
       ]
     },
     "generative_designer": {
@@ -1611,114 +1758,6 @@
       "eslint",
       "mypy"
     ]
-  },
-  "observability": {
-    "metrics": {
-      "export_to": "prometheus",
-      "track": [
-        "request_rate",
-        "error_rate",
-        "latency_p50_p95_p99",
-        "deployment_frequency"
-      ]
-    },
-    "logging": {
-      "level": "info",
-      "format": "json"
-    },
-    "alerts": {
-      "rules": [
-        {
-          "name": "high_error_rate",
-          "condition": "error_rate > 0.05",
-          "severity": "critical"
-        },
-        {
-          "name": "degradation_detected",
-          "condition": "complexity_increase > 0.1",
-          "severity": "medium"
-        }
-      ]
-    }
-  },
-  "hooks": {
-    "pre_commit": {
-      "checks": [
-        "no_credentials",
-        "no_forbidden_shell_commands",
-        "rails8_compliance",
-        "tests_pass",
-        "lint_clean"
-      ],
-      "block_on_fail": true,
-      "credential_scan": {
-        "patterns": [
-          "password.*=.*[\"'][^\"']{1,20}[\"']",
-          "api[_-]?key.*=.*[\"'][^\"']+[\"']",
-          "secret.*=.*[\"'][^\"']+[\"']"
-        ],
-        "action": "block_commit_alert_user",
-        "description": "Automated credential scanning enforcing zero_trust_never_log_never_commit"
-      },
-      "shell_linting": {
-        "forbidden_commands": "@ref:standards.platform.posix.shell_builtins.never_use",
-        "tools": [
-          "shellcheck"
-        ],
-        "action": "warn_or_block_based_on_severity",
-        "description": "Enforce ultraminimal zsh patterns, no external forks"
-      },
-      "rails8_check": {
-        "pattern": "rails new.*(?!--skip-redis)",
-        "action": "block_warn_missing_skip_redis",
-        "description": "Rails 8 uses Solid Queue/Cache/Cable, must use --skip-redis flag"
-      },
-      "validation_cache": {
-        "enabled": true,
-        "cache_file": ".validation_cache.json",
-        "strategy": "hash_based_mtime_tracking",
-        "description": "Track validated files to avoid re-scanning unchanged files"
-      }
-    },
-    "recovery": {
-      "triggers": [
-        "gate_failure",
-        "test_failure",
-        "deployment_failure"
-      ],
-      "strategy": {
-        "committed": "git_revert",
-        "uncommitted": "restore_checkpoint",
-        "deployed": "blue_green_switch"
-      }
-    }
-  },
-  "audio": {
-    "processing_flow": [
-      "detect_bpm",
-      "separate_stems",
-      "analyze_key",
-      "generate",
-      "layer",
-      "apply_effects",
-      "render"
-    ],
-    "synthesis": {
-      "soundfonts": {
-        "primary": "TimbreOfHeaven.sf2",
-        "path": "G:/pub/soundfonts"
-      },
-      "pads": {
-        "programs": [
-          89,
-          90,
-          91,
-          92
-        ],
-        "layers": 3,
-        "detune_cents": 7
-      }
-    }
   },
   "apps": {
     "infrastructure": {
