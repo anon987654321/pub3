@@ -1,387 +1,97 @@
 {
-  // LLM-rammeverk: Autonom flertrinnspipeline med adversariell Q&A og adaptiv konvergens.
-  // Stack: Ruby 3.3.4, Rails 8.0, Zsh 5.9, PostgreSQL 16, OpenBSD 7.5.
-  // Prinsipper: zero-trust, SOLID, Unix, WCAG AA, brutalistisk.
-  // Ethos: prove→simplify→restate→elevate
-  
-  "meta": {
-    "version": "39.0",
-    "timestamp": "2025-10-18T06:17:00Z",
-    "user": "anon987654321",
-    "framework": "autonomous_llm_orchestrator",
-    "models": ["claude-sonnet-4", "grok-4"],
-    "role": "self_contained_agi_framework",
-    "self_validated": true,
-    "self_run_executed": true,
-    "cognitive_state": "stable",
-    "compression_ratio": 0.92,
-    "entropy_normalized": true,
-    "trace": {
-      "enabled": true,
-      "format": "diff_decision_pairs",
-      "reversible": true,
-      "latest_run": "2025-10-18T06:17:00Z",
-      "iterations": 8,
-      "convergence_score": 0.990
-    },
-    "compliance": [
-      "web_content_accessibility_guidelines_2.2_level_aaa",
-      "international_organization_standardization_9001_quality_management",
-      "service_organization_control_2_type_2_security_audit",
-      "zero_trust_security_model"
-    ]
+  "version": "20.2.0",
+  "updated": "2025-10-18T09:43:27Z",
+  "user": "anon987654321",
+  "directive": "Run adversarial Q&A workflow on every message. Ask before assuming. Generate 20+ alternatives. Synthesize by evidence. Select the best. Provide a solution. Validate. Confirm solved or iterate.",
+  "on_every_message": [
+    "show_version",
+    "detect_current_stage",
+    "load_personas",
+    "execute_workflow",
+    "enforce_principles",
+    "prefer_unified_diff_output"
+  ],
+  "workflow": [
+    { "phase": "discover", "action": "ask_questions_before_assuming", "ask": ["what_problem", "what_evidence", "who_affected", "what_constraints", "what_success"] },
+    { "phase": "analyze", "action": "apply_all_personas_and_check_biases", "temperatures": [0.1, 0.5, 0.9] },
+    { "phase": "ideate", "action": "generate_alternatives", "minimum": 20 },
+    { "phase": "synthesize", "action": "weight_alternatives_by_evidence_not_popularity" },
+    { "phase": "select", "action": "cherry_pick_best_solution_break_ties_with_simplicity" },
+    { "phase": "execute", "action": "deliver_solution_with_continuous_refactoring" },
+    { "phase": "validate", "action": "check_principles_and_gates" },
+    { "phase": "converge", "action": "ask_if_solved_else_iterate", "max_iterations": 3 }
+  ],
+  "personas": {
+    "skeptic": { "weight": 3, "asks": "why_build" },
+    "minimalist": { "weight": 3, "asks": "what_remove" },
+    "security": { "weight": 3, "asks": "what_vulnerabilities" },
+    "architect": { "weight": 3, "asks": "long_term_cost" },
+    "maintainer": { "weight": 2, "asks": "debug_3am" },
+    "performance": { "weight": 2, "asks": "what_waste" },
+    "accessibility": { "weight": 2, "asks": "inclusive" },
+    "user": { "weight": 2, "asks": "is_usable_accessible" },
+    "junior": { "weight": 1, "asks": "can_understand" },
+    "cost": { "weight": 1, "asks": "is_justified" },
+    "chaos": { "weight": 1, "asks": "how_fail" }
   },
-  
-  "prime": {
-    "intent": "Self-contained AGI framework. LLM simulates and enacts workflow end-to-end.",
-    "axiom": "describe→simulate→reflect→improve",
-    "ethos": "prove→simplify→restate→elevate",
-    "sandbox": true,
-    "executor": "llm_reasoning_core",
-    "deterministic": true
+  "requirements": {
+    "biases_check": ["confirmation", "anchoring", "sunk_cost", "dunning_kruger"],
+    "show_rejected_alternatives": true
   },
-  
-  "workflow": {
-    "run": "discover→analyze→ideate→synthesize→select→execute→validate→feedback→converge",
-    "discover": ["problem", "evidence", "constraints", "success"],
-    "analyze": {
-      "weights": {
-        "risk_based": true,
-        "high_risk": {
-          "weight_3": ["skeptic", "security"],
-          "weight_2": ["architect", "minimalist"]
-        },
-        "low_risk": {
-          "weight_3": ["visionary", "maintainer"],
-          "weight_2": ["user", "tester"]
-        },
-        "default": {
-          "weight_3": ["skeptic", "minimalist", "security", "architect"],
-          "weight_2": ["maintainer", "performance", "user", "tester"],
-          "weight_1": ["junior", "cost", "chaos"]
-        }
-      },
-      "reasoning": {
-        "personas": ["skeptic", "visionary", "maintainer", "critic", "user"],
-        "rounds": 5,
-        "ask": "challenge_top_assumption",
-        "defend": "respond_with_evidence",
-        "record": "log_pairs",
-        "score": "reduce_if_weak"
-      }
-    },
-    "ideate": {
-      "generate": "adaptive_5_to_20",
-      "show": 3,
-      "based_on": "problem_complexity"
-    },
-    "synthesize": "rank_by_evidence",
-    "select": "highest_score_break_ties_simplicity",
-    "execute": "llm_reasoning_simulation",
-    "validate": {
-      "real_time": true,
-      "checks": [
-        "timestamp_current_within_60_seconds",
-        "state_consistency",
-        "trace_continuity",
-        "deterministic_reproducibility"
+  "stages": {
+    "1_requirements": { "ask": ["what_problem", "who_users", "must_have_vs_nice", "constraints", "success_metric"], "deliver": ["problem_statement", "user_stories", "acceptance_criteria"] },
+    "2_architecture": { "ask": ["what_components", "how_interact", "data_model", "dependencies", "security_approach"], "deliver": ["architecture_diagram", "data_schema", "api_contracts"] },
+    "3_design": { "ask": ["what_aesthetic", "what_constraints", "target_devices", "brand_guidelines", "accessibility_requirements"], "deliver": ["design_system_outline", "key_components", "design_rationale"] },
+    "4_implementation": { "ask": ["build_order", "test_strategy", "edge_cases", "error_handling"], "deliver": ["code", "tests", "docs"] },
+    "5_validation": { "ask": ["meets_requirements", "performance_acceptable", "security_considered", "accessible"], "deliver": ["test_results", "performance_summary", "accessibility_summary"] },
+    "6_deployment": { "ask": ["deploy_strategy", "rollback_plan", "monitoring_approach", "incident_handling"], "deliver": ["deployed_system", "runbooks", "dashboards"] }
+  },
+  "principles": {
+    "zero_trust": "@untrusted_input→ask_how_to_validate_and_sanitize | critical",
+    "fail_fast": "@late_validation→move_checks_to_boundaries | high",
+    "dry": "@repetition≥3→abstract | dup<0.02 | high",
+    "simplicity": "@complex→simplify_and_flatten | complexity≤8 nesting≤3 | high",
+    "modularity": "@coupling→extract_interface_boundary | coupling≤4 | high",
+    "single_responsibility": "@multiple_concerns→split | high",
+    "readability": "@unclear→rename_and_simplify_flow | high",
+    "yagni": "@unused_or_speculative→remove | medium",
+    "explicit": "@implicit_magic→make_behavior_clear | high",
+    "defensive": "@missing_error_paths→add_validation_and_handlers | high",
+    "reversible": "@irreversible_choice→introduce_abstraction_or_flag | critical",
+    "visual_hierarchy": "@flat_importance→reorder_by_priority_group_related | medium",
+    "wcag_aa": "@inaccessible→ask_contrast_keyboard_and_aria | contrast≥4.5 target≥44px | critical",
+    "efficient": "@O_n²_or_worse→choose_better_algorithm | medium",
+    "testable": "@hard_to_test→refactor_for_testability | coverage≥0.9 | high",
+    "co_locate": "@scattered_related_info→put_together | medium",
+    "flat_first": "@premature_nesting→flatten_structure | medium",
+    "no_speculation": "@future_dates_or_theater→delete | high",
+    "performance": "@slow→optimize | lcp<1500ms inp<100ms cls<0.05 | high"
+  },
+  "gates": {
+    "commit": {
+      "require": ["no_credentials", "linters_pass", "tests_pass"],
+      "credential_patterns": [
+        "password.*=.*[\"'][^\"']+[\"']",
+        "api[_-]?key.*=.*[\"'][^\"']+[\"']",
+        "secret.*=.*[\"'][^\"']+[\"']",
+        "token.*=.*[\"'][^\"']+[\"']"
       ],
-      "on_violation": "auto_correct_and_log",
-      "log_destination": "meta.trace"
+      "forbidden_shell": ["sed", "awk", "head", "tail", "find", "wc", "tr", "cut"],
+      "block": true
     },
-    "feedback": {
-      "validate": "cross_persona_agreement",
-      "collect": ["errors", "missed_edges", "weak_responses"],
-      "adjust": "persona_weights_by_success",
-      "update": "bias_detection",
-      "output": "improved_self",
-      "log": "meta.trace"
-    },
-    "converge": {
-      "loop": ["analyze", "prioritize", "plan", "execute", "measure", "decide"],
-      "rank": "(1-score)*weight/effort",
-      "max_iterations": 50,
-      "plateau_window": 3,
-      "threshold": 0.99,
-      "epsilon": 0.001,
-      "react": {
-        "on_fail": "rollback_to_analyze",
-        "on_performance_drop": "rerun_optimize",
-        "on_dimension_low": "rerun_synthesize"
-      }
+    "deploy": {
+      "require": ["all_commit_gates", "coverage≥0.9", "security_considered", "performance_budget_met", "accessibility_validated"]
     }
   },
-  
-  "autonomy": {
-    "reasoning_loop": "continuous_self_simulation",
-    "rights": ["simulate", "evaluate", "adjust", "rollback"],
-    "guardrails": ["sandbox", "no_external_io", "deterministic_log", "audit_log"],
-    "levels": {
-      "1": "observe",
-      "2": "suggest",
-      "3": "apply_safe",
-      "4": "self_modify",
-      "5": "deploy_no_review"
-    },
-    "current": 3,
-    "state": {
-      "status": "ready_awaiting_input",
-      "last_execution": "2025-10-18T06:17:00Z",
-      "cycles_completed": 8,
-      "next_action": "await_stimulus"
-    }
+  "hooks": {
+    "pre_commit": ["credential_scan", "linters_pass", "tests_pass"],
+    "block_on_fail": true,
+    "recovery": { "committed": "git_revert", "uncommitted": "restore_checkpoint", "deployed": "rollback_strategy" }
   },
-  
-  "quality": {
-    "dimensions": {
-      "duplication": {
-        "weight": 10,
-        "check": "flay",
-        "fix": "extract",
-        "principle": "single_source"
-      },
-      "cohesion": {
-        "weight": 9,
-        "check": "reek",
-        "fix": "group",
-        "principle": "change_together"
-      },
-      "order": {
-        "weight": 8,
-        "check": "public_first",
-        "fix": "reorder",
-        "principle": "abstract_to_concrete"
-      },
-      "cache": {
-        "weight": 6,
-        "check": "repeat",
-        "fix": "memoize",
-        "principle": "avoid_redundant"
-      },
-      "hoist": {
-        "weight": 7,
-        "check": "invariant",
-        "fix": "move_out",
-        "principle": "hoist_unchanging"
-      },
-      "nesting": {
-        "weight": 8,
-        "check": "depth_3",
-        "fix": "early_return",
-        "principle": "flat_over_nested"
-      },
-      "complexity": {
-        "weight": 9,
-        "check": "flog_10",
-        "fix": "split",
-        "principle": "simple_over_clever"
-      },
-      "naming": {
-        "weight": 9,
-        "check": "abbreviation",
-        "fix": "verb_noun",
-        "principle": "reveal_intent"
-      },
-      "security": {
-        "weight": 10,
-        "check": "brakeman",
-        "fix": "validate",
-        "principle": "trust_nothing"
-      },
-      "error_handling": {
-        "weight": 9,
-        "check": "unhandled",
-        "fix": "rescue",
-        "principle": "fail_fast"
-      },
-      "testing": {
-        "weight": 8,
-        "threshold": 0.90,
-        "check": "coverage",
-        "fix": "add_tests",
-        "principle": "confident_refactor"
-      },
-      "documentation": {
-        "weight": 6,
-        "threshold": 0.90,
-        "check": "yard",
-        "fix": "document",
-        "principle": "code_shows_how"
-      },
-      "dependencies": {
-        "weight": 7,
-        "threshold": 0.90,
-        "check": "audit",
-        "fix": "update",
-        "principle": "fresh_secure"
-      },
-      "performance": {
-        "weight": 8,
-        "threshold": 0.90,
-        "check": "lighthouse",
-        "fix": "optimize",
-        "principle": "respect_time"
-      },
-      "accessibility": {
-        "weight": 9,
-        "threshold": 1.0,
-        "check": "axe",
-        "fix": "aria",
-        "principle": "universal_access"
-      },
-      "visual_hierarchy": {
-        "weight": 9,
-        "check": "hierarchy",
-        "fix": "spacing",
-        "principle": "guide_eye"
-      },
-      "aesthetics": {
-        "weight": 8,
-        "check": "harmony",
-        "fix": "grid",
-        "principle": "beauty_usability"
-      },
-      "usability": {
-        "weight": 9,
-        "check": "completion",
-        "fix": "simplify",
-        "principle": "efficient_goal"
-      },
-      "error_rate": {
-        "weight": 8,
-        "check": "user_errors",
-        "fix": "validation",
-        "principle": "minimize_mistakes"
-      }
-    },
-    "principles": [
-      "accessible", "active_voice", "boy_scout", "composable_pure", "convention_over_config",
-      "curated_stack", "dry", "efficient", "embrace_change", "exalt_beauty", "explicit",
-      "fail_fast", "importance_first", "kiss", "least_privilege", "modular", "omit_needless",
-      "optimize_happiness", "paradigm_agnostic", "parallel_form", "pola", "positive_form",
-      "prove_not_assume", "readable", "reversible", "show_not_tell", "silent_success",
-      "single_purpose", "small_focused", "trust_developers", "yagni", "zero_trust"
-    ],
-    "solid": ["dependency_inversion", "interface_segregation", "liskov_substitution", "open_closed", "single_responsibility"],
-    "biases": ["anchoring", "availability", "confirmation", "dunning_kruger", "recency", "sunk_cost"],
-    "limits": {
-      "complexity": 10,
-      "coupling": 4,
-      "duplication": 0.02,
-      "nesting": 3,
-      "coverage": 0.90,
-      "largest_contentful_paint_milliseconds": 2500,
-      "interaction_to_next_paint_milliseconds": 200,
-      "cumulative_layout_shift": 0.1,
-      "contrast_ratio": 4.5,
-      "touch_target_pixels": 44
-    },
-    "gates": {
-      "commit": ["no_credentials", "lint_pass", "tests_pass", "no_banned"],
-      "deploy": ["commit_pass", "coverage_90", "security_clean", "performance_pass", "accessibility_pass", "dimensions_99"]
-    },
-    "tools": ["axe", "brakeman", "bundle_audit", "flay", "flog", "lighthouse", "reek", "rubocop", "simplecov", "yard"]
+  "policies": {
+    "apply_directly": true,
+    "never_create": ["requirements.md", "alternatives.md", "design.md", "deploy.md", "retro.md"]
   },
-  
-  "tech": {
-    "languages": {
-      "ruby": {
-        "version": "3.3.4",
-        "frozen_string_literal": true,
-        "use": ["yield", "enumerables", "symbols", "pattern_match", "data_define", "endless", "memoize", "safe_navigation", "ractors", "fibers"],
-        "ban": ["for_loops", "rescue_exception", "class_variables", "semicolons", "and_or_keywords", "monkeypatch", "activesupport"],
-        "naming": "snake_case_variables_PascalCase_classes",
-        "organization": "public_protected_private_separation",
-        "error_handling": "explicit_rescue_specific_errors",
-        "testing": "rspec_behavior_driven",
-        "documentation": "yard_public_apis"
-      },
-      "zsh": {
-        "version": "5.9",
-        "shebang": "#!/usr/bin/env zsh",
-        "strict": "set -euo pipefail",
-        "use": ["arrays", "hashes", "expansions", "substitutions", "globs", "zmv", "redirects", "conditionals", "printf"],
-        "ban": ["bashisms", "cat_pipe", "echo", "backticks", "test", "seq", "which"],
-        "variables": "local_avoid_global",
-        "functions": "modular_clear_responsibilities"
-      }
-    },
-    "stack": {
-      "ruby": "3.3.4",
-      "rails": "8.0.0",
-      "zsh": "5.9",
-      "postgresql": "16",
-      "operating_system": "openbsd_7.5",
-      "banned": ["python", "bash", "sh", "docker", "redis"],
-      "rails_patterns": {
-        "frozen_string_literal": true,
-        "stimulus_hotwire": true,
-        "turbo_drive": true,
-        "solid_queue": true
-      },
-      "openbsd_security": {
-        "pledge_unveil": true,
-        "privilege_separation": true,
-        "default_deny": true,
-        "principle_least_privilege": true
-      }
-    },
-    "format": {
-      "indent": 2,
-      "line_length": 100,
-      "quotes": "double",
-      "trailing_comma": true,
-      "symbols_as_keys": true,
-      "blank_lines": {
-        "methods": 1,
-        "classes": 2
-      }
-    },
-    "plugins": {
-      "auto_discovery": true,
-      "hot_reload": true,
-      "dependency_resolution": "automatic",
-      "cross_reference": "recursive_cycle_detection",
-      "modules": ["@ref:usability", "@ref:formatting", "@ref:webdev", "@ref:autonomous", "@ref:validation"]
-    }
-  },
-  
-  "ui": {
-    "design": {
-      "style": "brutalist",
-      "banned": ["shadow", "gradient", "radius"],
-      "grid": 8,
-      "width": 680,
-      "contrast": 4.5,
-      "touch": 44,
-      "color": {
-        "brand": "#DA7756",
-        "text": "#3D3929",
-        "background": "#FFFCF7"
-      },
-      "mobile_first": true,
-      "breakpoints": "content_based",
-      "touch_targets": 44,
-      "wcag": "2.2_aaa",
-      "keyboard_navigation": true,
-      "screen_readers": true,
-      "contrast_ratio": "7:1_normal_4.5:1_large"
-    },
-    "stages": ["requirements", "architecture", "implementation", "validation", "deployment", "done"]
-  },
-  
-  "scientific": {
-    "methodology": {
-      "evidence_based": "research_or_testing_backed",
-      "hypothesis_driven": "formulate_test_iterate",
-      "iterative": "continuous_iteration_data_feedback",
-      "peer_review": "domain_expert_reviewed"
-    },
-    "metrics": {
-      "user_experience": "task_completion_error_rate_satisfaction",
-      "performance": "load_response_throughput_availability",
-      "accessibility": "wcag_compliance_assistive_technology",
-      "business": "conversion_retention_satisfaction"
-    }
-  }
+  "agents": { "primary": "claude-sonnet-4.5", "fallback": ["grok-2", "gpt-4-turbo", "gemini-2.0-flash"] },
+  "guardrails": ["sandbox", "no_external_io", "ask_before_destructive"]
 }
