@@ -369,7 +369,7 @@ module Aight
     def call_openai(prompt)
       uri = URI("https://api.openai.com/v1/chat/completions")
       request = Net::HTTP::Post.new(uri)
-      request["Authorization"] = "Bearer #{ENV.fetch('OPENAI_API_KEY', nil)}"
+      request["Authorization"] = "Bearer #{ENV.fetch('OPENAI_API_KEY')}"
       request["Content-Type"] = "application/json"
       request.body = {
         model: @options[:model],
