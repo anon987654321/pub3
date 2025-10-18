@@ -558,19 +558,20 @@ def skin_protect(image, intensity = 1.0)
 
   skin_mask = hue_mask & sat_mask
 
-  protection = skin_mask.cast('float') / 255.0 * (1.0 - intensity * 0.7)
+  protection = skin_mask.cast('float') / 255.0 * (intensity * -0.7 + 1.0)
   protection_rgb = protection.bandjoin([protection, protection])
 
-  safe_cast(image * (1.0 - protection_rgb) + image * protection_rgb)
+  inv_protection = protection_rgb.linear([-1.0], [1.0])
+  safe_cast(image * inv_protection + image * protection_rgb)
 end
 
 def film_curve(image, stock = :kodak_portra, intensity = 1.0)
   data = STOCKS[stock] || STOCKS[:kodak_portra]
 
   shadows = image.linear([1.0], [data[:lift] * 255 * intensity])
-  gamma_corrected = shadows.pow(data[:gamma])
+  gamma_corrected = shadows ** data[:gamma]
 
-  highlights = gamma_corrected.pow(data[:rolloff])
+  highlights = gamma_corrected ** data[:rolloff]
 
   safe_cast(image * (1 - intensity) + highlights * intensity)
 end
@@ -591,7 +592,8 @@ end
 def shadow_lift(image, lift = 0.15, preserve_blacks = true)
   gray = image.colourspace('grey16').cast('float') / 255.0
 
-  shadow_mask = preserve_blacks ? ((1.0 - gray).pow(2.0)) * 0.8 : (1.0 - gray) * lift
+  inv_gray = gray.linear([-1.0], [1.0])
+  shadow_mask = preserve_blacks ? (inv_gray ** 2.0) * 0.8 : inv_gray * lift
 
   lift_rgb = shadow_mask.bandjoin([shadow_mask, shadow_mask])
 
@@ -643,13 +645,14 @@ def base_tint(image, color = [252, 248, 240], intensity = 0.08)
 
   image_norm = image.cast('float') / 255.0
 
-  result = image_norm.ifthenelse(
-    overlay_norm < 0.5,
+  inv_image = image_norm.linear([-1.0], [1.0])
+  inv_overlay = overlay_norm.linear([-1.0], [1.0])
 
-    2 * image_norm * overlay_norm,
+  mask = overlay_norm < 0.5
+  result = mask.ifthenelse(
+    image_norm * overlay_norm * 2.0,
 
-    1 - 2 * (1 - image_norm) * (1 - overlay_norm)
-
+    (inv_image * inv_overlay * 2.0).linear([-1.0], [1.0])
   )
 
   blended = result * 255
@@ -714,15 +717,22 @@ def highlight_roll_filmic(image, knee_start = 190, knee_softness = 25, intensity
   # Soft knee compression above threshold for film-like highlight behavior
   mask = image > knee_start
   
-  over_exposed = (image - knee_start).max(0)
+  # Clamp to 0 minimum
+  over_exposed_raw = image - knee_start
+  over_exposed = (over_exposed_raw < 0).ifthenelse(0, over_exposed_raw)
   
   # Soft knee: blend between linear and compressed based on distance from threshold
-  blend_factor = (over_exposed / knee_softness).min(1.0)
-  compressed = knee_start + (over_exposed * 0.4).pow(0.8)
+  blend_factor_raw = over_exposed / knee_softness.to_f
+  blend_factor = (blend_factor_raw > 1.0).ifthenelse(1.0, blend_factor_raw)
+  inv_blend = blend_factor.linear([-1.0], [1.0])
   
-  rolled_off = over_exposed * (1.0 - blend_factor) + compressed * blend_factor + knee_start
+  compressed = (over_exposed * 0.4) ** 0.8
+  compressed_with_knee = compressed.linear([1.0], [knee_start])
   
-  result = mask.ifthenelse(rolled_off, image)
+  rolled_off = over_exposed * inv_blend + compressed * blend_factor
+  rolled_off_with_knee = rolled_off.linear([1.0], [knee_start])
+  
+  result = mask.ifthenelse(rolled_off_with_knee, image)
   
   safe_cast(image * (1 - intensity) + result * intensity)
 end
@@ -757,7 +767,8 @@ def grain_film(image, iso = 400, stock = :kodak_portra, intensity = 0.4, size: 1
   
   # Luma-dependent strength
   brightness = image.colourspace('grey16').cast('float') / 255.0
-  strength = (1.2 - brightness).max(0.3) * intensity
+  strength_raw = brightness.linear([-1.0], [1.2])
+  strength = ((strength_raw < 0.3).ifthenelse(0.3, strength_raw)) * intensity
   strength_rgb = strength.bandjoin([strength, strength])
   
   grain_rgb = rgb_bands(channel_noise * strength_rgb)
@@ -812,10 +823,6 @@ def vignetting_analog(image, amount = 0.25, power = 2.8)
   center_x = width / 2.0
   center_y = height / 2.0
   
-  # Create radial distance field using xyz
-  # We'll create a simple radial gradient
-  max_dist = Math.sqrt(center_x**2 + center_y**2)
-  
   # Create XYZ image for radial distance calculation
   xyz = Vips::Image.xyz(width, height)
   x_band = xyz.extract_band(0)
@@ -825,10 +832,12 @@ def vignetting_analog(image, amount = 0.25, power = 2.8)
   dx = (x_band - center_x) / center_x
   dy = (y_band - center_y) / center_y
   
-  dist = (dx * dx + dy * dy).pow(0.5)
+  dist = (dx * dx + dy * dy) ** 0.5
   
   # Apply power for falloff curve control
-  falloff = (1.0 - (dist * amount).min(1.0)).pow(power)
+  dist_scaled = dist * amount
+  dist_clamped = (dist_scaled > 1.0).ifthenelse(1.0, dist_scaled)
+  falloff = dist_clamped.linear([-1.0], [1.0]) ** power
   
   # Apply to all channels
   falloff_rgb = falloff.bandjoin([falloff, falloff])
