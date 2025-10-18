@@ -118,7 +118,6 @@ _aight_repl() {
     '.model'
     '.exit'
   )
-  
   _multi_parts . repl_cmds
 }
 
