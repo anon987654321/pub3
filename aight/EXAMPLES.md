@@ -5,7 +5,7 @@ This document provides practical examples of using the aight REPL with LLM integ
 ## Quick Start
 
 ```bash
-cd /home/runner/work/pub3/pub3/aight
+cd aight
 ./aight.rb
 ```
 
