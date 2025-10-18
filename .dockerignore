@@ -6,8 +6,8 @@
 # Documentation
 *.md
 !README.md
+docs/archive/
 LICENSE
-CHANGELOG.md
 
 # Dependencies
 node_modules
