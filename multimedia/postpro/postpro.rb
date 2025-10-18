@@ -596,8 +596,9 @@ def shadow_lift(image, lift = 0.15, preserve_blacks = true)
   shadow_mask = preserve_blacks ? (inv_gray ** 2.0) * 0.8 : inv_gray * lift
 
   lift_rgb = shadow_mask.bandjoin([shadow_mask, shadow_mask])
+  lift_amount = lift_rgb * 255 * lift
 
-  safe_cast(image.linear([1.0, 1.0, 1.0], [lift_rgb * 255 * lift]))
+  safe_cast(image + lift_amount)
 
 end
 
@@ -613,10 +614,14 @@ end
 def color_separate(image, intensity = 0.6)
   r, g, b = image.bandsplit
 
-  r_clean = (r - (g * 0.08 * intensity) - (b * 0.05 * intensity)).max(0)
-  g_clean = (g - (r * 0.06 * intensity) - (b * 0.10 * intensity)).max(0)
+  r_clean_raw = r - (g * 0.08 * intensity) - (b * 0.05 * intensity)
+  r_clean = (r_clean_raw < 0).ifthenelse(0, r_clean_raw)
+  
+  g_clean_raw = g - (r * 0.06 * intensity) - (b * 0.10 * intensity)
+  g_clean = (g_clean_raw < 0).ifthenelse(0, g_clean_raw)
 
-  b_clean = (b - (r * 0.04 * intensity) - (g * 0.07 * intensity)).max(0)
+  b_clean_raw = b - (r * 0.04 * intensity) - (g * 0.07 * intensity)
+  b_clean = (b_clean_raw < 0).ifthenelse(0, b_clean_raw)
 
   separated = Vips::Image.bandjoin([r_clean, g_clean, b_clean])
   safe_cast(image * (1 - intensity) + separated * intensity)
