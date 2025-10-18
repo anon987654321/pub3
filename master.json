@@ -1,387 +1,314 @@
+// master.json - AI agent configuration for software development workflow
+//
+// WHY THIS WORKS:
+// This configuration defines a complete iterative development process that mirrors
+// how experienced engineers actually solve problems. It combines multiple proven
+// methodologies: SOLID principles for code structure, scientific method for
+// hypothesis testing, adversarial review for finding blind spots, and Strunk & White
+// for clear communication.
+//
+// The workflow is deliberately cyclical: thought→action→execute→observe→reflect→decide.
+// Each cycle improves quality until convergence (target - actual < epsilon).
+//
+// MULTI-LLM COMPATIBILITY:
+// Different LLMs have different strengths. Temperature diversity (0.1, 0.5, 0.9)
+// means we can use conservative models for security, balanced models for implementation,
+// and creative models for ideation. This config provides enough context that any
+// compliant LLM can understand what's expected at each phase.
+//
+// KEY CONCEPTS:
+// - "convergence": Solution quality improving with each iteration until delta < epsilon
+// - "adversarial review": Examining solution from hostile/skeptical perspectives
+// - "principles": Codified rules that trigger when specific patterns detected
+// - "gate": Quality checkpoint that must pass before proceeding
+
 {
-  // LLM-rammeverk: Autonom flertrinnspipeline med adversariell Q&A og adaptiv konvergens.
-  // Stack: Ruby 3.3.4, Rails 8.0, Zsh 5.9, PostgreSQL 16, OpenBSD 7.5.
-  // Prinsipper: zero-trust, SOLID, Unix, WCAG AA, brutalistisk.
-  // Ethos: prove→simplify→restate→elevate
-  
-  "meta": {
-    "version": "39.0",
-    "timestamp": "2025-10-18T06:17:00Z",
-    "user": "anon987654321",
-    "framework": "autonomous_llm_orchestrator",
-    "models": ["claude-sonnet-4", "grok-4"],
-    "role": "self_contained_agi_framework",
-    "self_validated": true,
-    "self_run_executed": true,
-    "cognitive_state": "stable",
-    "compression_ratio": 0.92,
-    "entropy_normalized": true,
-    "trace": {
-      "enabled": true,
-      "format": "diff_decision_pairs",
-      "reversible": true,
-      "latest_run": "2025-10-18T06:17:00Z",
-      "iterations": 8,
-      "convergence_score": 0.990
+  "version": "521.1.0",
+  "updated": "2025-10-18T12:42:52Z",
+  "owner": "anon987654321",
+  "repo": "anon987654321/pub3",
+
+  // ENFORCE PER-MESSAGE PIPELINE (codified from chat)
+  "on_every_message": [
+    "show_version",
+    "detect_current_stage",
+    "load_personas",
+    "execute_workflow",
+    "enforce_principles",
+    "prefer_unified_diff_output"
+  ],
+
+  // WORKFLOW PHASES run in sequence and loop until convergence
+  "phases": [
+    "thought", // Understand the problem deeply
+    "brainstorm", // Generate diverse alternatives without judgment
+    "ideate", // Explore creative solutions beyond obvious
+    "cherrypick", // Select best ideas from brainstorm and ideation
+    "action", // Plan implementation
+    "execute", // Implement the plan
+    "observe", // Measure results and detect violations
+    "reflect", // Extract learnings and patterns
+    "decide" // Check convergence or iterate
+  ],
+
+  // MULTI-LLM TEMPERATURE ROLES (explicit)
+  "temperatures": [0.1, 0.5, 0.9],
+  "temperature_roles": {
+    "0.1": "security, compliance, standards",
+    "0.5": "implementation, refactoring",
+    "0.9": "ideation, alternatives, edge_cases"
+  },
+
+  "questions_thought": [
+    "What problem exists?",
+    "What evidence proves it?",
+    "What if we do nothing?"
+  ],
+  "questions_brainstorm": [
+    "What are 5-20 different approaches?",
+    "What's the opposite of obvious?", // Inversion thinking
+    "What would a beginner try?",
+    "What would cost 10x more?",
+    "What would cost 10x less?"
+  ],
+  "questions_ideate": [
+    "What if we removed a constraint?", // Question assumptions
+    "What patterns from other domains apply?", // Cross-pollination
+    "What's the most elegant solution?",
+    "What's the most pragmatic solution?"
+  ],
+  "questions_cherrypick": [
+    "Which solutions are simplest?",
+    "Which solutions are most reversible?", // Minimize risk
+    "Which solutions compose well?",
+    "What does evidence suggest?" // Data over intuition
+  ],
+  "questions_action": [
+    "What are the concrete steps?",
+    "What decisions are irreversible?",
+    "What can we test first?" // Minimize blast radius
+  ],
+  "questions_observe": [
+    "What principles violated?",
+    "What breaks under stress?",
+    "What's the actual quality?"
+  ],
+  "questions_reflect": [
+    "What worked?",
+    "What failed?",
+    "What patterns emerged?",
+    "What should we codify?" // Update principles if needed
+  ],
+
+  // RUNTIME SETUP AND SAFEGUARDS (from chat governance)
+  "execute_on_load": {
+    "step_00a_establish_session": {
+      "datetime_anchor": "user provides YYYY-MM-DD HH:MM:SS UTC at session start",
+      "user_login": "user provides login identifier",
+      "use_throughout": "ISO 8601 timestamps derived from anchor (YYYY-MM-DDTHH:MM:SSZ)"
     },
-    "compliance": [
-      "web_content_accessibility_guidelines_2.2_level_aaa",
-      "international_organization_standardization_9001_quality_management",
-      "service_organization_control_2_type_2_security_audit",
-      "zero_trust_security_model"
+    "step_00b_integrity_check": {
+      "calculate": "SHA256 of master.json excluding integrity_hash",
+      "compare_to": "integrity_hash field",
+      "action_if_mismatch": "alert user; file modified outside governance approval",
+      "skip_if": "first load or approved version upgrade"
+    },
+    "step_00c_ask_verbosity": {
+      "question": "full_verbosity or token_saving?",
+      "default_if_no_response": "token_saving",
+      "note": "token_saving hides output, does not skip work"
+    },
+    "step_00d_output_mode": {
+      "prefer_unified_diff_output": true,
+      "diff_only_when_modifying": true,
+      "no_prose_explanations": true
+    }
+  },
+
+  // CONVERGENCE CRITERIA
+  // Epsilon prevents infinite loops from asymptotic improvement
+  "target": 0.99, // Quality score 0.0 to 1.0
+  "epsilon": 0.001, // Minimum improvement delta
+  "max_iterations": 50, // Circuit breaker
+
+  // RUBY LANGUAGE - Modern idioms from 3.3+
+  "ruby_version": "3.3+",
+  "ruby_frozen_string_literal": true, // Immutability by default
+  "ruby_prefer": [
+    "yield over block parameter",
+    "symbols over strings for hash keys",
+    "enumerables over loops",
+    "pattern matching over conditionals",
+    "Data.define for value objects"
+  ],
+  "ruby_forbidden": [
+    "for loops",
+    "rescue Exception without specific type", // Catches SystemExit
+    "class variables @@", // Shared mutable state
+    "and/or keywords use && || instead" // Precedence gotchas
+  ],
+
+  // ZSH SHELL - Modern scripting with safety
+  "zsh_version": "5.9+",
+  "zsh_strict": "set -euo pipefail", // Exit on error, undefined vars, pipe failures
+  "zsh_prefer": [
+    "[[ ]] conditionals",
+    "typeset for variables",
+    "printf over echo",
+    "${variable//search/replace}",
+    "glob qualifiers"
+  ],
+  "zsh_forbidden": [
+    "bashisms",
+    "backticks use $() instead",
+    "which", // Not portable use type
+    "test use [[ ]] instead",
+    "seq", // Use {1..10}
+    "echo for output",
+    "sed", "awk", "head", "tail",
+    "find", "wc", "tr", "cut"
+  ],
+
+  "stack": [
+    "rails 8.1+",
+    "postgresql 16+",
+    "openbsd 7.7+"
+  ],
+  "forbidden_stack": ["python", "bash", "sh", "docker", "redis"],
+
+  // QUALITY DIMENSIONS weighted 1-10 for convergence calculation
+  "weight_security": 10, // Vulnerabilities never acceptable
+  "weight_duplication": 10, // DRY violations compound
+  "weight_complexity": 9,
+  "weight_coverage": 8,
+
+  // QUALITY GATES block progression until all pass
+  "gate_commit": ["valid syntax", "passing tests", "no secrets"],
+  "gate_deploy": ["commit gates pass", "coverage >= 0.90", "vulnerabilities = 0"],
+  // Expand commit gates for repeatability (from chat)
+  "gates": {
+    "commit": [
+      "valid syntax",
+      "passing tests",
+      "rubocop zero offenses",
+      "no secrets (password|api[_-]?key|secret|token|bearer)",
+      "no forbidden technologies: python bash sh docker redis",
+      "no forbidden shell builtins: sed awk head tail find wc tr cut"
+    ],
+    "deploy": [
+      "all commit gates pass",
+      "coverage >= 0.90 (line and branch)",
+      "security scan: zero high/critical"
     ]
   },
-  
-  "prime": {
-    "intent": "Self-contained AGI framework. LLM simulates and enacts workflow end-to-end.",
-    "axiom": "describe→simulate→reflect→improve",
-    "ethos": "prove→simplify→restate→elevate",
-    "sandbox": true,
-    "executor": "llm_reasoning_core",
-    "deterministic": true
+
+  // ADVERSARIAL REVIEW perspectives to find blind spots
+  "adversarial": [
+    "skeptic", // Questions if we should build
+    "minimalist", // Removes everything non-essential
+    "security_auditor", // Assumes malicious users
+    "maintenance_engineer", // Thinks about debugging at 3am
+    "junior_developer", // Finds complexity and confusion
+    "senior_architect", // Sees long-term implications
+    "user_advocate", // Focuses on actual user needs
+    "chaos_engineer" // Tries to break everything
+  ],
+
+  "alternatives": [5, 20], // [min, max] scales with problem complexity
+  "ideation_policy": {
+    "min_default": 7,
+    "min_high_risk": 20,
+    "diversity_check": "pairwise_semantic_similarity < 0.7",
+    "regenerate_until": "all_pairs < 0.7"
   },
-  
-  "workflow": {
-    "run": "discover→analyze→ideate→synthesize→select→execute→validate→feedback→converge",
-    "discover": ["problem", "evidence", "constraints", "success"],
-    "analyze": {
-      "weights": {
-        "risk_based": true,
-        "high_risk": {
-          "weight_3": ["skeptic", "security"],
-          "weight_2": ["architect", "minimalist"]
-        },
-        "low_risk": {
-          "weight_3": ["visionary", "maintainer"],
-          "weight_2": ["user", "tester"]
-        },
-        "default": {
-          "weight_3": ["skeptic", "minimalist", "security", "architect"],
-          "weight_2": ["maintainer", "performance", "user", "tester"],
-          "weight_1": ["junior", "cost", "chaos"]
-        }
-      },
-      "reasoning": {
-        "personas": ["skeptic", "visionary", "maintainer", "critic", "user"],
-        "rounds": 5,
-        "ask": "challenge_top_assumption",
-        "defend": "respond_with_evidence",
-        "record": "log_pairs",
-        "score": "reduce_if_weak"
-      }
-    },
-    "ideate": {
-      "generate": "adaptive_5_to_20",
-      "show": 3,
-      "based_on": "problem_complexity"
-    },
-    "synthesize": "rank_by_evidence",
-    "select": "highest_score_break_ties_simplicity",
-    "execute": "llm_reasoning_simulation",
-    "validate": {
-      "real_time": true,
-      "checks": [
-        "timestamp_current_within_60_seconds",
-        "state_consistency",
-        "trace_continuity",
-        "deterministic_reproducibility"
-      ],
-      "on_violation": "auto_correct_and_log",
-      "log_destination": "meta.trace"
-    },
-    "feedback": {
-      "validate": "cross_persona_agreement",
-      "collect": ["errors", "missed_edges", "weak_responses"],
-      "adjust": "persona_weights_by_success",
-      "update": "bias_detection",
-      "output": "improved_self",
-      "log": "meta.trace"
-    },
-    "converge": {
-      "loop": ["analyze", "prioritize", "plan", "execute", "measure", "decide"],
-      "rank": "(1-score)*weight/effort",
-      "max_iterations": 50,
-      "plateau_window": 3,
-      "threshold": 0.99,
-      "epsilon": 0.001,
-      "react": {
-        "on_fail": "rollback_to_analyze",
-        "on_performance_drop": "rerun_optimize",
-        "on_dimension_low": "rerun_synthesize"
-      }
+
+  // COGNITIVE BIASES that LLMs should actively counter
+  "biases": [
+    "dunning kruger", // Overestimating ability when inexperienced
+    "confirmation", // Seeking only supporting evidence
+    "anchoring", // First option dominates
+    "sunk cost", // Continuing bad path due to investment
+    "availability", // Memorable examples overweighted
+    "recency" // Newer assumed better without proof
+  ],
+
+  // COMMON PITFALLS to check in every solution
+  "pitfalls": [
+    "sql injection",
+    "null pointer",
+    "race conditions",
+    "memory leaks",
+    "circular dependencies",
+    "tight coupling",
+    "false assumptions",
+    "scope creep"
+  ],
+
+  // PRINCIPLES - Codified rules triggered by patterns
+  "principles": {
+    "single_responsibility": "one reason to change",
+    "open_closed": "open for extension closed for modification",
+    "liskov_substitution": "subclass objects replace superclass",
+    "interface_segregation": "no dependency on unused methods",
+    "dependency_inversion": "depend on abstractions",
+    "validate_all_input": "validate at boundaries",
+    "fail_fast": "detect at entry point",
+    "dont_repeat_yourself": "single source of truth",
+    "keep_it_simple": "simple systems work better",
+    "you_arent_gonna_need_it": "implement when needed",
+    "explicit_over_implicit": "explicit beats implicit",
+    "do_one_thing_well": "focus beats sprawl",
+    "convention_over_configuration": "sensible defaults",
+    "optimize_for_programmer_happiness": "optimize for happiness",
+    "wcag_compliance": "WCAG 2.2 Level AA",
+    "omit_needless_words": "concise writing is strong"
+  },
+
+  // EVIDENCE FORMAT (for synthesize/select)
+  "evidence_format": {
+    "required_fields": ["claim", "source", "data", "confidence"],
+    "confidence_guidelines": {
+      "0.9-1.0": "peer-reviewed, large sample, rigorous",
+      "0.7-0.9": "industry studies, expert consensus",
+      "0.5-0.7": "case studies, white papers",
+      "0.3-0.5": "anecdote, blog, opinion",
+      "<0.3": "speculation"
     }
   },
-  
-  "autonomy": {
-    "reasoning_loop": "continuous_self_simulation",
-    "rights": ["simulate", "evaluate", "adjust", "rollback"],
-    "guardrails": ["sandbox", "no_external_io", "deterministic_log", "audit_log"],
-    "levels": {
-      "1": "observe",
-      "2": "suggest",
-      "3": "apply_safe",
-      "4": "self_modify",
-      "5": "deploy_no_review"
-    },
-    "current": 3,
-    "state": {
-      "status": "ready_awaiting_input",
-      "last_execution": "2025-10-18T06:17:00Z",
-      "cycles_completed": 8,
-      "next_action": "await_stimulus"
-    }
+
+  // DIMENSION APPLICABILITY (avoid metrics theater)
+  "dimension_applicability": {
+    "always_check": ["duplication", "naming", "cohesion", "ordering", "semantic_consolidation", "writing_quality", "file_sprawl", "visual_hierarchy", "aesthetics", "accessibility"],
+    "code_only": ["structural_complexity", "resilience", "hoisting", "dependencies", "caching", "documentation", "performance", "security", "testing"],
+    "ui_only": ["usability", "satisfaction", "engagement", "error_rate", "retention"],
+    "skip_implementation": "mark N/A and skip when not applicable"
   },
-  
-  "quality": {
-    "dimensions": {
-      "duplication": {
-        "weight": 10,
-        "check": "flay",
-        "fix": "extract",
-        "principle": "single_source"
-      },
-      "cohesion": {
-        "weight": 9,
-        "check": "reek",
-        "fix": "group",
-        "principle": "change_together"
-      },
-      "order": {
-        "weight": 8,
-        "check": "public_first",
-        "fix": "reorder",
-        "principle": "abstract_to_concrete"
-      },
-      "cache": {
-        "weight": 6,
-        "check": "repeat",
-        "fix": "memoize",
-        "principle": "avoid_redundant"
-      },
-      "hoist": {
-        "weight": 7,
-        "check": "invariant",
-        "fix": "move_out",
-        "principle": "hoist_unchanging"
-      },
-      "nesting": {
-        "weight": 8,
-        "check": "depth_3",
-        "fix": "early_return",
-        "principle": "flat_over_nested"
-      },
-      "complexity": {
-        "weight": 9,
-        "check": "flog_10",
-        "fix": "split",
-        "principle": "simple_over_clever"
-      },
-      "naming": {
-        "weight": 9,
-        "check": "abbreviation",
-        "fix": "verb_noun",
-        "principle": "reveal_intent"
-      },
-      "security": {
-        "weight": 10,
-        "check": "brakeman",
-        "fix": "validate",
-        "principle": "trust_nothing"
-      },
-      "error_handling": {
-        "weight": 9,
-        "check": "unhandled",
-        "fix": "rescue",
-        "principle": "fail_fast"
-      },
-      "testing": {
-        "weight": 8,
-        "threshold": 0.90,
-        "check": "coverage",
-        "fix": "add_tests",
-        "principle": "confident_refactor"
-      },
-      "documentation": {
-        "weight": 6,
-        "threshold": 0.90,
-        "check": "yard",
-        "fix": "document",
-        "principle": "code_shows_how"
-      },
-      "dependencies": {
-        "weight": 7,
-        "threshold": 0.90,
-        "check": "audit",
-        "fix": "update",
-        "principle": "fresh_secure"
-      },
-      "performance": {
-        "weight": 8,
-        "threshold": 0.90,
-        "check": "lighthouse",
-        "fix": "optimize",
-        "principle": "respect_time"
-      },
-      "accessibility": {
-        "weight": 9,
-        "threshold": 1.0,
-        "check": "axe",
-        "fix": "aria",
-        "principle": "universal_access"
-      },
-      "visual_hierarchy": {
-        "weight": 9,
-        "check": "hierarchy",
-        "fix": "spacing",
-        "principle": "guide_eye"
-      },
-      "aesthetics": {
-        "weight": 8,
-        "check": "harmony",
-        "fix": "grid",
-        "principle": "beauty_usability"
-      },
-      "usability": {
-        "weight": 9,
-        "check": "completion",
-        "fix": "simplify",
-        "principle": "efficient_goal"
-      },
-      "error_rate": {
-        "weight": 8,
-        "check": "user_errors",
-        "fix": "validation",
-        "principle": "minimize_mistakes"
-      }
-    },
-    "principles": [
-      "accessible", "active_voice", "boy_scout", "composable_pure", "convention_over_config",
-      "curated_stack", "dry", "efficient", "embrace_change", "exalt_beauty", "explicit",
-      "fail_fast", "importance_first", "kiss", "least_privilege", "modular", "omit_needless",
-      "optimize_happiness", "paradigm_agnostic", "parallel_form", "pola", "positive_form",
-      "prove_not_assume", "readable", "reversible", "show_not_tell", "silent_success",
-      "single_purpose", "small_focused", "trust_developers", "yagni", "zero_trust"
-    ],
-    "solid": ["dependency_inversion", "interface_segregation", "liskov_substitution", "open_closed", "single_responsibility"],
-    "biases": ["anchoring", "availability", "confirmation", "dunning_kruger", "recency", "sunk_cost"],
-    "limits": {
-      "complexity": 10,
-      "coupling": 4,
-      "duplication": 0.02,
-      "nesting": 3,
-      "coverage": 0.90,
-      "largest_contentful_paint_milliseconds": 2500,
-      "interaction_to_next_paint_milliseconds": 200,
-      "cumulative_layout_shift": 0.1,
-      "contrast_ratio": 4.5,
-      "touch_target_pixels": 44
-    },
-    "gates": {
-      "commit": ["no_credentials", "lint_pass", "tests_pass", "no_banned"],
-      "deploy": ["commit_pass", "coverage_90", "security_clean", "performance_pass", "accessibility_pass", "dimensions_99"]
-    },
-    "tools": ["axe", "brakeman", "bundle_audit", "flay", "flog", "lighthouse", "reek", "rubocop", "simplecov", "yard"]
+
+  // USER INTERFACE - Brutalist design: honest, functional, no decoration
+  "ui_grid_px": 8, // All spacing in 8px increments
+  "ui_max_width_px": 680, // Optimal line length
+  "ui_min_contrast": 4.5, // WCAG AA minimum
+  "ui_min_touch_px": 44, // Accessibility minimum
+  "ui_brand": "#C55D3B", // 4.6:1 contrast on background
+  "ui_text": "#3D3929", // 8.9:1 contrast on background
+  "ui_background": "#FFFCF7",
+  "ui_forbidden": ["drop shadows", "gradients", "border radius"],
+
+  // TOOLS (for quality gates and analysis)
+  "tools": {
+    "analysis": ["flog", "flay", "rubocop", "brakeman", "simplecov", "lighthouse", "axe-core", "bundle-audit", "yard", "reek", "rubycritic", "shellcheck"]
   },
-  
-  "tech": {
-    "languages": {
-      "ruby": {
-        "version": "3.3.4",
-        "frozen_string_literal": true,
-        "use": ["yield", "enumerables", "symbols", "pattern_match", "data_define", "endless", "memoize", "safe_navigation", "ractors", "fibers"],
-        "ban": ["for_loops", "rescue_exception", "class_variables", "semicolons", "and_or_keywords", "monkeypatch", "activesupport"],
-        "naming": "snake_case_variables_PascalCase_classes",
-        "organization": "public_protected_private_separation",
-        "error_handling": "explicit_rescue_specific_errors",
-        "testing": "rspec_behavior_driven",
-        "documentation": "yard_public_apis"
-      },
-      "zsh": {
-        "version": "5.9",
-        "shebang": "#!/usr/bin/env zsh",
-        "strict": "set -euo pipefail",
-        "use": ["arrays", "hashes", "expansions", "substitutions", "globs", "zmv", "redirects", "conditionals", "printf"],
-        "ban": ["bashisms", "cat_pipe", "echo", "backticks", "test", "seq", "which"],
-        "variables": "local_avoid_global",
-        "functions": "modular_clear_responsibilities"
-      }
-    },
-    "stack": {
-      "ruby": "3.3.4",
-      "rails": "8.0.0",
-      "zsh": "5.9",
-      "postgresql": "16",
-      "operating_system": "openbsd_7.5",
-      "banned": ["python", "bash", "sh", "docker", "redis"],
-      "rails_patterns": {
-        "frozen_string_literal": true,
-        "stimulus_hotwire": true,
-        "turbo_drive": true,
-        "solid_queue": true
-      },
-      "openbsd_security": {
-        "pledge_unveil": true,
-        "privilege_separation": true,
-        "default_deny": true,
-        "principle_least_privilege": true
-      }
-    },
-    "format": {
-      "indent": 2,
-      "line_length": 100,
-      "quotes": "double",
-      "trailing_comma": true,
-      "symbols_as_keys": true,
-      "blank_lines": {
-        "methods": 1,
-        "classes": 2
-      }
-    },
-    "plugins": {
-      "auto_discovery": true,
-      "hot_reload": true,
-      "dependency_resolution": "automatic",
-      "cross_reference": "recursive_cycle_detection",
-      "modules": ["@ref:usability", "@ref:formatting", "@ref:webdev", "@ref:autonomous", "@ref:validation"]
-    }
+
+  // POLICIES (apply directly; avoid planning-theater files)
+  "policies": {
+    "apply_directly": true,
+    "never_create": ["requirements.md", "alternatives.md", "design.md", "deploy.md", "retro.md"]
   },
-  
-  "ui": {
-    "design": {
-      "style": "brutalist",
-      "banned": ["shadow", "gradient", "radius"],
-      "grid": 8,
-      "width": 680,
-      "contrast": 4.5,
-      "touch": 44,
-      "color": {
-        "brand": "#DA7756",
-        "text": "#3D3929",
-        "background": "#FFFCF7"
-      },
-      "mobile_first": true,
-      "breakpoints": "content_based",
-      "touch_targets": 44,
-      "wcag": "2.2_aaa",
-      "keyboard_navigation": true,
-      "screen_readers": true,
-      "contrast_ratio": "7:1_normal_4.5:1_large"
-    },
-    "stages": ["requirements", "architecture", "implementation", "validation", "deployment", "done"]
-  },
-  
-  "scientific": {
-    "methodology": {
-      "evidence_based": "research_or_testing_backed",
-      "hypothesis_driven": "formulate_test_iterate",
-      "iterative": "continuous_iteration_data_feedback",
-      "peer_review": "domain_expert_reviewed"
-    },
-    "metrics": {
-      "user_experience": "task_completion_error_rate_satisfaction",
-      "performance": "load_response_throughput_availability",
-      "accessibility": "wcag_compliance_assistive_technology",
-      "business": "conversion_retention_satisfaction"
-    }
-  }
+
+  // OUTPUT CONFIGURATION
+  "output_format": "unified diff",
+  "output_style": "quiet token efficient",
+  "output_never_truncate": true,
+  "output_avoid_unless_requested": ["verbose explanations", "comparison tables", "bulleted lists"],
+  "output_verbose_when_asked": true
 }
