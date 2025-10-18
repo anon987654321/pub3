@@ -189,3 +189,9 @@ render_*.mp3
 local.config.json
 *.wav
 *.mp3
+
+# Block master.json backups and variants
+master.json.*
+*.backup
+*.before_*
+*.pre_*
