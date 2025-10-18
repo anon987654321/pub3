@@ -7,7 +7,7 @@ require_relative 'gtts_ruby'
 text = ARGV.join(" ")
 
 unless text.empty?
-  # Bomoh Hang Tuah: Indian English accent (co.in), deep pitch (-150)
-  GoogleTTS.speak(text, lang: 'en', tld: 'co.in', pitch_adjust: 0)
+  # Bomoh Hang Tuah: Malaysian accent (com.my), deep pitch (-150)
+  GoogleTTS.speak(text, lang: 'ms', tld: 'com.my', pitch_adjust: -150)
 end
 

@@ -188,4 +188,4 @@ render_*.mp3
 .local/
 local.config.json
 *.wav
-multimedia/tts/.claude/settings.local.json
+*.mp3
