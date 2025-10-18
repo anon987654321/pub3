@@ -189,3 +189,7 @@ render_*.mp3
 local.config.json
 *.wav
 *.mp3
+# Test files
+test_*.jpg
+test_*.json
+*_portrait_*.png
