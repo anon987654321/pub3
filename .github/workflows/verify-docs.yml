@@ -21,10 +21,16 @@ jobs:
         run: |
           echo "Checking internal documentation links..."
           
-          # Check README.md links
-          for file in DEVELOPMENT.md CONTRIBUTING.md SECURITY.md CHANGELOG.md CODE_OF_CONDUCT.md LICENSE; do
-            if [ ! -f "$file" ]; then
-              echo "ERROR: $file referenced in README but not found"
+          # Check core docs still exist
+          if [ ! -f "LICENSE" ]; then
+            echo "ERROR: LICENSE not found"
+            exit 1
+          fi
+          
+          # Check archived docs exist
+          for file in DEVELOPMENT.md CONTRIBUTING.md SECURITY.md CHANGELOG.md CODE_OF_CONDUCT.md OVERVIEW.md AUTHORS; do
+            if [ ! -f "docs/archive/$file" ]; then
+              echo "ERROR: $file not found in docs/archive/"
               exit 1
             fi
           done
@@ -37,19 +43,33 @@ jobs:
           
           required_files=(
             "README.md"
-            "CONTRIBUTING.md"
             "LICENSE"
-            "CODE_OF_CONDUCT.md"
-            "SECURITY.md"
-            "DEVELOPMENT.md"
-            "CHANGELOG.md"
+            "master.json"
             ".gitignore"
             ".editorconfig"
+          )
+          
+          archived_files=(
+            "docs/archive/CONTRIBUTING.md"
+            "docs/archive/CODE_OF_CONDUCT.md"
+            "docs/archive/SECURITY.md"
+            "docs/archive/DEVELOPMENT.md"
+            "docs/archive/CHANGELOG.md"
+            "docs/archive/OVERVIEW.md"
+            "docs/archive/AUTHORS"
           )
           
           for file in "${required_files[@]}"; do
             if [ ! -f "$file" ]; then
               echo "ERROR: Required file $file not found"
+              exit 1
+            fi
+            echo "✓ $file exists"
+          done
+          
+          for file in "${archived_files[@]}"; do
+            if [ ! -f "$file" ]; then
+              echo "ERROR: Archived file $file not found"
               exit 1
             fi
             echo "✓ $file exists"
