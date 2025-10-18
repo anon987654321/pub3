@@ -9,8 +9,8 @@ require 'cgi'
 require 'fileutils'
 
 module GoogleTTS
-  CACHE_DIR = "G:/pub/tts/cache"
-  SOX_PATH = "G:/pub/dilla/effects/sox/sox.exe"
+  CACHE_DIR = "G:/pub/multimedia/tts/cache"
+  SOX_PATH = "G:/pub/multimedia/dilla/effects/sox/sox.exe"
 
   def self.setup
     FileUtils.mkdir_p(CACHE_DIR)
