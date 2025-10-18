@@ -388,13 +388,13 @@ STOCKS = {
 }.freeze
 
 PRESETS = {
-  portrait: { fx: %w[skin_protect film_curve highlight_roll micro_contrast grain color_temp base_tint], stock: :kodak_portra, temp: 5200, intensity: 0.8 },
+  portrait: { fx: %w[skin_protect film_curve highlight_roll_filmic micro_contrast grain_film color_temp base_tint vignetting_analog], stock: :kodak_portra, temp: 5200, intensity: 0.8 },
 
-  landscape: { fx: %w[film_curve color_separate highlight_roll micro_contrast grain vintage_lens], stock: :fuji_velvia, temp: 5800, intensity: 0.9 },
+  landscape: { fx: %w[film_curve color_separate highlight_roll_filmic micro_contrast grain_film vintage_lens vignetting_analog], stock: :fuji_velvia, temp: 5800, intensity: 0.9 },
 
-  street: { fx: %w[film_curve shadow_lift micro_contrast vintage_lens grain], stock: :tri_x, temp: 5600, intensity: 1.0 },
+  street: { fx: %w[film_curve shadow_lift micro_contrast vintage_lens grain_film vignetting_analog], stock: :tri_x, temp: 5600, intensity: 1.0 },
 
-  blockbuster: { fx: %w[teal_orange grain bloom_pro highlight_roll micro_contrast], stock: :kodak_vision3, temp: 4800, intensity: 1.2 }
+  blockbuster: { fx: %w[teal_orange grain_film bloom_threshold highlight_roll_filmic micro_contrast halation_analog], stock: :kodak_vision3, temp: 4800, intensity: 1.2 }
 
 }.freeze
 
@@ -708,6 +708,181 @@ def bloom_pro(image, intensity = 1.0)
 
 end
 
+# New Analog-Style Effects
+
+def highlight_roll_filmic(image, knee_start = 190, knee_softness = 25, intensity = 1.0)
+  # Soft knee compression above threshold for film-like highlight behavior
+  mask = image > knee_start
+  
+  over_exposed = (image - knee_start).max(0)
+  
+  # Soft knee: blend between linear and compressed based on distance from threshold
+  blend_factor = (over_exposed / knee_softness).min(1.0)
+  compressed = knee_start + (over_exposed * 0.4).pow(0.8)
+  
+  rolled_off = over_exposed * (1.0 - blend_factor) + compressed * blend_factor + knee_start
+  
+  result = mask.ifthenelse(rolled_off, image)
+  
+  safe_cast(image * (1 - intensity) + result * intensity)
+end
+
+def grain_film(image, iso = 400, stock = :kodak_portra, intensity = 0.4, size: 1.0)
+  # Channel-weighted grain with downsample/upsample for perceived grain size
+  data = STOCKS[stock] || STOCKS[:kodak_portra]
+  
+  sigma = data[:grain] * Math.sqrt(iso / 100.0) * intensity
+  
+  # Downsample for larger grain appearance if size > 1.0
+  scale_factor = [1.0 / size, 0.5].max  # Cap at 0.5 for performance
+  
+  if size > 1.0 && scale_factor < 1.0
+    scaled_w = (image.width * scale_factor).to_i
+    scaled_h = (image.height * scale_factor).to_i
+    noise = Vips::Image.gaussnoise(scaled_w, scaled_h, sigma: sigma)
+    # Nearest neighbor upsample for blocky grain look
+    noise = noise.resize(1.0 / scale_factor, kernel: :nearest)
+    # Ensure noise matches image dimensions
+    noise = noise.extract_area(0, 0, [noise.width, image.width].min, [noise.height, image.height].min)
+  else
+    noise = Vips::Image.gaussnoise(image.width, image.height, sigma: sigma)
+  end
+  
+  # Channel-aware: more grain in blue channel (film characteristic)
+  r_noise = noise * 0.8
+  g_noise = noise * 0.9
+  b_noise = noise * 1.2
+  
+  channel_noise = Vips::Image.bandjoin([r_noise, g_noise, b_noise])
+  
+  # Luma-dependent strength
+  brightness = image.colourspace('grey16').cast('float') / 255.0
+  strength = (1.2 - brightness).max(0.3) * intensity
+  strength_rgb = strength.bandjoin([strength, strength])
+  
+  grain_rgb = rgb_bands(channel_noise * strength_rgb)
+  safe_cast(image + grain_rgb * 0.25)
+end
+
+def bloom_threshold(image, intensity = 1.0, threshold = 200, radius = 12)
+  # Bloom only in bright regions using luma-derived mask
+  luma = image.colourspace('grey16').cast('float')
+  
+  # Create mask for areas above threshold
+  bright_mask = (luma > threshold).cast('float') / 255.0
+  
+  # Extract bright areas
+  bright_areas = image.cast('float') * bright_mask.bandjoin([bright_mask, bright_mask])
+  
+  # Apply bloom to bright areas only
+  bloom = bright_areas.gaussblur(radius * intensity)
+  
+  safe_cast(image + bloom * 0.3 * intensity)
+end
+
+def halation_analog(image, intensity = 0.6, radius = 12, red_bias = 1.4, orange_bias = 1.1)
+  # Highlight-driven red/orange bleed + slight diffusion (film halation effect)
+  luma = image.colourspace('grey16').cast('float')
+  
+  # Create mask for very bright areas (halation source)
+  halation_mask = ((luma > 220).cast('float') / 255.0)
+  
+  # Extract highlights
+  r, g, b = image.bandsplit
+  
+  # Create red/orange biased halation source
+  halation_source = Vips::Image.bandjoin([
+    r * red_bias,
+    g * orange_bias,
+    b * 0.6
+  ]) * halation_mask.bandjoin([halation_mask, halation_mask])
+  
+  # Apply strong blur for diffusion
+  halation = halation_source.gaussblur(radius)
+  
+  safe_cast(image + halation * intensity * 0.4)
+end
+
+def vignetting_analog(image, amount = 0.25, power = 2.8)
+  # Radial falloff derived from distance field
+  width = image.width
+  height = image.height
+  
+  # Create coordinate grid
+  center_x = width / 2.0
+  center_y = height / 2.0
+  
+  # Create radial distance field using xyz
+  # We'll create a simple radial gradient
+  max_dist = Math.sqrt(center_x**2 + center_y**2)
+  
+  # Create XYZ image for radial distance calculation
+  xyz = Vips::Image.xyz(width, height)
+  x_band = xyz.extract_band(0)
+  y_band = xyz.extract_band(1)
+  
+  # Calculate distance from center
+  dx = (x_band - center_x) / center_x
+  dy = (y_band - center_y) / center_y
+  
+  dist = (dx * dx + dy * dy).pow(0.5)
+  
+  # Apply power for falloff curve control
+  falloff = (1.0 - (dist * amount).min(1.0)).pow(power)
+  
+  # Apply to all channels
+  falloff_rgb = falloff.bandjoin([falloff, falloff])
+  
+  safe_cast(image * falloff_rgb)
+end
+
+def chromatic_aberration_analog(image, amount = 1.0)
+  # Small channel micro-shift for CA look
+  shift = (2 * amount).round
+  
+  r, g, b = image.bandsplit
+  
+  # Shift red outward, blue inward (lateral CA)
+  r_shifted = shift > 0 ? r.embed(shift, 0, image.width, image.height) : r
+  b_shifted = shift > 0 ? b.embed(-shift, 0, image.width, image.height) : b
+  
+  safe_cast(Vips::Image.bandjoin([r_shifted, g, b_shifted]))
+end
+
+def dust_and_scratches(image, intensity = 0.3)
+  # Random specks and hairline lines with slight blur overlay
+  overlay = Vips::Image.black(image.width, image.height, bands: 3)
+  
+  # Add dust specks
+  speck_count = (image.width * image.height / 50000.0 * intensity).to_i
+  speck_count.times do
+    x = rand(image.width)
+    y = rand(image.height)
+    size = rand(1..3)
+    gray = rand(100..200)
+    color = [gray, gray, gray]
+    
+    overlay = overlay.draw_circle(color, x, y, size, fill: true) rescue overlay
+  end
+  
+  # Add scratches (hairline vertical lines mostly)
+  scratch_count = (5 * intensity).to_i
+  scratch_count.times do
+    x = rand(image.width)
+    y_start = rand(image.height / 2)
+    y_end = y_start + rand(image.height / 4..image.height / 2)
+    gray = rand(150..220)
+    color = [gray, gray, gray]
+    
+    overlay = overlay.draw_line(color, x, y_start, x, y_end) rescue overlay
+  end
+  
+  # Slight blur to make it look more organic
+  overlay = overlay.gaussblur(0.5)
+  
+  safe_cast(image + overlay * intensity * 0.15)
+end
+
 # Preset Application
 def preset(image, name)
 
@@ -726,11 +901,15 @@ def preset(image, name)
 
              when 'highlight_roll' then highlight_roll(result, 200, p[:intensity] * 0.7)
 
+             when 'highlight_roll_filmic' then highlight_roll_filmic(result, 190, 25, p[:intensity] * 0.8)
+
              when 'shadow_lift' then shadow_lift(result, 0.2, false)
 
              when 'micro_contrast' then micro_contrast(result, 6, p[:intensity] * 0.4)
 
              when 'grain' then grain(result, 400, p[:stock], p[:intensity] * 0.4)
+
+             when 'grain_film' then grain_film(result, 400, p[:stock], p[:intensity] * 0.4, size: 1.0)
 
              when 'color_temp' then color_temp(result, p[:temp], p[:intensity] * 0.6)
 
@@ -743,6 +922,16 @@ def preset(image, name)
              when 'teal_orange' then teal_orange(result, p[:intensity])
 
              when 'bloom_pro' then bloom_pro(result, p[:intensity])
+
+             when 'bloom_threshold' then bloom_threshold(result, p[:intensity] * 0.8, 200, 12)
+
+             when 'halation_analog' then halation_analog(result, 0.6, 12, 1.4, 1.1)
+
+             when 'vignetting_analog' then vignetting_analog(result, 0.25, 2.8)
+
+             when 'chromatic_aberration_analog' then chromatic_aberration_analog(result, 1.0)
+
+             when 'dust_and_scratches' then dust_and_scratches(result, 0.3)
 
              else result
 
@@ -783,6 +972,14 @@ def random_fx(image, effects, mode)
              when 'glitch' then glitch_basic(result, intensity)
 
              when 'flare' then flare_basic(result, intensity)
+
+             when 'vignette' then vignetting_analog(result, intensity * 0.3, 2.8)
+
+             when 'halation' then halation_analog(result, intensity * 0.6, 12, 1.4, 1.1)
+
+             when 'dust' then dust_and_scratches(result, intensity * 0.3)
+
+             when 'aberration' then chromatic_aberration_analog(result, intensity)
 
              else result
 
@@ -908,11 +1105,39 @@ def recipe(image, recipe_data)
 
   recipe_data.each do |fx, params|
 
-    intensity = params.is_a?(Hash) ? params['intensity'].to_f : params.to_f
-
     method = fx.gsub('_professional', '')
 
-    result = respond_to?(method) ? send(method, result, intensity) : result
+    result = if respond_to?(method)
+               if params.is_a?(Hash)
+                 # Extract parameters from hash
+                 intensity = params['intensity'].to_f
+                 
+                 # Call with appropriate parameters based on method
+                 case method
+                 when 'highlight_roll_filmic'
+                   highlight_roll_filmic(result, params['knee_start']&.to_i || 190, params['knee_softness']&.to_i || 25, intensity)
+                 when 'grain_film'
+                   grain_film(result, params['iso']&.to_i || 400, (params['stock'] || :kodak_portra).to_sym, intensity, size: params['size']&.to_f || 1.0)
+                 when 'bloom_threshold'
+                   bloom_threshold(result, intensity, params['threshold']&.to_i || 200, params['radius']&.to_i || 12)
+                 when 'halation_analog'
+                   halation_analog(result, intensity, params['radius']&.to_i || 12, params['red_bias']&.to_f || 1.4, params['orange_bias']&.to_f || 1.1)
+                 when 'vignetting_analog'
+                   vignetting_analog(result, params['amount']&.to_f || 0.25, params['power']&.to_f || 2.8)
+                 when 'chromatic_aberration_analog'
+                   chromatic_aberration_analog(result, params['amount']&.to_f || 1.0)
+                 when 'dust_and_scratches'
+                   dust_and_scratches(result, intensity)
+                 else
+                   send(method, result, intensity)
+                 end
+               else
+                 intensity = params.to_f
+                 send(method, result, intensity)
+               end
+             else
+               result
+             end
 
   end
 
@@ -1225,9 +1450,9 @@ def auto_launch
 
               when :random
 
-                fx = %w[grain leaks sepia bloom teal_orange cross vhs chroma glitch flare]
+                fx = %w[grain leaks sepia bloom teal_orange cross vhs chroma glitch flare vignette halation dust aberration]
 
-                selected = config[:mode] == "experimental" ? fx : fx.first(6)
+                selected = config[:mode] == "experimental" ? fx : fx.first(10)
 
                 random_effects = selected.shuffle.take(config[:fx])
 
