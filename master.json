@@ -296,7 +296,31 @@
 
   // TOOLS (for quality gates and analysis)
   "tools": {
-    "analysis": ["flog", "flay", "rubocop", "brakeman", "simplecov", "lighthouse", "axe-core", "bundle-audit", "yard", "reek", "rubycritic", "shellcheck"]
+    "analysis": ["flog", "flay", "rubocop", "brakeman", "simplecov", "lighthouse", "axe-core", "bundle-audit", "yard", "reek", "rubycritic", "shellcheck"],
+    "audio_generation": {
+      "engine": "SoX",
+      "description": "Complete audio generation system with pure Ruby + SoX synthesis",
+      "capabilities": [
+        "SoX-based waveform synthesis (sine, sawtooth, square, noise)",
+        "FM synthesis for warm analog character",
+        "Per-note swing timing (J Dilla-style micro-timing)",
+        "J Dilla Donuts chord progressions database",
+        "Industrial techno drum synthesis",
+        "Neo-soul chord progressions with extended voicings"
+      ],
+      "entry_points": {
+        "burst": "multimedia/burst.rb - Industrial techno generator",
+        "dilla": "multimedia/dilla.rb - J Dilla-style beats and chords",
+        "master": "multimedia/dilla/master.rb - Complete workflow orchestrator",
+        "chords": "multimedia/dilla/chords.rb - Chord progression generator",
+        "drums": "multimedia/dilla/drums_consolidated.rb - Drum pattern generator with swing",
+        "pads": "multimedia/dilla/pads.rb - FM synthesis pads and atmospheric sounds"
+      },
+      "data": {
+        "progressions": "multimedia/dilla/dilla_data.json - Unified database with chord theory, progressions, and drum patterns",
+        "evidence": "Donuts (2006) - analyzed timing patterns from J Dilla's masterwork"
+      }
+    }
   },
 
   // POLICIES (apply directly; avoid planning-theater files)
