@@ -1,5 +1,15 @@
 #!/usr/bin/env ruby
 # Simple J Dilla chord generator - FM SYNTHESIS + HALL OF FAME PRESETS
+#
+# Usage:
+#   ruby chords.rb              # Standard generation
+#   ruby chords.rb --swing      # Enable per-note swing timing (NEW!)
+
+# Check for swing flag
+ENABLE_SWING = ARGV.include?("--swing")
+
+# Load synthesis module if swing is enabled
+require_relative 'audio_synthesis' if ENABLE_SWING
 
 SOX = "G:/pub/dilla/effects/sox/sox.exe"
 # Hall of Fame FX Presets
@@ -296,6 +306,18 @@ end
 
 # FM Synthesis: 3-layer (sawtooth + square + sine)
 def generate_chord(freqs, duration, output)
+  # Use new synthesis with per-note swing if enabled
+  if ENABLE_SWING
+    AudioSynthesis.sox_path = SOX
+    AudioSynthesis.generate_chord_with_swing(
+      freqs,
+      duration,
+      output,
+      swing: 0.542,  # Golden ratio
+      microtonal_range: 5
+    )
+    return
+  end
 
   voices = freqs.each_with_index.map do |freq, i|
 
@@ -338,6 +360,7 @@ def apply_fx(input, output, preset_name)
 end
 
 puts "J Dilla FM Synthesis Generator - Hall of Fame Presets"
+puts "Per-note swing: #{ENABLE_SWING ? 'ENABLED (golden ratio)' : 'disabled'}"
 puts "=" * 60
 
 # Generate all progressions

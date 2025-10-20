@@ -1,0 +1,22 @@
+# Audio output files
+*.wav
+*.mp3
+*.flac
+*.ogg
+
+# Generated directories
+synthesis_examples/
+chords/
+bass/
+drums/
+final/
+
+# Temporary files
+*.tmp
+_*
+*.log
+
+# Editor files
+.DS_Store
+*~
+.*.swp
