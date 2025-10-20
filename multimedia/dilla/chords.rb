@@ -1,7 +1,29 @@
 #!/usr/bin/env ruby
 # Simple J Dilla chord generator - FM SYNTHESIS + HALL OF FAME PRESETS
 
-SOX = "G:/pub/dilla/effects/sox/sox.exe"
+# Cross-platform SoX detection (Cygwin/OpenBSD/Linux friendly)
+def find_sox
+  # Try common locations
+  candidates = [
+    "sox",                                            # System PATH
+    "/usr/local/bin/sox",                             # OpenBSD
+    "/usr/bin/sox",                                   # Linux
+    File.join(__dir__, "effects", "sox", "sox.exe"),  # Cygwin relative
+    "G:/pub/dilla/effects/sox/sox.exe"                # Absolute Cygwin
+  ]
+
+  candidates.each do |path|
+    if system("which #{path} > /dev/null 2>&1") || File.exist?(path)
+      return path
+    end
+  end
+
+  # Fallback to system sox
+  "sox"
+end
+
+SOX = find_sox
+
 # Hall of Fame FX Presets
 FX_PRESETS = {
 
