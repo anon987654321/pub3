@@ -28,6 +28,10 @@ Choose between two audio generation methods:
 
 - Perfect for lofi/experimental/Flying Lotus aesthetics
 
+- **NEW: Per-Note Swing Timing** - J Dilla's signature technique applied to individual chord voices
+
+- **NEW: Enhanced FM Synthesis** - Multi-operator FM with configurable ratios and modulation depth
+
 - **Command**: `ruby chords.rb`
 
 ### **FluidSynth + Soundfonts** (Professional Quality)
@@ -109,11 +113,15 @@ ruby chords_compare.rb --engine=both
 ### J Dilla Techniques
 - **Golden ratio swing**: 54.2% offbeat timing
 
+- **Per-note swing timing**: Individual chord voices pushed/pulled for organic feel (NEW!)
+
 - **Microtonality**: ±0.5% frequency detuning for analog warmth
 
 - **Voice dynamics**: Bass (-14dB), melody (-12dB), inner voices (-17dB)
 
 - **3-layer synthesis**: Sawtooth + square + sine per voice
+
+- **Enhanced FM synthesis**: Multi-operator FM with Yamaha DX7-style capabilities (NEW!)
 
 - **FX chains**: warm_tape, lofi_dream, dilla_butter, analog_lush
 
@@ -160,6 +168,52 @@ ruby chords_compare.rb --engine=both
   - VintageDreamsWaves-v2.sf2/sf3 - Vintage analog emulation
 
 - **Optional**: GoldBaby ROM808 samples at `/g/music/samples/drums/goldbaby/rom808/`
+
+## Advanced Synthesis Features (NEW!)
+
+The system now includes a comprehensive audio synthesis module (`audio_synthesis.rb`) with advanced capabilities:
+
+### Per-Note Swing Timing
+Apply J Dilla's signature swing to individual chord voices, not just drum beats:
+```ruby
+# Chord with 58% swing and ±8 cents microtonality
+AudioSynthesis.generate_chord_with_swing(
+  [261.63, 329.63, 392.00, 493.88],  # Cmaj7
+  2.0,
+  "output.wav",
+  swing: 0.58,
+  microtonal_range: 8
+)
+```
+
+### Enhanced FM Synthesis
+Multi-operator FM synthesis inspired by Yamaha DX7:
+```ruby
+# Electric piano with 4 operators
+AudioSynthesis.fm_multi_operator(
+  440.0, 2.5, "epiano.wav",
+  operators: [
+    {ratio: 1.0, level: 1.0},   # Fundamental
+    {ratio: 3.5, level: 0.8},   # Harmonic
+    {ratio: 14.0, level: 0.6},  # Shimmer
+    {ratio: 0.5, level: 0.4}    # Sub-harmonic
+  ]
+)
+```
+
+### Additional Synthesis Methods
+- **Subtractive Synthesis**: Classic analog filter sweeps (lowpass, highpass, bandpass)
+- **Additive Synthesis**: Build complex timbres from harmonic series (organ-like sounds)
+- **Wavetable Synthesis**: Various waveforms (pulse, triangle, filtered noise)
+- **Bass Synthesis**: Deep sub-bass with multiple sub-octaves
+
+### Try the Examples
+Run the synthesis examples to hear all the new capabilities:
+```bash
+ruby synthesis_examples.rb
+# Creates synthesis_examples/ directory with 10+ audio examples
+# Compare chord_swing.wav vs chord_no_swing.wav to hear the difference!
+```
 
 ## Theory Scoring Example
 ```
@@ -300,6 +354,10 @@ dilla/
 
 ├── dilla_data.json      # UNIFIED DATA SOURCE (chords + drums + all theory)
 
+├── audio_synthesis.rb   # NEW: Comprehensive synthesis module (FM, per-note swing, etc.)
+
+├── synthesis_examples.rb # NEW: Examples demonstrating synthesis capabilities
+
 ├── master.rb            # Master orchestrator (all-in-one workflow)
 
 ├── chords.rb            # Standalone chord generator
@@ -320,6 +378,13 @@ dilla/
 - ✅ Consolidated drums.rb + drums_fixed.rb → drums_consolidated.rb
 - ✅ Consolidated mix.rb + create_final_mixes.rb → mix_consolidated.rb
 - ✅ All scripts reference single source of truth: dilla_data.json
+
+**NEW in v4.1.0:**
+- ✅ Added audio_synthesis.rb - Comprehensive synthesis utilities module
+- ✅ Per-note swing timing for J Dilla-style organic feel
+- ✅ Enhanced FM synthesis with multi-operator support
+- ✅ Additional synthesis methods (subtractive, additive, wavetable)
+- ✅ Added synthesis_examples.rb with 10+ demonstrations
 ```
 
 ## References
