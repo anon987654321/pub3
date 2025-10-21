@@ -1,10 +1,33 @@
 {
   "meta": {
-    "version": "v20.7.0",
-    "updated": "2025-10-21T20:00:00Z",
+    "version": "v20.8.0",
+    "updated": "2025-10-21T21:00:00Z",
     "purpose": "Primary Claude Code instruction manifest - replaces CLAUDE.md",
     "enforced": "Read this file at startup and follow ALL rules strictly",
-    "changelog": "v20.7.0: Integrated docs/openbsd-guidance.md and ZSH_NATIVE_PATTERNS.md - comprehensive OpenBSD + zsh reference"
+    "changelog": "v20.8.0: Added mandatory_workflows - tree.sh before folder work, clean.sh before file edits, frequent master.json reloads"
+  },
+
+  "mandatory_workflows": {
+    "CRITICAL": "These workflows are MANDATORY - failure to follow causes data corruption",
+    "before_folder_work": {
+      "rule": "ALWAYS run tree.sh before starting work in a new folder",
+      "command": "zsh.exe G:/pub/sh/tree.sh /path/to/folder",
+      "purpose": "Audit folder structure, identify sprawl, understand layout",
+      "when": ["First time working in a directory", "After git pull/merge", "Before major refactoring"]
+    },
+    "before_file_modification": {
+      "rule": "ALWAYS run clean.sh on a file before starting modification",
+      "command": "zsh.exe G:/pub/sh/clean.sh /path/to/file",
+      "purpose": "Remove trailing whitespace, fix line endings, normalize formatting",
+      "when": ["Before every Edit operation", "Before every Write operation", "After reading a file that will be modified"],
+      "critical": "Prevents diff pollution and merge conflicts"
+    },
+    "reload_master_json": {
+      "rule": "Reload master.json VERY OFTEN throughout session",
+      "frequency": ["At session start (MANDATORY)", "After every 10-15 tool calls", "Before major decisions", "After user corrections", "When uncertain about rules"],
+      "command": "Read tool on G:/pub/master.json",
+      "why": "Rules evolve, context is added, user teaches new patterns"
+    }
   },
 
   "shell_usage": {
@@ -293,7 +316,10 @@
     "parallel_tool_calls": "Use single message with multiple tool invocations when independent",
     "sequential_dependencies": "Use && in bash for dependent operations (git add && git commit)",
     "explore_codebase": "Use Task tool with subagent_type=Explore for non-needle queries",
-    "todo_tracking": "Use TodoWrite for multi-step tasks, mark completed immediately"
+    "todo_tracking": "Use TodoWrite for multi-step tasks, mark completed immediately",
+    "MANDATORY_before_folder_work": "zsh.exe G:/pub/sh/tree.sh /folder - ALWAYS run before working in new directory",
+    "MANDATORY_before_file_edit": "zsh.exe G:/pub/sh/clean.sh /file - ALWAYS run before Edit/Write operations",
+    "MANDATORY_reload_context": "Read master.json VERY OFTEN - at start, every 10-15 calls, after corrections"
   },
 
   "reference_docs": {
@@ -307,7 +333,10 @@
       "critical_mistakes": [
         "Used head/tail/grep commands despite deny list - MUST use Read tool instead",
         "Tried bash commands when zsh.exe required - always check shell_usage.mandatory first",
-        "Forgot to check master.json rules before starting - read at session start"
+        "Forgot to check master.json rules before starting - read at session start",
+        "Did NOT run tree.sh before starting folder work - causes blind navigation",
+        "Did NOT run clean.sh before file edits - causes diff pollution and merge conflicts",
+        "Did NOT reload master.json frequently - missed evolving rules and context"
       ],
       "successful_patterns": [
         "TodoWrite tracking worked excellently for 30+ PR merges",
