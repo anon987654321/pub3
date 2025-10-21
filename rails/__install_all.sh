@@ -1,33 +1,35 @@
 #!/usr/bin/env zsh
 set -euo pipefail
 
-# Install all 12 Rails apps on VPS
-# Apps as defined in master.json
+# Install all Rails apps on VPS
+# Port assignments from master.json deployment.ports (single source of truth)
 
 APPS=(
-  "brgen:3000"
+  "brgen:11006"
 
-  "brgen_dating:3001"
+  "brgen_dating:11006"
 
-  "brgen_marketplace:3002"
+  "brgen_marketplace:11006"
 
-  "brgen_playlist:3003"
+  "brgen_playlist:11006"
 
-  "brgen_takeaway:3004"
+  "brgen_takeaway:11006"
 
-  "brgen_tv:3005"
+  "brgen_tv:11006"
 
-  "amber:3006"
+  "pubattorney:10002"
 
-  "baibl:3007"
+  "bsdports:10003"
 
-  "blognet:3008"
+  "hjerterom:10004"
 
-  "bsdports:3009"
+  "privcam:10005"
 
-  "hjerterom:3010"
+  "amber:10006"
 
-  "privcam:3011"
+  "blognet:10007"
+
+  "mytoonz:10008"
 
 )
 

@@ -1,7 +1,7 @@
 {
   "meta": {
-    "v": "16.8.0",
-    "updated": "2025-10-21T12:00:00Z",
+    "v": "16.9.0",
+    "updated": "2025-10-21T09:20:00Z",
     "purpose": "llm_driven_development_governance",
     "philosophy": [
       "questions>commands",
@@ -674,7 +674,8 @@
       {"n": "bsdports", "port": 10003, "size": "14KB", "generates": "~1200_lines", "domains": ["bsdports.org"], "type": "standalone", "purpose": "openbsd_ports", "status": "running", "https": false},
       {"n": "hjerterom", "port": 10004, "size": "35KB", "generates": "~1900_lines", "domains": ["hjerterom.no", "hjerterom.brgen.no"], "type": "standalone", "language": "norwegian", "status": "running", "https": false},
       {"n": "privcam", "port": 10005, "size": "28KB", "generates": "~1800_lines", "domains": ["privcam.no"], "type": "standalone", "purpose": "privacy_camera", "status": "running", "https": false},
-      {"n": "pubattorney", "port": 10002, "size": "unknown", "domains": ["pub.attorney"], "type": "standalone", "purpose": "legal_services", "status": "running", "https": false}
+      {"n": "pubattorney", "port": 10002, "size": "unknown", "domains": ["pub.attorney"], "type": "standalone", "purpose": "legal_services", "status": "running", "https": false},
+      {"n": "mytoonz", "port": 10008, "size": "28KB", "generates": "~1800_lines", "domains": ["mytoonz.com"], "type": "standalone", "purpose": "ai_comic_generator", "status": "development", "https": false}
     ],
     "shared_modules": {
       "location": "rails/__shared/",
@@ -742,8 +743,8 @@
         "max_wal_size": "4GB"
       },
       "falcon": {
-        "instances": 7,
-        "ports": [11006, 10002, 10003, 10004, 10005, 10006, 10007],
+        "instances": 8,
+        "ports": [11006, 10002, 10003, 10004, 10005, 10006, 10007, 10008],
         "protocol": "async_http",
         "workers_per_app": "4-5",
         "timeout": 30,
@@ -755,7 +756,7 @@
         "tls": true,
         "port": 443,
         "backends": [11006],
-        "actual_backends": [11006, 10002, 10003, 10004, 10005, 10006, 10007],
+        "actual_backends": [11006, 10002, 10003, 10004, 10005, 10006, 10007, 10008],
         "production_backend": 11006,
         "note": "currently only brgen.no exposed via HTTPS, other apps http-only on localhost"
       },
@@ -771,6 +772,22 @@
         "zones": 49,
         "verbosity": 1
       }
+    },
+    "ports": {
+      "brgen": 11006,
+      "pubattorney": 10002,
+      "bsdports": 10003,
+      "hjerterom": 10004,
+      "privcam": 10005,
+      "amber": 10006,
+      "blognet": 10007,
+      "mytoonz": 10008,
+      "baibl": null,
+      "brgen_dating": "extends:brgen",
+      "brgen_marketplace": "extends:brgen",
+      "brgen_playlist": "extends:brgen",
+      "brgen_takeaway": "extends:brgen",
+      "brgen_tv": "extends:brgen"
     },
     "security": {
       "doas": "permit nopass dev",
