@@ -156,6 +156,73 @@ Rails.application.routes.draw do
 
 end
 EOF
+
+# Create ultraminimal professional layout
+log "Creating PubAttorney application layout"
+mkdir -p app/views/layouts app/assets/stylesheets
+cat <<'LAYOUTEOF' > app/views/layouts/application.html.erb
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= content_for?(:title) ? yield(:title) : "PubAttorney - Free Legal Help" %></title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <meta name="description" content="<%= content_for?(:description) ? yield(:description) : 'Connect with qualified lawyers for free legal consultations' %>">
+  <meta name="theme-color" content="#2c3e50">
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <nav>
+        <div class="logo"><%= link_to "⚖️ PubAttorney", root_path %></div>
+        <div class="nav-links">
+          <%= link_to "Cases", cases_path, class: "nav-link" %>
+          <%= link_to "Resources", legal_resources_path, class: "nav-link" %>
+          <% if user_signed_in? %>
+            <%= link_to "Profile", "#", class: "nav-link" %>
+            <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "btn-text" %>
+          <% else %>
+            <%= link_to "Sign In", new_user_session_path, class: "nav-link" %>
+            <%= link_to "Get Help", new_user_registration_path, class: "btn-primary" %>
+          <% end %>
+        </div>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <% if notice %><div class="flash flash-notice"><%= notice %></div><% end %>
+    <% if alert %><div class="flash flash-alert"><%= alert %></div><% end %>
+    <%= yield %>
+  </main>
+  <footer class="site-footer">
+    <div class="container"><p>&copy; <%= Time.current.year %> PubAttorney. <%= link_to "Privacy", "#" %> &middot; <%= link_to "Terms", "#" %></p></div>
+  </footer>
+</body>
+</html>
+LAYOUTEOF
+
+cat <<'CSSEOF' > app/assets/stylesheets/application.css
+:root{--primary:#2c3e50;--bg:#fafafa;--text:#212121;--border:#e0e0e0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,sans-serif;color:var(--text);background:var(--bg);line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
+.container{max-width:1200px;margin:0 auto;padding:0 1rem}
+.site-header{background:white;border-bottom:1px solid var(--border);padding:1rem 0}
+.site-header nav{display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:1.5rem;font-weight:600;text-decoration:none;color:var(--text)}
+.nav-links{display:flex;gap:1rem;align-items:center}
+.nav-link{text-decoration:none;color:var(--text)}
+main{flex:1;padding:2rem 0}
+.flash{padding:1rem;margin:1rem auto;max-width:1200px;border-radius:4px}
+.flash-notice{background:#e8f5e9;color:#2e7d32}
+.flash-alert{background:#ffebee;color:#c62828}
+.btn-primary{background:var(--primary);color:white;padding:.5rem 1rem;border-radius:4px;text-decoration:none}
+.site-footer{background:white;border-top:1px solid var(--border);padding:2rem 0;text-align:center;color:#666}
+CSSEOF
+
 cat <<EOF > app/views/home/index.html.erb
 <div class="hero">
 

@@ -1142,6 +1142,523 @@ en:
 
 EOF
 
+# Create ultraminimal professional layout
+mkdir -p app/views/layouts
+cat <<'LAYOUTEOF' > app/views/layouts/application.html.erb
+<!DOCTYPE html>
+<html lang="<%= I18n.locale %>">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= content_for?(:title) ? yield(:title) : "Brgen - #{ActsAsTenant.current_tenant&.name || 'Multi-tenant Platform'}" %></title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <meta name="description" content="<%= content_for?(:description) ? yield(:description) : 'Multi-tenant social and marketplace platform' %>">
+  <meta name="theme-color" content="#1a1a1a">
+
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+</head>
+<body class="<%= controller_name %> <%= action_name %>">
+  <header class="site-header">
+    <div class="container">
+      <nav class="nav-main">
+        <div class="nav-brand">
+          <%= link_to root_path, class: "logo-link" do %>
+            <span class="logo">Brgen</span>
+            <% if ActsAsTenant.current_tenant %>
+              <span class="tenant"><%= ActsAsTenant.current_tenant.name %></span>
+            <% end %>
+          <% end %>
+        </div>
+
+        <div class="nav-links">
+          <%= link_to t("nav.listings"), listings_path, class: "nav-link" %>
+          <%= link_to t("nav.cities"), cities_path, class: "nav-link" %>
+
+          <% if user_signed_in? %>
+            <span class="nav-user"><%= current_user.email %></span>
+            <%= button_to t("nav.sign_out"), destroy_user_session_path, method: :delete, class: "nav-link" %>
+          <% else %>
+            <%= link_to t("nav.sign_in"), new_user_session_path, class: "nav-link" %>
+            <%= link_to t("nav.sign_up"), new_user_registration_path, class: "nav-link nav-cta" %>
+          <% end %>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="site-main">
+    <% if notice %>
+      <div class="flash flash-notice"><%= notice %></div>
+    <% end %>
+    <% if alert %>
+      <div class="flash flash-alert"><%= alert %></div>
+    <% end %>
+
+    <%= yield %>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p class="footer-text">
+        &copy; <%= Time.current.year %> Brgen.
+        <%= link_to "Privacy", "#", class: "footer-link" %> &middot;
+        <%= link_to "Terms", "#", class: "footer-link" %> &middot;
+        <%= link_to "About", "#", class: "footer-link" %>
+      </p>
+    </div>
+  </footer>
+</body>
+</html>
+LAYOUTEOF
+
+# Create comprehensive ultraminimal CSS
+mkdir -p app/assets/stylesheets
+cat <<'CSSEOF' > app/assets/stylesheets/application.css
+/* Brgen Ultraminimal Professional Stylesheet */
+/* Brutalist aesthetic with functional clarity */
+
+:root {
+  --color-bg: #fafafa;
+  --color-text: #1a1a1a;
+  --color-border: #e0e0e0;
+  --color-accent: #0066cc;
+  --color-accent-hover: #0052a3;
+  --color-error: #cc0000;
+  --color-success: #00aa00;
+  --color-muted: #666666;
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "SF Mono", Monaco, "Cascadia Code", "Courier New", monospace;
+
+  --space-xs: 0.25rem;
+  --space-s: 0.5rem;
+  --space-m: 1rem;
+  --space-l: 1.5rem;
+  --space-xl: 2rem;
+  --space-xxl: 3rem;
+
+  --radius: 2px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  background: var(--color-bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-m);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: var(--space-m);
+}
+
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.25rem; }
+
+p { margin-bottom: var(--space-m); }
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-accent-hover);
+  text-decoration: underline;
+}
+
+/* Header */
+.site-header {
+  border-bottom: 1px solid var(--color-border);
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-m) 0;
+  gap: var(--space-l);
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  text-decoration: none;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.tenant {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  border-left: 1px solid var(--color-border);
+  padding-left: var(--space-s);
+}
+
+.nav-links {
+  display: flex;
+  gap: var(--space-l);
+  align-items: center;
+}
+
+.nav-link {
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.nav-link:hover {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.nav-cta {
+  background: var(--color-accent);
+  color: white;
+  padding: var(--space-s) var(--space-m);
+  border-radius: var(--radius);
+}
+
+.nav-cta:hover {
+  background: var(--color-accent-hover);
+  color: white;
+}
+
+.nav-user {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+}
+
+/* Main */
+.site-main {
+  flex: 1;
+  padding: var(--space-xxl) 0;
+}
+
+/* Flash messages */
+.flash {
+  padding: var(--space-m);
+  margin-bottom: var(--space-l);
+  border-radius: var(--radius);
+  border-left: 4px solid;
+}
+
+.flash-notice {
+  background: #e8f5e9;
+  border-color: var(--color-success);
+  color: #2e7d32;
+}
+
+.flash-alert {
+  background: #ffebee;
+  border-color: var(--color-error);
+  color: #c62828;
+}
+
+/* Forms */
+.form {
+  max-width: 600px;
+}
+
+.form-group {
+  margin-bottom: var(--space-l);
+}
+
+label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: var(--space-s);
+  font-size: 0.9375rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="url"],
+textarea,
+select {
+  width: 100%;
+  padding: var(--space-s) var(--space-m);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  background: white;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: var(--space-s) var(--space-l);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  background: white;
+  color: var(--color-text);
+  transition: all 0.15s;
+}
+
+.btn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--color-accent);
+  color: white;
+  border-color: var(--color-accent);
+}
+
+.btn-primary:hover {
+  background: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+  color: white;
+}
+
+.btn-danger {
+  background: var(--color-error);
+  color: white;
+  border-color: var(--color-error);
+}
+
+/* Cards */
+.card {
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-l);
+  margin-bottom: var(--space-l);
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: var(--space-m);
+}
+
+/* Grid */
+.grid {
+  display: grid;
+  gap: var(--space-l);
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+@media (max-width: 768px) {
+  .grid-2, .grid-3, .grid-4 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Lists */
+.list-unstyled {
+  list-style: none;
+}
+
+.list-item {
+  padding: var(--space-m) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.list-item:last-child {
+  border-bottom: none;
+}
+
+/* Footer */
+.site-footer {
+  border-top: 1px solid var(--color-border);
+  padding: var(--space-xl) 0;
+  margin-top: auto;
+  background: white;
+}
+
+.footer-text {
+  text-align: center;
+  color: var(--color-muted);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.footer-link {
+  color: var(--color-muted);
+}
+
+.footer-link:hover {
+  color: var(--color-accent);
+}
+
+/* Utilities */
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-muted { color: var(--color-muted); }
+
+.mt-0 { margin-top: 0; }
+.mt-s { margin-top: var(--space-s); }
+.mt-m { margin-top: var(--space-m); }
+.mt-l { margin-top: var(--space-l); }
+.mt-xl { margin-top: var(--space-xl); }
+
+.mb-0 { margin-bottom: 0; }
+.mb-s { margin-bottom: var(--space-s); }
+.mb-m { margin-bottom: var(--space-m); }
+.mb-l { margin-bottom: var(--space-l); }
+.mb-xl { margin-bottom: var(--space-xl); }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nav-main {
+    flex-direction: column;
+    gap: var(--space-m);
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .site-main {
+    padding: var(--space-l) 0;
+  }
+}
+CSSEOF
+
+# Add Stimulus controller for live search
+mkdir -p app/javascript/controllers
+cat <<'JSEOF' > app/javascript/controllers/search_controller.js
+import { Controller } from "@hotwired/stimulus"
+
+export default class extends Controller {
+  static targets = ["input", "results"]
+  static values = { url: String, delay: { type: Number, default: 300 } }
+
+  connect() {
+    this.timeout = null
+  }
+
+  search() {
+    clearTimeout(this.timeout)
+
+    this.timeout = setTimeout(() => {
+      const query = this.inputTarget.value.trim()
+
+      if (query.length < 2) {
+        this.resultsTarget.innerHTML = ""
+        return
+      }
+
+      this.performSearch(query)
+    }, this.delayValue)
+  }
+
+  async performSearch(query) {
+    const url = new URL(this.urlValue, window.location.origin)
+    url.searchParams.set("q", query)
+
+    try {
+      const response = await fetch(url, {
+        headers: { "Accept": "text/html" }
+      })
+
+      if (response.ok) {
+        this.resultsTarget.innerHTML = await response.text()
+      }
+    } catch (error) {
+      console.error("Search failed:", error)
+    }
+  }
+
+  disconnect() {
+    clearTimeout(this.timeout)
+  }
+}
+JSEOF
+
+cat <<'JSEOF' > app/javascript/controllers/dropdown_controller.js
+import { Controller } from "@hotwired/stimulus"
+
+export default class extends Controller {
+  static targets = ["menu"]
+
+  toggle() {
+    this.menuTarget.classList.toggle("hidden")
+  }
+
+  hide(event) {
+    if (!this.element.contains(event.target)) {
+      this.menuTarget.classList.add("hidden")
+    }
+  }
+}
+JSEOF
+
 cat <<EOF > db/seeds.rb
 cities = [
 

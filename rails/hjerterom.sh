@@ -690,6 +690,156 @@ export default class extends Controller {
 
 EOF
 
+# Create ultraminimal professional layout
+log "Creating Hjerterom application layout"
+mkdir -p app/views/layouts
+cat <<'LAYOUTEOF' > app/views/layouts/application.html.erb
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= content_for?(:title) ? yield(:title) : "Hjerterom - Mat til alle" %></title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <meta name="description" content="<%= content_for?(:description) ? yield(:description) : 'Matdeling og matredning i Norge' %>">
+  <meta name="theme-color" content="#e91e63">
+
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+</head>
+<body class="<%= controller_name %> <%= action_name %>">
+  <header class="site-header">
+    <div class="container">
+      <nav class="nav-main">
+        <div class="nav-brand">
+          <%= link_to root_path, class: "logo-link" do %>
+            <span class="logo">❤️ Hjerterom</span>
+          <% end %>
+        </div>
+
+        <div class="nav-links">
+          <%= link_to "Finn mat", distributions_path, class: "nav-link" %>
+          <%= link_to "Gi mat", "#", class: "nav-link" %>
+          <%= link_to "Om oss", "#", class: "nav-link" %>
+
+          <% if user_signed_in? %>
+            <span class="nav-user"><%= current_user.email %></span>
+            <%= button_to "Logg ut", destroy_user_session_path, method: :delete, class: "btn-text" %>
+          <% else %>
+            <%= link_to "Logg inn", new_user_session_path, class: "nav-link" %>
+            <%= link_to "Registrer", new_user_registration_path, class: "btn-primary-sm" %>
+          <% end %>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="site-main">
+    <% if notice %>
+      <div class="flash flash-notice"><%= notice %></div>
+    <% end %>
+    <% if alert %>
+      <div class="flash flash-alert"><%= alert %></div>
+    <% end %>
+
+    <%= yield %>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p class="footer-text">
+        &copy; <%= Time.current.year %> Hjerterom.
+        <%= link_to "Personvern", "#", class: "footer-link" %> &middot;
+        <%= link_to "Vilkår", "#", class: "footer-link" %> &middot;
+        <%= link_to "Kontakt", "#", class: "footer-link" %>
+      </p>
+    </div>
+  </footer>
+</body>
+</html>
+LAYOUTEOF
+
+# Add comprehensive CSS
+mkdir -p app/assets/stylesheets
+cat <<'CSSEOF' > app/assets/stylesheets/application.css
+/* Hjerterom - Ultraminimal Norwegian food sharing platform */
+:root {
+  --primary: #e91e63;
+  --secondary: #f48fb1;
+  --success: #4caf50;
+  --bg: #fafafa;
+  --text: #212121;
+  --border: #e0e0e0;
+  --spacing: 1rem;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 var(--spacing); }
+
+.site-header {
+  background: white;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing) 0;
+}
+
+.logo { font-size: 1.5rem; font-weight: 600; }
+.nav-links { display: flex; gap: var(--spacing); align-items: center; }
+.nav-link { text-decoration: none; color: var(--text); }
+.nav-link:hover { color: var(--primary); }
+
+.site-main { flex: 1; padding: calc(var(--spacing) * 2) 0; }
+
+.flash {
+  padding: var(--spacing);
+  margin-bottom: var(--spacing);
+  border-radius: 4px;
+}
+
+.flash-notice { background: #e8f5e9; color: #2e7d32; }
+.flash-alert { background: #ffebee; color: #c62828; }
+
+.btn-primary-sm {
+  background: var(--primary);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.site-footer {
+  background: white;
+  border-top: 1px solid var(--border);
+  padding: calc(var(--spacing) * 2) 0;
+  margin-top: auto;
+}
+
+.footer-text { text-align: center; color: #666; font-size: 0.875rem; }
+.footer-link { color: #666; text-decoration: none; }
+.footer-link:hover { color: var(--primary); }
+CSSEOF
+
 mkdir -p app/views/hjerterom_logo
 cat <<EOF > app/views/hjerterom_logo/_logo.html.erb
 <%= tag.svg xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 100 50", role: "img", class: "logo", "aria-label": t("hjerterom.logo_alt") do %>

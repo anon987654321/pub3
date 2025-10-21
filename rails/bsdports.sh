@@ -170,6 +170,174 @@ cat << "EOF" > app/views/ports/_port.html.erb
 
 EOF
 
+# Create ultraminimal professional layout
+log "Creating BSDPorts application layout"
+mkdir -p app/views/layouts
+cat <<'LAYOUTEOF' > app/views/layouts/application.html.erb
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= content_for?(:title) ? yield(:title) : "BSDPorts - Package Search" %></title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <meta name="description" content="<%= content_for?(:description) ? yield(:description) : 'Search OpenBSD, FreeBSD, and NetBSD packages' %>">
+  <meta name="theme-color" content="#000084">
+
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+</head>
+<body class="<%= controller_name %> <%= action_name %>">
+  <header class="site-header">
+    <div class="container">
+      <nav class="nav-main">
+        <div class="nav-brand">
+          <%= link_to root_path, class: "logo-link" do %>
+            <span class="logo">BSDPorts</span>
+          <% end %>
+        </div>
+
+        <div class="nav-links">
+          <%= link_to "OpenBSD", ports_path(platform: "openbsd"), class: "nav-link" %>
+          <%= link_to "FreeBSD", ports_path(platform: "freebsd"), class: "nav-link" %>
+          <%= link_to "NetBSD", ports_path(platform: "netbsd"), class: "nav-link" %>
+          <%= link_to "About", "#", class: "nav-link" %>
+        </div>
+
+        <div class="search-box" data-controller="search" data-search-url-value="<%= ports_path(format: :html) %>">
+          <input
+            type="search"
+            placeholder="Search packages..."
+            data-search-target="input"
+            data-action="input->search#search"
+            class="search-input"
+            autofocus
+          >
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="site-main">
+    <% if notice %>
+      <div class="flash flash-notice"><%= notice %></div>
+    <% end %>
+    <% if alert %>
+      <div class="flash flash-alert"><%= alert %></div>
+    <% end %>
+
+    <%= yield %>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p class="footer-text">
+        &copy; <%= Time.current.year %> BSDPorts.
+        <%= link_to "OpenBSD", "https://www.openbsd.org/", class: "footer-link", target: "_blank", rel: "noopener" %> &middot;
+        <%= link_to "FreeBSD", "https://www.freebsd.org/", class: "footer-link", target: "_blank", rel: "noopener" %> &middot;
+        <%= link_to "NetBSD", "https://www.netbsd.org/", class: "footer-link", target: "_blank", rel: "noopener" %> &middot;
+        <%= link_to "API", "#", class: "footer-link" %>
+      </p>
+    </div>
+  </footer>
+</body>
+</html>
+LAYOUTEOF
+
+# Additional Stimulus controllers
+log "Creating BSDPorts Stimulus controllers"
+mkdir -p app/javascript/controllers
+cat <<'JSEOF' > app/javascript/controllers/infinite_scroll_controller.js
+import { Controller } from "@hotwired/stimulus"
+
+export default class extends Controller {
+  static targets = ["entries", "loading"]
+  static values = { url: String, page: { type: Number, default: 1 } }
+
+  connect() {
+    this.observeLastEntry()
+  }
+
+  observeLastEntry() {
+    const options = {
+      root: null,
+      rootMargin: "200px",
+      threshold: 0
+    }
+
+    this.observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          this.loadMore()
+        }
+      })
+    }, options)
+
+    const lastEntry = this.entriesTargets[this.entriesTargets.length - 1]
+    if (lastEntry) {
+      this.observer.observe(lastEntry)
+    }
+  }
+
+  async loadMore() {
+    if (this.loading) return
+
+    this.loading = true
+    this.loadingTarget.classList.remove("hidden")
+
+    try {
+      this.pageValue += 1
+      const url = new URL(this.urlValue, window.location.origin)
+      url.searchParams.set("page", this.pageValue)
+
+      const response = await fetch(url)
+      if (response.ok) {
+        const html = await response.text()
+        this.element.insertAdjacentHTML("beforeend", html)
+        this.observeLastEntry()
+      }
+    } catch (error) {
+      console.error("Failed to load more:", error)
+    } finally {
+      this.loading = false
+      this.loadingTarget.classList.add("hidden")
+    }
+  }
+
+  disconnect() {
+    if (this.observer) {
+      this.observer.disconnect()
+    }
+  }
+}
+JSEOF
+
+cat <<'JSEOF' > app/javascript/controllers/filter_controller.js
+import { Controller } from "@hotwired/stimulus"
+
+export default class extends Controller {
+  static targets = ["checkbox", "item"]
+
+  filter() {
+    const selected = Array.from(this.checkboxTargets)
+      .filter(cb => cb.checked)
+      .map(cb => cb.value)
+
+    this.itemTargets.forEach(item => {
+      const category = item.dataset.category
+
+      if (selected.length === 0 || selected.includes(category)) {
+        item.style.display = "block"
+      } else {
+        item.style.display = "none"
+      }
+    })
+  }
+}
+JSEOF
+
 cat << "EOF" > app/assets/stylesheets/application.scss
 @import "variables";
 
