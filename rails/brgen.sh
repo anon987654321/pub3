@@ -1176,65 +1176,13 @@ EOF
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
-  <meta name="description" content="<%= content_for?(:description) ? yield(:description) : 'Multi-tenant social and marketplace platform' %>">
-  <meta name="theme-color" content="#1a1a1a">
-
-  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-  <%= javascript_importmap_tags %>
-</head>
-<body class="<%= controller_name %> <%= action_name %>">
-  <header class="site-header">
-    <div class="container">
-      <nav class="nav-main">
-        <div class="nav-brand">
-          <%= link_to root_path, class: "logo-link" do %>
-            <span class="logo">Brgen</span>
-            <% if ActsAsTenant.current_tenant %>
-              <span class="tenant"><%= ActsAsTenant.current_tenant.name %></span>
-            <% end %>
-          <% end %>
-        </div>
-
-        <div class="nav-links">
-          <%= link_to t("nav.listings"), listings_path, class: "nav-link" %>
-          <%= link_to t("nav.cities"), cities_path, class: "nav-link" %>
-
-          <% if user_signed_in? %>
-            <span class="nav-user"><%= current_user.email %></span>
-            <%= button_to t("nav.sign_out"), destroy_user_session_path, method: :delete, class: "nav-link" %>
-          <% else %>
-            <%= link_to t("nav.sign_in"), new_user_session_path, class: "nav-link" %>
-            <%= link_to t("nav.sign_up"), new_user_registration_path, class: "nav-link nav-cta" %>
-          <% end %>
-        </div>
-      </nav>
-    </div>
-  </header>
-
-  <main class="site-main">
-    <% if notice %>
-      <div class="flash flash-notice"><%= notice %></div>
-    <% end %>
-    <% if alert %>
-      <div class="flash flash-alert"><%= alert %></div>
-    <% end %>
-
-    <%= yield %>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <p class="footer-text">
-        &copy; <%= Time.current.year %> Brgen.
-        <%= link_to "Privacy", "#", class: "footer-link" %> &middot;
-        <%= link_to "Terms", "#", class: "footer-link" %> &middot;
-        <%= link_to "About", "#", class: "footer-link" %>
-      </p>
-    </div>
-  </footer>
-</body>
-</html>
-LAYOUTEOF
+# Add custom nav links for Brgen
+cat >> app/views/shared/_nav.html.erb << 'NAVLINKS_EOF'
+<% content_for :nav_links do %>
+  <%= link_to t("nav.listings"), listings_path, class: "nav-link" %>
+  <%= link_to t("nav.cities"), cities_path, class: "nav-link" %>
+<% end %>
+NAVLINKS_EOF
 
 
 # Create comprehensive ultraminimal CSS
