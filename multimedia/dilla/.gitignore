@@ -1,0 +1,31 @@
+# Generated audio files
+*.wav
+chords/
+bass/
+drums/
+final/
+drones/
+effects/
+
+# Build artifacts and temp files
+*.log
+render.log
+_*.wav
+voice_*.wav
+chord_*.wav
+bass_*.wav
+pos_*.wav
+pad_*.wav
+sin*.wav
+saw*.wav
+sqr*.wav
+*_raw.wav
+*_loop.wav
+*_trimmed.wav
+temp*.wav
+rhodes_raw_*.wav
+cs80_raw_*.wav
+moog_raw_*.wav
+strings_raw_*.wav
+strings_chorus_*.wav
+ob_raw_*.wav
