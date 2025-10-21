@@ -2,7 +2,7 @@
 # ╔═══════════════════════════════════════════════════════════════╗
 
 # ║  OpenBSD Infrastructure - Complete Rails Deployment          ║
-# ║  Version: 337.3.0                                            ║
+# ║  Version: 337.4.0                                            ║
 # ╚═══════════════════════════════════════════════════════════════╝
 #
 # MANIFEST:
@@ -28,16 +28,16 @@
 #   2. DNS propagation: Wait for ns.brgen.no to resolve
 #   3. Post-point: TLS + relayd + PTR + cron
 #
-# VERIFIED: 2025-10-16 against man.openbsd.org (pf.conf, relayd.conf)
+# VERIFIED: 2025-10-21 against man.openbsd.org (pf.conf, relayd.conf)
 #
 #!/usr/bin/env zsh
-# Unified Rails-OpenBSD Infrastructure v337.3.0
+# Unified Rails-OpenBSD Infrastructure v337.4.0
 # Complete deployment: DNS, TLS, Rails apps, 40+ domains
 set -euo pipefail
 
 # Constants
 
-readonly VERSION="337.3.0"
+readonly VERSION="337.4.0"
 readonly MAIN_IP="185.52.176.18"
 readonly BACKUP_NS="194.63.248.53"
 
@@ -160,24 +160,27 @@ all_domains=(
 
 )
 
-# App to port mappings - random ports for easier management
+# App to port mappings - canonical ports from master.json
+# Source of truth: master.json deployment.ports
 
 typeset -A app_domains
 
 app_domains=(
-  ["brgen:$((RANDOM % 55535 + 10000))]="brgen.no oshlo.no trndheim.no stvanger.no trmso.no reykjavk.is kobenhvn.dk stholm.se gteborg.se mlmoe.se hlsinki.fi lndon.uk mnchester.uk brmingham.uk edinbrgh.uk glasgw.uk lverpool.uk amstrdam.nl rottrdam.nl utrcht.nl brssels.be zrich.ch lchtenstein.li frankfrt.de mrseille.fr mlan.it lsbon.pt lsangeles.com newyrk.us chcago.us dtroit.us houstn.us dllas.us austn.us prtland.com mnneapolis.com"
+  ["brgen:11006"]="brgen.no oshlo.no trndheim.no stvanger.no trmso.no reykjavk.is kobenhvn.dk stholm.se gteborg.se mlmoe.se hlsinki.fi lndon.uk mnchester.uk brmingham.uk edinbrgh.uk glasgw.uk lverpool.uk amstrdam.nl rottrdam.nl utrcht.nl brssels.be zrich.ch lchtenstein.li frankfrt.de mrseille.fr mlan.it lsbon.pt lsangeles.com newyrk.us chcago.us dtroit.us houstn.us dllas.us austn.us prtland.com mnneapolis.com"
 
-  ["amber:$((RANDOM % 55535 + 10000))]="amberapp.com"
+  ["amber:10006"]="amberapp.com"
 
-  ["blognet:$((RANDOM % 55535 + 10000))]="foodielicio.us stacyspassion.com antibettingblog.com anticasinoblog.com antigamblingblog.com foball.no"
+  ["blognet:10007"]="foodielicio.us stacyspassion.com antibettingblog.com anticasinoblog.com antigamblingblog.com foball.no"
 
-  ["bsdports:$((RANDOM % 55535 + 10000))]="bsdports.org"
+  ["bsdports:10003"]="bsdports.org"
 
-  ["hjerterom:$((RANDOM % 55535 + 10000))]="hjerterom.no"
+  ["hjerterom:10004"]="hjerterom.no"
 
-  ["privcam:$((RANDOM % 55535 + 10000))]="privcam.no"
+  ["privcam:10005"]="privcam.no"
 
-  ["pubattorney:$((RANDOM % 55535 + 10000))]="pub.attorney freehelp.legal"
+  ["pubattorney:10002"]="pub.attorney freehelp.legal"
+
+  ["mytoonz:10008"]="mytoonz.com"
 
 )
 
@@ -298,7 +301,7 @@ EOF
   local gems=(
 
     "bundler:2.5.0"
-    "rails:7.2.0"
+    "rails:8.0.3"
 
     "pg:1.5.0"
 
