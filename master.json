@@ -16,11 +16,12 @@
       "when": ["First time working in a directory", "After git pull/merge", "Before major refactoring"]
     },
     "before_file_modification": {
-      "rule": "ALWAYS run clean.sh on a file before starting modification",
-      "command": "zsh.exe G:/pub/sh/clean.sh /path/to/file",
-      "purpose": "Remove trailing whitespace, fix line endings, normalize formatting",
-      "when": ["Before every Edit operation", "Before every Write operation", "After reading a file that will be modified"],
-      "critical": "Prevents diff pollution and merge conflicts"
+      "rule": "ALWAYS run clean.sh on directory containing files before modification",
+      "command": "zsh.exe G:/pub/sh/clean.sh /path/to/directory (or . for current)",
+      "purpose": "Remove CRLF, trailing whitespace, normalize formatting on all text files",
+      "what_it_does": "Recursively processes all text files: tr -d \\r, awk trim, reduce blank lines",
+      "when": ["Before Edit operations on directory", "Before major refactoring", "After git pull/merge"],
+      "critical": "Prevents diff pollution and merge conflicts from whitespace changes"
     },
     "reload_master_json": {
       "rule": "Reload master.json VERY OFTEN throughout session",
@@ -318,7 +319,7 @@
     "explore_codebase": "Use Task tool with subagent_type=Explore for non-needle queries",
     "todo_tracking": "Use TodoWrite for multi-step tasks, mark completed immediately",
     "MANDATORY_before_folder_work": "zsh.exe G:/pub/sh/tree.sh /folder - ALWAYS run before working in new directory",
-    "MANDATORY_before_file_edit": "zsh.exe G:/pub/sh/clean.sh /file - ALWAYS run before Edit/Write operations",
+    "MANDATORY_before_file_edit": "zsh.exe G:/pub/sh/clean.sh /directory - ALWAYS run before Edit ops (cleans all text files)",
     "MANDATORY_reload_context": "Read master.json VERY OFTEN - at start, every 10-15 calls, after corrections"
   },
 
