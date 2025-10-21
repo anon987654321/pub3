@@ -1,7 +1,7 @@
 {
   "meta": {
-    "v": "16.8.0",
-    "updated": "2025-10-21T12:00:00Z",
+    "v": "16.9.0",
+    "updated": "2025-10-21T11:10:00Z",
     "purpose": "llm_driven_development_governance",
     "philosophy": [
       "questions>commands",
@@ -1033,5 +1033,92 @@
         }
       }
     ]
+  },
+
+  "business_plans": {
+    "target_funding": "innovasjonnorge.no",
+    "total_funding_nok": 2800000,
+    "plans": 8,
+    "language": "norwegian",
+    "compliance": {
+      "executive_summary": "required",
+      "market_analysis": "required",
+      "business_model": "required",
+      "technology_description": "required",
+      "roadmap_milestones": "required",
+      "funding_allocation": "required",
+      "team_competence": "required",
+      "sustainability_impact": "required"
+    },
+    "structure": {
+      "baseline": "syre.html from pub2",
+      "template": "__shared/template.html.erb",
+      "data": "data/*.json",
+      "generated": "generated/*.html"
+    },
+    "plans_list": [
+      {
+        "name": "SYRE™",
+        "sector": "Environment & Sustainability",
+        "funding_nok": 250000,
+        "file": "syre.json"
+      },
+      {
+        "name": "SPEIS",
+        "sector": "Maritime + Defense",
+        "funding_nok": 500000,
+        "file": "speis.json"
+      },
+      {
+        "name": "Norwegian Hedge",
+        "sector": "Technology + Finance",
+        "funding_nok": 300000,
+        "file": "norwegianhedge.json"
+      },
+      {
+        "name": "pub.healthcare",
+        "sector": "Health",
+        "funding_nok": 500000,
+        "file": "pubhealthcare.json"
+      },
+      {
+        "name": "Ragnhild",
+        "sector": "Social Innovation",
+        "funding_nok": 150000,
+        "file": "ragnhild.json"
+      },
+      {
+        "name": "Bergen Selvstyreparti",
+        "sector": "Civic Tech",
+        "funding_nok": 200000,
+        "file": "govt_bergen.json"
+      },
+      {
+        "name": "NATO Aurora",
+        "sector": "Maritime + Defense",
+        "funding_nok": 500000,
+        "file": "nato.json"
+      },
+      {
+        "name": "AI³",
+        "sector": "Energy & Environment + Aerospace",
+        "funding_nok": 400000,
+        "file": "ai3.json"
+      }
+    ],
+    "quality_metrics": {
+      "json_file_size_kb": 10,
+      "html_file_size_kb": 100,
+      "duplication_threshold_pct": 3,
+      "responsive_breakpoint": 768,
+      "chart_library": "chart.js",
+      "carousel_library": "swiper@8"
+    },
+    "design": {
+      "logo_font": "Black Han Sans, 70px",
+      "gradient": "linear-gradient(45deg, #ff007f, #00c9ff, #ffcc00, #ff007f)",
+      "animation": "gradientMove 5s infinite linear",
+      "background_size": "400%"
+    }
   }
 }
