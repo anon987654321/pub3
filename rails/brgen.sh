@@ -1145,6 +1145,28 @@ EOF
 # Create ultraminimal professional layout
 mkdir -p app/views/layouts
 cat <<'LAYOUTEOF' > app/views/layouts/application.html.erb
+
+
+# Create routes with root path
+cat <<EOF > config/routes.rb
+Rails.application.routes.draw do
+  resources :cities
+  resources :listings
+  resources :posts do
+    resources :comments, only: [:create, :edit, :update, :destroy]
+    member do
+      post 'upvote'
+      post 'downvote'
+    end
+  end
+  resources :votes, only: [:create]
+
+  get "up" => "rails/health#show", as: :rails_health_check
+
+  root "home#index"
+end
+EOF
+
 <!DOCTYPE html>
 <html lang="<%= I18n.locale %>">
 <head>
@@ -1213,6 +1235,7 @@ cat <<'LAYOUTEOF' > app/views/layouts/application.html.erb
 </body>
 </html>
 LAYOUTEOF
+
 
 # Create comprehensive ultraminimal CSS
 mkdir -p app/assets/stylesheets
