@@ -1,7 +1,7 @@
 {
   "meta": {
-    "version": "v20.5.0",
-    "updated": "2025-10-21T14:00:00Z",
+    "version": "v20.6.0",
+    "updated": "2025-10-21T19:00:00Z",
     "purpose": "Primary Claude Code instruction manifest - replaces CLAUDE.md",
     "enforced": "Read this file at startup and follow ALL rules strictly"
   },
@@ -123,5 +123,45 @@
     "openbsd_manual": "https://man.openbsd.org/ (rc.d, rc.subr, pf.conf, relayd.conf, nsd.conf)",
     "rails_guides": "https://guides.rubyonrails.org/",
     "falcon_server": "https://github.com/socketry/falcon"
+  },
+
+  "lessons_learned": {
+    "session_2025_10_21": {
+      "critical_mistakes": [
+        "Used head/tail/grep commands despite deny list - MUST use Read tool instead",
+        "Tried bash commands when zsh.exe required - always check shell_usage.mandatory first",
+        "Forgot to check master.json rules before starting - read at session start"
+      ],
+      "successful_patterns": [
+        "TodoWrite tracking worked excellently for 30+ PR merges",
+        "git merge -X ours strategy perfect for keeping consolidated versions",
+        "git checkout --ours/--theirs for selective conflict resolution",
+        "Parallel tool calls speed up independent operations significantly",
+        "WebFetch for OpenBSD man pages better than ssh commands"
+      ],
+      "git_workflow": {
+        "merge_prs": "git merge origin/branch --no-edit -X ours (prefer our consolidated code)",
+        "resolve_conflicts": "git checkout --ours file.rb (keep our version) OR git rm (delete theirs)",
+        "cleanup_branches": "git push origin --delete branch1 branch2 branch3 (batch delete)",
+        "verify_clean": "git fetch origin --prune && git branch -r (check remaining branches)"
+      },
+      "environment_quirks": {
+        "cygwin_path": "Tools in Windows AppData not visible to Git Bash - use full paths or zsh",
+        "gh_cli": "Installed via npm but not in bash PATH - user must run from zsh or add to PATH",
+        "ssh_from_bash": "Works fine for remote commands - no PATH issues",
+        "zsh_scripts": "MUST use 'zsh.exe script.sh' NOT 'sh script.sh' or './script.sh'"
+      },
+      "consolidation_strategy": {
+        "multimedia_goal": "4 root files only: dilla.rb, repligen.rb, tts.rb, postpro.rb",
+        "keep_subdirs_for": "Data files (*.wav, *.db, *.json), tools (sox, fluidsynth), cache",
+        "delete_from_subdirs": "All *.rb logic files, backup files (*.bak), temp files",
+        "version_comments": "Add 'Version X.X.X - Consolidated (zero sprawl)' to root files"
+      },
+      "vps_health_check": {
+        "found_issues": "Rails apps running but rcctl reports failed - pexp pattern mismatch",
+        "nsd_issue": "Control disabled in config, processes run but status check fails",
+        "solution": "Use fstat to verify ports listening - more reliable than rcctl check"
+      }
+    }
   }
 }
