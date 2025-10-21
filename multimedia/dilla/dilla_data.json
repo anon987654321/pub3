@@ -8,7 +8,27 @@
       "drum_patterns.json v1.0.0"
     ],
     "philosophy": "consolidation>fragmentation per master.json",
-    "updated": "2025-10-16T23:43:37Z"
+    "updated": "2025-10-16T23:43:37Z",
+    "schema": {
+      "description": "Musical data for algorithmic composition in J Dilla style",
+      "size": "94KB",
+      "sections": {
+        "chords": "Chord progressions, voicings, and harmonic theory",
+        "scales": "Musical scales, modes, and melodic patterns",
+        "rhythms": "Drum patterns, groove templates, and timing data",
+        "effects": "Audio processing parameters and mixing settings",
+        "progressions": "Harmonic movement patterns and cadences",
+        "voicings": "Specific note arrangements for different instruments"
+      },
+      "data_types": {
+        "intervals": "Array of semitone offsets from root",
+        "formula": "String representation using scale degrees",
+        "patterns": "Arrays of hit/rest indicators for rhythms",
+        "velocity": "MIDI velocity values (0-127)",
+        "timing": "Beat positions and swing ratios"
+      },
+      "usage": "Loaded by master.rb for real-time music generation"
+    }
   },
   "chords": {
     "chord_types": {
