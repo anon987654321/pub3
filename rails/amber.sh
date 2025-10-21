@@ -570,96 +570,72 @@ cat > app/views/kondo_ai/declutter_guide.html.erb << 'DECLUTTEREOF'
 </div>
 DECLUTTEREOF
 
-# Create ultraminimal professional layout
-log "Creating Amber application layout"
-mkdir -p app/views/layouts
-cat <<'LAYOUTEOF' > app/views/layouts/application.html.erb
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= content_for?(:title) ? yield(:title) : "Amber - AI-Enhanced Fashion Assistant" %></title>
-  <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
+# Install shared layouts from __shared/layouts
+log "Installing shared layouts for Amber"
+install_shared_layouts "Amber" "#D4A574" "Organize your wardrobe, get style suggestions, and discover fashion trends"
 
-  <meta name="description" content="<%= content_for?(:description) ? yield(:description) : 'Organize your wardrobe, get style suggestions, and discover fashion trends' %>">
-  <meta name="theme-color" content="#D4A574">
-
-  <%= stylesheet_link_tag "amber", "data-turbo-track": "reload" %>
-  <%= javascript_importmap_tags %>
-</head>
-<body class="<%= controller_name %> <%= action_name %>">
-  <header class="site-header">
-    <div class="container">
-      <nav class="nav-main">
-        <div class="nav-brand">
-          <%= link_to root_path, class: "logo-link" do %>
-            <span class="logo">Amber</span>
-          <% end %>
-        </div>
-
-        <div class="nav-links">
-          <%= link_to "Wardrobe", "#", class: "nav-link" %>
-          <%= link_to "Outfits", "#", class: "nav-link" %>
-          <%= link_to "Trends", "#", class: "nav-link" %>
-          <%= link_to "AI Assistant", "#", class: "nav-link" %>
-
-          <% if user_signed_in? %>
-            <span class="nav-user"><%= current_user.email %></span>
-            <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "btn-text" %>
-          <% else %>
-            <%= link_to "Sign In", new_user_session_path, class: "nav-link" %>
-            <%= link_to "Get Started", new_user_registration_path, class: "btn-primary-sm" %>
-          <% end %>
-        </div>
-      </nav>
-    </div>
-  </header>
-
-  <main class="site-main">
-    <% if notice %>
-      <div class="flash flash-notice"><%= notice %></div>
-    <% end %>
-    <% if alert %>
-      <div class="flash flash-alert"><%= alert %></div>
-    <% end %>
-
-    <%= yield %>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-section">
-          <h4>Amber</h4>
-          <p>Your AI-powered fashion companion</p>
-        </div>
-        <div class="footer-section">
-          <h4>Features</h4>
-          <ul class="footer-links">
-            <li><%= link_to "Wardrobe Manager", "#" %></li>
-            <li><%= link_to "Style Assistant", "#" %></li>
-            <li><%= link_to "Outfit Generator", "#" %></li>
-          </ul>
-        </div>
-        <div class="footer-section">
-          <h4>Company</h4>
-          <ul class="footer-links">
-            <li><%= link_to "About", "#" %></li>
-            <li><%= link_to "Privacy", "#" %></li>
-            <li><%= link_to "Terms", "#" %></li>
-          </ul>
-        </div>
+# Add custom nav links for Amber
+cat > app/views/shared/_nav.html.erb << 'NAVEOF'
+<header class="site-header">
+  <div class="container">
+    <nav class="nav-main" role="navigation" aria-label="Main navigation">
+      <div class="nav-brand">
+        <%= link_to root_path, class: "logo-link" do %>
+          <span class="logo">Amber</span>
+        <% end %>
       </div>
-      <p class="footer-copyright">
-        &copy; <%= Time.current.year %> Amber. All rights reserved.
-      </p>
+
+      <div class="nav-links">
+        <%= link_to "Wardrobe", "#", class: "nav-link" %>
+        <%= link_to "Outfits", "#", class: "nav-link" %>
+        <%= link_to "Trends", "#", class: "nav-link" %>
+        <%= link_to "AI Assistant", "#", class: "nav-link" %>
+
+        <% if user_signed_in? %>
+          <span class="nav-user"><%= current_user.email %></span>
+          <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "btn-text" %>
+        <% else %>
+          <%= link_to "Sign In", new_user_session_path, class: "nav-link" %>
+          <%= link_to "Get Started", new_user_registration_path, class: "btn-primary-sm" %>
+        <% end %>
+      </div>
+    </nav>
+  </div>
+</header>
+NAVEOF
+
+# Add custom footer for Amber
+cat > app/views/shared/_footer.html.erb << 'FOOTEREOF'
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>Amber</h4>
+        <p>Your AI-powered fashion companion</p>
+      </div>
+      <div class="footer-section">
+        <h4>Features</h4>
+        <ul class="footer-links">
+          <li><%= link_to "Wardrobe Manager", "#" %></li>
+          <li><%= link_to "Style Assistant", "#" %></li>
+          <li><%= link_to "Outfit Generator", "#" %></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Company</h4>
+        <ul class="footer-links">
+          <li><%= link_to "About", "#" %></li>
+          <li><%= link_to "Privacy", "#" %></li>
+          <li><%= link_to "Terms", "#" %></li>
+        </ul>
+      </div>
     </div>
-  </footer>
-</body>
-</html>
-LAYOUTEOF
+    <p class="footer-copyright">
+      &copy; <%= Time.current.year %> Amber. All rights reserved.
+    </p>
+  </div>
+</footer>
+FOOTEREOF
 
 # Stimulus controllers for interactivity
 log "Creating Amber Stimulus controllers"

@@ -1389,3 +1389,173 @@ generate_crud_views() {
 
     log "CRUD views generated: show, new, edit"
 }
+
+# Install shared layouts from __shared/layouts
+install_shared_layouts() {
+    local app_name="${1:-App}"
+    local theme_color="${2:-#1a1a1a}"
+    local app_description="${3:-Rails Application}"
+    
+    log "Installing shared layouts for ${app_name}"
+    
+    # Ensure directories exist
+    mkdir -p app/views/layouts
+    mkdir -p app/views/shared
+    
+    # Copy shared layout files
+    local shared_layouts_dir="${SCRIPT_DIR}/layouts"
+    
+    if [[ ! -d "$shared_layouts_dir" ]]; then
+        log "ERROR: Shared layouts directory not found at $shared_layouts_dir"
+        return 1
+    fi
+    
+    # Copy main application layout with app-specific customization
+    log "Creating application layout"
+    cat > app/views/layouts/application.html.erb << 'LAYOUT_EOF'
+<!DOCTYPE html>
+<html lang="<%= I18n.locale rescue 'en' %>" dir="ltr">
+<head>
+  <%= render "shared/meta" %>
+  <%= yield :head %>
+</head>
+<body data-controller="<%= controller_name rescue 'application' %>" class="<%= body_classes rescue "#{controller_name} #{action_name}" %>">
+  <%= render "shared/skip_links" %>
+  <%= render "shared/nav" %>
+  
+  <main id="main-content" class="site-main">
+    <%= render "shared/flash" %>
+    <%= yield %>
+  </main>
+  
+  <%= render "shared/footer" %>
+  <%= yield :scripts %>
+</body>
+</html>
+LAYOUT_EOF
+    
+    # Copy partials
+    log "Creating layout partials"
+    cp "$shared_layouts_dir/_meta.html.erb" app/views/shared/_meta.html.erb 2>/dev/null || {
+        log "Creating _meta partial"
+        cat > app/views/shared/_meta.html.erb << 'META_EOF'
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title><%= content_for?(:title) ? yield(:title) : @app_title || "Rails App" %></title>
+<%= csrf_meta_tags rescue nil %>
+<%= csp_meta_tag rescue nil %>
+
+<meta name="description" content="<%= content_for?(:description) ? yield(:description) : @app_description || 'Rails Application' %>">
+<meta name="theme-color" content="<%= @theme_color || '#1a1a1a' %>">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<%= stylesheet_link_tag "application", "data-turbo-track": "reload" rescue nil %>
+<%= javascript_importmap_tags rescue nil %>
+META_EOF
+    }
+    
+    cp "$shared_layouts_dir/_nav.html.erb" app/views/shared/_nav.html.erb 2>/dev/null || {
+        log "Creating _nav partial"
+        cat > app/views/shared/_nav.html.erb << 'NAV_EOF'
+<header class="site-header">
+  <div class="container">
+    <nav class="nav-main" role="navigation" aria-label="Main navigation">
+      <div class="nav-brand">
+        <%= link_to root_path, class: "logo-link" do %>
+          <span class="logo"><%= @app_name || "App" %></span>
+          <% if defined?(ActsAsTenant) && ActsAsTenant.current_tenant %>
+            <span class="tenant"><%= ActsAsTenant.current_tenant.name %></span>
+          <% end %>
+        <% end %>
+      </div>
+
+      <div class="nav-links">
+        <%= yield :nav_links if content_for?(:nav_links) %>
+        
+        <% if defined?(user_signed_in?) && user_signed_in? %>
+          <span class="nav-user"><%= current_user.email %></span>
+          <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "nav-link" %>
+        <% elsif defined?(current_user) && current_user %>
+          <span class="nav-user"><%= current_user.email %></span>
+          <%= link_to "Sign Out", destroy_session_path, method: :delete, class: "nav-link" %>
+        <% else %>
+          <%= link_to "Sign In", new_session_path, class: "nav-link" if defined?(new_session_path) %>
+        <% end %>
+      </div>
+    </nav>
+  </div>
+</header>
+NAV_EOF
+    }
+    
+    cp "$shared_layouts_dir/_flash.html.erb" app/views/shared/_flash.html.erb 2>/dev/null || {
+        log "Creating _flash partial"
+        cat > app/views/shared/_flash.html.erb << 'FLASH_EOF'
+<% if notice %>
+  <div class="flash flash-notice" role="alert" data-controller="flash" data-flash-auto-dismiss-value="true">
+    <%= notice %>
+  </div>
+<% end %>
+
+<% if alert %>
+  <div class="flash flash-alert" role="alert" data-controller="flash" data-flash-auto-dismiss-value="true">
+    <%= alert %>
+  </div>
+<% end %>
+
+<% flash.each do |type, message| %>
+  <% next if type.to_s == "notice" || type.to_s == "alert" %>
+  <div class="flash flash-<%= type %>" role="alert" data-controller="flash" data-flash-auto-dismiss-value="true">
+    <%= message %>
+  </div>
+<% end %>
+FLASH_EOF
+    }
+    
+    cp "$shared_layouts_dir/_footer.html.erb" app/views/shared/_footer.html.erb 2>/dev/null || {
+        log "Creating _footer partial"
+        cat > app/views/shared/_footer.html.erb << 'FOOTER_EOF'
+<footer class="site-footer">
+  <div class="container">
+    <% if content_for?(:footer_content) %>
+      <%= yield :footer_content %>
+    <% else %>
+      <p class="footer-text">
+        &copy; <%= Time.current.year rescue Time.now.year %> <%= @app_name || "App" %>.
+        <%= link_to "Privacy", "#", class: "footer-link" %> &middot;
+        <%= link_to "Terms", "#", class: "footer-link" %> &middot;
+        <%= link_to "About", "#", class: "footer-link" %>
+      </p>
+    <% end %>
+  </div>
+</footer>
+FOOTER_EOF
+    }
+    
+    cp "$shared_layouts_dir/_skip_links.html.erb" app/views/shared/_skip_links.html.erb 2>/dev/null || {
+        log "Creating _skip_links partial"
+        cat > app/views/shared/_skip_links.html.erb << 'SKIP_EOF'
+<a href="#main-content" class="skip-link">Skip to main content</a>
+SKIP_EOF
+    }
+    
+    # Set app variables in ApplicationController
+    log "Setting application variables"
+    cat >> app/controllers/application_controller.rb << APPCTRL_EOF
+
+  # Application branding variables
+  before_action :set_app_variables
+
+  private
+
+  def set_app_variables
+    @app_name = "${app_name}"
+    @theme_color = "${theme_color}"
+    @app_description = "${app_description}"
+  end
+APPCTRL_EOF
+    
+    log "✓ Shared layouts installed successfully"
+}
