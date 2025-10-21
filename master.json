@@ -725,53 +725,12 @@
       }
     },
     "services": {
-      "postgresql": {
-        "v": "16",
-        "port": 5432,
-        "socket": "/tmp",
-        "max_connections": 100,
-        "shared_buffers": "256MB",
-        "effective_cache_size": "1GB",
-        "maintenance_work_mem": "64MB",
-        "checkpoint_completion_target": 0.9,
-        "wal_buffers": "16MB",
-        "default_statistics_target": 100,
-        "random_page_cost": 1.1,
-        "effective_io_concurrency": 200,
-        "work_mem": "4MB",
-        "min_wal_size": "1GB",
-        "max_wal_size": "4GB"
-      },
-      "falcon": {
-        "instances": 8,
-        "ports": [11006, 10002, 10003, 10004, 10005, 10006, 10007, 10008],
-        "protocol": "async_http",
-        "workers_per_app": "4-5",
-        "timeout": 30,
-        "restart_timeout": 60,
-        "note": "brgen_* variants extend brgen, not separate instances"
-      },
-      "relayd": {
-        "protocol": "https",
-        "tls": true,
-        "port": 443,
-        "backends": [11006],
-        "actual_backends": [11006, 10002, 10003, 10004, 10005, 10006, 10007, 10008],
-        "production_backend": 11006,
-        "note": "currently only brgen.no exposed via HTTPS, other apps http-only on localhost"
-      },
-      "pf": {
-        "port": 31415,
-        "rules": "/etc/pf.conf",
-        "max_src_conn": 100,
-        "max_src_conn_rate": "15/5",
-        "synproxy": true
-      },
-      "nsd": {
-        "port": 53,
-        "zones": 49,
-        "verbosity": 1
-      }
+      "note": "Full configuration details in openbsd/README.md",
+      "postgresql": {"v": "16", "port": 5432, "config": "see_openbsd_README"},
+      "falcon": {"instances": 8, "protocol": "async_http", "config": "see_openbsd_README"},
+      "relayd": {"protocol": "https", "tls": true, "port": 443, "config": "see_openbsd_README"},
+      "pf": {"port": 31415, "config": "see_openbsd_README"},
+      "nsd": {"port": 53, "zones": 49, "config": "see_openbsd_README"}
     },
     "ports": {
       "brgen": 11006,
@@ -790,52 +749,16 @@
       "brgen_tv": "extends:brgen"
     },
     "security": {
-      "doas": "permit nopass dev",
-      "fw": "pf fixed source-track",
-      "port": 31415,
-      "dns": true,
-      "dnssec": true,
-      "fde": "prevents VM host start",
-      "hardening": ["disable_root_login", "key_only_auth", "fail2ban_equivalent", "automatic_updates", "minimal_packages", "pf_strict_rules"],
-      "tls": {
-        "provider": "letsencrypt",
-        "version": "1.3",
-        "ciphers": "strong_only",
-        "hsts": true,
-        "ocsp_stapling": true
-      }
+      "note": "Full security configuration in openbsd/README.md",
+      "ssh_port": 31415,
+      "fw": "pf",
+      "tls": "letsencrypt"
     },
-    "backup": {
-      "provider": "tarsnap",
-      "frequency": "daily",
-      "retention": "30d",
-      "targets": ["database", "uploads", "config", "logs"],
-      "verify": "weekly",
-      "encrypt": true
-    },
-    "monitoring": {
-      "uptime": "munin",
-      "logs": "syslog",
-      "errors": "rails_logs",
-      "performance": "rack_mini_profiler",
-      "alerts": ["email", "log"],
-      "websockets": "actioncable_metrics"
-    },
-    "deployment_process": {
-      "steps": ["git_pull", "run_installer_sh", "generate_rails_code", "bundle_install", "rails_db_migrate", "rails_db_seed", "start_falcon", "verify_health", "rollback_on_failure"],
-      "health_check": "/up",
-      "rollback_automatic": true,
-      "zero_downtime": false,
-      "backup_before": true
-    },
-    "payment": {
-      "amt": 69,
-      "cur": "EUR",
-      "per": "yearly",
-      "due": "2026-08-01",
-      "stripe": "https://buy.stripe.com/8wMaEO0i67LS1eE288",
-      "ideal": "https://bunq.me/openbsdams/69/vm08%20server27",
-      "paypal": "https://paypal.me/runbsd/69eur"
+    "operations": {
+      "note": "Backup, monitoring, payment details in openbsd/README.md",
+      "backup": "tarsnap_daily",
+      "monitoring": "munin",
+      "payment_due": "2026-08-01"
     }
   },
 
