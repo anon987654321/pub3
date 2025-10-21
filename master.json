@@ -1,7 +1,7 @@
 {
   "meta": {
-    "v": "16.7.0",
-    "updated": "2025-10-21T07:18:14Z",
+    "v": "16.8.0",
+    "updated": "2025-10-21T12:00:00Z",
     "purpose": "llm_driven_development_governance",
     "philosophy": [
       "questions>commands",
@@ -606,7 +606,7 @@
   "workflows": [
     {"n": "file", "ph": ["scan", "analyze", "implement", "validate"], "t": "5min", "p": true},
     {"n": "feature", "ph": ["discover", "analyze", "design", "implement", "validate"], "t": "30min", "p": false},
-    {"n": "installer", "ph": ["scan", "design", "implement", "validate"], "t": "1h", "p": false, "desc": "zsh_rails_generator"},
+    {"n": "installer", "ph": ["scan", "design", "implement", "validate"], "t": "1h", "p": false, "desc": "zsh_rails_generator", "req": ["layout", "css", "stimulus", "views", "models", "controllers", "routes", "seeds"], "verify": ["grep layouts/application", "grep application.css", "grep _controller.js", "count views > 5"]},
     {"n": "stimulus_controller", "ph": ["design", "implement", "validate"], "t": "15min", "p": false, "desc": "client_side_behavior"},
     {"n": "reflex_action", "ph": ["design", "implement", "validate"], "t": "20min", "p": false, "desc": "server_side_reactive_method"},
     {"n": "framework", "ph": ["scan", "analyze", "ideate", "design", "implement", "validate", "deliver", "learn"], "t": "8h", "p": true},
@@ -868,6 +868,23 @@
   },
 
   "collaboration": {
+    "git": {
+      "large_repo_config": {
+        "threshold_gb": 1.0,
+        "pack_windowMemory": "512m",
+        "pack_packSizeLimit": "512m",
+        "pack_deltaCacheSize": "128m",
+        "http_postBuffer": "524288000",
+        "core_compression": 9,
+        "temp_compression": 0,
+        "reason": "Prevents OOM errors on push for repos >1GB"
+      },
+      "commit_message": {
+        "format": "conventional",
+        "types": ["feat", "fix", "docs", "style", "refactor", "perf", "test", "chore"],
+        "footer": "🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>"
+      }
+    },
     "code_review": {
       "required": false,
       "checklist": ["tests", "security", "performance", "naming", "docs", "stimulus_cleanup", "reflex_authorization"],
@@ -908,6 +925,113 @@
       "template": true,
       "blameless": true,
       "action_items": "tracked"
-    }
+    },
+    "sessions": [
+      {
+        "date": "2025-10-21",
+        "v": "16.7.0",
+        "focus": "vps_verification_and_rails_installer_completion",
+        "lessons": [
+          {
+            "n": "installer_completeness",
+            "issue": "Rails installers missing application.html.erb layouts",
+            "impact": "Generated apps lacked professional UI structure",
+            "solution": "Added ultraminimal layouts to all 6 apps via cat/heredoc",
+            "pattern": "Every installer must generate: layout, CSS, Stimulus controllers, views, models, controllers",
+            "priority": "high"
+          },
+          {
+            "n": "css_architecture",
+            "issue": "No standardized CSS approach across apps",
+            "impact": "Inconsistent UX, missing responsive design",
+            "solution": "Brutalist/minimal CSS with CSS custom properties, mobile breakpoints",
+            "pattern": "Use CSS variables for theming, minimal class names, utility classes for spacing",
+            "priority": "high"
+          },
+          {
+            "n": "stimulus_integration",
+            "issue": "Missing client-side interactivity controllers",
+            "impact": "No live search, infinite scroll, or dynamic filtering",
+            "solution": "Added search_controller.js, infinite_scroll_controller.js, filter_controller.js, dropdown_controller.js",
+            "pattern": "Each feature needs Stimulus controller with lifecycle management (connect/disconnect)",
+            "priority": "medium"
+          },
+          {
+            "n": "git_large_repo",
+            "issue": "git push failed with OOM (3.6GB repo)",
+            "impact": "Cannot push changes to GitHub",
+            "solution": "git config pack.windowMemory=512m, pack.packSizeLimit=512m, pack.deltaCacheSize=128m, http.postBuffer=524288000, core.compression=0 (temp)",
+            "pattern": "For repos >1GB, configure git memory limits before push",
+            "priority": "critical"
+          },
+          {
+            "n": "vps_architecture_clarity",
+            "issue": "Unclear which apps are production vs development",
+            "impact": "Confusion about HTTPS availability and deployment status",
+            "solution": "Documented: brgen.no (11006) HTTPS production, 6 apps (10002-10007) localhost HTTP dev",
+            "pattern": "master.json must clearly indicate app status: production/running/not_deployed and https: true/false",
+            "priority": "high"
+          },
+          {
+            "n": "zsh_vs_bash",
+            "issue": "Mixing bash and zsh patterns",
+            "impact": "Inconsistent shell syntax, portability issues",
+            "solution": "Enforced pure zsh patterns: [[ ]], ${var}, $(<file), no backticks",
+            "pattern": "Use zsh builtin conditionals and parameter expansion, avoid external commands",
+            "priority": "medium"
+          },
+          {
+            "n": "token_efficiency",
+            "issue": "master.json v502 was verbose (30+ sections)",
+            "impact": "High token usage, slower processing",
+            "solution": "Consolidated to token-efficient v16.7.0 (8 top sections, abbreviated keys)",
+            "pattern": "Use short keys (n/v/ph/t), consolidate related config, preserve only essential verbosity",
+            "priority": "medium"
+          },
+          {
+            "n": "cat_heredoc_pattern",
+            "issue": "Inconsistent file generation methods",
+            "impact": "Some installers used echo, some cat, some Write tool",
+            "solution": "Standardized on cat <<EOF or cat <<'EOF' for all file generation",
+            "pattern": "Always use cat with heredocs for file generation in installers, use 'EOF' to prevent variable expansion when needed",
+            "priority": "high"
+          },
+          {
+            "n": "layout_requirements",
+            "issue": "No documentation of required layout elements",
+            "impact": "Incomplete layouts missing CSRF, CSP, flash messages",
+            "solution": "Defined standard layout structure: meta tags, navigation, flash, main, footer",
+            "pattern": "application.html.erb must include: csrf_meta_tags, csp_meta_tag, flash messages (notice/alert), responsive nav, sticky header, flex layout",
+            "priority": "high"
+          },
+          {
+            "n": "verification_workflow",
+            "issue": "No systematic verification of installer completeness",
+            "impact": "Discovered missing layouts only when asked",
+            "solution": "Check pattern: grep for layouts, CSS, JS, views, controllers, models, scaffolds",
+            "pattern": "Before declaring installer complete, verify: layout exists, CSS exists, Stimulus controllers exist, views > 5, has scaffolds or custom controllers",
+            "priority": "high"
+          }
+        ],
+        "metrics": {
+          "apps_enhanced": 6,
+          "lines_added": 1128,
+          "commits": 2,
+          "files_modified": 7,
+          "token_usage": "~103k/200k",
+          "duration": "session",
+          "git_push_issues": 1,
+          "git_config_fixes": 5
+        },
+        "outcomes": {
+          "all_installers_complete": true,
+          "layouts_added": 6,
+          "css_frameworks_added": 6,
+          "stimulus_controllers_added": 8,
+          "vps_documented": true,
+          "git_issues_resolved": true
+        }
+      }
+    ]
   }
 }
