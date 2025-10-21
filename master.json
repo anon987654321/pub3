@@ -47,6 +47,188 @@
       "preserve_state": true
     }
   },
+
+  "aight": {
+    "description": "AI framework for specialized domain assistants with langchainrb integration",
+    "version": "2.0.0",
+    "language": "ruby",
+    "entry_point": "aight/aight.rb",
+    "architecture": {
+      "pattern": "modular",
+      "base_class": "Langchain::Assistant",
+      "llm_providers": [
+        "openai",
+        "anthropic",
+        "gemini",
+        "mistral",
+        "ollama"
+      ],
+      "vector_stores": [
+        "pgvector",
+        "weaviate",
+        "chroma"
+      ],
+      "components": {
+        "config": "lib/aight/config.rb",
+        "prompts": "lib/aight/prompts.rb",
+        "tools": "lib/aight/tools.rb",
+        "assistant": "lib/aight/assistant.rb",
+        "cli": "lib/aight/cli.rb"
+      }
+    },
+    "dependencies": {
+      "required": [
+        "ruby >= 3.3",
+        "langchainrb >= 0.16.0"
+      ],
+      "optional": [
+        "chroma-db",
+        "pgvector",
+        "eqn",
+        "safe_ruby",
+        "replicate",
+        "faker",
+        "twitter",
+        "sentimental",
+        "ferrum",
+        "octokit",
+        "rugged",
+        "listen",
+        "parser",
+        "rubocop-ast",
+        "pledge"
+      ]
+    },
+    "assistants": {
+      "count": 20,
+      "domains": [
+        "legal",
+        "medical",
+        "security",
+        "architecture",
+        "trading",
+        "real_estate",
+        "seo",
+        "audio",
+        "systems",
+        "web_development",
+        "propulsion",
+        "materials",
+        "healthcare",
+        "rocket_science"
+      ],
+      "standards": {
+        "file_size_limit": 20480,
+        "inheritance": "Langchain::Assistant",
+        "documentation_required": true,
+        "modular_structure": "Split files >20KB into modules"
+      }
+    },
+    "features": {
+      "rag": {
+        "enabled": true,
+        "engine": "langchainrb",
+        "vector_store": "pgvector",
+        "implementation": "lib/rag_engine.rb"
+      },
+      "evaluation": {
+        "enabled": true,
+        "framework": "ragas",
+        "metrics": [
+          "faithfulness",
+          "context_relevance",
+          "answer_relevance"
+        ]
+      },
+      "caching": {
+        "enabled": true,
+        "backend": "query_cache.rb"
+      },
+      "session_management": {
+        "enabled": true,
+        "persistence": true,
+        "implementation": "session_manager.rb"
+      },
+      "cognitive_tracking": {
+        "enabled": true,
+        "max_capacity": 7,
+        "description": "7±2 rule for Claude context management"
+      },
+      "knowledge_store": {
+        "enabled": true,
+        "storage": "data/knowledge",
+        "search": true
+      }
+    },
+    "tools": {
+      "built_in": [
+        "calculator",
+        "database",
+        "filesystem",
+        "wikipedia",
+        "weather",
+        "news_retriever"
+      ],
+      "custom": [
+        "web_scraper",
+        "code_analyzer",
+        "github_integration",
+        "project_scanner",
+        "file_watcher"
+      ]
+    },
+    "validation": {
+      "script": "aight/validate.sh",
+      "checks": [
+        "file_size_compliance",
+        "langchainrb_integration",
+        "documentation_coverage",
+        "module_structure"
+      ],
+      "enforcement": {
+        "max_file_size": 20480,
+        "max_lines": 700,
+        "max_method_length": 20,
+        "max_class_length": 300
+      }
+    },
+    "refactoring": {
+      "completed": [
+        {
+          "file": "aight.rb",
+          "before": "42KB (1571 lines)",
+          "after": "1.4KB (88 lines)",
+          "modules": [
+            "config.rb (4.8KB)",
+            "prompts.rb (3.3KB)",
+            "tools.rb (4.3KB)",
+            "assistant.rb (9.1KB)",
+            "cli.rb (19KB)"
+          ],
+          "reduction": "97%"
+        },
+        {
+          "file": "assistants/offensive_operations.rb",
+          "before": "21KB (567 lines)",
+          "after": "4.8KB (169 lines)",
+          "modules": [
+            "offensive_operations/helpers.rb (4.2KB)",
+            "offensive_operations/recon.rb (3.9KB)",
+            "offensive_operations/exploits.rb (7.4KB)"
+          ],
+          "reduction": "77%"
+        }
+      ],
+      "status": "All files under 20KB limit"
+    },
+    "standards_compliance": {
+      "file_size": "enforced",
+      "modular_design": "enforced",
+      "langchainrb_integration": "implemented",
+      "documentation": "required",
+      "validation_tooling": "implemented"
+    }
+  },
   
   "core": {
     "ssh_port": 31415,
