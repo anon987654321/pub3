@@ -189,3 +189,4 @@ render_*.mp3
 local.config.json
 *.wav
 multimedia/tts/.claude/settings.local.json
+bplans/VALIDATION_SUMMARY.txt
