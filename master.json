@@ -1033,5 +1033,194 @@
         }
       }
     ]
+  },
+
+  "rails": {
+    "layouts": {
+      "shared_path": "rails/__shared/layouts/",
+      "components": [
+        "application.html.erb",
+        "_meta.html.erb",
+        "_nav.html.erb",
+        "_flash.html.erb",
+        "_footer.html.erb",
+        "_skip_links.html.erb",
+        "visualizer.css",
+        "visualizer.js",
+        "visualizer_controller.rb",
+        "visualizer_index.html.erb",
+        "visualizer_layout.html.erb"
+      ],
+      "standards": {
+        "meta_tags_required": ["charset", "viewport", "csrf", "csp"],
+        "accessibility": {
+          "skip_links": true,
+          "aria_labels": true,
+          "semantic_html": true,
+          "role_attributes": true
+        },
+        "performance": {
+          "turbo_enabled": true,
+          "importmap": true,
+          "asset_pipeline": "propshaft",
+          "lazy_loading": true
+        },
+        "mobile": {
+          "viewport": "width=device-width, initial-scale=1.0, viewport-fit=cover",
+          "safe_area_insets": true,
+          "pwa_capable": true,
+          "responsive_design": true
+        },
+        "seo": {
+          "meta_description": true,
+          "canonical_urls": true,
+          "open_graph": "optional",
+          "structured_data": "optional"
+        }
+      },
+      "customization": {
+        "app_variables": ["@app_name", "@theme_color", "@app_description"],
+        "override_partials": true,
+        "content_for_blocks": ["title", "head", "nav_links", "footer_content", "scripts"],
+        "layout_variants": ["application", "visualizer", "minimal"]
+      }
+    },
+    "brgen": {
+      "platform": {
+        "type": "multi_tenant_hub",
+        "main_app": "brgen",
+        "sub_apps": [
+          "brgen_dating",
+          "brgen_marketplace",
+          "brgen_playlist",
+          "brgen_takeaway",
+          "brgen_tv"
+        ],
+        "standalone_apps": [
+          "amber",
+          "baibl",
+          "mytoonz"
+        ],
+        "features": {
+          "sso": true,
+          "shared_sessions": true,
+          "unified_navigation": true,
+          "acts_as_tenant": true,
+          "cross_subdomain_auth": true
+        }
+      },
+      "domains": {
+        "production": "brgen.no",
+        "subdomains": ["dating", "marketplace", "playlist", "takeaway", "tv"],
+        "cities": [
+          "bergen", "oslo", "trondheim", "stavanger", "tromso", "longyearbyen",
+          "reykjavik", "kobenhavn", "stockholm", "goteborg", "malmo", "helsinki",
+          "london", "cardiff", "manchester", "birmingham", "liverpool", "edinburgh",
+          "glasgow", "amsterdam", "rotterdam", "utrecht", "brussels", "zurich",
+          "liechtenstein", "frankfurt", "warsaw", "gdansk", "bordeaux", "marseille",
+          "milan", "lisbon", "losangeles", "newyork", "chicago", "houston",
+          "dallas", "austin", "portland", "minneapolis"
+        ]
+      },
+      "playlist": {
+        "visualizer_enabled": true,
+        "visualizer_path": "/visualizer",
+        "visualizer_assets": {
+          "css": "visualizer.css",
+          "js": "visualizer.js",
+          "layout": "visualizer.html.erb"
+        },
+        "audio_formats": ["youtube", "mp3", "m3u", "json"],
+        "playlist_endpoints": [
+          "/visualizer/playlist.json",
+          "/visualizer/playlist.m3u",
+          "/visualizer/index.json"
+        ],
+        "features": {
+          "beat_detection": true,
+          "spectral_analysis": true,
+          "visualization_modes": 8,
+          "city_carousel": true,
+          "mobile_gestures": true,
+          "dual_audio_engines": true,
+          "youtube_fallback": true,
+          "crossfade": true,
+          "auto_mode_switching": true,
+          "performance_adaptive": true
+        },
+        "cities_carousel": 40,
+        "tracks_default": 20
+      },
+      "routing": {
+        "subdomain_constraints": true,
+        "subdomain_routing": {
+          "dating": "constraints subdomain: 'dating' do",
+          "marketplace": "constraints subdomain: 'marketplace' do",
+          "playlist": "constraints subdomain: 'playlist' do",
+          "takeaway": "constraints subdomain: 'takeaway' do",
+          "tv": "constraints subdomain: 'tv' do"
+        },
+        "city_routing": {
+          "pattern": "constraints subdomain: /^(bergen|oslo|trondheim|...)$/ do",
+          "tenant_resolution": "ActsAsTenant.current_tenant = City.find_by(subdomain: request.subdomain)"
+        }
+      }
+    },
+    "apps": {
+      "amber": {
+        "name": "Amber",
+        "description": "AI-Enhanced Fashion & Wardrobe Assistant",
+        "theme_color": "#D4A574",
+        "features": ["marie_kondo_ai", "wardrobe_management", "outfit_generation", "style_assistant"],
+        "ai_services": ["langchain", "openai", "weaviate"],
+        "layout_customization": {
+          "nav": "custom",
+          "footer": "custom_sections"
+        }
+      },
+      "baibl": {
+        "name": "BAIBL",
+        "description": "AI Bible Application with Norwegian Interface",
+        "theme_color": "#1a1a1a",
+        "locale": "nb",
+        "features": ["biblical_text_analysis", "ai_translation", "precision_metrics", "norwegian_interface"],
+        "ai_services": ["langchain", "openai", "weaviate"],
+        "layout_customization": {
+          "language": "norwegian",
+          "fonts": ["IBM Plex Sans", "IBM Plex Mono", "Noto Serif"],
+          "nav": "custom_norwegian",
+          "footer": "custom_norwegian"
+        }
+      },
+      "mytoonz": {
+        "name": "MyToonz",
+        "description": "AI-Powered Comic Strip Generator",
+        "theme_color": "#6366f1",
+        "features": ["comic_generation", "replicate_ai", "photo_upload", "mood_selection"],
+        "ai_services": ["replicate"],
+        "layout_customization": {
+          "type": "minimal",
+          "fullscreen": true
+        }
+      }
+    },
+    "installer_conventions": {
+      "layout_installation": {
+        "method": "install_shared_layouts()",
+        "parameters": ["app_name", "theme_color", "app_description"],
+        "customization": "Override partials in app/views/shared/ after installation"
+      },
+      "file_generation": {
+        "preferred_method": "cat <<'EOF'",
+        "use_single_quotes": "when content contains variables that shouldn't expand",
+        "use_double_quotes": "when shell variable expansion is needed"
+      },
+      "directory_structure": {
+        "layouts": "app/views/layouts/",
+        "partials": "app/views/shared/",
+        "assets_css": "app/assets/stylesheets/",
+        "assets_js": "app/assets/javascripts/"
+      }
+    }
   }
 }
