@@ -690,6 +690,14 @@ end
 
 SOX = find_sox
 
+# Configure audio synthesis module
+AudioSynthesis.sox_path = SOX
+
+# Enable per-note swing timing (J Dilla's signature technique)
+ENABLE_PER_NOTE_SWING = true
+SWING_AMOUNT = 0.542  # Golden ratio swing (54.2%)
+MICROTONAL_RANGE = 5  # ±5 cents for analog warmth
+
 # Load unified data from dilla_data.json (consolidation>fragmentation per master.json)
 DILLA_DATA = JSON.parse(File.read(File.join(__dir__, "dilla_data.json")))
 
@@ -765,6 +773,20 @@ end
 # ============================================================================
 
 def generate_chord(freqs, duration, instrument)
+  # Use new synthesis module with per-note swing if enabled
+  if ENABLE_PER_NOTE_SWING && instrument == "fm"
+    output_file = "chord_out.wav"
+    AudioSynthesis.generate_chord_with_swing(
+      freqs,
+      duration,
+      output_file,
+      swing: SWING_AMOUNT,
+      microtonal_range: MICROTONAL_RANGE
+    )
+    return output_file
+  end
+  
+  # Original synthesis methods for other instruments
   freqs.each_with_index do |freq, i|
     case instrument
     when "rhodes" then Dilla::Synthesis.rhodes(i, freq, -10, duration, SOX)
