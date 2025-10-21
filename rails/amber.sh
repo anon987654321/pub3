@@ -570,6 +570,160 @@ cat > app/views/kondo_ai/declutter_guide.html.erb << 'DECLUTTEREOF'
 </div>
 DECLUTTEREOF
 
+# Create ultraminimal professional layout
+log "Creating Amber application layout"
+mkdir -p app/views/layouts
+cat <<'LAYOUTEOF' > app/views/layouts/application.html.erb
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= content_for?(:title) ? yield(:title) : "Amber - AI-Enhanced Fashion Assistant" %></title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <meta name="description" content="<%= content_for?(:description) ? yield(:description) : 'Organize your wardrobe, get style suggestions, and discover fashion trends' %>">
+  <meta name="theme-color" content="#D4A574">
+
+  <%= stylesheet_link_tag "amber", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+</head>
+<body class="<%= controller_name %> <%= action_name %>">
+  <header class="site-header">
+    <div class="container">
+      <nav class="nav-main">
+        <div class="nav-brand">
+          <%= link_to root_path, class: "logo-link" do %>
+            <span class="logo">Amber</span>
+          <% end %>
+        </div>
+
+        <div class="nav-links">
+          <%= link_to "Wardrobe", "#", class: "nav-link" %>
+          <%= link_to "Outfits", "#", class: "nav-link" %>
+          <%= link_to "Trends", "#", class: "nav-link" %>
+          <%= link_to "AI Assistant", "#", class: "nav-link" %>
+
+          <% if user_signed_in? %>
+            <span class="nav-user"><%= current_user.email %></span>
+            <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "btn-text" %>
+          <% else %>
+            <%= link_to "Sign In", new_user_session_path, class: "nav-link" %>
+            <%= link_to "Get Started", new_user_registration_path, class: "btn-primary-sm" %>
+          <% end %>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="site-main">
+    <% if notice %>
+      <div class="flash flash-notice"><%= notice %></div>
+    <% end %>
+    <% if alert %>
+      <div class="flash flash-alert"><%= alert %></div>
+    <% end %>
+
+    <%= yield %>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>Amber</h4>
+          <p>Your AI-powered fashion companion</p>
+        </div>
+        <div class="footer-section">
+          <h4>Features</h4>
+          <ul class="footer-links">
+            <li><%= link_to "Wardrobe Manager", "#" %></li>
+            <li><%= link_to "Style Assistant", "#" %></li>
+            <li><%= link_to "Outfit Generator", "#" %></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Company</h4>
+          <ul class="footer-links">
+            <li><%= link_to "About", "#" %></li>
+            <li><%= link_to "Privacy", "#" %></li>
+            <li><%= link_to "Terms", "#" %></li>
+          </ul>
+        </div>
+      </div>
+      <p class="footer-copyright">
+        &copy; <%= Time.current.year %> Amber. All rights reserved.
+      </p>
+    </div>
+  </footer>
+</body>
+</html>
+LAYOUTEOF
+
+# Stimulus controllers for interactivity
+log "Creating Amber Stimulus controllers"
+mkdir -p app/javascript/controllers
+cat <<'JSEOF' > app/javascript/controllers/wardrobe_controller.js
+import { Controller } from "@hotwired/stimulus"
+
+export default class extends Controller {
+  static targets = ["item", "filter"]
+
+  connect() {
+    console.log("Wardrobe controller connected")
+  }
+
+  filterItems(event) {
+    const category = event.target.value
+    this.itemTargets.forEach(item => {
+      if (category === "all" || item.dataset.category === category) {
+        item.style.display = "block"
+      } else {
+        item.style.display = "none"
+      }
+    })
+  }
+
+  toggleFavorite(event) {
+    event.currentTarget.classList.toggle("favorited")
+  }
+}
+JSEOF
+
+cat <<'JSEOF' > app/javascript/controllers/outfit_generator_controller.js
+import { Controller } from "@hotwired/stimulus"
+
+export default class extends Controller {
+  static targets = ["result", "loading"]
+
+  async generate() {
+    this.loadingTarget.classList.remove("hidden")
+    this.resultTarget.innerHTML = ""
+
+    try {
+      const response = await fetch("/kondo_ai/suggest_outfits", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-Token": document.querySelector("[name='csrf-token']").content
+        },
+        body: JSON.stringify({ occasion: "casual" })
+      })
+
+      if (response.ok) {
+        const html = await response.text()
+        this.resultTarget.innerHTML = html
+      }
+    } catch (error) {
+      console.error("Failed to generate outfit:", error)
+    } finally {
+      this.loadingTarget.classList.add("hidden")
+    }
+  }
+}
+JSEOF
+
 # Stylesheet
 log "Creating Amber stylesheet"
 mkdir -p app/assets/stylesheets
