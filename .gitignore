@@ -189,3 +189,30 @@ render_*.mp3
 local.config.json
 *.wav
 multimedia/tts/.claude/settings.local.json
+
+# Multimedia output files
+multimedia/dilla/bass/
+multimedia/dilla/chords/
+multimedia/dilla/drones/
+multimedia/dilla/drums/
+multimedia/dilla/effects/
+multimedia/dilla/*.wav
+multimedia/dilla/*.mp3
+multimedia/dilla/*.log
+
+multimedia/postpro/output/
+multimedia/postpro/*.png
+multimedia/postpro/*.jpg
+
+multimedia/repligen/output/
+multimedia/repligen/*.png
+multimedia/repligen/*.jpg
+
+multimedia/tts/output/
+multimedia/tts/*.wav
+multimedia/tts/*.mp3
+multimedia/tts/*.log
+
+# Binary archives
+multimedia/**/*.tar.gz
+multimedia/**/*.zip
