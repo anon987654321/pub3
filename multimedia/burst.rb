@@ -128,8 +128,9 @@ def make_industrial_clap
   # Double-hit industrial clap
   sox("-n _clap1.wav synth 0.08 noise lowpass 3000 highpass 800 fade h 0.001 0.08 0.03 gain -8")
   sox("-n _clap2.wav synth 0.08 noise lowpass 3000 highpass 800 fade h 0.001 0.08 0.03 gain -10")
-  sox("_clap1.wav _clap2.wav _clap.wav pad 0 0 0.015")
-  cleanup("_clap1.wav", "_clap2.wav")
+  sox("_clap2.wav _clap2_delayed.wav pad 0.015 0")
+  sox("_clap1.wav _clap2_delayed.wav _clap.wav")
+  cleanup("_clap1.wav", "_clap2.wav", "_clap2_delayed.wav")
   "_clap.wav"
 end
 
