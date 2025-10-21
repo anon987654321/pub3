@@ -1,7 +1,7 @@
 {
   "meta": {
-    "v": "16.8.0",
-    "updated": "2025-10-21T12:00:00Z",
+    "v": "16.10.0",
+    "updated": "2025-10-21T09:26:00Z",
     "purpose": "llm_driven_development_governance",
     "philosophy": [
       "questions>commands",
@@ -819,6 +819,81 @@
       "stripe": "https://buy.stripe.com/8wMaEO0i67LS1eE288",
       "ideal": "https://bunq.me/openbsdams/69/vm08%20server27",
       "paypal": "https://paypal.me/runbsd/69eur"
+    }
+  },
+
+  "multimedia": {
+    "subsystems": {
+      "dilla": {
+        "type": "music_generation",
+        "language": "ruby",
+        "entry_point": "master.rb",
+        "dependencies": ["sox", "ffmpeg", "ruby-3.3"],
+        "output_formats": ["wav", "mp3"],
+        "standards": {
+          "sample_rate": 44100,
+          "bit_depth": 16,
+          "channels": 2
+        },
+        "data": {
+          "file": "dilla_data.json",
+          "size": "94KB",
+          "contains": "chord_theory, drum_patterns, scales"
+        }
+      },
+      "postpro": {
+        "type": "image_processing",
+        "language": "ruby",
+        "entry_point": "postpro.rb",
+        "dependencies": ["imagemagick", "libvips", "ruby-vips", "ruby-3.3"],
+        "output_formats": ["png", "jpg"],
+        "standards": {
+          "max_resolution": "4096x4096",
+          "color_space": "sRGB"
+        },
+        "exceptions": {
+          "file_size": "postpro.rb exceeds 20KB (28KB) - complex working code"
+        }
+      },
+      "repligen": {
+        "type": "ai_image_generation",
+        "language": "ruby",
+        "entry_point": "repligen.rb",
+        "dependencies": ["python", "replicate-api", "ruby-3.3"],
+        "output_formats": ["png"],
+        "workflows": ["lora_masterpiece_workflow.sh"],
+        "integration": "postpro for refinement"
+      },
+      "tts": {
+        "type": "text_to_speech",
+        "language": "ruby",
+        "entry_point": "smart_say.rb",
+        "dependencies": ["piper-tts", "sherpa-onnx", "ruby-3.3"],
+        "output_formats": ["wav", "mp3"],
+        "engines": ["piper", "sherpa", "gtts", "replicate", "system"],
+        "features": ["claude_integration", "multi_language", "voice_selection"]
+      }
+    },
+    "standards": {
+      "file_size_limit": 20480,
+      "exceptions": ["postpro/postpro.rb", "repligen/archive/*"],
+      "no_backup_files": true,
+      "gitignore_output": true,
+      "gitignore_logs": true,
+      "gitignore_binaries": true,
+      "documentation_required": true,
+      "readme_per_subsystem": true
+    },
+    "validation": {
+      "script": "multimedia/validate_all.sh",
+      "run_on": ["commit", "push"],
+      "checks": ["file_size", "backups", "logs", "binaries", "documentation", "syntax"],
+      "enforce": true
+    },
+    "integration": {
+      "cross_subsystem": ["repligen→postpro", "dilla→tts"],
+      "master_json_governed": true,
+      "follows_philosophy": ["consolidation>fragmentation", "minimize_file_sprawl", "no_backups_without_permission"]
     }
   },
 
