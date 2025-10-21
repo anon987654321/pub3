@@ -1,26 +1,127 @@
 {
   "meta": {
-    "version": "v20.4.0",
-    "updated": "2025-10-21T13:00:00Z",
-    "purpose": "multi_llm_convergence_with_rails_deployment_knowledge"
+    "version": "v20.5.0",
+    "updated": "2025-10-21T14:00:00Z",
+    "purpose": "Primary Claude Code instruction manifest - replaces CLAUDE.md",
+    "enforced": "Read this file at startup and follow ALL rules strictly"
   },
+
+  "shell_usage": {
+    "mandatory": {
+      "on_windows_cygwin": "ALWAYS use 'zsh.exe' command prefix for shell scripts",
+      "ssh_commands": "Use 'ssh user@host command' NOT bash - approved pattern",
+      "pure_zsh_patterns": "Use zsh builtins: ${var//pattern/replace}, ${(s/ /)array}, ${(@k)assoc}, [[ ]] tests",
+      "never_use": ["bash", "sh", "grep", "sed", "awk", "find", "cat", "head", "tail", "echo for output"]
+    },
+    "zsh_pattern_examples": {
+      "string_replacement": "${token4_raw//$'\\r'/} - remove CRLF without sed/tr",
+      "substring_extraction": "${salt_hash:0:16} - first 16 chars without cut",
+      "array_from_lines": "arr=(\"${(@f)$(command)}\") - split by newlines",
+      "array_iteration": "for item in \"${arr[@]}\"; do ... done",
+      "assoc_array_keys": "for key in \"${(@k)hash}\"; do ... done",
+      "pattern_matching": "[[ \"$str\" == *pattern* ]] not grep",
+      "array_filtering": "for line in \"${arr[@]}\"; do [[ \"$line\" != *skip* ]] && filtered+=(\"$line\"); done",
+      "word_splitting": "for word in ${(s/ /)string}; do ... done",
+      "command_substitution": "local var=$(command) or local var=$(<file)",
+      "conditional_test": "[[ $EUID -eq 0 ]] || error 'need root'",
+      "file_test": "[[ -f /path/file ]] && echo exists",
+      "string_concat": "local full=\"${prefix}${suffix}\" no + needed"
+    },
+    "prefer_tools_over_bash": {
+      "file_search": "Glob tool NOT find or ls",
+      "content_search": "Grep tool NOT grep or rg commands",
+      "read_files": "Read tool NOT cat/head/tail",
+      "edit_files": "Edit tool NOT sed/awk",
+      "write_files": "Write tool NOT echo >/cat <<EOF",
+      "communicate": "Output text directly NOT echo/printf"
+    },
+    "approved_bash_uses": {
+      "git": "git status, git add, git commit (sequential with &&)",
+      "ssh": "ssh user@host 'remote command'",
+      "system": "pkg_add, rcctl, pfctl, systemctl, service commands",
+      "approved_auto": ["ssh:*", "zsh.exe:*"]
+    }
+  },
+
   "rails": {
     "deployment_workflow": {
       "golden_rule": "ALWAYS fix installer in G:/pub/rails/*.sh or G:/pub/openbsd/openbsd.sh FIRST before deploying to VPS",
-      "steps": ["edit_installer_locally", "test_syntax", "upload_to_vps", "run_installer", "verify"],
-      "forbidden": ["manual VPS file edits without updating installer", "production hotfixes without installer update"]
+      "steps": ["edit_installer_locally", "test_syntax_zsh", "upload_to_vps", "run_installer", "verify"],
+      "forbidden": ["manual VPS file edits without updating installer", "production hotfixes without installer update"],
+      "syntax_check": "zsh.exe -n script.sh before upload"
     },
     "vps_access": {
       "architecture": "server27 (HOST) -> vm08 (GUEST running Rails)",
-      "ssh_to_vm": "ssh dev@185.52.176.18 port 22",
+      "ssh_to_vm": "ssh dev@185.52.176.18",
       "ssh_to_host": "ssh -p 31415 dev@server27.openbsd.amsterdam",
-      "doas": "permit nopass dev on vm08"
+      "doas": "permit nopass dev on vm08",
+      "command_pattern": "ssh dev@185.52.176.18 'command here'"
     },
-    "installer_must_generate": ["config/routes.rb with root route", "models with class declarations", "layouts/application.html.erb", "rc.d scripts"],
+    "installer_must_generate": [
+      "config/routes.rb with root route",
+      "models with class declarations",
+      "layouts/application.html.erb",
+      "rc.d scripts with correct pexp patterns"
+    ],
     "common_errors": {
       "missing_root_route": "add root directive to routes.rb",
       "scope_new_conflict": "use scope :newest not :new",
       "bundler": "use bundle exec when vendor/bundle exists"
     }
+  },
+
+  "openbsd": {
+    "rc_scripts": {
+      "pexp_pattern": "Regular expression for pgrep to find daemon process",
+      "default_pexp": "Combines daemon path + daemon_flags",
+      "custom_pexp": "Override after sourcing rc.subr, must match actual process",
+      "check_failure_causes": [
+        "pgrep finds no matching processes",
+        "pexp regex doesn't match running process",
+        "requires root but rc_usercheck not set to NO"
+      ],
+      "debugging": [
+        "ps aux | grep processname",
+        "pgrep -fl 'pexp_pattern'",
+        "fstat | grep port_number",
+        "rcctl check service_name",
+        "doas rcctl -d start service_name (debug mode)"
+      ]
+    },
+    "service_health_check": {
+      "postgresql": "rcctl check postgresql && psql -U postgres -c 'SELECT version()'",
+      "redis": "rcctl check redis && redis-cli ping",
+      "nsd": "rcctl check nsd && nsd-control status (if control enabled)",
+      "httpd": "rcctl check httpd && fstat | grep httpd",
+      "relayd": "rcctl check relayd && relayctl show summary",
+      "pf": "pfctl -si (special variable, no rc.d script)",
+      "rails_apps": "fstat | grep 'port_number' to verify listening"
+    },
+    "dns_dnssec": {
+      "tools": "ldns-keygen, ldns-signzone, nsd, nsd-control",
+      "key_types": "ZSK: ECDSAP256SHA256 -b 256, KSK: ECDSAP256SHA256 -k -b 256",
+      "zone_signing": "ldns-signzone -n -p -s salt zone.file zsk.key ksk.key",
+      "verification": "dig +dnssec @localhost domain.tld"
+    }
+  },
+
+  "file_organization": {
+    "reduce_sprawl": "Consolidate related files, remove duplicates",
+    "tree_command": "zsh.exe G:/pub/sh/tree.sh G:/pub to audit structure",
+    "git_hygiene": "Run 'git status' before major changes, commit atomically",
+    "restore_logic": "git diff HEAD to check for lost logic before edits"
+  },
+
+  "workflow_patterns": {
+    "parallel_tool_calls": "Use single message with multiple tool invocations when independent",
+    "sequential_dependencies": "Use && in bash for dependent operations (git add && git commit)",
+    "explore_codebase": "Use Task tool with subagent_type=Explore for non-needle queries",
+    "todo_tracking": "Use TodoWrite for multi-step tasks, mark completed immediately"
+  },
+
+  "reference_docs": {
+    "openbsd_manual": "https://man.openbsd.org/ (rc.d, rc.subr, pf.conf, relayd.conf, nsd.conf)",
+    "rails_guides": "https://guides.rubyonrails.org/",
+    "falcon_server": "https://github.com/socketry/falcon"
   }
 }
