@@ -440,119 +440,96 @@ end
 EOF
 
 # Create Norwegian-language views with dark theme
+# Install shared layouts from __shared/layouts with BAIBL customization
+log "Installing shared layouts for BAIBL"
 mkdir -p app/views/layouts
+mkdir -p app/views/shared
 
-cat <<EOF > app/views/layouts/application.html.erb
-
+# Create custom BAIBL layout (Norwegian-focused with custom structure)
+cat > app/views/layouts/application.html.erb << 'BAIBL_LAYOUT_EOF'
 <!DOCTYPE html>
-
 <html lang="nb">
-
 <head>
-
-  <meta charset="UTF-8">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title><%= yield(:title) || t('baibl.app_name') %> - <%= t('baibl.tagline') %></title>
-
-  <meta name="description" content="<%= yield(:description) || t('baibl.description') %>">
-
-  <meta name="keywords" content="<%= yield(:keywords) || 'BAIBL, AI-Bibel, lingvistikk, religiøs, AI, teknologi, presisjon' %>">
-
-  <meta name="author" content="BAIBL">
-
-  <link rel="canonical" href="<%= request.original_url %>">
-
-  <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
-
+  <%= render "shared/meta" %>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;300;400;500;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Serif:ital@0;1&display=swap" rel="stylesheet">
-
-  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-  <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
-
   <%= yield(:schema) %>
 </head>
-
 <body>
-
-  <header role="banner">
-
-    <div class="nav-bar" role="navigation" aria-label="<%= t('shared.footer_nav') %>">
-
-      <div>
-
-        <%= link_to root_path do %>
-
-          <h1 class="hero-title"><%= t('baibl.app_name') %></h1>
-
-        <% end %>
-
-      </div>
-
-      <nav class="main-nav">
-
-        <%= link_to t('shared.about'), about_path %>
-
-        <%= link_to t('baibl.manifest_title'), manifest_path %>
-
-        <%= link_to t('baibl.product_title'), product_path %>
-
-        <%= link_to t('baibl.precision_title'), study_tools_metrics_path if defined?(StudyToolsController) %>
-
-      </nav>
-
-    </div>
-
-    <% if current_page?(root_path) %>
-
-      <div class="vision-statement">
-
-        <p><%= t('baibl.vision_statement') %></p>
-
-      </div>
-
-    <% end %>
-
-  </header>
-
+  <%= render "shared/nav" %>
   <main role="main">
-    <%= tag.div data: { turbo_frame: "notices" } do %>
-
-      <%= render "shared/notices" %>
-
-    <% end %>
-
+    <%= render "shared/flash" %>
     <%= yield %>
-
   </main>
-
-  <footer role="contentinfo">
-    <div class="user-info">
-
-      <p><%= t('baibl.copyright_notice') %></p>
-
-      <p>Nåværende dato: <%= Time.current.strftime('%Y-%m-%d %H:%M:%S') %></p>
-
-      <% if user_signed_in? %>
-
-        <p>Innlogget som: <%= current_user.email %></p>
-
-      <% end %>
-
-    </div>
-
-  </footer>
-
+  <%= render "shared/footer" %>
 </body>
-
 </html>
+BAIBL_LAYOUT_EOF
 
-EOF
+# Create BAIBL-specific meta partial
+cat > app/views/shared/_meta.html.erb << 'BAIBL_META_EOF'
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title><%= yield(:title) || t('baibl.app_name') %> - <%= t('baibl.tagline') %></title>
+<meta name="description" content="<%= yield(:description) || t('baibl.description') %>">
+<meta name="keywords" content="<%= yield(:keywords) || 'BAIBL, AI-Bibel, lingvistikk, religiøs, AI, teknologi, presisjon' %>">
+<meta name="author" content="BAIBL">
+<link rel="canonical" href="<%= request.original_url %>">
+<%= csrf_meta_tags %>
+<%= csp_meta_tag %>
+<%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+<%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+BAIBL_META_EOF
+
+# Create BAIBL-specific navigation
+cat > app/views/shared/_nav.html.erb << 'BAIBL_NAV_EOF'
+<header role="banner">
+  <div class="nav-bar" role="navigation" aria-label="<%= t('shared.footer_nav') %>">
+    <div>
+      <%= link_to root_path do %>
+        <h1 class="hero-title"><%= t('baibl.app_name') %></h1>
+      <% end %>
+    </div>
+    <nav class="main-nav">
+      <%= link_to t('shared.about'), about_path %>
+      <%= link_to t('baibl.manifest_title'), manifest_path %>
+      <%= link_to t('baibl.product_title'), product_path %>
+      <%= link_to t('baibl.precision_title'), study_tools_metrics_path if defined?(StudyToolsController) %>
+    </nav>
+  </div>
+  <% if current_page?(root_path) %>
+    <div class="vision-statement">
+      <p><%= t('baibl.vision_statement') %></p>
+    </div>
+  <% end %>
+</header>
+BAIBL_NAV_EOF
+
+# Create BAIBL-specific flash messages (uses shared notices)
+cat > app/views/shared/_flash.html.erb << 'BAIBL_FLASH_EOF'
+<%= tag.div data: { turbo_frame: "notices" } do %>
+  <%= render "shared/notices" %>
+<% end %>
+BAIBL_FLASH_EOF
+
+# Create BAIBL-specific footer
+cat > app/views/shared/_footer.html.erb << 'BAIBL_FOOTER_EOF'
+<footer role="contentinfo">
+  <div class="user-info">
+    <p><%= t('baibl.copyright_notice') %></p>
+    <p>Nåværende dato: <%= Time.current.strftime('%Y-%m-%d %H:%M:%S') %></p>
+    <% if user_signed_in? %>
+      <p>Innlogget som: <%= current_user.email %></p>
+    <% end %>
+  </div>
+</footer>
+BAIBL_FOOTER_EOF
+
+# Skip links for accessibility
+cat > app/views/shared/_skip_links.html.erb << 'BAIBL_SKIP_EOF'
+<a href="#main-content" class="skip-link">Hopp til hovedinnhold</a>
+BAIBL_SKIP_EOF
 
 # Create BAIBL home page with Norwegian content
 cat <<EOF > app/views/home/index.html.erb

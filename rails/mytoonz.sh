@@ -787,38 +787,28 @@ setup_frontend() {
 
 create_frontend_view() {
     log "Creating frontend HTML..."
-
+    
+    # Install shared layouts for MyToonz
+    mkdir -p app/views/layouts
+    mkdir -p app/views/shared
+    
+    # Create minimal layout for MyToonz (no header/footer needed)
     cat > app/views/layouts/application.html.erb << 'HTML'
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
   <meta charset="UTF-8">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>MyToonz - AI Comic Strip Generator</title>
-
+  <title><%= content_for?(:title) ? yield(:title) : "MyToonz - AI Comic Strip Generator" %></title>
   <%= csrf_meta_tags %>
-
   <%= csp_meta_tag %>
-
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-
   <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
-
 </head>
-
 <body>
-
   <%= yield %>
-
 </body>
-
 </html>
-
 HTML
 
     cat > app/views/home/index.html.erb << 'HTML'
