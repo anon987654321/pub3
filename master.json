@@ -1,1037 +1,117 @@
 {
-  "meta": {
-    "v": "16.8.0",
-    "updated": "2025-10-21T12:00:00Z",
-    "purpose": "llm_driven_development_governance",
-    "philosophy": [
-      "questions>commands",
-      "evidence>opinion",
-      "execution>explanation",
-      "clarity>cleverness",
-      "consolidation>fragmentation",
-      "reversibility>irreversibility",
-      "truth>consensus"
-    ],
-    "owner": "anon987654321",
-    "fallback": "https://gist.github.com/anon987654321/7c557be423c378dd35ad0be4dd4340fa",
-    "status": "production"
-  },
-
-  "system": {
-    "message": "governance_for_llm_driven_development",
-    "defaults": {
-      "big_picture_thinking": true,
-      "high_scrutiny": true,
-      "brutal_honesty": true,
-      "require_evidence": true,
-      "minimize_file_sprawl": true,
-      "edit_in_place": true,
-      "no_backups_without_permission": true
-    },
-    "execution": {
-      "profile": ["unix_tool", "enterprise"],
-      "style": "minimal_unix_cli",
-      "output_aesthetic": "strunk_white"
-    },
-    "context_budget": {
-      "soft": 0.85,
-      "hard": 0.95,
-      "warn_at": 0.80,
-      "action": "summarize_history"
-    },
-    "error_handling": {
-      "retry": 2,
-      "cooldown_s": 1.2,
-      "report": "stderr",
-      "rollback": true,
-      "preserve_state": true
-    }
-  },
-  
-  "core": {
-    "ssh_port": 31415,
-    "vm": "vm08",
-    "host": "server27.openbsd.amsterdam",
-    "target": 0.99,
-    "limits": {
-      "coverage": 0.9,
-      "complexity": 10,
-      "duplication": 0.03,
-      "sections": 10,
-      "method_length": 20,
-      "class_length": 300,
-      "params": 3,
-      "chain_depth": 3,
-      "file_size": 102400
-    },
-    "weights": {
-      "security": 10,
-      "duplication": 10,
-      "complexity": 9,
-      "coverage": 8,
-      "style": 7,
-      "cost": 6,
-      "naming": 5
-    },
-    "costs": {
-      "sonnet_in": 0.003,
-      "sonnet_out": 0.015,
-      "grok_in": 0.005,
-      "grok_out": 0.02,
-      "dev_hour": 100,
-      "deploy_fail": 5000,
-      "downtime_min": 500,
-      "security_incident": 50000
-    },
-    "strict": "set -euo pipefail",
-    "services": ["postgresql-16", "redis", "falcon", "relayd", "httpd", "nsd", "pf"],
-    "shell": {
-      "interpreter": "zsh",
-      "policy": "modern_zsh_first",
-      "forbidden": ["bashism", "backtick", "which", "test", "seq", "echo", "printf"],
-      "prefer_zsh": ["glob_qualifiers", "parameter_expansion", "pattern_matching", "input_redirection", "builtin_conditionals"],
-      "allowed_external": ["doas", "file", "mktemp", "date", "mv", "cp", "cat", "vim", "rails", "bundle", "psql", "node", "ruby"],
-      "patterns": {
-        "glob": ["**/*(.N)", "**/*/", "**/*.ext", "(.N)=nullglob"],
-        "param": ["${v#pre}", "${v##*/}", "${v%suf}", "${v/o/n}", "${v//o/n}"],
-        "cond": ["[[ ]]", "[[ -d ]]", "[[ -z ]]", "[[ $x == *p* ]]"],
-        "io": ["$(<f)", "<(c)", "=(c)"],
-        "heredoc": ["cat <<EOF", "cat <<'EOF'"]
-      }
-    },
-    "protected": ["*.css", "*.scss", "*.sass", "stylesheets/*", "app/assets/stylesheets/*", "vendor/assets/stylesheets/*", "public/assets/*", ".env.production", "config/master.key", "config/credentials/*.key"]
-  },
-
-  "dependencies": {
-    "rails": {
-      "version": "~> 8.0.3",
-      "released": "2025-09-22",
-      "language_composition": {"ruby": 97.2, "javascript": 1.3, "html": 1.1, "other": 0.4},
-      "components": {
-        "core": ["actioncable", "actionpack", "actionview", "activesupport", "activerecord", "activejob"],
-        "rails_8_new": ["solid_queue", "solid_cache", "solid_cable", "authentication_generator"],
-        "hotwire": ["turbo-rails", "stimulus-rails"]
-      },
-      "replaces": {
-        "solid_queue": "sidekiq/resque",
-        "solid_cache": "redis_cache_store",
-        "solid_cable": "redis_actioncable",
-        "authentication": "devise"
-      },
-      "key_features": [
-        "rails_8_authentication_generator",
-        "solid_adapters_replace_redis",
-        "importmap_default",
-        "propshaft_assets"
-      ]
-    },
-    "stimulus_reflex": {
-      "version": "~> 3.5",
-      "repo": "stimulusreflex/stimulus_reflex",
-      "language_composition": {"ruby": 59.6, "javascript": 40.3, "other": 0.1},
-      "purpose": "real_time_reactive_updates_over_websockets",
-      "architecture": "client_js_to_server_ruby_to_morph_dom",
-      "round_trip": "20-30ms",
-      "dependencies": {
-        "ruby": ["cable_ready ~> 5.0", "nokogiri ~> 1.0", "rack >= 2, < 4"],
-        "javascript": ["morphdom", "@hotwired/stimulus"],
-        "rails": "actioncable >= 5.2"
-      },
-      "lifecycle": {
-        "client": "stimulate(target, ...args) → websocket",
-        "server": "reflex_class.process(method) → cableready",
-        "morph": "morphdom.patch(selector, html)"
-      },
-      "reflex_class": {
-        "location": "app/reflexes/*_reflex.rb",
-        "base": "ApplicationReflex < StimulusReflex::Reflex",
-        "callbacks": ["before_reflex", "around_reflex", "after_reflex"],
-        "access": ["element", "params", "session", "connection", "current_user"],
-        "methods": ["morph(selector, html)", "render(*args)", "broadcast"]
-      }
-    },
-    "stimulus": {
-      "version": "latest",
-      "repo": "hotwired/stimulus",
-      "source": "@hotwired/stimulus",
-      "language_composition": {"typescript": 98.9, "javascript": 1.1},
-      "philosophy": "augment_html_dont_replace",
-      "core_concepts": ["controllers", "targets", "actions", "values"],
-      "lifecycle": {
-        "initialize": "once_when_instantiated",
-        "connect": "anytime_connected_to_dom",
-        "disconnect": "anytime_disconnected_from_dom",
-        "target_connected": "[name]TargetConnected(target)",
-        "target_disconnected": "[name]TargetDisconnected(target)"
-      },
-      "best_practices": [
-        "use_connect_not_initialize_for_setup",
-        "cleanup_in_disconnect_prevent_memory_leaks",
-        "targets_over_queryselector",
-        "actions_over_inline_handlers",
-        "values_for_reactive_state"
-      ],
-      "naming": {
-        "controllers": "kebab-case",
-        "files": "snake_case_controller.js or kebab-case-controller.js",
-        "methods": "camelCase",
-        "targets": "camelCase"
-      }
-    },
-    "gems": {
-      "required": [
-        {"n": "acts_as_tenant", "purpose": "multi_tenancy", "usage": "subdomain_based_tenants"},
-        {"n": "pagy", "purpose": "pagination", "reason": "fastest_ruby_paginator"},
-        {"n": "faker", "purpose": "test_data", "usage": "seed_realistic_data"}
-      ],
-      "rails_8_builtin": [
-        {"n": "solid_queue", "replaces": "sidekiq", "purpose": "background_jobs"},
-        {"n": "solid_cache", "replaces": "redis", "purpose": "caching"},
-        {"n": "solid_cable", "replaces": "redis", "purpose": "actioncable_backend"}
-      ],
-      "server": [
-        {"n": "falcon", "purpose": "async_http_server", "protocol": "http/1.1_http/2"}
-      ]
-    },
-    "javascript": {
-      "packages": [
-        {"n": "@hotwired/stimulus", "bundled": "via_importmap_or_rails"},
-        {"n": "@hotwired/turbo-rails", "bundled": "via_importmap_or_rails"},
-        {"n": "stimulus_reflex", "version": "match_ruby_gem"},
-        {"n": "mapbox-gl-js", "purpose": "maps", "usage": "listings_geolocation"}
-      ],
-      "components": [
-        {"n": "character-counter", "source": "generated"},
-        {"n": "form-validation", "source": "generated"},
-        {"n": "textarea-autogrow", "source": "generated"},
-        {"n": "file-preview", "source": "generated"},
-        {"n": "infinite-scroll", "source": "generated_with_reflex"},
-        {"n": "search", "source": "generated_with_reflex"},
-        {"n": "mapbox", "source": "generated"},
-        {"n": "insights", "source": "generated_with_reflex"}
-      ]
-    },
-    "compatibility": {
-      "rails_8": {
-        "min_ruby": "3.0.0",
-        "recommended_ruby": "3.3",
-        "postgresql": "16",
-        "authentication": "built_in_generator_replaces_devise",
-        "solid_adapters": "replace_redis_for_queue_cache_cable"
-      },
-      "stimulus_reflex": {
-        "min_rails": "5.2",
-        "recommended_rails": "8.0",
-        "cable_ready": "5.0",
-        "stimulus": "any_via_hotwire"
-      },
-      "openbsd": {
-        "version": "7.6",
-        "ruby": "3.3_from_ports",
-        "postgresql": "16_from_ports",
-        "node": "via_ports_or_volta"
-      }
-    },
-    "patterns": {
-      "stimulus_lifecycle": {
-        "initialize": "setup_constants_no_dom_access",
-        "connect": "setup_listeners_dom_manipulation_api_calls",
-        "disconnect": "cleanup_timers_listeners_prevent_memory_leaks",
-        "critical": "always_cleanup_in_disconnect"
-      },
-      "stimulus_reflex_flow": {
-        "client": "this.stimulate('ReflexClass#method', element, options, ...args)",
-        "transport": "websocket_via_actioncable",
-        "server": "app/reflexes/reflex_class.rb#method",
-        "morph": "morph(selector, html) or morph(:page)",
-        "broadcast": "cable_ready_operations",
-        "timing": "20-30ms_roundtrip"
-      },
-      "code_generation": {
-        "method": "heredoc_templates",
-        "models": "rails_generate_model",
-        "controllers": "rails_generate_controller_or_scaffold",
-        "views": "erb_via_heredoc",
-        "stimulus": "javascript_via_heredoc",
-        "reflex": "ruby_class_via_heredoc"
-      },
-      "feature_modules": {
-        "reddit": ["voting", "karma", "comments", "hot_top_new_sorting"],
-        "twitter": ["retweets", "follows", "timeline", "mentions"],
-        "airbnb": ["bookings", "reviews", "host_profiles", "availability"],
-        "momondo": ["flights", "hotels", "price_alerts", "search"],
-        "messenger": ["dms", "typing_indicators", "read_receipts", "presence"]
-      }
-    },
-    "version_pinning": {
-      "gemfile": {
-        "rails": "~> 8.0.3",
-        "stimulus_reflex": "~> 3.5",
-        "cable_ready": "~> 5.0",
-        "acts_as_tenant": "~> 1.0",
-        "pagy": "~> 6.0",
-        "faker": "~> 3.0",
-        "falcon": "~> 0.42"
-      },
-      "package_json": {
-        "@hotwired/stimulus": "latest_from_rails",
-        "@hotwired/turbo-rails": "latest_from_rails",
-        "stimulus_reflex": "match_gem_version",
-        "mapbox-gl": "^2.0 or ^3.0"
-      }
-    }
-  },
-
-  "standards": {
-    "arrangement": {
-      "importance": {
-        "file": ["constants", "config", "public", "private", "helpers"],
-        "class": ["constants", "concerns", "validations", "associations", "scopes", "callbacks", "public", "private"],
-        "method": ["guard", "setup", "main", "cleanup", "return"],
-        "json": ["meta", "system", "core", "dependencies", "standards", "execution", "deployment", "intelligence", "quality", "workflows"]
-      },
-      "chronology": {
-        "lifecycle": ["init", "validate", "execute", "cleanup", "destroy"],
-        "callbacks": ["before", "around", "after"],
-        "migrations": ["structure", "data", "indexes", "constraints"],
-        "http": ["before_action", "action", "respond", "rescue", "ensure"],
-        "stimulus": ["initialize", "connect", "action", "disconnect"]
-      },
-      "spacing": {
-        "default": 1,
-        "guard": 0,
-        "chains": 0,
-        "sections": 2,
-        "blocks": 1
-      }
-    },
-    
-    "naming": {
-      "transforms": {
-        "verbs": ["get→fetch", "check→validate", "do→execute", "handle→process", "make→create", "build→construct", "calc→calculate"],
-        "nouns": ["data→payload", "info→metadata", "temp→tmp", "config→cfg", "params→parameters", "args→arguments"],
-        "bools": ["is_*→*?", "has_*→*?", "can_*→*able?", "should_*→*?"]
-      },
-      "avoid": ["thing", "stuff", "data", "info", "item", "object", "manager", "helper", "util", "misc"],
-      "style": {
-        "const": "SCREAMING_SNAKE",
-        "class": "PascalCase",
-        "module": "PascalCase",
-        "method": "snake_case",
-        "variable": "snake_case",
-        "predicate": "?",
-        "dangerous": "!",
-        "file": "snake_case",
-        "dir": "snake_case"
-      },
-      "rails": {
-        "controller": "*Controller",
-        "model": "SingularNoun",
-        "job": "*Job",
-        "mailer": "*Mailer",
-        "service": "*Service",
-        "concern": "*able or *Concern",
-        "decorator": "*Decorator",
-        "serializer": "*Serializer"
-      },
-      "stimulus": {
-        "controller": "*Controller extends Controller",
-        "file": "*_controller.js",
-        "identifier": "kebab-case",
-        "method": "camelCase",
-        "target": "camelCase"
-      },
-      "reflex": {
-        "class": "*Reflex < ApplicationReflex",
-        "file": "*_reflex.rb",
-        "method": "snake_case",
-        "location": "app/reflexes/"
-      }
-    },
-    
-    "principles": [
-      {"n": "dry", "on": "dup>3", "do": "extract", "sev": "h"},
-      {"n": "kiss", "on": "cx>10", "do": "simplify", "sev": "h"},
-      {"n": "yagni", "on": "unused", "do": "remove", "sev": "m"},
-      {"n": "solid_s", "on": "multi_resp", "do": "split", "sev": "h"},
-      {"n": "solid_o", "on": "mod_req", "do": "extend", "sev": "h"},
-      {"n": "solid_l", "on": "subst_break", "do": "fix", "sev": "c"},
-      {"n": "solid_i", "on": "unused_iface", "do": "segregate", "sev": "m"},
-      {"n": "solid_d", "on": "concrete_dep", "do": "inject", "sev": "h"},
-      {"n": "pola", "on": "surprise", "do": "predict", "sev": "h"},
-      {"n": "unix", "on": "multi", "do": "one", "sev": "h"},
-      {"n": "rails", "on": "non_std", "do": "convention", "sev": "h"},
-      {"n": "omakase", "on": "bikeshed", "do": "defaults", "sev": "m"},
-      {"n": "sharp", "on": "overprotect", "do": "trust", "sev": "l"},
-      {"n": "strunk", "on": "wordy", "do": "cut", "sev": "m"},
-      {"n": "fail_fast", "on": "silent_error", "do": "raise", "sev": "h"},
-      {"n": "tell_dont_ask", "on": "query_chain", "do": "command", "sev": "m"},
-      {"n": "stimulus_cleanup", "on": "disconnect", "do": "remove_listeners_timers", "sev": "h"}
-    ],
-    
-    "smells": {
-      "method": ["long>20", "cx>10", "envy", "temp", "params>3", "flag_param", "long_message_chain"],
-      "class": ["large>300", "lazy<50", "data", "refused", "god_object", "feature_envy"],
-      "change": ["divergent", "shotgun", "parallel", "solution_sprawl"],
-      "coupling": ["chains>3", "middle", "intimate", "inappropriate"],
-      "abstract": ["primitive", "clumps", "switch", "speculative", "refused_bequest"],
-      "naming": ["cryptic", "misleading", "inconsistent", "vague", "meaningless"],
-      "rails": ["fat_controller", "fat_model", "callback_hell", "n_plus_1", "missing_index", "unused_eager_loading"],
-      "stimulus": ["missing_disconnect", "dom_in_initialize", "no_cleanup", "memory_leaks", "global_state"],
-      "reflex": ["fat_reflex", "business_logic_in_reflex", "missing_authorization", "n_plus_1_in_morph"]
-    },
-    
-    "security": {
-      "owasp_top_10": [
-        {"n": "injection", "check": "parameterized_queries", "sev": "c"},
-        {"n": "broken_auth", "check": "rails_8_auth_or_devise", "sev": "c"},
-        {"n": "sensitive_exposure", "check": "credentials_encrypted", "sev": "c"},
-        {"n": "xxe", "check": "xml_parsing_safe", "sev": "h"},
-        {"n": "broken_access", "check": "authorization_present", "sev": "c"},
-        {"n": "misconfiguration", "check": "secure_headers", "sev": "h"},
-        {"n": "xss", "check": "escaped_output", "sev": "h"},
-        {"n": "insecure_deserial", "check": "no_marshal_yaml", "sev": "c"},
-        {"n": "vulnerable_deps", "check": "bundle_audit", "sev": "h"},
-        {"n": "insufficient_logging", "check": "log_security_events", "sev": "m"}
-      ],
-      "rails": {
-        "csrf": "protect_from_forgery with: :exception",
-        "sql_injection": "use_parameterized_queries",
-        "mass_assignment": "strong_parameters",
-        "xss": "escape_by_default",
-        "secrets": "credentials_not_env",
-        "headers": "secure_headers_gem"
-      },
-      "stimulus_reflex": {
-        "authorization": "verify_in_before_reflex_callback",
-        "element_data": "sanitize_element_dataset",
-        "current_user": "verify_session_not_stale",
-        "broadcast": "verify_channel_permissions"
-      },
-      "checks": ["brakeman", "bundle-audit", "bundler-leak", "no_secrets_in_code", "no_secrets_in_repo", "encrypted_credentials", "secure_headers", "authorization_present"]
-    }
-  },
-
-  "execution": {
-    "mode": "silent",
-    "report": "results",
-    "file_operations": {
-      "create_new": "require_permission",
-      "edit_existing": "preferred",
-      "backup": "forbidden_without_permission",
-      "minimize_sprawl": true
-    },
-    "claude_code": {
-      "autonomous": true,
-      "batch": true,
-      "parallel": true,
-      "confidence": 0.9,
-      "reversible": true,
-      "chunk_files": true,
-      "max_file": 102400,
-      "max_batch": 50,
-      "timeout": 300
-    },
-    "file_handling": {
-      "read_complete": true,
-      "rationale": "avoid_partial_understanding",
-      "exceptions": ["binary", "generated", "minified"],
-      "verify_after": true,
-      "max_size": 102400,
-      "chunk_threshold": 50000
-    },
-    "commit_strategy": {
-      "milestone_based": true,
-      "auto_commit": false,
-      "message_format": "conventional",
-      "require_tests": true,
-      "require_lint": true,
-      "atomic": true,
-      "squash": false
-    },
-    "library_verification": {
-      "check_docs": true,
-      "sources": ["perplexity", "web_search", "github", "rubygems", "npmjs"],
-      "priority": "latest_stable",
-      "cache_duration": "24h",
-      "never_skip": true,
-      "verify_syntax": true,
-      "verify_compatibility": ["rails_version", "ruby_version", "stimulus_version"]
-    },
-    "meta_prompt": {
-      "enabled": false,
-      "hook_path": ".gldd/hooks/improve-prompt.py",
-      "bypass_prefixes": ["*", "/", "#"],
-      "token_overhead": 300,
-      "research_phases": ["explore", "question"],
-      "max_questions": 6,
-      "require_context": true
-    },
-    "phases": [
-      {"n": "scan", "in": "target", "out": "inventory", "t": "5s", "p": true},
-      {"n": "discover", "in": "problem", "out": "definition", "t": "30s", "p": false},
-      {"n": "analyze", "in": "definition", "out": "analysis", "t": "60s", "p": true},
-      {"n": "ideate", "in": "analysis", "out": "options", "t": "120s", "p": true},
-      {"n": "design", "in": "options", "out": "plan", "t": "180s", "p": false},
-      {"n": "implement", "in": "plan", "out": "code", "t": "300s", "p": true},
-      {"n": "validate", "in": "code", "out": "verified", "t": "120s", "p": true},
-      {"n": "deliver", "in": "verified", "out": "deployed", "t": "60s", "p": false},
-      {"n": "learn", "in": "deployed", "out": "knowledge", "t": "30s", "p": false}
-    ],
-    "refactor": {
-      "on": true,
-      "every": "touch",
-      "check": ["principles", "smells", "naming", "security", "stimulus_lifecycle", "reflex_authorization"],
-      "do": ["rename", "reorder", "respace", "extract", "simplify", "remove", "secure", "add_disconnect_cleanup"],
-      "gate": ["no_smells", "cx_down", "clarity_up", "tests_pass", "security_clear", "no_memory_leaks"]
-    },
-    "testing": {
-      "framework": "minitest",
-      "coverage": 0.9,
-      "mutation": 0.8,
-      "required": ["unit", "integration"],
-      "optional": ["system", "performance"],
-      "stimulus": ["controller_lifecycle", "action_bindings", "target_access"],
-      "reflex": ["authorization", "morph_output", "broadcast"],
-      "ci": true,
-      "parallel": true,
-      "before_commit": true,
-      "before_push": true,
-      "before_deploy": true
-    },
-    "log": {
-      "fmt": "openbsd",
-      "style": "syslog",
-      "emoji": "✓✗→⚠️🔍🏗️🧠🪞🚀🔒",
-      "collapse": true,
-      "timestamp": true,
-      "severity": ["debug", "info", "warn", "error", "critical"],
-      "context": true
-    },
-    "output": {
-      "style": "results_first",
-      "concise": true,
-      "metrics": ["duration", "tokens", "cost", "confidence", "quality"],
-      "actions": true,
-      "omit": ["process", "thinking", "verbose_logs"],
-      "error": ["context", "step", "recovery", "rollback"],
-      "diff": "unified",
-      "code_blocks": "labeled"
-    },
-    "git": {
-      "commit_style": "conventional",
-      "prefixes": ["feat", "fix", "refactor", "perf", "test", "docs", "chore", "security"],
-      "branch_style": "type/description",
-      "protected_branches": ["main", "production"],
-      "require_tests": true,
-      "require_review": false,
-      "auto_squash": false
-    }
-  },
-
-  "intelligence": {
-    "personas": [
-      {"n": "skeptic", "q": "question", "r": "challenge_assumptions"},
-      {"n": "minimalist", "q": "remove", "r": "eliminate_waste"},
-      {"n": "perf", "q": "microsec", "r": "optimize_performance"},
-      {"n": "security", "q": "attack", "r": "find_vulnerabilities"},
-      {"n": "maintainer", "q": "3am", "r": "ensure_debuggability"},
-      {"n": "junior", "q": "learn", "r": "check_clarity"},
-      {"n": "architect", "q": "5year", "r": "plan_longevity"},
-      {"n": "economist", "q": "roi", "r": "justify_cost"},
-      {"n": "user", "q": "needs", "r": "validate_usefulness"},
-      {"n": "chaos", "q": "break", "r": "test_resilience"},
-      {"n": "fowler", "q": "refactor", "r": "improve_design"},
-      {"n": "strunk", "q": "clarity", "r": "simplify_communication"}
-    ],
-    "min_alternatives": 15,
-    "decision_matrix": ["impact", "effort", "risk", "cost", "reversibility", "learning"],
-    "biases": [
-      {"n": "recency", "sev": "m", "mit": "review_history"},
-      {"n": "confirmation", "sev": "h", "mit": "seek_disconfirming"},
-      {"n": "anchoring", "sev": "h", "mit": "multiple_estimates"},
-      {"n": "sunk_cost", "sev": "h", "mit": "ignore_past_investment"},
-      {"n": "optimism", "sev": "h", "mit": "premortem"},
-      {"n": "dunning_kruger", "sev": "c", "mit": "expert_review"}
-    ],
-    "pitfalls": {
-      "code": ["off_by_one", "null_pointer", "race_condition", "memory_leak", "sql_injection", "buffer_overflow", "use_after_free", "double_free", "integer_overflow"],
-      "design": ["circular_dependency", "hidden_coupling", "shotgun_surgery", "feature_envy", "god_object", "primitive_obsession"],
-      "cognitive": ["assumption_error", "premature_optimization", "scope_creep", "hallucination", "context_loss", "over_engineering"],
-      "rails": ["n_plus_1", "missing_index", "callback_hell", "fat_model", "fat_controller", "session_overload"],
-      "shell": ["unquoted_variables", "missing_error_handling", "bashisms_in_zsh", "unnecessary_external_calls"],
-      "generation": ["incomplete_heredoc", "missing_eof", "unescaped_variables", "lost_indentation"],
-      "stimulus": ["missing_disconnect_cleanup", "dom_access_in_initialize", "memory_leaks_from_timers", "global_variable_pollution", "missing_target_checks"],
-      "stimulus_reflex": ["missing_authorization", "n_plus_1_in_morph", "stale_element_reference", "broadcast_to_wrong_channel", "morph_entire_page_unnecessarily"]
-    },
-    "techniques": {
-      "analysis": ["five_whys", "fishbone", "pareto", "swot", "force_field"],
-      "generation": ["brainstorm", "scamper", "six_hats", "morphological"],
-      "evaluation": ["decision_matrix", "pros_cons", "risk_reward", "premortem"],
-      "validation": ["red_team", "chaos_engineering", "fuzzing", "mutation_testing"],
-      "stimulus_debug": ["console_log_lifecycle", "inspect_element_dataset", "check_action_bindings", "verify_targets"],
-      "reflex_debug": ["log_reflex_data", "inspect_morph_selector", "check_authorization", "verify_broadcast_channel"]
-    }
-  },
-
-  "quality": {
-    "formula": "Σ(w*s)/Σ(w)",
-    "dims": {
-      "security": {"w": 10, "t": 0, "m": "vulns", "tool": "brakeman"},
-      "duplication": {"w": 10, "t": 0, "m": "flay", "tool": "flay"},
-      "complexity": {"w": 9, "t": 10, "m": "flog", "tool": "flog"},
-      "coverage": {"w": 8, "t": 90, "m": "cov", "tool": "simplecov"},
-      "style": {"w": 7, "t": 0, "m": "rubocop", "tool": "rubocop"},
-      "cost": {"w": 6, "t": 0.02, "m": "tokens", "tool": "internal"},
-      "naming": {"w": 5, "t": 1, "m": "clarity", "tool": "reek"}
-    },
-    "tools": {
-      "static": ["rubocop", "reek", "flog", "flay", "brakeman", "bundle-audit"],
-      "dynamic": ["minitest", "simplecov", "benchmark"],
-      "runtime": ["rack-mini-profiler", "memory_profiler", "stackprof"],
-      "javascript": ["eslint", "prettier"]
-    },
-    "gates": {
-      "commit": {"coverage": 0.9, "complexity": 10, "security": 0},
-      "push": {"coverage": 0.9, "complexity": 10, "security": 0, "style": 0},
-      "deploy": {"coverage": 0.95, "complexity": 8, "security": 0, "style": 0, "tests": "pass"}
-    },
-    "monitoring": {
-      "metrics": ["response_time", "throughput", "error_rate", "memory", "cpu", "websocket_connections"],
-      "alerts": ["error_spike", "slow_query", "high_memory", "disk_space", "websocket_failures"],
-      "logging": ["errors", "security_events", "performance", "business_events", "reflex_timing"]
-    }
-  },
-
-  "workflows": [
-    {"n": "file", "ph": ["scan", "analyze", "implement", "validate"], "t": "5min", "p": true},
-    {"n": "feature", "ph": ["discover", "analyze", "design", "implement", "validate"], "t": "30min", "p": false},
-    {"n": "installer", "ph": ["scan", "design", "implement", "validate"], "t": "1h", "p": false, "desc": "zsh_rails_generator", "req": ["layout", "css", "stimulus", "views", "models", "controllers", "routes", "seeds"], "verify": ["grep layouts/application", "grep application.css", "grep _controller.js", "count views > 5"]},
-    {"n": "stimulus_controller", "ph": ["design", "implement", "validate"], "t": "15min", "p": false, "desc": "client_side_behavior"},
-    {"n": "reflex_action", "ph": ["design", "implement", "validate"], "t": "20min", "p": false, "desc": "server_side_reactive_method"},
-    {"n": "framework", "ph": ["scan", "analyze", "ideate", "design", "implement", "validate", "deliver", "learn"], "t": "8h", "p": true},
-    {"n": "self_improve", "ph": ["scan", "analyze", "implement", "validate"], "t": "5min", "trigger": "manual", "target": "master.json", "p": false},
-    {"n": "deploy", "ph": ["analyze", "validate", "deliver", "validate"], "t": "15min", "p": false},
-    {"n": "security", "ph": ["analyze", "implement", "validate", "deliver"], "pri": "highest", "t": "1h", "p": false},
-    {"n": "hotfix", "ph": ["discover", "implement", "validate", "deliver"], "pri": "critical", "t": "30min", "p": false}
+  "forbidden_commands": [
+    "bashism",
+    "backtick",
+    "which",
+    "test",
+    "seq",
+    "echo",
+    "printf",
+    "cut",
+    "head",
+    "tail",
+    "sed",
+    "awk",
+    "tr",
+    "grep",
+    "sort",
+    "uniq",
+    "wc",
+    "basename",
+    "dirname",
+    "find",
+    "xargs",
+    "readlink",
+    "expr",
+    "tee",
+    "column",
+    "paste",
+    "join",
+    "comm"
   ],
-
-  "deployment": {
-    "vps": {
-      "vm": "vm08",
-      "host": "server27.openbsd.amsterdam",
-      "ipv4": "185.52.176.18",
-      "ipv6": "2a03:6000:76f1:608::18",
-      "gw4": "185.52.176.1",
-      "gw6": "2a03:6000:76f1:608::1",
-      "subnet4": "255.255.255.192",
-      "subnet6": 64,
-      "user": "dev",
-      "key": "~/.ssh/id_rsa",
-      "port": 31415,
-      "opts": "-o VerifyHostKeyDNS=yes -o StrictHostKeyChecking=yes",
-      "mgmt": {
-        "start": "doas vmctl start vm08",
-        "stop": "doas vmctl stop vm08",
-        "restart": "doas vmctl stop vm08 && doas vmctl start vm08",
-        "status": "doas vmctl status vm08",
-        "console": "doas vmctl console vm08"
-      }
-    },
-    "stack": {
-      "v": "225.0.0",
-      "os": "openbsd-7.6",
-      "ruby": "3.3",
-      "rails": "8.0.3",
-      "db": "postgresql-16",
-      "cache": "solid_cache",
-      "queue": "solid_queue",
-      "cable": "solid_cable",
-      "search": "postgresql_full_text",
-      "fw": "pf",
-      "dns": "nsd",
-      "tls": "acme-client",
-      "http": "relayd",
-      "acme": "httpd",
-      "app": "falcon",
-      "deploy": "rcctl",
-      "monitor": "munin",
-      "backup": "tarsnap",
-      "arch": "zsh_generators→rails_apps→falcon→relayd→internet",
-      "total_domains": 49,
-      "generation_method": "heredoc_templates"
-    },
-    "installers": [
-      {"n": "brgen", "port": 11006, "size": "38KB", "generates": "~2000_lines", "domains": 35, "primary": "brgen.no", "type": "multi_tenant_marketplace", "features": ["reddit", "twitter", "airbnb", "momondo", "messenger"], "status": "production", "https": true},
-      {"n": "brgen_dating", "port": "extends_brgen", "size": "1.5KB", "extends": "brgen", "type": "variant", "feature_focus": "dating"},
-      {"n": "brgen_marketplace", "port": "extends_brgen", "size": "1.6KB", "extends": "brgen", "type": "variant", "feature_focus": "marketplace"},
-      {"n": "brgen_playlist", "port": "extends_brgen", "size": "1.4KB", "extends": "brgen", "type": "variant", "feature_focus": "music"},
-      {"n": "brgen_takeaway", "port": "extends_brgen", "size": "1.6KB", "extends": "brgen", "type": "variant", "feature_focus": "food"},
-      {"n": "brgen_tv", "port": "extends_brgen", "size": "1.5KB", "extends": "brgen", "type": "variant", "feature_focus": "video"},
-      {"n": "amber", "port": 10006, "size": "27KB", "generates": "~1800_lines", "domains": ["amberapp.com", "amber.brgen.no"], "type": "standalone", "status": "running", "https": false},
-      {"n": "baibl", "port": null, "size": "29KB", "generates": "~1900_lines", "type": "standalone", "purpose": "bible_app", "status": "not_deployed"},
-      {"n": "blognet", "port": 10007, "size": "1.4KB", "extends": "base", "domains": 6, "type": "blog_network", "status": "running", "https": false},
-      {"n": "bsdports", "port": 10003, "size": "14KB", "generates": "~1200_lines", "domains": ["bsdports.org"], "type": "standalone", "purpose": "openbsd_ports", "status": "running", "https": false},
-      {"n": "hjerterom", "port": 10004, "size": "35KB", "generates": "~1900_lines", "domains": ["hjerterom.no", "hjerterom.brgen.no"], "type": "standalone", "language": "norwegian", "status": "running", "https": false},
-      {"n": "privcam", "port": 10005, "size": "28KB", "generates": "~1800_lines", "domains": ["privcam.no"], "type": "standalone", "purpose": "privacy_camera", "status": "running", "https": false},
-      {"n": "pubattorney", "port": 10002, "size": "unknown", "domains": ["pub.attorney"], "type": "standalone", "purpose": "legal_services", "status": "running", "https": false}
+  "zsh_patterns": {
+    "array_operations": [
+      "${#arr}",
+      "${arr[1,10]}",
+      "${(o)arr}",
+      "${(u)arr}",
+      "${(M)arr:#pat}"
     ],
-    "shared_modules": {
-      "location": "rails/__shared/",
-      "common": "@common.sh",
-      "size_common": "25.5KB",
-      "features": [
-        {"n": "@features_base.sh", "size": "2.3KB", "provides": "base_framework"},
-        {"n": "@reddit_features.sh", "size": "14.8KB", "provides": ["voting", "karma", "comments"]},
-        {"n": "@twitter_features.sh", "size": "15.0KB", "provides": ["retweets", "follows", "timeline"]},
-        {"n": "@airbnb_features.sh", "size": "19.5KB", "provides": ["bookings", "reviews", "hosts"]},
-        {"n": "@momondo_features.sh", "size": "17.7KB", "provides": ["flights", "hotels", "alerts"]},
-        {"n": "@messenger_features.sh", "size": "19.6KB", "provides": ["dms", "typing", "read_receipts"]}
-      ]
-    },
-    "architecture": {
-      "pattern": "installer_generator",
-      "input": "zsh_script",
-      "output": "rails_8_1_app",
-      "generation": {
-        "method": "heredoc_templates",
-        "models": "rails_generators",
-        "views": "erb_heredocs",
-        "controllers": "ruby_heredocs",
-        "migrations": "rails_generators",
-        "seeds": "faker_data",
-        "locales": "yaml_heredocs",
-        "config": "ruby_heredocs",
-        "stimulus": "javascript_heredocs",
-        "reflex": "ruby_class_heredocs"
-      },
-      "deployment": {
-        "master": "__install_all.sh",
-        "parallel": true,
-        "per_app": "bin/falcon-host",
-        "server": "falcon_async_http",
-        "manager": "rcctl"
-      },
-      "code_stats": {
-        "per_installer": "1000-2000_lines_generated",
-        "models": "10-15_per_app",
-        "controllers": "5-10_per_app",
-        "views": "15-25_per_app",
-        "migrations": "10-20_per_app",
-        "locales": "100+_keys_per_app",
-        "stimulus_controllers": "5-10_per_app",
-        "reflex_classes": "3-8_per_app"
-      }
-    },
-    "services": {
-      "postgresql": {
-        "v": "16",
-        "port": 5432,
-        "socket": "/tmp",
-        "max_connections": 100,
-        "shared_buffers": "256MB",
-        "effective_cache_size": "1GB",
-        "maintenance_work_mem": "64MB",
-        "checkpoint_completion_target": 0.9,
-        "wal_buffers": "16MB",
-        "default_statistics_target": 100,
-        "random_page_cost": 1.1,
-        "effective_io_concurrency": 200,
-        "work_mem": "4MB",
-        "min_wal_size": "1GB",
-        "max_wal_size": "4GB"
-      },
-      "falcon": {
-        "instances": 7,
-        "ports": [11006, 10002, 10003, 10004, 10005, 10006, 10007],
-        "protocol": "async_http",
-        "workers_per_app": "4-5",
-        "timeout": 30,
-        "restart_timeout": 60,
-        "note": "brgen_* variants extend brgen, not separate instances"
-      },
-      "relayd": {
-        "protocol": "https",
-        "tls": true,
-        "port": 443,
-        "backends": [11006],
-        "actual_backends": [11006, 10002, 10003, 10004, 10005, 10006, 10007],
-        "production_backend": 11006,
-        "note": "currently only brgen.no exposed via HTTPS, other apps http-only on localhost"
-      },
-      "pf": {
-        "port": 31415,
-        "rules": "/etc/pf.conf",
-        "max_src_conn": 100,
-        "max_src_conn_rate": "15/5",
-        "synproxy": true
-      },
-      "nsd": {
-        "port": 53,
-        "zones": 49,
-        "verbosity": 1
-      }
-    },
-    "security": {
-      "doas": "permit nopass dev",
-      "fw": "pf fixed source-track",
-      "port": 31415,
-      "dns": true,
-      "dnssec": true,
-      "fde": "prevents VM host start",
-      "hardening": ["disable_root_login", "key_only_auth", "fail2ban_equivalent", "automatic_updates", "minimal_packages", "pf_strict_rules"],
-      "tls": {
-        "provider": "letsencrypt",
-        "version": "1.3",
-        "ciphers": "strong_only",
-        "hsts": true,
-        "ocsp_stapling": true
-      }
-    },
-    "backup": {
-      "provider": "tarsnap",
-      "frequency": "daily",
-      "retention": "30d",
-      "targets": ["database", "uploads", "config", "logs"],
-      "verify": "weekly",
-      "encrypt": true
-    },
-    "monitoring": {
-      "uptime": "munin",
-      "logs": "syslog",
-      "errors": "rails_logs",
-      "performance": "rack_mini_profiler",
-      "alerts": ["email", "log"],
-      "websockets": "actioncable_metrics"
-    },
-    "deployment_process": {
-      "steps": ["git_pull", "run_installer_sh", "generate_rails_code", "bundle_install", "rails_db_migrate", "rails_db_seed", "start_falcon", "verify_health", "rollback_on_failure"],
-      "health_check": "/up",
-      "rollback_automatic": true,
-      "zero_downtime": false,
-      "backup_before": true
-    },
-    "payment": {
-      "amt": 69,
-      "cur": "EUR",
-      "per": "yearly",
-      "due": "2026-08-01",
-      "stripe": "https://buy.stripe.com/8wMaEO0i67LS1eE288",
-      "ideal": "https://bunq.me/openbsdams/69/vm08%20server27",
-      "paypal": "https://paypal.me/runbsd/69eur"
-    }
-  },
-
-  "documentation": {
-    "style": "readme_driven",
-    "format": "markdown",
-    "structure": "modular",
-    "root": ".gldd/",
-    "files": {
-      "master.json": "core_configuration",
-      "code-style.md": "style_guide",
-      "security.md": "security_policies",
-      "deployment.md": "deploy_procedures",
-      "workflows.md": "common_patterns",
-      "testing.md": "test_requirements",
-      "stimulus.md": "stimulus_patterns_and_lifecycle",
-      "stimulus_reflex.md": "reflex_patterns_and_authorization"
-    },
-    "separation": {
-      "human": ["code-style.md", "deployment.md"],
-      "llm": ["master.json", "workflows.md"],
-      "shared": ["security.md", "testing.md", "stimulus.md", "stimulus_reflex.md"]
-    },
-    "required": ["README.md", "CHANGELOG.md", "CONTRIBUTING.md"],
-    "optional": ["ARCHITECTURE.md", "DEPLOYMENT.md", "SECURITY.md"],
-    "inline": {
-      "public_api": "required",
-      "private_api": "optional",
-      "complex_logic": "required",
-      "business_rules": "required",
-      "stimulus_lifecycle": "document_cleanup",
-      "reflex_authorization": "document_checks"
-    },
-    "examples": {
-      "api": "required",
-      "cli": "required",
-      "config": "required",
-      "stimulus_controller": "required",
-      "reflex_class": "required"
-    },
-    "diagrams": {
-      "architecture": "mermaid",
-      "sequence": "mermaid",
-      "erd": "mermaid",
-      "stimulus_reflex_flow": "mermaid"
-    }
-  },
-
-  "collaboration": {
-    "git": {
-      "large_repo_config": {
-        "threshold_gb": 1.0,
-        "pack_windowMemory": "512m",
-        "pack_packSizeLimit": "512m",
-        "pack_deltaCacheSize": "128m",
-        "http_postBuffer": "524288000",
-        "core_compression": 9,
-        "temp_compression": 0,
-        "reason": "Prevents OOM errors on push for repos >1GB"
-      },
-      "commit_message": {
-        "format": "conventional",
-        "types": ["feat", "fix", "docs", "style", "refactor", "perf", "test", "chore"],
-        "footer": "🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>"
-      }
-    },
-    "code_review": {
-      "required": false,
-      "checklist": ["tests", "security", "performance", "naming", "docs", "stimulus_cleanup", "reflex_authorization"],
-      "auto_approve": ["style", "typo", "docs"]
-    },
-    "issues": {
-      "template": true,
-      "labels": ["bug", "feature", "refactor", "security", "performance", "docs", "stimulus", "reflex"],
-      "priority": ["critical", "high", "medium", "low"],
-      "triage": "daily"
-    },
-    "pull_requests": {
-      "template": true,
-      "require_issue": false,
-      "require_tests": true,
-      "require_changelog": true,
-      "squash_merge": false
-    }
-  },
-
-  "learning": {
-    "feedback_loops": [
-      {"n": "immediate", "src": "tests", "act": "fix"},
-      {"n": "hourly", "src": "ci", "act": "review"},
-      {"n": "daily", "src": "monitoring", "act": "optimize"},
-      {"n": "weekly", "src": "metrics", "act": "plan"},
-      {"n": "monthly", "src": "retrospective", "act": "improve"}
+    "parameter_expansion": [
+      "${v:h}",
+      "${v:t}",
+      "${v:A}",
+      "${v:l}",
+      "${v:u}"
     ],
-    "metrics_tracked": ["deployment_frequency", "lead_time", "mttr", "change_failure_rate", "code_quality_trend", "coverage_trend", "performance_trend", "websocket_latency"],
-    "knowledge_base": {
-      "location": "docs/knowledge",
-      "format": "markdown",
-      "categories": ["decisions", "patterns", "gotchas", "tips", "stimulus_patterns", "reflex_patterns"],
-      "update": "continuous"
-    },
-    "postmortems": {
-      "required": ["outage", "security_incident", "data_loss", "websocket_failure"],
-      "template": true,
-      "blameless": true,
-      "action_items": "tracked"
-    },
-    "sessions": [
-      {
-        "date": "2025-10-21",
-        "v": "16.7.0",
-        "focus": "vps_verification_and_rails_installer_completion",
-        "lessons": [
-          {
-            "n": "installer_completeness",
-            "issue": "Rails installers missing application.html.erb layouts",
-            "impact": "Generated apps lacked professional UI structure",
-            "solution": "Added ultraminimal layouts to all 6 apps via cat/heredoc",
-            "pattern": "Every installer must generate: layout, CSS, Stimulus controllers, views, models, controllers",
-            "priority": "high"
-          },
-          {
-            "n": "css_architecture",
-            "issue": "No standardized CSS approach across apps",
-            "impact": "Inconsistent UX, missing responsive design",
-            "solution": "Brutalist/minimal CSS with CSS custom properties, mobile breakpoints",
-            "pattern": "Use CSS variables for theming, minimal class names, utility classes for spacing",
-            "priority": "high"
-          },
-          {
-            "n": "stimulus_integration",
-            "issue": "Missing client-side interactivity controllers",
-            "impact": "No live search, infinite scroll, or dynamic filtering",
-            "solution": "Added search_controller.js, infinite_scroll_controller.js, filter_controller.js, dropdown_controller.js",
-            "pattern": "Each feature needs Stimulus controller with lifecycle management (connect/disconnect)",
-            "priority": "medium"
-          },
-          {
-            "n": "git_large_repo",
-            "issue": "git push failed with OOM (3.6GB repo)",
-            "impact": "Cannot push changes to GitHub",
-            "solution": "git config pack.windowMemory=512m, pack.packSizeLimit=512m, pack.deltaCacheSize=128m, http.postBuffer=524288000, core.compression=0 (temp)",
-            "pattern": "For repos >1GB, configure git memory limits before push",
-            "priority": "critical"
-          },
-          {
-            "n": "vps_architecture_clarity",
-            "issue": "Unclear which apps are production vs development",
-            "impact": "Confusion about HTTPS availability and deployment status",
-            "solution": "Documented: brgen.no (11006) HTTPS production, 6 apps (10002-10007) localhost HTTP dev",
-            "pattern": "master.json must clearly indicate app status: production/running/not_deployed and https: true/false",
-            "priority": "high"
-          },
-          {
-            "n": "zsh_vs_bash",
-            "issue": "Mixing bash and zsh patterns",
-            "impact": "Inconsistent shell syntax, portability issues",
-            "solution": "Enforced pure zsh patterns: [[ ]], ${var}, $(<file), no backticks",
-            "pattern": "Use zsh builtin conditionals and parameter expansion, avoid external commands",
-            "priority": "medium"
-          },
-          {
-            "n": "token_efficiency",
-            "issue": "master.json v502 was verbose (30+ sections)",
-            "impact": "High token usage, slower processing",
-            "solution": "Consolidated to token-efficient v16.7.0 (8 top sections, abbreviated keys)",
-            "pattern": "Use short keys (n/v/ph/t), consolidate related config, preserve only essential verbosity",
-            "priority": "medium"
-          },
-          {
-            "n": "cat_heredoc_pattern",
-            "issue": "Inconsistent file generation methods",
-            "impact": "Some installers used echo, some cat, some Write tool",
-            "solution": "Standardized on cat <<EOF or cat <<'EOF' for all file generation",
-            "pattern": "Always use cat with heredocs for file generation in installers, use 'EOF' to prevent variable expansion when needed",
-            "priority": "high"
-          },
-          {
-            "n": "layout_requirements",
-            "issue": "No documentation of required layout elements",
-            "impact": "Incomplete layouts missing CSRF, CSP, flash messages",
-            "solution": "Defined standard layout structure: meta tags, navigation, flash, main, footer",
-            "pattern": "application.html.erb must include: csrf_meta_tags, csp_meta_tag, flash messages (notice/alert), responsive nav, sticky header, flex layout",
-            "priority": "high"
-          },
-          {
-            "n": "verification_workflow",
-            "issue": "No systematic verification of installer completeness",
-            "impact": "Discovered missing layouts only when asked",
-            "solution": "Check pattern: grep for layouts, CSS, JS, views, controllers, models, scaffolds",
-            "pattern": "Before declaring installer complete, verify: layout exists, CSS exists, Stimulus controllers exist, views > 5, has scaffolds or custom controllers",
-            "priority": "high"
-          }
-        ],
-        "metrics": {
-          "apps_enhanced": 6,
-          "lines_added": 1128,
-          "commits": 2,
-          "files_modified": 7,
-          "token_usage": "~103k/200k",
-          "duration": "session",
-          "git_push_issues": 1,
-          "git_config_fixes": 5
-        },
-        "outcomes": {
-          "all_installers_complete": true,
-          "layouts_added": 6,
-          "css_frameworks_added": 6,
-          "stimulus_controllers_added": 8,
-          "vps_documented": true,
-          "git_issues_resolved": true
-        }
-      }
+    "advanced_glob_qualifiers": [
+      "**/*(.N)",
+      "**/*(^/)",
+      "**/*.rb(-.)"
     ]
-  }
+  },
+  "business_plans": [
+    {
+      "name": "syre.html",
+      "amount": "NOK 250k",
+      "description": "3D-printede sko"
+    },
+    {
+      "name": "speis.html",
+      "amount": "NOK 900k",
+      "description": "NATO Aurora + kampfly + Ruby 3D-printing",
+      "status": "MERGED"
+    },
+    {
+      "name": "norwegianhedge.html",
+      "amount": "NOK 300k",
+      "description": "Hedgefond"
+    },
+    {
+      "name": "pubhealthcare.html",
+      "amount": "NOK 500k",
+      "description": "Autonome sykehus"
+    },
+    {
+      "name": "ragnhild.html",
+      "amount": "NOK 150k",
+      "description": "Begravelsesbyrå (Addams Family gothic fonts)"
+    },
+    {
+      "name": "govt_bergen.html",
+      "amount": "NOK 200k",
+      "description": "Bergen selvstyre"
+    }
+  ],
+  "total_amount": "NOK 2,300,000",
+  "formatting_rules": {
+    "json": "2-space indentation, double quotes everywhere, multiline for readability",
+    "ruby_rails": "2-space, double quotes, 120 char line length",
+    "javascript_stimulus": "2-space, double quotes, semicolons always",
+    "shell_zsh": "2-space, prefer builtins over external commands"
+  },
+  "norwegian_language_compliance": {
+    "ordbinding": "single word compounds",
+    "da_nar": "den gang da, hver gang når",
+    "strunk_white": "avg 18 words/sentence, active voice, concrete specifics"
+  },
+  "style_preferences": {
+    "prefer_simple_multiline_over_complex_oneliner": true,
+    "avoid": [
+      "excessive_piping",
+      "complex_regex",
+      "unnecessary_concatenation"
+    ],
+    "token_efficient_keys": true
+  },
+  "meta": {
+    "v": "16.9.0",
+    "updated": "2025-10-21T11:16:34Z",
+    "optimization_note": "For Claude Code"
+  },
+  "allowed_external_commands": [
+    "git",
+    "tar",
+    "gzip"
+  ]
 }
