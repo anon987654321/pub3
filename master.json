@@ -1,92 +1,399 @@
 {
   "meta": {
-    "version": "v20.3.0",
-    "updated": "2025-10-21T12:30:46Z",
+    "version": "v20.4.0",
+    "updated": "2025-10-21T13:21:07Z",
     "purpose": "multi_llm_convergence",
     "philosophy": [],
     "status": "converged"
   },
+
   "constants": {
     "thresholds": {
-      "coverage": "",
-      "complexity": "",
-      "duplication": ""
+      "coverage": 0.9,
+      "coverage_deploy": 0.95,
+      "complexity": 10,
+      "complexity_deploy": 8,
+      "duplication": 0.03
     },
     "limits": {
-      "method_length": "",
-      "class_length": "",
-      "params": "",
-      "file_size": "",
-      "max_tokens": "",
-      "convergence_timeout": ""
+      "method_length": 20,
+      "class_length": 300,
+      "params": 3,
+      "chain_depth": 3,
+      "file_size": 102400,
+      "max_tokens_per_task": 100000,
+      "convergence_timeout": 3600
     },
     "costs": {
-      "llm_in_1m": "",
-      "llm_out_1m": "",
-      "dev_hour": "",
-      "deploy_fail": "",
-      "downtime_min": "",
-      "security_incident": ""
+      "llm_in_1m": 3.0,
+      "llm_out_1m": 15.0,
+      "dev_hour": 100,
+      "deploy_fail": 5000,
+      "downtime_min": 500,
+      "security_incident": 50000
     }
   },
+
   "system": {
-    "defaults": ["big_picture", "high_scrutiny", "require_evidence", "minimize_sprawl", "edit_in_place"],
-    "execution_profile": "",
-    "style": "",
-    "output_aesthetic": "",
-    "error_handling": ["retry", "cooldown", "rollback", "preserve_state"]
+    "defaults": {
+      "big_picture_thinking": true,
+      "high_scrutiny": true,
+      "brutal_honesty": true,
+      "require_evidence": true,
+      "minimize_file_sprawl": true,
+      "edit_in_place": true,
+      "no_backups_without_permission": true
+    },
+    "execution": {
+      "profile": ["unix_tool", "enterprise"],
+      "style": "minimal_unix_cli",
+      "output_aesthetic": "strunk_white"
+    },
+    "context_budget": {
+      "soft": 0.85,
+      "hard": 0.95,
+      "warn_at": 0.80,
+      "action": "summarize_history"
+    },
+    "error_handling": {
+      "retry": 2,
+      "cooldown_s": 1.2,
+      "report": "stderr",
+      "rollback": true,
+      "preserve_state": true
+    }
   },
+
   "core": {
     "strict": "set -euo pipefail",
-    "weights": ["security", "duplication", "complexity", "coverage", "style", "cost", "naming"]
+    "ssh_port": 31415,
+    "vm": "vm08",
+    "host": "server27.openbsd.amsterdam",
+    "services": ["postgresql", "falcon", "relayd", "pf", "nsd"],
+    "weights": {
+      "security": 10,
+      "duplication": 10,
+      "complexity": 9,
+      "coverage": 8,
+      "style": 7,
+      "cost": 6,
+      "naming": 5
+    }
   },
+
+  "languages": {
+    "primary": "ruby",
+    "secondary": "javascript",
+    "avoid": ["python", "perl", "php"],
+    "rationale": {
+      "ruby": "Rails 8 ecosystem with Hotwire/Stimulus; mature tooling; expressive syntax; strong metaprogramming",
+      "javascript": "Stimulus/Hotwire frontend integration; Node.js ecosystem when needed",
+      "avoid_python": "Prefer Ruby for CLI/automation to maintain language consistency and leverage Rails ecosystem"
+    },
+    "use_cases": {
+      "automation": "ruby",
+      "cli_tools": "ruby (thor/optparse/dry-cli)",
+      "system_admin": "zsh + ruby",
+      "web_frontend": "javascript (stimulus/hotwire)",
+      "web_backend": "ruby (rails)"
+    }
+  },
+
   "shell": {
     "interpreter": "zsh",
     "policy": "modern_zsh_first",
-    "forbidden": ["bashism", "backtick", "which", "test", "seq", "echo", "printf", "cut", "head", "tail", "sed", "awk", "tr", "grep", "sort", "uniq", "wc", "basename", "dirname", "find", "xargs", "readlink", "expr", "tee", "column", "paste", "join"],
-    "patterns": ["glob", "param", "cond", "io", "heredoc", "array"]
+    "forbidden": ["bashism", "backtick", "which", "test", "seq", "echo", "printf", "cut", "head", "tail", "sed", "awk", "tr", "grep", "sort", "uniq", "wc", "basename", "dirname", "find", "xargs", "readlink", "expr", "tee", "column", "paste", "join", "comm"],
+    "allowed_external": ["doas", "rcctl", "pkg_add", "pkg_info", "pkg_delete", "syspatch", "sysupgrade", "pfctl", "relayctl", "nsd-control", "unbound-control", "acme-client", "vmctl", "signify", "openssl", "ifconfig", "route", "netstat", "systat", "sysctl", "dmesg", "man", "apropos", "ksh", "file", "mktemp", "date", "mv", "cp", "cat", "vim", "git", "tar", "gzip", "rails", "bundle", "psql", "node", "ruby"],
+    "patterns": {
+      "glob": {
+        "desc": "Use zsh glob patterns instead of find",
+        "bad": "find . -name '*.rb'",
+        "good": "**/*.rb"
+      },
+      "param": {
+        "desc": "Use parameter expansion instead of sed/awk/cut",
+        "bad": "echo $file | sed 's/.txt/.bak/'",
+        "good": "${file%.txt}.bak"
+      },
+      "cond": {
+        "desc": "Use [[ ]] instead of test or [ ]",
+        "bad": "if [ -f $file ]; then",
+        "good": "if [[ -f $file ]]; then"
+      },
+      "io": {
+        "desc": "Use zsh redirection and process substitution",
+        "bad": "cat file | grep pattern",
+        "good": "grep pattern < file or < file grep pattern"
+      },
+      "heredoc": {
+        "desc": "Use heredoc for multiline strings",
+        "example": "cat <<'EOF'\n  multiline\n  content\nEOF"
+      },
+      "array": {
+        "desc": "Use zsh array operations",
+        "bad": "for f in $(ls); do",
+        "good": "for f in *(N); do"
+      },
+      "string": {
+        "desc": "Use parameter expansion for string manipulation",
+        "examples": {
+          "uppercase": "${var:u}",
+          "lowercase": "${var:l}",
+          "trim_prefix": "${var#prefix}",
+          "trim_suffix": "${var%suffix}",
+          "replace": "${var/old/new}",
+          "replace_all": "${var//old/new}"
+        }
+      }
+    }
   },
+
+  "openbsd": {
+    "service_management": {
+      "tool": "rcctl",
+      "enable": "doas rcctl enable service_name",
+      "disable": "doas rcctl disable service_name",
+      "start": "doas rcctl start service_name",
+      "stop": "doas rcctl stop service_name",
+      "restart": "doas rcctl restart service_name",
+      "check": "doas rcctl check service_name",
+      "status": "doas rcctl ls on"
+    },
+    "packages": {
+      "install": "doas pkg_add package_name",
+      "info": "pkg_info package_name",
+      "search": "pkg_info -Q search_term",
+      "delete": "doas pkg_delete package_name",
+      "list": "pkg_info"
+    },
+    "system_updates": {
+      "patches": "doas syspatch",
+      "upgrade": "doas sysupgrade",
+      "check": "syspatch -c"
+    },
+    "firewall": {
+      "tool": "pfctl",
+      "reload": "doas pfctl -f /etc/pf.conf",
+      "enable": "doas pfctl -e",
+      "disable": "doas pfctl -d",
+      "show_rules": "doas pfctl -s rules",
+      "show_states": "doas pfctl -s states",
+      "flush": "doas pfctl -F all"
+    },
+    "load_balancer": {
+      "tool": "relayctl",
+      "reload": "doas relayctl reload",
+      "show": "doas relayctl show summary",
+      "hosts": "doas relayctl show hosts"
+    },
+    "dns": {
+      "tool": "nsd-control",
+      "reload": "doas nsd-control reload",
+      "reconfig": "doas nsd-control reconfig",
+      "status": "doas nsd-control status"
+    },
+    "tls": {
+      "tool": "acme-client",
+      "renew": "doas acme-client -v domain.com"
+    },
+    "virtualization": {
+      "tool": "vmctl",
+      "list": "doas vmctl status",
+      "start": "doas vmctl start vm_name",
+      "stop": "doas vmctl stop vm_name"
+    },
+    "crypto_signing": {
+      "tool": "signify",
+      "verify": "signify -C -p /etc/signify/openbsd-76-base.pub -x SHA256.sig file"
+    },
+    "networking": {
+      "interface_config": "doas ifconfig interface",
+      "routing": "doas route add/delete destination gateway",
+      "connections": "netstat -an",
+      "stats": "systat vmstat"
+    },
+    "introspection": {
+      "kernel_params": "sysctl kern.version",
+      "system_log": "dmesg | tail",
+      "manual": "man command",
+      "search_man": "apropos keyword"
+    },
+    "avoid": ["docker", "systemd", "gsed", "gawk", "ggrep", "bash"],
+    "rationale": "Prefer OpenBSD base system tools for security (audited code), simplicity (less dependency sprawl), and consistency with production VPS environment"
+  },
+
   "standards": {
     "naming": "style/avoid",
-    "principles": ["dry", "kiss", "yagni", "solid", "fail_fast"],
-    "smells": ["method", "class", "naming"],
-    "formatting": ["json", "code"]
+    "principles": {
+      "dry": "Don't Repeat Yourself - extract common logic",
+      "kiss": "Keep It Simple, Stupid - prefer simple solutions",
+      "yagni": "You Aren't Gonna Need It - avoid speculative features",
+      "solid": "Single Responsibility, Open/Closed, Liskov, Interface Segregation, Dependency Inversion",
+      "fail_fast": "Detect and report errors immediately",
+      "separation_of_concerns": "Separate business logic, presentation, data access",
+      "least_privilege": "Grant minimum necessary permissions",
+      "defense_in_depth": "Layer security controls"
+    },
+    "smells": {
+      "method": ["too_long", "too_many_params", "feature_envy", "flag_arguments", "nested_conditionals"],
+      "class": ["too_large", "god_object", "data_clump", "primitive_obsession"],
+      "change": ["shotgun_surgery", "divergent_change", "parallel_hierarchies"],
+      "coupling": ["inappropriate_intimacy", "message_chains", "middle_man"],
+      "abstract": ["speculative_generality", "incomplete_library"],
+      "naming": ["cryptic_names", "inconsistent_names", "type_in_name"],
+      "rails": ["fat_controller", "callback_hell", "n_plus_one"],
+      "stimulus": ["too_many_targets", "imperative_dom", "missing_lifecycle"],
+      "reflex": ["fat_reflex", "business_logic_in_reflex", "missing_validation"]
+    },
+    "formatting": {
+      "json": {"indent": 2, "quotes": "double", "trailing_comma": false},
+      "ruby": {"indent": 2, "quotes": "double", "style": "rubocop"},
+      "javascript": {"indent": 2, "quotes": "double", "semicolons": true, "style": "standard"},
+      "zsh": {"indent": 2, "prefer_builtins": true, "no_bashisms": true}
+    }
   },
+
   "security": {
-    "top_risks": ["injection", "auth", "secrets", "xss"]
+    "top_risks": ["injection", "auth", "secrets", "xss", "csrf", "clickjacking", "insecure_deserialization", "insufficient_logging"]
   },
+
   "execution": {
     "mode": "silent",
     "file_operations": ["create", "edit", "backup"],
-    "autonomous": {"enabled": true, "batch": true, "confidence": true, "reversible": true},
-    "autoiteration": {"enabled": true, "strategies": {"consensus": {}, "incremental": {}, "ensemble": {}, "adversarial": {}}, "max_iterations": ""},
-    "comparison_methods": ["diff", "ast", "semantic", "embedding"],
-    "oscillation_detection": {"enabled": true},
-    "cost_tracking": {"enabled": true},
-    "dynamic_selection": {"with_heuristics": true},
-    "global_criteria": {},
+    "autonomous": {
+      "enabled": true,
+      "batch": true,
+      "confidence": true,
+      "reversible": true
+    },
+    "refactor": {
+      "on": true,
+      "every": "touch",
+      "check": ["principles", "smells", "naming", "security"],
+      "do": ["rename", "reorder", "respace", "extract", "simplify", "remove", "secure"],
+      "gate": ["no_smells", "cx_down", "clarity_up", "tests_pass", "security_clear"]
+    },
+    "autoiteration": {
+      "enabled": true,
+      "strategies": [
+        {
+          "name": "consensus",
+          "method": "compare_outputs",
+          "threshold": 0.95,
+          "fallback": "majority_vote",
+          "criteria": ["identical_code", "tests_pass", "lint_pass"],
+          "max_iterations": 5,
+          "use_when": ["file_size<1000", "well_defined_task", "low_ambiguity"]
+        },
+        {
+          "name": "incremental",
+          "method": "sequential_feedback",
+          "threshold": 0.90,
+          "fallback": "human_review",
+          "criteria": ["improved_metrics", "reduced_complexity", "tests_pass"],
+          "max_iterations": 10,
+          "use_when": ["complexity>15", "needs_refinement", "iterative_improvement"]
+        },
+        {
+          "name": "ensemble",
+          "method": "task_delegation",
+          "task_categories": {
+            "structure": ["organization", "naming", "documentation"],
+            "optimization": ["performance", "security"],
+            "creativity": ["novel_solutions", "language"]
+          },
+          "threshold": 0.92,
+          "fallback": "weighted_merge",
+          "max_iterations": 7,
+          "use_when": ["diverse_tasks", "specialized_needs", "parallel_workload"]
+        },
+        {
+          "name": "adversarial",
+          "method": "cross_validation",
+          "approach": "round_robin_critique",
+          "threshold": 0.90,
+          "fallback": "escalate_to_all",
+          "max_iterations": 6,
+          "use_when": ["security_critical", "high_risk", "production_code"]
+        }
+      ],
+      "max_iterations": 10
+    },
+    "comparison_methods": {
+      "diff_based": {
+        "tolerance": 0.05,
+        "use_when": "exact_match_needed",
+        "metric": "lines_changed/total_lines"
+      },
+      "ast_based": {
+        "tolerance": 0.10,
+        "use_when": "structure_matters",
+        "metric": "tree_edit_distance"
+      },
+      "semantic": {
+        "tolerance": 0.15,
+        "use_when": "logic_equivalent",
+        "metric": "behavior_equivalence"
+      },
+      "embedding": {
+        "tolerance": 0.20,
+        "use_when": "high_level_similarity",
+        "metric": "cosine_similarity"
+      }
+    },
+    "oscillation_detection": {
+      "enabled": true,
+      "window": 3,
+      "threshold": 0.80,
+      "action": "escalate_to_human"
+    },
+    "cost_tracking": {
+      "enabled": true,
+      "max_tokens_per_task": 100000,
+      "alert_at": 0.80,
+      "abort_at": 1.00
+    },
+    "dynamic_selection": {
+      "with_heuristics": true,
+      "heuristics": [
+        {"if": "file_size<100", "then": "consensus"},
+        {"if": "complexity>15", "then": "incremental"},
+        {"if": "security_file", "then": "adversarial"},
+        {"if": "diverse_skills_needed", "then": "ensemble"}
+      ],
+      "classifiers": ["complexity", "file_type", "change_scope", "risk_level"]
+    },
+    "global_criteria": ["no_changes_needed", "tests_pass", "lint_pass", "security_clear"],
     "monitoring": {
       "metrics": ["log", "alert_on"],
       "phases": ["scan", "analyze", "implement", "validate"],
-      "testing": {"required": ["unit", "integration"], "ci": true},
+      "testing": {
+        "required": ["unit", "integration"],
+        "ci": true
+      },
       "git_commit_style": "conventional"
     }
   },
+
   "intelligence": {
     "personas": ["skeptic", "minimalist", "security", "architect"],
     "decision_matrix": ["impact", "effort", "risk", "cost", "reversibility"],
     "biases": ["confirmation", "optimism", "anchoring"],
     "techniques": ["analysis", "validation"]
   },
+
   "quality": {
     "gates": ["commit", "deploy"],
     "thresholds": ["coverage", "complexity", "security"]
   },
+
   "monitoring": {
     "production_metrics": ["deployment_frequency", "lead_time", "mttr", "change_failure_rate"],
     "alerts": ["error_spike", "security_violation"]
   },
+
   "workflows": ["file", "self_improve"],
+
   "deployment": {
     "vps": {
       "vm": "vm08",
