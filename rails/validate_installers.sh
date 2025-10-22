@@ -169,6 +169,29 @@ if [[ ${#MISSING_INSTALLERS[@]} -gt 0 ]]; then
   log_error "${#MISSING_INSTALLERS[@]} installer(s) missing: ${MISSING_INSTALLERS[*]}"
 fi
 
+# Code metrics
+echo -e "\n━━━ Code Metrics ━━━\n"
+
+TOTAL_LINES=$(cat "${SCRIPT_DIR}"/*.sh 2>/dev/null | wc -l)
+TOTAL_HEREDOCS=$(grep -h "<<" "${SCRIPT_DIR}"/*.sh 2>/dev/null | wc -l)
+LARGE_FILES=$(find "${SCRIPT_DIR}" -name "*.sh" -size +1000c 2>/dev/null | wc -l)
+
+log_info "Total lines: $TOTAL_LINES"
+log_info "Heredoc patterns: $TOTAL_HEREDOCS"
+log_info "Large installers (>1KB): $LARGE_FILES"
+
+# Check for largest files (complexity indicators)
+echo -e "\n━━━ Largest Installers ━━━\n"
+for installer in "${SCRIPT_DIR}"/*.sh; do
+  [[ ! -f "$installer" ]] && continue
+  [[ "$(basename "$installer")" == "validate_installers.sh" ]] && continue
+  lines=$(wc -l < "$installer")
+  if [[ $lines -gt 500 ]]; then
+    app_name="$(basename "$installer" .sh)"
+    log_warning "$app_name: $lines lines (consider refactoring if >1500)"
+  fi
+done
+
 if [[ $ERRORS -eq 0 && $WARNINGS -eq 0 ]]; then
   echo -e "${GREEN}✓ All installers validated successfully!${NC}\n"
   exit 0

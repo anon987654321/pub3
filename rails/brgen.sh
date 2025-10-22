@@ -1845,7 +1845,7 @@ require 'async/http/server'
 require 'rack'
 
 ENV["RAILS_ENV"] ||= "production"
-port = ENV.fetch("PORT", 11006).to_i
+port = ENV.fetch("PORT", 10001).to_i
 
 # Load the Rails application
 require_relative '../config/environment'

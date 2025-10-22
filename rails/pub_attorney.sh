@@ -4,11 +4,11 @@ set -euo pipefail
 # Pubattorney: Legal services platform with document upload, lawyer matching, case management
 # Domains: pub.attorney, freehelp.legal
 
-# Port: 12109
+# Port: 10002 (from master.json apps.pubattorney)
 APP_NAME="pubattorney"
 BASE_DIR="/home/dev/rails"
 
-PORT=12109
+PORT=10002
 source "./__shared/@common.sh"
 log "Starting Pubattorney setup"
 
