@@ -9,7 +9,8 @@ APP_DIR="${BASE_DIR}/app"
 
 BRGEN_IP="185.52.176.18"
 
-BRGEN_PORT="11006"
+# Port defined in master.json apps.brgen
+BRGEN_PORT="10001"
 
 source "./__shared/@common.sh"
 log "Starting Brgen core setup"

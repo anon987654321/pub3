@@ -52,19 +52,21 @@ fi
 
 log_success "master.json found"
 
-# Validate JSON syntax
-if ! jq empty "$MASTER_JSON" 2>/dev/null; then
-  log_error "master.json has invalid JSON syntax"
-  exit 1
-fi
+# Parse master.json (JSON5 with comments - extract apps section only)
+log_success "master.json found (JSON5 format with comments)"
 
-log_success "master.json has valid JSON syntax"
-
-# Get ports from master.json
+# Get ports from master.json apps section using simple grep/sed parsing
+# This avoids jq's strict JSON parsing issues with JSON5 comments
 declare -A PORTS
-while IFS=: read -r app port; do
-  PORTS[$app]=$port
-done < <(jq -r '.deployment.ports | to_entries[] | "\(.key):\(.value)"' "$MASTER_JSON")
+
+# Extract app port definitions from master.json
+while IFS= read -r line; do
+  if [[ "$line" =~ \"([^\"]+)\":[[:space:]]*\{\"port\":[[:space:]]*([0-9]+) ]]; then
+    app="${BASH_REMATCH[1]}"
+    port="${BASH_REMATCH[2]}"
+    PORTS[$app]=$port
+  fi
+done < <(sed -n '/^[[:space:]]*"apps":/,/^[[:space:]]*}/p' "$MASTER_JSON")
 
 echo -e "\n━━━ Canonical Ports from master.json ━━━"
 for app in "${!PORTS[@]}"; do
@@ -143,15 +145,17 @@ for installer in "${SCRIPT_DIR}"/*.sh; do
 done
 
 # Check for installers in master.json that don't have .sh files
-echo -e "━━━ Checking master.json installers ━━━\n"
+# Note: master.json uses JSON5 with comments, so we check apps defined above
+echo -e "━━━ Cross-checking installers ━━━\n"
 
 MISSING_INSTALLERS=()
-while read -r installer_name; do
-  if [[ ! -f "${SCRIPT_DIR}/${installer_name}.sh" ]]; then
-    MISSING_INSTALLERS+=("$installer_name")
-    log_error "master.json references $installer_name but ${installer_name}.sh not found"
+# Check that all apps in master.json have corresponding installers
+for app in "${!PORTS[@]}"; do
+  if [[ ! -f "${SCRIPT_DIR}/${app}.sh" ]]; then
+    MISSING_INSTALLERS+=("$app")
+    log_error "master.json defines $app but ${app}.sh not found"
   fi
-done < <(jq -r '.deployment.installers[].n' "$MASTER_JSON")
+done
 
 # Summary
 echo -e "\n╔════════════════════════════════════════════════════════╗"
