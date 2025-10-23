@@ -47,4 +47,3 @@ echo ""
 echo "Without API token, script falls back to gTTS."
 
 echo ""
-

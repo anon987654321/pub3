@@ -56,4 +56,3 @@ if result[:output].is_a?(String) && result[:output].start_with?("http")
   puts "Download: curl -o #{filename} '#{result[:output]}'"
 
 end
-

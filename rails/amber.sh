@@ -1174,4 +1174,3 @@ Helps girls organize wardrobes with joy and mindfulness.
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
 
 Co-Authored-By: Claude <noreply@anthropic.com>"
-

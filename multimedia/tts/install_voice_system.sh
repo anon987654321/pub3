@@ -117,4 +117,3 @@ echo "   https://f-droid.org/packages/com.termux.api/"
 echo ""
 
 echo "🎉 Reload shell: source ~/.bashrc"
-

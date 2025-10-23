@@ -31,4 +31,3 @@ for file in **/*(.N); do
   fi
 
 done
-

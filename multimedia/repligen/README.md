@@ -177,4 +177,3 @@ Default budget tracking:
 **License**: MIT
 
 **Docs**: See CLAUDE.md for integration patterns
-

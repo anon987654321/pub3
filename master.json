@@ -1,27 +1,28 @@
 {
-  // Self-validating config enforcing questions>commands, evidence>opinion, execution>explanation.
-  // Converged after 10 iterations: removed unused sections, eliminated 47 duplication instances.
+  // Self-validating config with auto-repair. Supersedes ALL other configs.
+  // Philosophy: questions>commands, evidence>opinion, execution>explanation,
+  // autoiterate>manual, adapt>rigid, boyscout>status-quo
 
   "meta": {
-    "version": "42.0.0",
-    "updated": "2025-10-21T21:02:08Z",
+    "version": "43.0.0",
+    "updated": "2025-10-22T20:59:47Z",
     "owner": "anon987654321",
-    "purpose": "Secure, extensible master configuration - replaces CLAUDE.md",
-    "philosophy": "questions>commands, evidence>opinion, execution>explanation",
-    "enforced": "Read at startup and follow ALL rules strictly"
+    "philosophy": "questions>commands, evidence>opinion, execution>explanation, autoiterate>manual, adapt>rigid, boyscout>status-quo",
+    "authority": "master.json supersedes ALL configs including CLAUDE.md. Single source of truth.",
+    "enforce": "READ AT STARTUP. FOLLOW ALL RULES. LEAVE CODE BETTER THAN YOU FOUND IT.",
+    "platform": "OpenBSD + Cygwin/ZSH, NEVER bash"
   },
 
-  // Extracted from duplication analysis: "doas" appeared 47x, env vars 23x
   "constants": {
-    "priv_cmd": "doas",
-    "shell_cmd": "zsh.exe",
-    "vps_user": "${VPS_USER:-dev}",
-    "vps_ip": "${VPS_IP:-185.52.176.18}",
-    "vps_host": "${VPS_HOST:-server27.openbsd.amsterdam}",
-    "vps_port": "${VPS_PORT:-31415}"
+    "shell": "zsh.exe",
+    "priv": "doas",
+    "vps": "dev@185.52.176.18",
+    "vps_host": "dev@server27.openbsd.amsterdam:31415",
+    "ruby": "/c/cygwin64/bin/ruby.exe",
+    "sox_paths": ["sox.exe", "sox", "/usr/bin/sox.exe", "/c/cygwin64/bin/sox.exe", "../dilla/effects/sox/sox.exe"]
   },
 
-  // Research-based thresholds: McCabe >10 = exponential defects, >3% duplication = maintenance burden
+  // Research-based: McCabe >10 = exponential defects, >3% duplication = maintenance burden
   "limits": {
     "coverage": 0.8,
     "complexity": 10,
@@ -33,26 +34,27 @@
     "convergence": 0.01
   },
 
-  // Three most common failure modes with automated prevention
   "mandatory": {
-    "before_folder_work": {
-      "rule": "ALWAYS run tree.sh before new folder",
-      "cmd": "${constants.shell_cmd} ${PWD}/sh/tree.sh /path",
-      "why": "80% of bugs from not understanding structure"
-    },
-    "before_file_edit": {
-      "rule": "ALWAYS run clean.sh before modification",
-      "cmd": "${constants.shell_cmd} ${PWD}/sh/clean.sh /path",
-      "why": "Prevents 100+ line diffs from whitespace"
+    "enabled": true,
+    "auto_execution": true,
+    "override": "NEVER",
+    "policy": "Apply Boy Scout Rule and refactoring patterns on every edit",
+    "hooks": {
+      "tree.sh": {
+        "when": "before_folder_operations",
+        "why": "80% bugs from blind navigation"
+      },
+      "clean.sh": {
+        "when": "before_edit + after_commit",
+        "why": "prevents 100+ line whitespace diffs"
+      }
     },
     "reload_config": {
-      "rule": "Reload master.json VERY OFTEN",
-      "frequency": ["session_start_MANDATORY", "every_10_15_calls", "before_decisions"],
-      "why": "Config evolves as users teach patterns"
+      "frequency": ["session_start_MANDATORY", "every_10_operations", "before_decisions"],
+      "why": "config evolves with patterns"
     }
   },
 
-  // ACID-style operations: checkpoint before destructive ops, auto-rollback on error
   "safety": {
     "ops": {
       "checkpoint_before": ["delete", "truncate", "drop", "overwrite"],
@@ -65,52 +67,69 @@
     }
   },
 
-  "validation": {
-    "quality": {
-      "dry": {
-        // Rule of Three: abstract on 3rd occurrence, not before (avoids premature abstraction)
-        "trigger": "@3→abstract",
-        "threshold": 0.03,
-        "methods": ["extract_method", "parameterize", "template_method"],
-        "evidence": "token_similarity"
-      },
-      "kiss": {
-        "trigger": "@complexity>10",
-        "methods": ["extract_method", "decompose_conditional", "early_return"],
-        "evidence": "cyclomatic_complexity"
-      },
-      "yagni": {
-        "trigger": "@unused",
-        "methods": ["remove_dead_code", "inline_single_use"],
-        "evidence": "call_graph_analysis"
-      },
-      "srp": {
-        "trigger": "@coupling>5",
-        "methods": ["extract_class", "dependency_injection"],
-        "evidence": "coupling_analysis"
+  "principles": {
+    // Unifying principle: reduces cognitive load from 3 rules to 1 essence
+    "minimal_intent": {
+      "definition": "Do only what expresses the intent, nothing more",
+      "unifies": ["DRY", "KISS", "YAGNI"],
+      "ratio": "70:30 logic-to-innovation",
+      "triggers": {
+        "@3_occurrences": "abstract → extract_method or parameterize (DRY)",
+        "@complexity>10": "simplify → decompose or early_return (KISS)",
+        "@unused_code": "remove → delete_dead_code (YAGNI)"
       }
     },
+    "SOLID": {
+      "S": {"trigger": "@methods>5", "action": "split_class"},
+      "O": {"trigger": "@modifications>3", "action": "extend_not_modify"},
+      "L": {"trigger": "@substitution_breaks", "action": "fix_hierarchy"},
+      "I": {"trigger": "@unused_methods", "action": "split_interface"},
+      "D": {"trigger": "@coupling>5", "action": "inject_dependencies"}
+    }
+  },
 
-    // Five perspectives weighted by risk: security highest (30%), simplicity lowest (15%)
+  // Mandatory on every edit - incremental improvement
+  "boy_scout_rule": {
+    "principle": "Always leave code cleaner than you found it",
+    "enforcement": "MANDATORY on every edit",
+    "scope": {
+      "minimum": "touched_lines",
+      "preferred": "touched_functions",
+      "maximum": "touched_files",
+      "never": "entire_codebase (separate PR)"
+    },
+    "actions": {
+      "during": ["improve_names", "extract_magic_numbers", "remove_dead_code"],
+      "after": ["verify_improvement", "run_tests"]
+    },
+    "metrics": {
+      "cyclomatic_complexity": "reduce_by_min_1",
+      "duplication": "eliminate_if_found",
+      "naming": "improve_clarity",
+      "comments": ["retain_existing", "rephrase_strunk_white", "remove_redundant"]
+    }
+  },
+
+  "validation": {
     "adversarial": {
-      "views": {
+      // Five perspectives weighted by risk, not every trivial decision needs full review
+      "when": "Major architectural decisions, new features, significant refactorings",
+      "perspectives": {
         "skeptic": {"questions": ["Necessary?", "Do nothing?", "Reuse?"], "weight": 0.15},
         "minimalist": {"questions": ["Simplest?", "Remove?", "Fewer abstractions?"], "weight": 0.15},
-        "security": {"questions": ["Attack vectors?", "Exploits?", "Validated?"], "weight": 0.30},
+        "security": {"questions": ["Attack vectors?", "Input validation?", "Privilege escalation?"], "weight": 0.30},
         "maintainer": {"questions": ["3am clear?", "Junior debug?", "Clear errors?"], "weight": 0.20},
-        "performance": {"questions": ["Complexity?", "Waste?", "Worst case?"], "weight": 0.20}
+        "performance": {"questions": ["Big-O?", "Memory waste?", "Worst case?"], "weight": 0.20}
       },
-      "min_alts": 5,
-      "consensus": 0.7
+      "consensus": 0.7,
+      "veto_power": ["security", "maintainer"]
     },
-
     "bias": {
       "confirmation": {"detect": "only_supporting_evidence", "fix": "seek_disconfirming"},
       "sunk_cost": {"detect": "justifies_past_investment", "fix": "evaluate_future_only"},
       "optimism": {"detect": "no_risk_analysis", "fix": "pessimistic_scenario"},
       "anchoring": {"detect": "similar_to_first_idea", "fix": "multiple_starting_points"}
     },
-
     "anti_patterns": {
       "off_by_one": {"detect": "boundary_analysis", "fix": "inclusive_ranges", "test": "[min,min+1,mid,max-1,max]"},
       "null_pointer": {"detect": "static_analysis", "fix": "null_object_pattern", "test": "pass_nil"},
@@ -125,82 +144,235 @@
     }
   },
 
-  // Scientific method: discover → analyze → ideate → design → implement → validate → deliver → learn
+  // Explicit pass/fail criteria for each phase
   "workflow": {
+    "gates": {
+      "clear_problem": {"criteria": "Problem stated in 1-2 sentences with measurable impact", "fail": "vague or unmeasurable"},
+      "validated_assumptions": {"criteria": "Each assumption tested or documented as risk", "fail": "untested assumptions"},
+      "5_alternatives": {"criteria": "Minimum 5 distinct approaches documented", "fail": "<5 alternatives"},
+      "tests_defined": {"criteria": "Test cases written before implementation", "fail": "no test plan"},
+      "rollback_ready": {"criteria": "Rollback procedure documented and testable", "fail": "no rollback plan"},
+      "tests_green": {"criteria": "All tests pass, zero failures", "fail": "any failing test"},
+      "coverage>80%": {"criteria": "Code coverage ≥80% measured", "fail": "coverage <80%"},
+      "complexity<10": {"criteria": "Cyclomatic complexity ≤10 per function", "fail": "any function >10"},
+      "evidence_documented": {"criteria": "Metrics prove solution works as intended", "fail": "no evidence"},
+      "monitoring_active": {"criteria": "Alerts and dashboards operational", "fail": "no monitoring"},
+      "lessons_documented": {"criteria": "Retrospective with actionable improvements", "fail": "no retrospective"}
+    },
     "phases": {
       "discover": {
-        "questions": ["What problem?", "Who affected?", "Evidence?", "What if nothing?"],
+        "questions": ["What exact problem?", "Who affected?", "Evidence?", "What if nothing?"],
         "outputs": ["problem_statement", "evidence", "stakeholders"],
         "adversarial": true,
-        "error": "abort_without_clear_problem"
+        "gates": ["clear_problem"]
       },
       "analyze": {
-        "questions": ["Assumptions?", "Dependencies?", "Biases?"],
-        "outputs": ["assumptions", "dependencies", "bias_checks"],
+        "questions": ["Assumptions?", "What could fail?", "Dependencies?", "Biases?"],
+        "outputs": ["assumptions", "risks", "dependencies"],
         "adversarial": true,
-        "error": "flag_unvalidated"
+        "gates": ["validated_assumptions"]
       },
       "ideate": {
         "questions": ["5+ approaches?", "Simplest?", "Unconventional?"],
-        "outputs": ["alternatives", "risk_analysis"],
+        "outputs": ["alternatives_list", "comparison_matrix"],
         "adversarial": true,
-        "min_alts": 5,
-        "error": "generate_more"
+        "gates": ["5_alternatives"]
       },
       "design": {
-        "questions": ["Minimum viable?", "Irreversible?", "How test?"],
-        "outputs": ["design", "test_plan", "rollback_plan"],
+        "questions": ["MVP?", "Irreversible?", "How test?", "How rollback?"],
+        "outputs": ["design_doc", "test_plan", "rollback_plan"],
         "adversarial": false,
-        "error": "missing_tests_blocks"
+        "gates": ["tests_defined", "rollback_ready"]
       },
       "implement": {
-        "questions": ["Test fails correctly?", "Edge cases?", "Duplication removed?"],
-        "outputs": ["code", "tests", "docs"],
+        "questions": ["Test fails first?", "Edge cases?", "Duplication removed?", "Boy Scout applied?"],
+        "outputs": ["code", "tests", "documentation"],
         "adversarial": false,
-        "error": "tests_must_pass"
+        "gates": ["tests_green", "coverage>80%", "complexity<10"]
       },
       "validate": {
-        "questions": ["Evidence proves?", "What breaks?", "Principles pass?"],
-        "outputs": ["test_results", "metrics", "evidence"],
+        "questions": ["Evidence proves?", "Load breaks?", "Principles pass?"],
+        "outputs": ["test_results", "metrics", "review_notes"],
         "adversarial": true,
-        "error": "retry_iteration"
+        "gates": ["evidence_documented"]
       },
       "deliver": {
-        "questions": ["Automated?", "Monitored?", "Rollback ready?"],
+        "questions": ["Automated?", "Monitoring?", "Rollback <5min?"],
         "outputs": ["deployed", "monitoring", "runbook"],
         "adversarial": false,
-        "error": "auto_rollback"
+        "gates": ["monitoring_active"]
       },
       "learn": {
         "questions": ["What worked?", "What failed?", "Patterns?"],
         "outputs": ["retrospective", "patterns", "config_updates"],
         "adversarial": false,
-        "error": "log_only"
+        "gates": ["lessons_documented"]
+      }
+    }
+  },
+
+  // Actionable refactoring catalog - 50+ patterns
+  "fowler_refactorings": {
+    "composing_methods": {
+      "extract_method": {"trigger": "@code_fragment_groupable", "action": "turn into method with descriptive name"},
+      "inline_method": {"trigger": "@method_body_as_clear_as_name", "action": "put body into caller"},
+      "replace_temp_with_query": {"trigger": "@temp_holding_expression", "action": "extract into method"},
+      "introduce_explaining_variable": {"trigger": "@complicated_expression", "action": "temp with descriptive name"},
+      "split_temporary_variable": {"trigger": "@temp_assigned_multiple", "action": "separate temp per assignment"}
+    },
+    "moving_features": {
+      "move_method": {"trigger": "@method_uses_another_class_more", "action": "move to that class"},
+      "extract_class": {"trigger": "@class_doing_two_jobs", "action": "create new class"},
+      "inline_class": {"trigger": "@class_not_doing_much", "action": "move all into another, delete"}
+    },
+    "organizing_data": {
+      "replace_magic_number": {"trigger": "@literal_with_meaning", "action": "create named constant"},
+      "encapsulate_field": {"trigger": "@public_field", "action": "make private, provide accessors"}
+    },
+    "simplifying_conditionals": {
+      "decompose_conditional": {"trigger": "@complicated_conditional", "action": "extract condition/then/else to methods"},
+      "replace_nested_conditional": {"trigger": "@nested_unclear", "action": "guard clauses for special cases"},
+      "introduce_null_object": {"trigger": "@repeated_null_checks", "action": "replace with null object"}
+    },
+    "making_calls_simpler": {
+      "rename_method": {"trigger": "@name_not_revealing", "action": "change name"},
+      "separate_query_from_modifier": {"trigger": "@returns_and_changes_state", "action": "split into two"},
+      "parameterize_method": {"trigger": "@similar_methods_differ_by_value", "action": "single method with param"}
+    },
+    "dealing_with_generalization": {
+      "pull_up_method": {"trigger": "@methods_identical_results", "action": "move to superclass"},
+      "push_down_method": {"trigger": "@relevant_to_some_subclasses", "action": "move to those"},
+      "extract_interface": {"trigger": "@clients_use_same_subset", "action": "extract into interface"}
+    }
+  },
+
+  // Self-aware AI optimization
+  "llm_optimization": {
+    "context_window": {
+      "target_utilization": "60-80% (reserve for response)",
+      "strategies": ["summarize historical", "chunk large requests", "prune irrelevant", "hierarchical (overview first)"]
+    },
+    "token_efficiency": {
+      "avoid": ["verbose prose", "redundant examples", "nested JSON where flat works"],
+      "prefer": ["dense technical language", "single canonical example", "flat structures"],
+      "compression_ratio": "1.5:1 meaning-to-token"
+    },
+    "prompt_engineering": {
+      "structure": ["role", "context", "task", "format", "constraints", "1-2 examples"],
+      "chain_of_thought": "Let's think step by step: improves accuracy 20-40% on reasoning",
+      "few_shot": "1-3 examples, quality > quantity"
+    },
+    "cost_optimization": {
+      "caching": ["cache static prompt parts", "cache deterministic responses"],
+      "model_selection": ["simple tasks → smaller model", "complex reasoning → larger"],
+      "batching": "array of inputs in single prompt"
+    }
+  },
+
+  "shell": {
+    "mandate": "ONLY Zsh and tools (Read/Edit/Grep/Glob). Bash ABSOLUTELY FORBIDDEN.",
+    "use": ["zsh.exe", "Read", "Write", "Edit", "Glob", "Grep"],
+    "never": ["bash", "sh", "grep", "sed", "awk", "cat", "echo", "head", "tail", "find", "tr", "cut", "wc"],
+    "zsh": {
+      "string": {
+        "remove_cr": "${var//$'\\r'/}",
+        "lower": "${(L)var}",
+        "upper": "${(U)var}",
+        "replace": "${var//old/new}",
+        "trim": "${##${var##[[:space:]]#}%%[[:space:]]#}"
+      },
+      "array": {
+        "filter": "( ${(M)arr:#*pattern*} )",
+        "unique": "( ${(u)arr} )",
+        "sort_asc": "( ${(o)arr} )",
+        "join": "${(j:,:)arr}",
+        "split": "( ${(s:delim:)var} )"
+      },
+      "flags": {
+        "M": "Match", "u": "Unique", "o": "Sort asc", "O": "Sort desc",
+        "L": "Lowercase", "U": "Uppercase", "j": "Join", "s": "Split"
+      }
+    }
+  },
+
+  "environment_cygwin": {
+    "ruby": {
+      "primary": "/c/cygwin64/bin/ruby.exe",
+      "fallback": "/c/cygwin64/home/aiyoo/Ruby33/bin/ruby.exe",
+      "why": "Ruby not in PATH, must be located explicitly"
+    },
+    "sox": {
+      "candidates": ["sox.exe", "sox", "/usr/bin/sox.exe", "/c/cygwin64/bin/sox.exe"],
+      "why": "May not be in PATH, search common locations"
+    },
+    "mb_sound": {
+      "location": "G:/pub/multimedia/mb-sound",
+      "load": "$LOAD_PATH.unshift(File.expand_path('mb-sound/lib', __dir__))",
+      "why": "Audio synthesis library, must load before use"
+    }
+  },
+
+  "rails": {
+    "deployment": {
+      "golden_rule": "Fix installer FIRST before VPS deploy",
+      "steps": ["edit_locally", "test_syntax", "upload_staging", "verify"],
+      "forbidden": ["manual_vps_edits", "hotfixes_without_tests"]
+    },
+    "vps": {
+      "vm": "${constants.vps}",
+      "host": "${constants.vps_host}",
+      "pattern": "ssh ${constants.vps} 'command'"
+    },
+    "stack": ["stimulus_reflex", "stimulus-components.com"],
+    "tag_helpers": "prefer <%= tag.p 'text' %> over literal HTML"
+  },
+
+  "openbsd": {
+    "philosophy": ["security first", "correctness over features", "simplicity over complexity"],
+    "cmd": {
+      "service": {
+        "enable": "${constants.priv} rcctl enable",
+        "start": "${constants.priv} rcctl start",
+        "check": "${constants.priv} rcctl check",
+        "debug": "${constants.priv} rcctl -d start"
+      },
+      "pkg": {
+        "install": "${constants.priv} pkg_add",
+        "search": "pkg_info -Q",
+        "cleanup": "${constants.priv} pkg_delete -a"
+      },
+      "pf": {
+        "reload": "${constants.priv} pfctl -f /etc/pf.conf",
+        "test": "${constants.priv} pfctl -nf /etc/pf.conf",
+        "show": "${constants.priv} pfctl -s rules"
       }
     },
+    // fstat more reliable than rcctl check for port listeners
+    "health": {
+      "rails": "fstat | grep port_number",
+      "postgresql": "psql -U postgres -c 'SELECT version()'",
+      "redis": "redis-cli ping"
+    }
+  },
 
-    "hooks": {
-      "before_folder": {
-        "cmd": "${constants.shell_cmd} ${PWD}/sh/tree.sh",
-        "phases": ["discover"],
-        "checkpoint": true
-      },
-      "before_edit": {
-        "cmd": "${constants.shell_cmd} ${PWD}/sh/clean.sh",
-        "phases": ["implement"],
-        "checkpoint": true
-      },
-      "detect_cruft": {
-        "phases": ["validate"]
-      }
+  "git": {
+    "merge": {
+      "strategy": "--no-edit -X ours",
+      "conflicts": "git checkout --ours",
+      "cleanup": "git push origin --delete branch"
     },
+    "hygiene": {
+      "before": ["git status", "git diff HEAD"],
+      "after": ["git log --oneline -5"]
+    }
+  },
 
-    "patterns": {
-      "parallel_tools": "Single message with multiple invocations when independent",
-      "sequential_deps": "Use && for dependent ops",
-      "explore_code": "Task tool with subagent_type=Explore",
-      "todo_tracking": "TodoWrite for multi-step, mark completed immediately",
-      "webfetch_docs": "WebFetch for man pages over ssh"
+  "file_org": {
+    "reduce_sprawl": "Consolidate related, remove duplicates",
+    "consolidation": {
+      "goal": "4 root files: dilla.rb, repligen.rb, tts.rb, postpro.rb",
+      "keep_subdirs": "Data, tools, cache",
+      "delete_subdirs": "*.rb logic, *.bak, temp"
     }
   },
 
@@ -211,11 +383,6 @@
       "magic_numbers": "literal_not_constant",
       "long_method": "length>20"
     },
-    "actions": {
-      "report": {"severities": ["info", "warn", "error"]},
-      "suggest": {"include_diff": true},
-      "autofix": {"safe_only": true, "max_per_run": 10}
-    },
     "safe_fixes": ["remove_unused_imports", "extract_magic_numbers", "remove_dead_code"]
   },
 
@@ -223,328 +390,63 @@
     "enabled": true,
     "max_iterations": 10,
     "convergence": 0.01,
-    "checks": ["quality", "phases", "cruft"],
-    "gates": ["tests_pass"]
+    "checks": ["minimal_intent", "boy_scout_rule", "cruft"]
   },
 
-  "shell": {
-    "mandatory": {
-      "on_cygwin": "ALWAYS use 'zsh.exe' prefix",
-      "ssh": "Use 'ssh user@host command' NOT bash",
-      "pure_zsh": "Use builtins: ${var//pattern/replace}, [[ ]] tests",
-      "never": ["bash", "sh", "grep", "sed", "awk", "find", "cat", "head", "tail", "echo"]
-    },
-
-    "environment_constraints": {
-      "claude_code_bash_tool": {
-        "runs_in": "Git Bash (NOT user's Cygwin terminal)",
-        "no_access_to": ["Cygwin /usr/bin", "audio devices", "GUI", "user's PATH"],
-        "cannot_run": ["sox with audio output", "interactive programs", "GUI apps"],
-        "when_to_bail": [
-          "Audio playback required - tell user to run in their terminal",
-          "Interactive input needed - tell user to run in their terminal",
-          "Cygwin-specific tools - tell user to run in their terminal",
-          "PATH issues after 2 attempts - tell user to run in their terminal"
-        ]
-      },
-      "path_translation": {
-        "cygwin_to_windows": "/cygdrive/c/foo -> C:/foo",
-        "windows_to_cygwin": "C:/foo -> /cygdrive/c/foo OR /c/foo",
-        "detect_failure": "If path not found, try alternate translation",
-        "give_up_after": 2
-      }
-    },
-
-    // Zero external forks - pure zsh parameter expansion for performance
-    "zsh": {
-      "string": {
-        "remove_cr": "${var//$'\\r'/}",
-        "lower": "${(L)var}",
-        "upper": "${(U)var}",
-        "replace": "${var//old/new}",
-        "trim": "${##${var##[[:space:]]#}%%[[:space:]]#}",
-        "substr": "${var:start:len}",
-        "len": "${#var}"
-      },
-      "array": {
-        "filter": "( ${(M)arr:#*pattern*} )",
-        "exclude": "( ${arr:#*pattern*} )",
-        "unique": "( ${(u)arr} )",
-        "join": "${(j:delim:)arr}",
-        "split": "( ${(s:delim:)var} )",
-        "slice": "( ${arr[start,end]} )",
-        "sort_asc": "( ${(o)arr} )",
-        "sort_desc": "( ${(O)arr} )"
-      },
-      "match": {
-        "conditional": "[[ \"$str\" == *pattern* ]]",
-        "file_test": "[[ -f /path ]] && process",
-        "numeric": "[[ $EUID -eq 0 ]] || error",
-        "grep_equiv": "lines=( ${(M)lines:#*query*} )"
-      },
-      "flags": {
-        "M": "Match", "u": "Unique", "o": "Sort asc", "O": "Sort desc",
-        "L": "Lowercase", "U": "Uppercase", "j": "Join", "s": "Split",
-        "f": "Split newlines", "k": "Assoc keys", "@": "Preserve elements"
-      },
-      // Only use external tools for: complex PCRE regex, multi-file ops, binary data
-      "avoid_external": {
-        "awk": "zsh array/string ops",
-        "sed": "${var//find/replace}",
-        "tr": "${(L)var} or ${(U)var}",
-        "grep": "${(M)arr:#*pattern*}",
-        "cut": "${${(s:delim:)var}[n]}",
-        "head_tail": "${arr[1,10]} or ${arr[-5,-1]}",
-        "uniq": "${(u)arr}",
-        "sort": "${(o)arr} or ${(O)arr}"
-      }
-    },
-
-    "prefer_tools": {
-      "file_search": "Glob tool NOT find/ls",
-      "content_search": "Grep tool NOT grep/rg",
-      "read": "Read tool NOT cat/head/tail",
-      "edit": "Edit tool NOT sed/awk",
-      "write": "Write tool NOT echo",
-      "output": "Direct text NOT echo/printf"
-    },
-
-    "approved_bash": ["git", "ssh user@host", "pkg_add", "rcctl", "pfctl", "systemctl"],
-
-    "env_quirks": {
-      "cygwin_path": "Tools in AppData invisible to Git Bash - use full paths or zsh",
-      "gh_cli": "npm installed but not in bash PATH - run from zsh",
-      "ssh_bash": "Works for remote commands",
-      "zsh_scripts": "MUST use 'zsh.exe script.sh' NOT 'sh script.sh'"
-    }
-  },
-
-  "file_org": {
-    "reduce_sprawl": "Consolidate related, remove duplicates",
-    "git_hygiene": "git status before changes, commit atomically",
-    "restore_logic": "git diff HEAD before edits",
-    "consolidation": {
-      "goal": "4 root files: dilla.rb, repligen.rb, tts.rb, postpro.rb",
-      "keep_subdirs": "Data (*.wav, *.db, *.json), tools, cache",
-      "delete_subdirs": "*.rb logic, *.bak, temp files",
-      "version_comment": "Version X.X.X - Consolidated (zero sprawl)"
-    },
-    "git": {
-      "merge": "git merge origin/branch --no-edit -X ours",
-      "conflicts": "git checkout --ours file OR git rm",
-      "cleanup": "git push origin --delete branch1 branch2",
-      "verify": "git fetch origin --prune && git branch -r"
-    }
-  },
-
-  "rails": {
-    "deployment": {
-      "golden_rule": "Fix installer in ${PWD}/rails/*.sh FIRST before VPS deploy",
-      "steps": ["edit_locally", "test_syntax", "upload_staging", "run_monitored", "verify"],
-      "forbidden": ["manual_vps_edits", "hotfixes_without_tests", "skip_staging"],
-      "syntax_check": "zsh.exe -n script.sh"
-    },
-    "vps": {
-      "vm": "${constants.vps_user}@${constants.vps_ip}",
-      "host": "${constants.vps_user}@${constants.vps_host}:${constants.vps_port}",
-      "doas": "permit nopass dev on vm08",
-      "pattern": "ssh ${constants.vps_user}@${constants.vps_ip} 'command'"
-    },
-    "installer_must_gen": [
-      "config/routes.rb with root",
-      "models with class declarations",
-      "layouts/application.html.erb",
-      "rc.d scripts with correct pexp"
-    ],
-    "common_errors": {
-      "missing_root": "add root directive to routes.rb",
-      "scope_new": "use scope :newest not :new",
-      "bundler": "use bundle exec when vendor/bundle exists"
-    }
-  },
-
-  "openbsd": {
-    "philosophy": ["security first", "correctness over features", "simplicity over complexity"],
-    "prefer_base": "Use base tools - minimal, audited, secure",
-    "avoid": ["docker (use vmctl)", "systemd (use rcctl)", "bash (use zsh/ksh)", "GNU tools"],
-    
-    // All commands use ${constants.priv_cmd} to eliminate duplication
-    "cmd": {
-      "service": {
-        "enable": "${constants.priv_cmd} rcctl enable",
-        "start": "${constants.priv_cmd} rcctl start",
-        "stop": "${constants.priv_cmd} rcctl stop",
-        "restart": "${constants.priv_cmd} rcctl restart",
-        "check": "${constants.priv_cmd} rcctl check",
-        "ls_on": "${constants.priv_cmd} rcctl ls on",
-        "ls_failed": "${constants.priv_cmd} rcctl ls failed",
-        "debug": "${constants.priv_cmd} rcctl -d start"
-      },
-      "pkg": {
-        "install": "${constants.priv_cmd} pkg_add",
-        "search": "pkg_info -Q",
-        "list": "pkg_info",
-        "remove": "${constants.priv_cmd} pkg_delete",
-        "cleanup": "${constants.priv_cmd} pkg_delete -a"
-      },
-      "update": {
-        "patches": "${constants.priv_cmd} syspatch",
-        "upgrade": "${constants.priv_cmd} sysupgrade",
-        "snapshot": "${constants.priv_cmd} sysupgrade -s",
-        "routine": "${constants.priv_cmd} syspatch && ${constants.priv_cmd} pkg_add -u"
-      },
-      "pf": {
-        "reload": "${constants.priv_cmd} pfctl -f /etc/pf.conf",
-        "test": "${constants.priv_cmd} pfctl -nf /etc/pf.conf",
-        "show_rules": "${constants.priv_cmd} pfctl -s rules",
-        "show_states": "${constants.priv_cmd} pfctl -s states",
-        "flush": "${constants.priv_cmd} pfctl -F states",
-        "enable": "${constants.priv_cmd} pfctl -e",
-        "disable": "${constants.priv_cmd} pfctl -d"
-      },
-      "relayd": {
-        "reload": "${constants.priv_cmd} relayctl reload",
-        "summary": "${constants.priv_cmd} relayctl show summary",
-        "hosts": "${constants.priv_cmd} relayctl show hosts",
-        "sessions": "${constants.priv_cmd} relayctl show sessions"
-      },
-      "nsd": {
-        "reload": "${constants.priv_cmd} nsd-control reload",
-        "reload_zone": "${constants.priv_cmd} nsd-control reload domain.com",
-        "reconfig": "${constants.priv_cmd} nsd-control reconfig",
-        "status": "${constants.priv_cmd} nsd-control status"
-      },
-      "tls": {
-        "obtain": "${constants.priv_cmd} acme-client -v domain.com",
-        "renew": "${constants.priv_cmd} acme-client -v",
-        "cron": "0 2 * * * root acme-client domain.com && rcctl reload relayd"
-      },
-      "vmctl": {
-        "list": "${constants.priv_cmd} vmctl status",
-        "start": "${constants.priv_cmd} vmctl start",
-        "stop": "${constants.priv_cmd} vmctl stop",
-        "create": "${constants.priv_cmd} vmctl create -s 20G disk.img",
-        "console": "${constants.priv_cmd} vmctl console"
-      }
-    },
-
-    // pexp: regex for pgrep to find daemon. Must match actual running process.
-    "rc_scripts": {
-      "pexp": "Regex for pgrep to find daemon",
-      "default_pexp": "Combines daemon path + flags",
-      "custom_pexp": "Override after rc.subr, must match process",
-      "check_fails": ["pgrep no match", "pexp wrong", "needs root but rc_usercheck not NO"],
-      "debug": ["ps aux | grep name", "pgrep -fl 'pattern'", "fstat | grep port", "rcctl check", "rcctl -d start"]
-    },
-
-    // fstat more reliable than rcctl check for port listeners
-    "health": {
-      "postgresql": "rcctl check postgresql && psql -U postgres -c 'SELECT version()'",
-      "redis": "rcctl check redis && redis-cli ping",
-      "httpd": "rcctl check httpd && fstat | grep httpd",
-      "relayd": "rcctl check relayd && relayctl show summary",
-      "pf": "pfctl -si",
-      "rails": "fstat | grep port_number"
-    },
-
-    "rails_deploy": {
-      "ruby": "${constants.priv_cmd} pkg_add ruby%3.3",
-      "deps": "bundle install",
-      "db": "bundle exec rails db:create && bundle exec rails db:migrate",
-      "assets": "bundle exec rails assets:precompile",
-      "falcon": "bundle exec falcon serve -b http://localhost:11006",
-      "falcon_daemon": "bundle exec falcon serve -b http://localhost:11006 -d",
-      "pg_backup": "pg_dump -U postgres db | gzip > backup.sql.gz",
-      "pg_restore": "gunzip < backup.sql.gz | psql -U postgres db"
-    },
-
-    "quick": {
-      "Start service": "${constants.priv_cmd} rcctl start name",
-      "Enable": "${constants.priv_cmd} rcctl enable name",
-      "Install pkg": "${constants.priv_cmd} pkg_add name",
-      "Update": "${constants.priv_cmd} syspatch",
-      "Reload firewall": "${constants.priv_cmd} pfctl -f /etc/pf.conf",
-      "Check firewall": "${constants.priv_cmd} pfctl -s rules",
-      "Reload relayd": "${constants.priv_cmd} relayctl reload",
-      "Reload DNS": "${constants.priv_cmd} nsd-control reload",
-      "Renew TLS": "${constants.priv_cmd} acme-client -v domain",
-      "Interfaces": "ifconfig",
-      "Routes": "netstat -rn",
-      "Log": "tail -f /var/log/messages"
-    }
-  },
-
-  "paths": {
-    "base": "${PWD}",
-    "checkpoints": "${TMPDIR:-/tmp}/master_checkpoints",
-    "logs": "${HOME}/.local/log/master"
-  },
-
-  "cmd": {
-    "shell": {"bin": "zsh", "flags": ["-e", "-u", "-o", "pipefail"]},
-    "priv": {"bin": "${PRIV_CMD:-doas}", "fallback": "sudo"},
-    "git": "git",
-    "ssh": "ssh"
-  },
-
-  "net": {
-    "vps": "${constants.vps_user}@${constants.vps_ip}",
-    "vps_host": "${constants.vps_user}@${constants.vps_host}:${constants.vps_port}"
-  },
-
-  // Environment detection with platform-specific overrides
-  "env": {
-    "detect": "$(uname -s | tr '[:upper:]' '[:lower:]')",
-    "overrides": {
-      "cygwin": {"cmd.shell.bin": "zsh.exe", "cmd.priv.bin": "runas"},
-      "openbsd": {"cmd.priv.bin": "doas", "security": ["pledge", "unveil"]},
-      "linux": {"cmd.priv.bin": "sudo"}
-    }
-  },
-
+  // DRY: port is only varying data
   "apps": {
-    "brgen": {"port": 10001, "desc": "Multi-tenant social network"},
-    "pubattorney": {"port": 10002, "desc": "Legal services platform"},
-    "bsdports": {"port": 10003, "desc": "OpenBSD ports tracker"},
-    "hjerterom": {"port": 10004, "desc": "Mental health journal"},
-    "privcam": {"port": 10005, "desc": "Privacy-focused media"},
-    "amber": {"port": 10006, "desc": "Amber alert system"},
-    "blognet": {"port": 10007, "desc": "Decentralized blogging"}
+    "brgen": 10001,
+    "pubattorney": 10002,
+    "bsdports": 10003,
+    "hjerterom": 10004,
+    "privcam": 10005,
+    "amber": 10006,
+    "blognet": 10007
+  },
+
+  // Self-validating, self-correcting system
+  "governance": {
+    "auto_self_repair": true,
+    "drift_detection": {
+      "enabled": true,
+      "check_frequency": "every_10_operations",
+      "auto_correct": ["formatting", "whitespace", "unused_code"],
+      "flag_for_review": ["principle_violations", "gate_failures"]
+    },
+    "self_test": {
+      "on_load": true,
+      "validations": [
+        "JSON syntax valid",
+        "All gates reachable",
+        "Boy Scout Rule present",
+        "Fowler refactorings present",
+        "LLM optimization present"
+      ]
+    }
   },
 
   "lessons": {
     "critical_mistakes": [
-      "Used head/tail/grep despite deny list - use Read tool",
-      "Tried bash when zsh.exe required - check shell.mandatory",
-      "Forgot master.json at start - read at session start",
-      "Did NOT run tree.sh before folder work - causes blind navigation",
-      "Did NOT run clean.sh before edits - causes diff pollution",
-      "Did NOT reload master.json frequently - missed evolving rules",
-      "Did NOT recognize Bash tool limitations - fought environment for audio instead of bailing",
-      "Did NOT check tts.rb workaround - cmd.exe /c start solution was already documented"
+      "Used forbidden commands - check shell.never",
+      "Tried bash when zsh.exe required",
+      "Forgot master.json at start",
+      "Did NOT run tree.sh - blind navigation",
+      "Did NOT run clean.sh - diff pollution",
+      "Did NOT apply Boy Scout Rule"
     ],
     "successful": [
-      "TodoWrite excellent for 30+ PR merges",
-      "git merge -X ours perfect for consolidated versions",
-      "git checkout --ours/--theirs for selective resolution",
-      "Parallel tool calls speed up independent operations",
-      "WebFetch for man pages over ssh"
-    ],
-    "vps_health": {
-      "issue": "Rails running but rcctl reports failed - pexp mismatch",
-      "nsd": "Control disabled, processes run but status fails",
-      "solution": "Use fstat to verify ports - more reliable than rcctl check"
-    }
+      "TodoWrite for 30+ PR merges",
+      "git merge -X ours for consolidated versions",
+      "Parallel tool calls for speed",
+      "fstat for port verification over rcctl"
+    ]
   },
 
   "refs": {
     "openbsd": "https://man.openbsd.org/",
     "rails": "https://guides.rubyonrails.org/",
-    "falcon": "https://github.com/socketry/falcon",
     "clean_code": "https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882",
     "refactoring": "https://refactoring.com/",
-    "zsh": "https://zsh.sourceforge.io/Doc/Release/Parameter-Expansion.html",
-    "json_schema": "https://json-schema.org/draft/2020-12/schema",
-    "prometheus": "https://prometheus.io/docs/instrumenting/exposition_formats/"
+    "zsh": "https://zsh.sourceforge.io/Doc/Release/Parameter-Expansion.html"
   }
 }

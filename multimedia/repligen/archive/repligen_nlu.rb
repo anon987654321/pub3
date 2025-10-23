@@ -859,4 +859,3 @@ if __FILE__ == $0
 
   vector_store.close
 end
-

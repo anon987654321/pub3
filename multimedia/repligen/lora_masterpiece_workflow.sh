@@ -353,4 +353,3 @@ echo "  scp -r dev@185.52.176.18:~/output/* /local/path/"
 echo ""
 
 echo "🎬 Your masterpieces are ready!"
-

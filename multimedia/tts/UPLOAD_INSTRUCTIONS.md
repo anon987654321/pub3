@@ -137,4 +137,3 @@ All automatically installed by setup script.
 Generated: 2025-10-16
 
 Claude Code + Master.json v336.1.0
-

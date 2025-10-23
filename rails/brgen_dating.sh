@@ -53,4 +53,3 @@ bin/rails db:migrate
 
 log "Brgen Dating features added to existing app."
 log "Run: bin/rails server -p 11006"
-

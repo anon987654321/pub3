@@ -1146,7 +1146,6 @@ EOF
 mkdir -p app/views/layouts
 cat <<'LAYOUTEOF' > app/views/layouts/application.html.erb
 
-
 # Create routes with root path
 cat <<EOF > config/routes.rb
 Rails.application.routes.draw do
@@ -1183,7 +1182,6 @@ cat >> app/views/shared/_nav.html.erb << 'NAVLINKS_EOF'
   <%= link_to t("nav.cities"), cities_path, class: "nav-link" %>
 <% end %>
 NAVLINKS_EOF
-
 
 # Create comprehensive ultraminimal CSS
 mkdir -p app/assets/stylesheets
@@ -1912,4 +1910,3 @@ log "The openbsd.sh script has already set up the service via rcctl."
 # - Ensured NNG, SEO, schema data, and minimal flat design compliance
 
 # - Finalized for unprivileged user on OpenBSD 7.5
-

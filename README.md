@@ -77,8 +77,6 @@ cd aight
 - [aight/README.md](aight/README.md) - Complete documentation
 - [aight/EXAMPLES.md](aight/EXAMPLES.md) - 10 detailed usage examples
 
-
-
 ## 🌐 Rails Platform - Brgen
 
 A Rails 8 multi-tenant platform hosting specialized Norwegian web applications on OpenBSD infrastructure.
@@ -400,4 +398,3 @@ Proprietary - All rights reserved. See [LICENSE](LICENSE) for details.
 **Version**: 502.0.0  
 **Last Updated**: 2025-10-16  
 **Rails**: 8.0.0 | **Ruby**: 3.3.0 | **OpenBSD**: 7.7
-

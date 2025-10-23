@@ -32,28 +32,20 @@ Steps
 Clone the repository:git clone <repository_url>
 cd ai3
 
-
 Run the core installation script:./install.sh
-
 
 Installs Ruby gems via Gemfile.
 Prompts for API keys (stored in ~/.ai3_keys).
 Sets ai3.rb as executable.
 
-
 Install assistants:./install_ass.sh
-
 
 Generates 15 assistant Ruby files in assistants/.
 Configures config.yml and en.yml.
 
-
-
 Post-Installation
 
 Run the CLI:ruby ai3.rb
-
-
 
 Usage
 Launch the interactive CLI with ruby ai3.rb. Available commands:
@@ -67,93 +59,73 @@ exit: Exit the CLI.
 
 Assistants
 
-
-
 Assistant
 Role
 Example Command
-
-
 
 General
 General-purpose queries
 chat Explain quantum computing
 
-
 OffensiveOps
 Sentiment trend analysis
 chat Analyze news sentiment
-
 
 Influencer
 Social media content curation
 chat Curate Instagram posts
 
-
 Lawyer
 Legal research
 rag Norwegian data privacy laws
-
 
 Trader
 Cryptocurrency analysis
 task analyze_market Ethereum
 
-
 Architect
 Parametric design
 chat Explore sustainable designs
-
 
 Hacker
 Ethical hacking
 chat Find Apache vulnerabilities
 
-
 ChatbotSnapchat
 Snapchat engagement
 chat Engage Snapchat users
-
 
 ChatbotOnlyfans
 OnlyFans engagement
 chat Engage OnlyFans users
 
-
 Personal
 Task management
 chat Schedule my day
-
 
 Music
 Music creation
 chat Compose a jazz track
 
-
 MaterialRepurposing
 Repurposing ideas
 chat Repurpose plastic bottles
-
 
 SEO
 Web optimization
 chat Optimize blog for SEO
 
-
 Medical
 Medical research
 rag Latest on Alzheimer’s
-
 
 PropulsionEngineer
 Propulsion analysis
 chat Analyze rocket engines
 
-
 LinuxOpenbsdDriverTranslator
 Driver translation
 chat Translate Linux driver
-
 
 Advanced Features
 
@@ -164,8 +136,6 @@ Execute system commands (e.g., doas su for root access).
 Browse the internet via UniversalScraper.
 Complete projects (e.g., generate code, manage files).
 Speculative: Orchestrate 3D printing of exoskeletons.
-
-
 
 Configuration
 Edit config.yml to customize:
@@ -245,7 +215,6 @@ class NewAssistant < BaseAssistant
   end
 end
 
-
 Update config.yml:assistants:
   new_assistant:
     role: "New assistant role"
@@ -253,7 +222,6 @@ Update config.yml:assistants:
     tools: ["SystemTool"]
     urls: ["https://example.com"]
     default_goal: "Explore new topics"
-
 
 Run install_ass.sh to regenerate assistants.
 
@@ -9143,4 +9111,3 @@ class WeaviateIntegration
   end
 end
 ```
-

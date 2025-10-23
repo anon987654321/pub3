@@ -82,4 +82,3 @@ if __FILE__ == $PROGRAM_NAME
   claude.narrate_work
 
 end
-

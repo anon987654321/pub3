@@ -108,4 +108,3 @@ module Repligen
   end
 
 end
-

@@ -44,4 +44,3 @@ for file in "$dir"/**/*(.N); do
   fi
 
 done
-

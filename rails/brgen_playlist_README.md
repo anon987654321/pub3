@@ -1113,4 +1113,3 @@ ab -n 100 -c 10 http://localhost:3000/api/v1/playlists
 - **Smart home** device integration
 
 - **Car audio** system compatibility
-

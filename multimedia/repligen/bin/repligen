@@ -79,4 +79,3 @@ else
   abort "Unknown command: #{cmd}\n\n#{usage}"
 
 end
-

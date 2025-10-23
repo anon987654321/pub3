@@ -728,7 +728,6 @@ generate_social_models() {
 
 }
 
-
 # Pure zsh route adder - replaces head/tail with parameter expansion
 # Complies with master.json:608 (never use head/tail/sed/awk)
 add_routes_block() {

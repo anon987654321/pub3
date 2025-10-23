@@ -816,4 +816,3 @@ end
 
 # Run scan
 scan(target, severity, attack_type)
-

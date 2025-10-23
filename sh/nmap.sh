@@ -156,4 +156,3 @@ fi
 
 # Avslutter og gir deg resultatene.
 print -P "%BSkanning ferdig klokken $(date).%b Se $loggfil og $utdatamappe!" | tee -a $loggfil
-

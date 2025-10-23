@@ -17,4 +17,3 @@ echo ""
 echo "To stop: kill \$(cat ~/tts_service.pid)"
 
 echo "Or run: ~/stop_talk.sh"
-

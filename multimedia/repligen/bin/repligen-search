@@ -31,4 +31,3 @@ results.each do |model|
   puts
 
 end
-

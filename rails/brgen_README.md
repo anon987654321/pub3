@@ -377,4 +377,3 @@ For technical support:
 - **Discussions**: Use GitHub Discussions for questions
 
 - **Email**: support@brgen.com for urgent matters
-

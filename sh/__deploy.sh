@@ -9,4 +9,3 @@ for file in *.sh; do
   chmod +x "$destination"
 
 done
-

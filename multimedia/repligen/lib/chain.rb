@@ -156,4 +156,3 @@ module Repligen
   end
 
 end
-

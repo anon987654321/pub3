@@ -422,4 +422,3 @@ Set defaults in `master.json`:
 **License**: MIT
 
 **Dependencies**: ruby-vips, tty-prompt (optional)
-

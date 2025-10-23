@@ -63,4 +63,3 @@ bin/rails db:migrate
 
 log "Brgen Marketplace features added to existing app."
 log "Run: bin/rails server -p 11006"
-

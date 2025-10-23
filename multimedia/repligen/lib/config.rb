@@ -58,4 +58,3 @@ module Repligen
   end
 
 end
-

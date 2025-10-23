@@ -28,4 +28,3 @@ echo ""
 echo "🎤 Microphone is now ready for use!"
 
 echo "   Use: termux-microphone-record -f output.wav -l <seconds>"
-
