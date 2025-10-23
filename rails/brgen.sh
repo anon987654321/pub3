@@ -9,7 +9,8 @@ APP_DIR="${BASE_DIR}/app"
 
 BRGEN_IP="185.52.176.18"
 
-BRGEN_PORT="11006"
+# Port defined in master.json apps.brgen
+BRGEN_PORT="10001"
 
 source "./__shared/@common.sh"
 log "Starting Brgen core setup"
@@ -1844,7 +1845,7 @@ require 'async/http/server'
 require 'rack'
 
 ENV["RAILS_ENV"] ||= "production"
-port = ENV.fetch("PORT", 11006).to_i
+port = ENV.fetch("PORT", 10001).to_i
 
 # Load the Rails application
 require_relative '../config/environment'

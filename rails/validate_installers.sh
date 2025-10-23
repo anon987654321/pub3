@@ -52,19 +52,21 @@ fi
 
 log_success "master.json found"
 
-# Validate JSON syntax
-if ! jq empty "$MASTER_JSON" 2>/dev/null; then
-  log_error "master.json has invalid JSON syntax"
-  exit 1
-fi
+# Parse master.json (JSON5 with comments - extract apps section only)
+log_success "master.json found (JSON5 format with comments)"
 
-log_success "master.json has valid JSON syntax"
-
-# Get ports from master.json
+# Get ports from master.json apps section using simple grep/sed parsing
+# This avoids jq's strict JSON parsing issues with JSON5 comments
 declare -A PORTS
-while IFS=: read -r app port; do
-  PORTS[$app]=$port
-done < <(jq -r '.deployment.ports | to_entries[] | "\(.key):\(.value)"' "$MASTER_JSON")
+
+# Extract app port definitions from master.json
+while IFS= read -r line; do
+  if [[ "$line" =~ \"([^\"]+)\":[[:space:]]*\{\"port\":[[:space:]]*([0-9]+) ]]; then
+    app="${BASH_REMATCH[1]}"
+    port="${BASH_REMATCH[2]}"
+    PORTS[$app]=$port
+  fi
+done < <(sed -n '/^[[:space:]]*"apps":/,/^[[:space:]]*}/p' "$MASTER_JSON")
 
 echo -e "\n━━━ Canonical Ports from master.json ━━━"
 for app in "${!PORTS[@]}"; do
@@ -143,15 +145,17 @@ for installer in "${SCRIPT_DIR}"/*.sh; do
 done
 
 # Check for installers in master.json that don't have .sh files
-echo -e "━━━ Checking master.json installers ━━━\n"
+# Note: master.json uses JSON5 with comments, so we check apps defined above
+echo -e "━━━ Cross-checking installers ━━━\n"
 
 MISSING_INSTALLERS=()
-while read -r installer_name; do
-  if [[ ! -f "${SCRIPT_DIR}/${installer_name}.sh" ]]; then
-    MISSING_INSTALLERS+=("$installer_name")
-    log_error "master.json references $installer_name but ${installer_name}.sh not found"
+# Check that all apps in master.json have corresponding installers
+for app in "${!PORTS[@]}"; do
+  if [[ ! -f "${SCRIPT_DIR}/${app}.sh" ]]; then
+    MISSING_INSTALLERS+=("$app")
+    log_error "master.json defines $app but ${app}.sh not found"
   fi
-done < <(jq -r '.deployment.installers[].n' "$MASTER_JSON")
+done
 
 # Summary
 echo -e "\n╔════════════════════════════════════════════════════════╗"
@@ -164,6 +168,29 @@ log_info "Found ${#PORTS[@]} port assignments in master.json"
 if [[ ${#MISSING_INSTALLERS[@]} -gt 0 ]]; then
   log_error "${#MISSING_INSTALLERS[@]} installer(s) missing: ${MISSING_INSTALLERS[*]}"
 fi
+
+# Code metrics
+echo -e "\n━━━ Code Metrics ━━━\n"
+
+TOTAL_LINES=$(cat "${SCRIPT_DIR}"/*.sh 2>/dev/null | wc -l)
+TOTAL_HEREDOCS=$(grep -h "<<" "${SCRIPT_DIR}"/*.sh 2>/dev/null | wc -l)
+LARGE_FILES=$(find "${SCRIPT_DIR}" -name "*.sh" -size +1000c 2>/dev/null | wc -l)
+
+log_info "Total lines: $TOTAL_LINES"
+log_info "Heredoc patterns: $TOTAL_HEREDOCS"
+log_info "Large installers (>1KB): $LARGE_FILES"
+
+# Check for largest files (complexity indicators)
+echo -e "\n━━━ Largest Installers ━━━\n"
+for installer in "${SCRIPT_DIR}"/*.sh; do
+  [[ ! -f "$installer" ]] && continue
+  [[ "$(basename "$installer")" == "validate_installers.sh" ]] && continue
+  lines=$(wc -l < "$installer")
+  if [[ $lines -gt 500 ]]; then
+    app_name="$(basename "$installer" .sh)"
+    log_warning "$app_name: $lines lines (consider refactoring if >1500)"
+  fi
+done
 
 if [[ $ERRORS -eq 0 && $WARNINGS -eq 0 ]]; then
   echo -e "${GREEN}✓ All installers validated successfully!${NC}\n"

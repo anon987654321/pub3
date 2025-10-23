@@ -49,6 +49,57 @@ command_exists() {
 
 }
 
+# Get port for an app from master.json
+# Usage: get_app_port "brgen" -> 10001
+get_app_port() {
+    local app_name="$1"
+    local master_json="${SCRIPT_DIR}/../master.json"
+    
+    # Default ports (fallback if master.json not found or parsing fails)
+    typeset -A default_ports
+    default_ports=(
+        [brgen]=10001
+        [pubattorney]=10002
+        [bsdports]=10003
+        [hjerterom]=10004
+        [privcam]=10005
+        [amber]=10006
+        [blognet]=10007
+    )
+    
+    # Try to parse from master.json
+    if [[ -f "$master_json" ]]; then
+        local port=$(grep -E "\"${app_name}\".*\"port\"" "$master_json" | \
+                     sed -E 's/.*"port":[[:space:]]*([0-9]+).*/\1/')
+        if [[ -n "$port" && "$port" =~ ^[0-9]+$ ]]; then
+            echo "$port"
+            return 0
+        fi
+    fi
+    
+    # Fallback to default
+    echo "${default_ports[$app_name]:-10000}"
+}
+
+# Generate from template with variable substitution
+# Usage: generate_from_template "controller.rb.erb" "output.rb" VAR1=value1 VAR2=value2
+generate_from_template() {
+    local template="$1"
+    local output="$2"
+    shift 2
+    
+    log "Generating $output from template $template"
+    
+    # For now, just copy - full ERB rendering would require Ruby
+    # This is a placeholder for future template system
+    if [[ -f "${SCRIPT_DIR}/__shared/templates/${template}" ]]; then
+        cp "${SCRIPT_DIR}/__shared/templates/${template}" "$output"
+        log "Template copied: $template -> $output"
+    else
+        log "WARNING: Template not found: $template"
+    fi
+}
+
 install_gem() {
     local gem_name="$1"
 

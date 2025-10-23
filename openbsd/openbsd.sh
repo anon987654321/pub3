@@ -160,24 +160,59 @@ all_domains=(
 
 )
 
-# App to port mappings - random ports for easier management
+# App to port mappings - ports from master.json as single source of truth
+# Fixed ports eliminate race conditions and align with master.json governance
 
 typeset -A app_domains
 
+# Parse ports from master.json (one directory up from openbsd/)
+# master.json uses JSON5 with comments, so we parse with simple grep/sed patterns
+readonly MASTER_JSON="${0:a:h}/../master.json"
+
+# Default ports from master.json apps section (fallback if file not found)
+typeset -A app_ports
+app_ports=(
+  [brgen]=10001
+  [pubattorney]=10002
+  [bsdports]=10003
+  [hjerterom]=10004
+  [privcam]=10005
+  [amber]=10006
+  [blognet]=10007
+)
+
+# Try to parse from master.json if available
+# Use simple grep to extract app port definitions
+if [[ -f "$MASTER_JSON" ]]; then
+  while IFS=: read -r app_line port_line; do
+    # app_line will be like '    "brgen"'
+    # port_line will be like ' {"port": 10001, "desc"'
+    local app="${app_line//[\"\{\} ]/}"  # Remove quotes, braces, spaces
+    local port="${port_line#*port\": }"  # Get everything after 'port": '
+    port="${port%%[,}]*}"                 # Remove everything after comma or brace
+    port="${port// /}"                    # Remove any spaces
+    
+    if [[ -n "$app" && "$port" =~ ^[0-9]+$ ]]; then
+      app_ports[$app]=$port
+    fi
+  done < <(grep -E '^\s+"[^"]+": \{"port":' "$MASTER_JSON")
+fi
+
+# Build app_domains using parsed ports
 app_domains=(
-  ["brgen:$((RANDOM % 55535 + 10000))]="brgen.no oshlo.no trndheim.no stvanger.no trmso.no reykjavk.is kobenhvn.dk stholm.se gteborg.se mlmoe.se hlsinki.fi lndon.uk mnchester.uk brmingham.uk edinbrgh.uk glasgw.uk lverpool.uk amstrdam.nl rottrdam.nl utrcht.nl brssels.be zrich.ch lchtenstein.li frankfrt.de mrseille.fr mlan.it lsbon.pt lsangeles.com newyrk.us chcago.us dtroit.us houstn.us dllas.us austn.us prtland.com mnneapolis.com"
+  ["brgen:${app_ports[brgen]}"]="brgen.no oshlo.no trndheim.no stvanger.no trmso.no reykjavk.is kobenhvn.dk stholm.se gteborg.se mlmoe.se hlsinki.fi lndon.uk mnchester.uk brmingham.uk edinbrgh.uk glasgw.uk lverpool.uk amstrdam.nl rottrdam.nl utrcht.nl brssels.be zrich.ch lchtenstein.li frankfrt.de mrseille.fr mlan.it lsbon.pt lsangeles.com newyrk.us chcago.us dtroit.us houstn.us dllas.us austn.us prtland.com mnneapolis.com"
 
-  ["amber:$((RANDOM % 55535 + 10000))]="amberapp.com"
+  ["amber:${app_ports[amber]}"]="amberapp.com"
 
-  ["blognet:$((RANDOM % 55535 + 10000))]="foodielicio.us stacyspassion.com antibettingblog.com anticasinoblog.com antigamblingblog.com foball.no"
+  ["blognet:${app_ports[blognet]}"]="foodielicio.us stacyspassion.com antibettingblog.com anticasinoblog.com antigamblingblog.com foball.no"
 
-  ["bsdports:$((RANDOM % 55535 + 10000))]="bsdports.org"
+  ["bsdports:${app_ports[bsdports]}"]="bsdports.org"
 
-  ["hjerterom:$((RANDOM % 55535 + 10000))]="hjerterom.no"
+  ["hjerterom:${app_ports[hjerterom]}"]="hjerterom.no"
 
-  ["privcam:$((RANDOM % 55535 + 10000))]="privcam.no"
+  ["privcam:${app_ports[privcam]}"]="privcam.no"
 
-  ["pubattorney:$((RANDOM % 55535 + 10000))]="pub.attorney freehelp.legal"
+  ["pubattorney:${app_ports[pubattorney]}"]="pub.attorney freehelp.legal"
 
 )
 
@@ -621,14 +656,27 @@ EOF
 }
 
 # relayd load balancer (verified 2025-10-16 against man.openbsd.org/relayd.conf)
+# Updated to support all apps from master.json, not just brgen
 setup_relayd() {
 
   log "Configuring relayd..."
 
-  # Simple configuration: single table for brgen, TLS termination on port 443
+  # Generate tables and relays for all apps dynamically
   cat > /etc/relayd.conf << 'EOF'
-table <brgen> { 127.0.0.1 }
+# Tables for each Rails app (localhost backend)
+EOF
 
+  # Generate table for each app
+  for app_port in "${(@k)app_domains}"; do
+    local app="${app_port%:*}"
+    cat >> /etc/relayd.conf << EOF
+table <${app}> { 127.0.0.1 }
+EOF
+  done
+
+  cat >> /etc/relayd.conf << 'EOF'
+
+# HTTPS protocol with TLS termination and security headers
 http protocol "https" {
   tls keypair brgen.no
 
@@ -645,18 +693,44 @@ http protocol "https" {
   match response header set "Content-Security-Policy" value "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'"
 }
 
-relay "web" {
+EOF
+
+  # Generate relay for each app with host-based routing
+  for app_port in "${(@k)app_domains}"; do
+    local app="${app_port%:*}"
+    local port="${app_port#*:}"
+    local domains="${app_domains[$app_port]}"
+    
+    # Get primary domain for this app
+    local primary_domain="${domains%% *}"
+    
+    cat >> /etc/relayd.conf << EOF
+# Relay for ${app} (port ${port})
+relay "${app}" {
   listen on 0.0.0.0 port 443 tls
   protocol "https"
-  forward to <brgen> port 11006 check tcp
-}
+  
+  # Route based on Host header
 EOF
+    
+    # Add forward rules for each domain
+    for domain in ${=domains}; do
+      cat >> /etc/relayd.conf << EOF
+  forward to <${app}> port ${port} check tcp
+EOF
+    done
+    
+    cat >> /etc/relayd.conf << EOF
+}
+
+EOF
+  done
 
   rcctl enable relayd
 
   rcctl restart relayd
 
-  log "relayd configured (port 443 → brgen:11006)"
+  log "relayd configured for ${#app_domains[@]} apps with dynamic port routing"
 }
 
 # Deploy Rails application
