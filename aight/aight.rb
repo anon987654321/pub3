@@ -2,6 +2,7 @@
 # frozen_string_literal: true
 
 # CRC - Claude Ruby CLI
+# Version: 15.0.0 - Consolidated (zero sprawl per master.json v43.0.0)
 # Autonomous AI coding assistant with Claude load awareness
 
 require "yaml"
@@ -9,11 +10,29 @@ require "json"
 require "fileutils"
 require "pathname"
 require "logger"
-require "concurrent-ruby"
 require "digest"
 require "io/console"
-require "langchainrb"
-require "octokit"
+
+CONCURRENT_AVAILABLE = begin
+  require "concurrent-ruby"
+  true
+rescue LoadError
+  false
+end
+
+LANGCHAIN_AVAILABLE = begin
+  require "langchainrb"
+  true
+rescue LoadError
+  false
+end
+
+OCTOKIT_AVAILABLE = begin
+  require "octokit"
+  true
+rescue LoadError
+  false
+end
 
 RUGGED_AVAILABLE = begin
   require "rugged"
