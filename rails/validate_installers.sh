@@ -1,15 +1,9 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 set -euo pipefail
 
-# Validate all Rails installers against master.json
-# Checks for:
-# - @common.sh sourcing
-# - Port consistency with master.json
-# - README existence
-# - Basic script structure
-#
-# Note: This validation script uses bash for portability,
-# but the installers themselves are zsh scripts (as intended)
+# Validate all Rails installers against master.json v1.0.0
+# Checks: @common.sh sourcing, port consistency, README, structure, VERSION
+readonly VERSION="1.0.0"
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 MASTER_JSON="${SCRIPT_DIR}/../master.json"
@@ -23,26 +17,26 @@ GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
 log_error() {
-  echo -e "${RED}✗${NC} $*"
+  print -P "%F{red}✗%f $*"
   ((ERRORS++))
 }
 
 log_warning() {
-  echo -e "${YELLOW}⚠${NC}  $*"
+  print -P "%F{yellow}⚠%f  $*"
   ((WARNINGS++))
 }
 
 log_success() {
-  echo -e "${GREEN}✓${NC} $*"
+  print -P "%F{green}✓%f $*"
 }
 
 log_info() {
-  echo -e "ℹ $*"
+  print "ℹ $*"
 }
 
-echo -e "\n╔════════════════════════════════════════════════════════╗"
-echo -e "║  Rails Installer Validation                           ║"
-echo -e "╚════════════════════════════════════════════════════════╝\n"
+print "\n╔════════════════════════════════════════════════════════╗"
+print "║  Rails Installer Validation v${VERSION}                           ║"
+print "╚════════════════════════════════════════════════════════╝\n"
 
 # Check master.json exists
 if [[ ! -f "$MASTER_JSON" ]]; then
@@ -85,23 +79,26 @@ for installer in "${SCRIPT_DIR}"/*.sh; do
   app_name="$(basename "$installer" .sh)"
   FOUND_INSTALLERS+=("$app_name")
   
-  echo -e "Checking ${app_name}.sh..."
+  print "Checking ${app_name}.sh..."
   
-  # Check 1: Shebang
-  if ! head -1 "$installer" | grep -q '#!/usr/bin/env zsh'; then
+  # Check 1: Shebang (pure zsh)
+  local first_line=$(<"$installer")
+  first_line="${first_line%%$'\n'*}"
+  if [[ "$first_line" != "#!/usr/bin/env zsh" ]]; then
     log_warning "$app_name: non-standard shebang (expected #!/usr/bin/env zsh)"
   fi
-  
-  # Check 2: set -euo pipefail
-  if ! head -10 "$installer" | grep -q 'set -euo pipefail'; then
+
+  # Check 2: set -euo pipefail (pure zsh)
+  local content=$(<"$installer")
+  if [[ "$content" != *"set -euo pipefail"* ]]; then
     log_warning "$app_name: missing 'set -euo pipefail'"
   fi
-  
-  # Check 3: Sources @common.sh (or old __shared.sh)
-  if ! grep -q 'source.*@common.sh' "$installer" && \
-     ! grep -q '\. .*@common.sh' "$installer" && \
-     ! grep -q 'source.*__shared.sh' "$installer" && \
-     ! grep -q '\. .*__shared.sh' "$installer"; then
+
+  # Check 3: Sources @common.sh (pure zsh)
+  if [[ "$content" != *"source"*"@common.sh"* ]] && \
+     [[ "$content" != *". "*"@common.sh"* ]] && \
+     [[ "$content" != *"source"*"__shared.sh"* ]] && \
+     [[ "$content" != *". "*"__shared.sh"* ]]; then
     log_error "$app_name: does not source @common.sh or __shared.sh"
   else
     log_success "$app_name: sources shared utilities"
@@ -123,8 +120,8 @@ for installer in "${SCRIPT_DIR}"/*.sh; do
     if [[ "$port" == "null" || "$port" == extends:* ]]; then
       log_info "$app_name: port is $port (skipping validation)"
     else
-      # Check if port appears in installer script
-      if grep -q ":${port}\b" "$installer" || grep -q "PORT.*${port}" "$installer"; then
+      # Check if port appears in installer script (pure zsh)
+      if [[ "$content" == *":${port}"* ]] || [[ "$content" == *"PORT"*"${port}"* ]]; then
         log_success "$app_name: port $port matches master.json"
       else
         log_error "$app_name: port mismatch (master.json: $port, not found in script)"
@@ -139,7 +136,7 @@ for installer in "${SCRIPT_DIR}"/*.sh; do
     log_warning "$app_name: not executable (run: chmod +x $installer)"
   fi
   
-  echo ""
+  print ""
 done
 
 # Check for installers in master.json that don't have .sh files

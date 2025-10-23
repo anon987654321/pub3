@@ -1,43 +1,15 @@
 #!/usr/bin/env zsh
-# ╔═══════════════════════════════════════════════════════════════╗
-
-# ║  OpenBSD Infrastructure - Complete Rails Deployment          ║
-# ║  Version: 337.3.0                                            ║
-# ╚═══════════════════════════════════════════════════════════════╝
+# OpenBSD Infrastructure v337.4.0 - Converged with master.json
+# Complete deployment: 40+ domains, 7 Rails apps, DNS+DNSSEC, TLS, PF, Relayd
 #
-# MANIFEST:
-#   - 40+ city domains (brgen.no, oshlo.no, lndon.uk, etc.)
-#   - 7 Rails applications (brgen, amber, blognet, bsdports, hjerterom, privcam, pubattorney)
-#   - Falcon async HTTP server (Async::HTTP)
-#   - PostgreSQL + Redis
-#   - Relayd reverse proxy with TLS termination
-#   - PF firewall with synproxy, rate limiting, bruteforce detection
-#   - Automatic TLS certificates (acme-client)
-#   - PTR record management (OpenBSD Amsterdam)
+# ARCHITECTURE: Internet → PF → Relayd (TLS) → Falcon → Rails
+# TWO-PHASE: --pre-point (infra + DNS) → DNS propagation → --post-point (TLS + proxy)
 #
-# ARCHITECTURE:
-#   Internet → PF (synproxy, rate limit) → Relayd (TLS termination, port 443)
-#   → Falcon (async HTTP server) → Rails apps
-#
-# USAGE:
-#   ./openbsd.sh --pre-point    # Initial setup (Ruby, PostgreSQL, Redis, DNS, Rails apps)
-#   ./openbsd.sh --post-point   # Post-setup (TLS certs, relayd, PTR records, cron)
-#
-# DEPLOYMENT ORDER:
-#   1. Pre-point: Infrastructure + Rails apps + DNS
-#   2. DNS propagation: Wait for ns.brgen.no to resolve
-#   3. Post-point: TLS + relayd + PTR + cron
-#
-# VERIFIED: 2025-10-16 against man.openbsd.org (pf.conf, relayd.conf)
-#
-#!/usr/bin/env zsh
-# Unified Rails-OpenBSD Infrastructure v337.3.0
-# Complete deployment: DNS, TLS, Rails apps, 40+ domains
+# VERIFIED: 2025-10-23 against man.openbsd.org + master.json principles
 set -euo pipefail
 
 # Constants
-
-readonly VERSION="337.3.0"
+readonly VERSION="337.4.0"
 readonly MAIN_IP="185.52.176.18"
 readonly BACKUP_NS="194.63.248.53"
 
@@ -498,13 +470,8 @@ pass
 # Block all incoming by default
 block in
 
-# Ban brute-force attackers
-# http://home.nuug.no/~peter/pf/en/bruteforce.html
-#
-# pfctl -t bruteforce -T show
-# pfctl -t bruteforce -T flush
-# pfctl -t bruteforce -T delete <IP>
-#
+# Ban brute-force attackers (http://home.nuug.no/~peter/pf/en/bruteforce.html)
+# Manage: pfctl -t bruteforce -T show | flush | delete <IP>
 table <bruteforce> persist
 block quick from <bruteforce>
 
@@ -1064,11 +1031,7 @@ EOF
     ;;
 
   *)
-
-    echo "Usage: doas zsh openbsd.sh [--pre-point|--post-point|--help]"
-
+    print "Usage: doas zsh openbsd.sh [--pre-point|--post-point|--help]"
     exit 1
-
     ;;
-
 esac

@@ -36,7 +36,7 @@ print_tree() {
     # Reconstruct full path and print with trailing slash
     local full_path="${dir}/${directory}"
 
-    [[ -d "$full_path" ]] && echo "${full_path}/"
+    [[ -d "$full_path" ]] && print "${full_path}/"
 
   done
 
@@ -47,7 +47,7 @@ print_tree() {
 
     [[ "${file##*/}" == .* ]] && continue
 
-    echo "$file"
+    print "$file"
   done
 
 }

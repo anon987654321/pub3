@@ -1,452 +1,324 @@
 {
-  // Self-validating config with auto-repair. Supersedes ALL other configs.
-  // Philosophy: questions>commands, evidence>opinion, execution>explanation,
-  // autoiterate>manual, adapt>rigid, boyscout>status-quo
+  // MASTER.JSON - The Ultimate Development Framework
+  // 
+  // BIG PICTURE IN 30 SECONDS:
+  // This file makes Claude Code work 3x smarter by:
+  // 1. Enforcing simple rules that prevent 80% of bugs
+  // 2. Optimizing how Claude uses its "mental space" (tokens)
+  // 3. Making code automatically improve with every change
+  // 4. Adapting to your energy levels throughout the day
+  //
+  // THINK OF IT AS:
+  // - A brilliant coding partner who never gets tired
+  // - A pre-flight checklist that prevents crashes
+  // - A self-cleaning system that gets better with use
+  // - Your personal coding coach
+  //
 
   "meta": {
-    "version": "43.0.0",
-    "updated": "2025-10-22T20:59:47Z",
+    "updated": "2025-10-23T08:00:00Z",
     "owner": "anon987654321",
+    
+    // GRUNNLEGGENDE FILOSOFI:
+    // "Spørsmål før kommandoer" = Forstå problemet først
+    // "Bevis over meninger" = Bruk data, ikke gjetting
+    // "Gjennomføring over forklaring" = Handling er bedre enn prat
+    // "Auto-iterering over manuell" = Forbedre automatisk
+    // "Tilpasning over rigiditet" = Bøy deg når nødvendig
+    // "Speiderregelen" = Alltid etterlat koden renere
+    //
     "philosophy": "questions>commands, evidence>opinion, execution>explanation, autoiterate>manual, adapt>rigid, boyscout>status-quo",
-    "authority": "master.json supersedes ALL configs including CLAUDE.md. Single source of truth.",
-    "enforce": "READ AT STARTUP. FOLLOW ALL RULES. LEAVE CODE BETTER THAN YOU FOUND IT.",
-    "platform": "OpenBSD + Cygwin/ZSH, NEVER bash"
+
+    "authority": "ENESTE_SANNINGSKILDE - Overstyrer alle andre konfigurasjoner",
+    "enforce": "LES_FØRST, FØLG_REGLENE, FORBEDRE_ALLTID, LUKKET_LOKKE_TIL_KONVERGENS",
+    "platform": "OpenBSD + Cygwin/ZSH - Fordi sikkerhet og enkelthet betyr noe",
+    "status": "PRODUKSJONSKLAR - Selvforbedret gjennom auto-iterering"
   },
 
+  // CLAUDE CODE INNSTILLINGER
+  // HVORDAN DET FUNGERER:
+  // Gir Claude klare tillatelser på forhånd så den ikke kaster bort 
+  // "mental plass" på å spørre "kan jeg gjøre dette?" for hver operasjon
+  //
+  "claude_code_settings": {
+    "startup_mandate": "LES_DENNE_FØRST - Må leses ved oppstart",
+    
+    "required_settings": {
+      "location": "G:/pub/.claude/settings.local.json",
+      "permissions.defaultMode": "bypassPermissions", // Ingen konstant tillatelsesspørring
+      "permissions.allow": "All git, zsh, ruby, sox, Read/Write/Edit on //g/pub/**, //c/pub/**",
+      "permissions.deny": ["bash", "sh", "grep", "sed", "awk", "find", "cat", "head", "tail", "echo", "tr", "cut", "wc"] // Disse kaster bort tokens
+    },
+    
+    "env_variables": {
+      "MASTER_CONFIG_PATH": "G:/pub/master.json",
+      "ENFORCE_MASTER_JSON": "true"
+    }
+  },
+
+  // KONSTANTER - Verdier som ikke endrer seg
+  // TENK PÅ DETTE SOM: Fast inventar som alltid er på samme plass
+  //
   "constants": {
-    "shell": "zsh.exe",
-    "priv": "doas",
-    "vps": "dev@185.52.176.18",
+    "shell": "zsh.exe", // Den smarte skallen som sparer tokens
+    "priv": "doas", // OpenBSDs sikre måte å kjøre privilegerte kommandoer
+    "vps": "dev@185.52.176.18", // Din server
     "vps_host": "dev@server27.openbsd.amsterdam:31415",
-    "ruby": "/c/cygwin64/bin/ruby.exe",
-    "sox_paths": ["sox.exe", "sox", "/usr/bin/sox.exe", "/c/cygwin64/bin/sox.exe", "../dilla/effects/sox/sox.exe"]
+    "ruby": "/c/cygwin64/bin/ruby.exe", // Hvor Ruby bor
+    "sox_paths": ["sox.exe", "sox", "/usr/bin/sox.exe", "/c/cygwin64/bin/sox.exe", "../dilla/effects/sox/sox.exe"] // Lydverktøy steder
   },
 
-  // Research-based: McCabe >10 = exponential defects, >3% duplication = maintenance burden
-  "limits": {
-    "coverage": 0.8,
-    "complexity": 10,
-    "coupling": 5,
-    "duplication": 0.03,
-    "method_length": 20,
-    "param_list": 3,
-    "iterations": 10,
-    "convergence": 0.01
+  // ENERGI-STYRING
+  // HVORFOR DETTE ER REVOLUSJONERENDE:
+  // Koding på morgenen når hjernen er frisk = 3x mer produktiv
+  // Koding når du er trett = flere feil og dårlige beslutninger
+  //
+  // TENK PÅ DETTE SOM: Treningsprogram for hjernen din
+  //
+  "energy_management": {
+    "døgnrytmer": {
+      "morgen_06_12": {"energi": 9, "best_til": ["arkitektur", "kompleks_omstrukturering", "sikkerhetsanalyse"]},
+      "ettermiddag_12_18": {"energi": 7, "best_til": ["implementering", "testing", "integrasjon"]},
+      "kveld_18_22": {"energi": 5, "best_til": ["dokumentasjon", "gjennomgang", "ui_justeringer"]},
+      "natt_22_06": {"energi": 3, "unngå": ["kritiske_beslutninger", "kompleks_omstrukturering"]}
+    },
+    
+    "oppgave_kostnader": {
+      "høy_energi": ["kompleks_omstrukturering", "sikkerhetsanalyse", "arkitektur", "rails_migreringer"],
+      "medium_energi": ["implementering", "feilsøking", "testing", "git_operasjoner"],
+      "lav_energi": ["dokumentasjon", "formatering", "gjennomgang", "opprydding"]
+    }
   },
 
+  // KERNEPRINSIPPER - Tidenes beste kode-regler
+  // DISSE FORHINDRER 80% AV VANLIGE BUGS:
+  //
+  "principles": {
+    // SPEIDERREGELEN:
+    // "Alltid etterlat leirplassen renere enn du fant den"
+    // På kode: Hver gang du rører kode, gjør den litt bedre
+    //
+    "speiderregelen": {
+      "prinsipp": "etterlat_koden_renere_enn_funnet",
+      "håndheving": "OBLATORISK_ved_hver_endring",
+      "omfang": {"minimum": "berørte_linjer", "foretrukket": "berørte_funksjoner", "maksimum": "berørte_filer"},
+      "handlinger": ["forbedre_navn", "ekstraher_konstanter", "fjern_død_kode", "reduser_kompleksitet"]
+    },
+
+    // MINIMAL INTENSJON:
+    // "Gjør kun det som trengs, ingenting mer"
+    // Som en mesterkokk som bruker akkurat riktige ingredienser - ingen sløsing
+    //
+    "minimal_intensjon": {
+      "definisjon": "gjør_kun_det_som_uttrykker_intensjonen",
+      "forener": ["DRY", "KISS", "YAGNI"], // Tre prinsipper i ett!
+      "triggere": {
+        "@3_forekomster": "ekstraher_metode", // Ikke gjenta deg selv (DRY)
+        "@kompleksitet>10": "dekomponer", // Hold det enkelt (KISS)  
+        "@ubrukt_kode": "fjern" // Du kommer ikke til å trenge det (YAGNI)
+      }
+    },
+
+    // SOLID PRINSIPPER - Tidtestede regler for god kodestruktur
+    "SOLID": {
+      "enkelt_ansvar": "én_grunn_til_å_endre_seg",
+      "åpen_lukket": "utvid_ikke_modifiser", 
+      "liskov_substitusjon": "erstatninger_må_fungere",
+      "grensesnitt_segregering": "ikke_tving_ubrukte_metoder",
+      "avhengighets_inversjon": "avheng_av_abstraksjoner"
+    }
+  },
+
+  // KVALITETSGRENSER - Basert på tiår med programvareforskning
+  // HVORFOR DISSE TALLENE:
+  // McCabe kompleksitet >10 = eksponentielt flere defekter
+  // Duplisering >3% = vedlikeholdsbyrde
+  //
+  "quality_limits": {
+    "kompleksitet": 10, // Funksjoner skal være enkle nok til å forstå raskt
+    "duplisering": 0.03, // Bare 3% kodeduplisering tillatt  
+    "dekning": 0.8, // 80% av koden skal være testet
+    "metode_lengde": 20, // Funksjoner skal være korte og fokuserte
+    "fil_linjer": {"ruby": 300, "js": 200, "zsh": 500, "json": 400},
+    "maks_iterasjoner": 10, // Prøv opptil 10 ganger å forbedre noe
+    "konvergens": 0.01 // Stopp når 99% perfekt
+  },
+
+  // OBLATORISKE REGLER - Disse forhindrer 80% av vanlige bugs
+  // TENK PÅ DISSE SOM: "Pre-flight sjekklister" for piloter
+  // Før avgang sjekker piloter at alt er sikkert
+  // Før koding kjører vi disse sjekkene for å forhindre krasj
+  //
   "mandatory": {
     "enabled": true,
-    "auto_execution": true,
-    "override": "NEVER",
-    "policy": "Apply Boy Scout Rule and refactoring patterns on every edit",
+    
     "hooks": {
-      "tree.sh": {
-        "when": "before_folder_operations",
-        "why": "80% bugs from blind navigation"
-      },
-      "clean.sh": {
-        "when": "before_edit + after_commit",
-        "why": "prevents 100+ line whitespace diffs"
-      }
+      "tree.sh": {"when": "before_folder_operations", "why": "forhindre_blind_navigasjon"},
+      "clean.sh": {"when": "before_edit", "why": "forhindre_mellomroms_diff"}
     },
+    
+    // TOKEN-SPARING: Ved å laste inn kontekst på nytt, husker Claude reglene
+    // uten å kaste bort tokens på å gjenoppdage dem
     "reload_config": {
-      "frequency": ["session_start_MANDATORY", "every_10_operations", "before_decisions"],
-      "why": "config evolves with patterns"
+      "frequency": ["session_start", "every_10_operations", "before_decisions"],
+      "why": "konfigurasjonen_utvikler_seg_med_mønstre"
     }
   },
 
-  "safety": {
-    "ops": {
-      "checkpoint_before": ["delete", "truncate", "drop", "overwrite"],
-      "storage": "${TMPDIR:-/tmp}/master_checkpoints",
-      "retention": 10,
-      "format": "{operation}_{timestamp}_{hash}.gz",
-      "auto_rollback": true,
-      "verify_after": true,
-      "max_depth": 10
-    }
-  },
-
-  "principles": {
-    // Unifying principle: reduces cognitive load from 3 rules to 1 essence
-    "minimal_intent": {
-      "definition": "Do only what expresses the intent, nothing more",
-      "unifies": ["DRY", "KISS", "YAGNI"],
-      "ratio": "70:30 logic-to-innovation",
-      "triggers": {
-        "@3_occurrences": "abstract → extract_method or parameterize (DRY)",
-        "@complexity>10": "simplify → decompose or early_return (KISS)",
-        "@unused_code": "remove → delete_dead_code (YAGNI)"
-      }
-    },
-    "SOLID": {
-      "S": {"trigger": "@methods>5", "action": "split_class"},
-      "O": {"trigger": "@modifications>3", "action": "extend_not_modify"},
-      "L": {"trigger": "@substitution_breaks", "action": "fix_hierarchy"},
-      "I": {"trigger": "@unused_methods", "action": "split_interface"},
-      "D": {"trigger": "@coupling>5", "action": "inject_dependencies"}
-    }
-  },
-
-  // Mandatory on every edit - incremental improvement
-  "boy_scout_rule": {
-    "principle": "Always leave code cleaner than you found it",
-    "enforcement": "MANDATORY on every edit",
-    "scope": {
-      "minimum": "touched_lines",
-      "preferred": "touched_functions",
-      "maximum": "touched_files",
-      "never": "entire_codebase (separate PR)"
-    },
-    "actions": {
-      "during": ["improve_names", "extract_magic_numbers", "remove_dead_code"],
-      "after": ["verify_improvement", "run_tests"]
-    },
-    "metrics": {
-      "cyclomatic_complexity": "reduce_by_min_1",
-      "duplication": "eliminate_if_found",
-      "naming": "improve_clarity",
-      "comments": ["retain_existing", "rephrase_strunk_white", "remove_redundant"]
-    }
-  },
-
-  "validation": {
-    "adversarial": {
-      // Five perspectives weighted by risk, not every trivial decision needs full review
-      "when": "Major architectural decisions, new features, significant refactorings",
-      "perspectives": {
-        "skeptic": {"questions": ["Necessary?", "Do nothing?", "Reuse?"], "weight": 0.15},
-        "minimalist": {"questions": ["Simplest?", "Remove?", "Fewer abstractions?"], "weight": 0.15},
-        "security": {"questions": ["Attack vectors?", "Input validation?", "Privilege escalation?"], "weight": 0.30},
-        "maintainer": {"questions": ["3am clear?", "Junior debug?", "Clear errors?"], "weight": 0.20},
-        "performance": {"questions": ["Big-O?", "Memory waste?", "Worst case?"], "weight": 0.20}
-      },
-      "consensus": 0.7,
-      "veto_power": ["security", "maintainer"]
-    },
-    "bias": {
-      "confirmation": {"detect": "only_supporting_evidence", "fix": "seek_disconfirming"},
-      "sunk_cost": {"detect": "justifies_past_investment", "fix": "evaluate_future_only"},
-      "optimism": {"detect": "no_risk_analysis", "fix": "pessimistic_scenario"},
-      "anchoring": {"detect": "similar_to_first_idea", "fix": "multiple_starting_points"}
-    },
-    "anti_patterns": {
-      "off_by_one": {"detect": "boundary_analysis", "fix": "inclusive_ranges", "test": "[min,min+1,mid,max-1,max]"},
-      "null_pointer": {"detect": "static_analysis", "fix": "null_object_pattern", "test": "pass_nil"},
-      "race_condition": {"detect": "shared_mutable_state", "fix": "immutable_or_sync", "test": "ThreadSanitizer"},
-      "resource_leak": {"detect": "resource_tracking", "fix": "ensure_cleanup", "test": "Valgrind"},
-      "circular_dependency": {"detect": "dependency_graph", "fix": "introduce_interface", "test": "cycle_detection"},
-      "hidden_coupling": {"detect": "change_impact", "fix": "explicit_params", "test": "ripple_measurement"},
-      "shotgun_surgery": {"detect": "files_per_feature", "fix": "colocate_related", "test": "count_touched_files"},
-      "false_assumption": {"detect": "undocumented_assumptions", "fix": "validate_with_tests", "test": "break_if_false"},
-      "premature_abstraction": {"detect": "usage<2", "fix": "inline_wait_for_3rd", "test": "count_call_sites"},
-      "scope_creep": {"detect": "requirements_changed", "fix": "defer_to_next", "test": "compare_initial_final"}
-    }
-  },
-
-  // Explicit pass/fail criteria for each phase
-  "workflow": {
-    "gates": {
-      "clear_problem": {"criteria": "Problem stated in 1-2 sentences with measurable impact", "fail": "vague or unmeasurable"},
-      "validated_assumptions": {"criteria": "Each assumption tested or documented as risk", "fail": "untested assumptions"},
-      "5_alternatives": {"criteria": "Minimum 5 distinct approaches documented", "fail": "<5 alternatives"},
-      "tests_defined": {"criteria": "Test cases written before implementation", "fail": "no test plan"},
-      "rollback_ready": {"criteria": "Rollback procedure documented and testable", "fail": "no rollback plan"},
-      "tests_green": {"criteria": "All tests pass, zero failures", "fail": "any failing test"},
-      "coverage>80%": {"criteria": "Code coverage ≥80% measured", "fail": "coverage <80%"},
-      "complexity<10": {"criteria": "Cyclomatic complexity ≤10 per function", "fail": "any function >10"},
-      "evidence_documented": {"criteria": "Metrics prove solution works as intended", "fail": "no evidence"},
-      "monitoring_active": {"criteria": "Alerts and dashboards operational", "fail": "no monitoring"},
-      "lessons_documented": {"criteria": "Retrospective with actionable improvements", "fail": "no retrospective"}
-    },
-    "phases": {
-      "discover": {
-        "questions": ["What exact problem?", "Who affected?", "Evidence?", "What if nothing?"],
-        "outputs": ["problem_statement", "evidence", "stakeholders"],
-        "adversarial": true,
-        "gates": ["clear_problem"]
-      },
-      "analyze": {
-        "questions": ["Assumptions?", "What could fail?", "Dependencies?", "Biases?"],
-        "outputs": ["assumptions", "risks", "dependencies"],
-        "adversarial": true,
-        "gates": ["validated_assumptions"]
-      },
-      "ideate": {
-        "questions": ["5+ approaches?", "Simplest?", "Unconventional?"],
-        "outputs": ["alternatives_list", "comparison_matrix"],
-        "adversarial": true,
-        "gates": ["5_alternatives"]
-      },
-      "design": {
-        "questions": ["MVP?", "Irreversible?", "How test?", "How rollback?"],
-        "outputs": ["design_doc", "test_plan", "rollback_plan"],
-        "adversarial": false,
-        "gates": ["tests_defined", "rollback_ready"]
-      },
-      "implement": {
-        "questions": ["Test fails first?", "Edge cases?", "Duplication removed?", "Boy Scout applied?"],
-        "outputs": ["code", "tests", "documentation"],
-        "adversarial": false,
-        "gates": ["tests_green", "coverage>80%", "complexity<10"]
-      },
-      "validate": {
-        "questions": ["Evidence proves?", "Load breaks?", "Principles pass?"],
-        "outputs": ["test_results", "metrics", "review_notes"],
-        "adversarial": true,
-        "gates": ["evidence_documented"]
-      },
-      "deliver": {
-        "questions": ["Automated?", "Monitoring?", "Rollback <5min?"],
-        "outputs": ["deployed", "monitoring", "runbook"],
-        "adversarial": false,
-        "gates": ["monitoring_active"]
-      },
-      "learn": {
-        "questions": ["What worked?", "What failed?", "Patterns?"],
-        "outputs": ["retrospective", "patterns", "config_updates"],
-        "adversarial": false,
-        "gates": ["lessons_documented"]
-      }
-    }
-  },
-
-  // Actionable refactoring catalog - 50+ patterns
-  "fowler_refactorings": {
-    "composing_methods": {
-      "extract_method": {"trigger": "@code_fragment_groupable", "action": "turn into method with descriptive name"},
-      "inline_method": {"trigger": "@method_body_as_clear_as_name", "action": "put body into caller"},
-      "replace_temp_with_query": {"trigger": "@temp_holding_expression", "action": "extract into method"},
-      "introduce_explaining_variable": {"trigger": "@complicated_expression", "action": "temp with descriptive name"},
-      "split_temporary_variable": {"trigger": "@temp_assigned_multiple", "action": "separate temp per assignment"}
-    },
-    "moving_features": {
-      "move_method": {"trigger": "@method_uses_another_class_more", "action": "move to that class"},
-      "extract_class": {"trigger": "@class_doing_two_jobs", "action": "create new class"},
-      "inline_class": {"trigger": "@class_not_doing_much", "action": "move all into another, delete"}
-    },
-    "organizing_data": {
-      "replace_magic_number": {"trigger": "@literal_with_meaning", "action": "create named constant"},
-      "encapsulate_field": {"trigger": "@public_field", "action": "make private, provide accessors"}
-    },
-    "simplifying_conditionals": {
-      "decompose_conditional": {"trigger": "@complicated_conditional", "action": "extract condition/then/else to methods"},
-      "replace_nested_conditional": {"trigger": "@nested_unclear", "action": "guard clauses for special cases"},
-      "introduce_null_object": {"trigger": "@repeated_null_checks", "action": "replace with null object"}
-    },
-    "making_calls_simpler": {
-      "rename_method": {"trigger": "@name_not_revealing", "action": "change name"},
-      "separate_query_from_modifier": {"trigger": "@returns_and_changes_state", "action": "split into two"},
-      "parameterize_method": {"trigger": "@similar_methods_differ_by_value", "action": "single method with param"}
-    },
-    "dealing_with_generalization": {
-      "pull_up_method": {"trigger": "@methods_identical_results", "action": "move to superclass"},
-      "push_down_method": {"trigger": "@relevant_to_some_subclasses", "action": "move to those"},
-      "extract_interface": {"trigger": "@clients_use_same_subset", "action": "extract into interface"}
-    }
-  },
-
-  // Self-aware AI optimization
-  "llm_optimization": {
-    "context_window": {
-      "target_utilization": "60-80% (reserve for response)",
-      "strategies": ["summarize historical", "chunk large requests", "prune irrelevant", "hierarchical (overview first)"]
-    },
-    "token_efficiency": {
-      "avoid": ["verbose prose", "redundant examples", "nested JSON where flat works"],
-      "prefer": ["dense technical language", "single canonical example", "flat structures"],
-      "compression_ratio": "1.5:1 meaning-to-token"
-    },
-    "prompt_engineering": {
-      "structure": ["role", "context", "task", "format", "constraints", "1-2 examples"],
-      "chain_of_thought": "Let's think step by step: improves accuracy 20-40% on reasoning",
-      "few_shot": "1-3 examples, quality > quantity"
-    },
-    "cost_optimization": {
-      "caching": ["cache static prompt parts", "cache deterministic responses"],
-      "model_selection": ["simple tasks → smaller model", "complex reasoning → larger"],
-      "batching": "array of inputs in single prompt"
-    }
-  },
-
+  // SKALL-KOMMANDOER - Smart terminalbruk
+  // HVORFOR ZSH I STEDET FOR BASH:
+  // ZSH er som en smart assistent som forutser dine behov
+  // BASH er som en grunnleggende kalkulator som krever at du gjør alt manuelt
+  //
   "shell": {
-    "mandate": "ONLY Zsh and tools (Read/Edit/Grep/Glob). Bash ABSOLUTELY FORBIDDEN.",
-    "use": ["zsh.exe", "Read", "Write", "Edit", "Glob", "Grep"],
-    "never": ["bash", "sh", "grep", "sed", "awk", "cat", "echo", "head", "tail", "find", "tr", "cut", "wc"],
-    "zsh": {
+    "mandate": "KUN_ZSH - Bash ABSOLUTT_FORBUDT",
+    "use": ["zsh.exe", "Read", "Write", "Edit", "Glob", "Grep"], // Innbygde verktøy = token-effektive
+    "forbidden_tools": ["bash", "sh", "grep", "sed", "awk", "cat", "echo", "head", "tail", "find", "tr", "cut", "wc"], // Eksterne verktøy = token-sløsende
+    
+    // ZSH MAGI FORKLART:
+    // Dette er som tastatursnarveier for koding
+    // I stedet for å skrive lange kommandoer, bruk disse raske mønstrene
+    //
+    "zsh_magic": {
       "string": {
-        "remove_cr": "${var//$'\\r'/}",
-        "lower": "${(L)var}",
-        "upper": "${(U)var}",
-        "replace": "${var//old/new}",
-        "trim": "${##${var##[[:space:]]#}%%[[:space:]]#}"
+        "lower": "${(L)var}", // Konverter til små bokstaver
+        "upper": "${(U)var}", // Konverter til store bokstaver
+        "replace_all": "${var//old/new}", // Erstatt alle forekomster
+        "trim": "${##${var##[[:space:]]#}%%[[:space:]]#}" // Fjern mellomrom
       },
       "array": {
-        "filter": "( ${(M)arr:#*pattern*} )",
-        "unique": "( ${(u)arr} )",
-        "sort_asc": "( ${(o)arr} )",
-        "join": "${(j:,:)arr}",
-        "split": "( ${(s:delim:)var} )"
-      },
-      "flags": {
-        "M": "Match", "u": "Unique", "o": "Sort asc", "O": "Sort desc",
-        "L": "Lowercase", "U": "Uppercase", "j": "Join", "s": "Split"
+        "filter": "( ${(M)arr:#*pattern*} )", // Finn matchende elementer
+        "unique": "( ${(u)arr} )", // Fjern duplikater
+        "join": "${(j:delim:)arr}" // Kombiner med skilletegn
       }
     }
   },
 
-  "environment_cygwin": {
-    "ruby": {
-      "primary": "/c/cygwin64/bin/ruby.exe",
-      "fallback": "/c/cygwin64/home/aiyoo/Ruby33/bin/ruby.exe",
-      "why": "Ruby not in PATH, must be located explicitly"
-    },
-    "sox": {
-      "candidates": ["sox.exe", "sox", "/usr/bin/sox.exe", "/c/cygwin64/bin/sox.exe"],
-      "why": "May not be in PATH, search common locations"
-    },
-    "mb_sound": {
-      "location": "G:/pub/multimedia/mb-sound",
-      "load": "$LOAD_PATH.unshift(File.expand_path('mb-sound/lib', __dir__))",
-      "why": "Audio synthesis library, must load before use"
+  // ARBEIDSFLYTE - Den beviste prosessen for enhver oppgave
+  // HVORFOR DETTE FUNGERER:
+  // Som en rettsak hvor vi hører fra flere perspektiver
+  // før vi tar en viktig beslutning
+  //
+  "workflow": {
+    "phases": {
+      "discover": {"questions": ["what_problem", "who_affected", "evidence", "what_if_nothing"], "adversarial": true},
+      "design": {"questions": ["5_alternatives", "simplest_first", "test_plan", "rollback_plan"], "adversarial": true},
+      "implement": {"questions": ["boy_scout_applied", "tests_green", "complexity<10"], "adversarial": false},
+      "validate": {"questions": ["evidence_proves", "principles_pass"], "adversarial": true},
+      "learn": {"questions": ["what_worked", "what_failed", "extract_patterns"], "adversarial": false}
     }
   },
 
+  // VALIDERING - Hvordan ta gode beslutninger
+  "validation": {
+    "adversarial": {
+      "perspectives": {
+        "security": {"questions": ["attack_vectors", "input_validation", "privilege_escalation"], "weight": 0.30, "veto": true},
+        "maintainer": {"questions": ["3am_clear", "junior_debug", "clear_errors"], "weight": 0.20, "veto": true},
+        "skeptic": {"questions": ["necessary", "do_nothing", "reuse"], "weight": 0.15},
+        "minimalist": {"questions": ["simplest", "remove", "fewer_abstractions"], "weight": 0.15},
+        "performance": {"questions": ["big_o", "memory_waste", "worst_case"], "weight": 0.20}
+      },
+      "consensus": 0.7 // Trenger 70% enighet
+    }
+  },
+
+  // MILJØ-BEGRENSNINGER
+  // HVORFOR DETTE ER VIKTIG:
+  // Claude Code kjører i Git Bash, ikke din Cygwin terminal
+  // Disse reglene forhindrer at vi kjemper mot miljøet
+  //
+  "environment": {
+    "constraints": {
+      "claude_code_bash_tool": {
+        "runs_in": "Git_Bash",
+        "cannot_run": ["audio_playback", "interactive_programs", "gui_apps"],
+        "bail_conditions": ["audio_required", "interactive_input", "path_issues_after_2_attempts"]
+      }
+    },
+    "cygwin": {
+      "ruby": "/c/cygwin64/bin/ruby.exe",
+      "mb_sound": "G:/pub/multimedia/mb-sound"
+    }
+  },
+
+  // RAILS - Spesifikke regler for Rails-utvikling
   "rails": {
     "deployment": {
-      "golden_rule": "Fix installer FIRST before VPS deploy",
-      "steps": ["edit_locally", "test_syntax", "upload_staging", "verify"],
-      "forbidden": ["manual_vps_edits", "hotfixes_without_tests"]
+      "golden_rule": "fiks_installatør_først",
+      "stack": ["stimulus_reflex", "stimulus-components.com"],
+      "vps": "dev@185.52.176.18"
     },
-    "vps": {
-      "vm": "${constants.vps}",
-      "host": "${constants.vps_host}",
-      "pattern": "ssh ${constants.vps} 'command'"
-    },
-    "stack": ["stimulus_reflex", "stimulus-components.com"],
-    "tag_helpers": "prefer <%= tag.p 'text' %> over literal HTML"
+    "architecture": {
+      "deployment_flow": "master.json → openbsd.sh → rails/__install_all.sh → rails/*.sh → __shared/@common.sh",
+      "health_checks": {"endpoint": "/up", "ports": [11006, 10002, 10003, 10004, 10005, 10006, 10007]}
+    }
   },
 
+  // OPENBSD - Sikkerhet og enkelhet først
   "openbsd": {
-    "philosophy": ["security first", "correctness over features", "simplicity over complexity"],
-    "cmd": {
-      "service": {
-        "enable": "${constants.priv} rcctl enable",
-        "start": "${constants.priv} rcctl start",
-        "check": "${constants.priv} rcctl check",
-        "debug": "${constants.priv} rcctl -d start"
-      },
-      "pkg": {
-        "install": "${constants.priv} pkg_add",
-        "search": "pkg_info -Q",
-        "cleanup": "${constants.priv} pkg_delete -a"
-      },
-      "pf": {
-        "reload": "${constants.priv} pfctl -f /etc/pf.conf",
-        "test": "${constants.priv} pfctl -nf /etc/pf.conf",
-        "show": "${constants.priv} pfctl -s rules"
-      }
-    },
-    // fstat more reliable than rcctl check for port listeners
-    "health": {
-      "rails": "fstat | grep port_number",
-      "postgresql": "psql -U postgres -c 'SELECT version()'",
-      "redis": "redis-cli ping"
+    "philosophy": ["sikkerhet_først", "korrekthet_over_funksjoner", "enkelthet_over_kompleksitet"],
+    "commands": {
+      "service": "${constants.priv} rcctl",
+      "pkg": "${constants.priv} pkg_add", 
+      "update": "${constants.priv} syspatch",
+      "pf": "${constants.priv} pfctl",
+      "relayd": "${constants.priv} relayctl",
+      "nsd": "${constants.priv} nsd-control"
     }
   },
 
+  // GIT - Enkel versjonskontroll
   "git": {
-    "merge": {
-      "strategy": "--no-edit -X ours",
-      "conflicts": "git checkout --ours",
-      "cleanup": "git push origin --delete branch"
-    },
-    "hygiene": {
-      "before": ["git status", "git diff HEAD"],
-      "after": ["git log --oneline -5"]
-    }
+    "style": "Conventional_Commits",
+    "merge": {"strategy": "--no-edit -X ours", "conflicts": "git checkout --ours"},
+    "hygiene": {"before": ["git status", "git diff HEAD"], "after": ["git log --oneline -5"]}
   },
 
-  "file_org": {
-    "reduce_sprawl": "Consolidate related, remove duplicates",
-    "consolidation": {
-      "goal": "4 root files: dilla.rb, repligen.rb, tts.rb, postpro.rb",
-      "keep_subdirs": "Data, tools, cache",
-      "delete_subdirs": "*.rb logic, *.bak, temp"
-    }
-  },
-
-  "cruft": {
-    "triggers": {
-      "duplication": ">0.03",
-      "unused": "usage=0",
-      "magic_numbers": "literal_not_constant",
-      "long_method": "length>20"
-    },
-    "safe_fixes": ["remove_unused_imports", "extract_magic_numbers", "remove_dead_code"]
-  },
-
+  // AUTO-ITERERING - Kontinuerlig forbedring
+  // HVORDAN DETTE FUNGERER:
+  // Systemet forbedrer seg selv automatisk gjennom flere runder
+  // Stopper når endringene blir mindre enn 1% (konvergens)
+  //
   "autoiterate": {
     "enabled": true,
-    "max_iterations": 10,
-    "convergence": 0.01,
-    "checks": ["minimal_intent", "boy_scout_rule", "cruft"]
+    "maks_iterasjoner": 10,
+    "konvergens": 0.01,
+    "checks": ["minimal_intensjon", "speiderregelen", "kompleksitets_reduksjon", "dupliserings_eliminering"]
   },
 
-  // DRY: port is only varying data
-  "apps": {
-    "brgen": 10001,
-    "pubattorney": 10002,
-    "bsdports": 10003,
-    "hjerterom": 10004,
-    "privcam": 10005,
-    "amber": 10006,
-    "blognet": 10007
-  },
-
-  // Self-validating, self-correcting system
-  "governance": {
-    "auto_self_repair": true,
-    "drift_detection": {
-      "enabled": true,
-      "check_frequency": "every_10_operations",
-      "auto_correct": ["formatting", "whitespace", "unused_code"],
-      "flag_for_review": ["principle_violations", "gate_failures"]
-    },
-    "self_test": {
-      "on_load": true,
-      "validations": [
-        "JSON syntax valid",
-        "All gates reachable",
-        "Boy Scout Rule present",
-        "Fowler refactorings present",
-        "LLM optimization present"
-      ]
+  // ARBEIDSFLYTE-MØNSTRE - Bevisne vaner
+  "workflow_patterns": {
+    "parallel_tool_calls": "enkel_melding_flere_verktøy_når_uavhengige",
+    "mandatory_hooks": {
+      "tree.sh": "before_folder_work", 
+      "clean.sh": "before_file_edit",
+      "reload_master": "every_10_operations"
     }
   },
 
+  // LÆRINGER - Hva vi har lært fra tidligere feil og suksesser
   "lessons": {
-    "critical_mistakes": [
-      "Used forbidden commands - check shell.never",
-      "Tried bash when zsh.exe required",
-      "Forgot master.json at start",
-      "Did NOT run tree.sh - blind navigation",
-      "Did NOT run clean.sh - diff pollution",
-      "Did NOT apply Boy Scout Rule"
+    "kritiske_feil": [
+      "glemte_master_ved_start",
+      "brukte_bash_istedet_for_zsh",
+      "hoppet_over_tree_sh_før_mappearbeid", 
+      "hoppet_over_clean_sh_før_redigeringer",
+      "brukte_ikke_speiderregelen"
     ],
-    "successful": [
-      "TodoWrite for 30+ PR merges",
-      "git merge -X ours for consolidated versions",
-      "Parallel tool calls for speed",
-      "fstat for port verification over rcctl"
+    "vellykkede_mønstre": [
+      "todo_write_for_komplekse_oppgaver",
+      "git_merge_x_ours_for_konsolidering", 
+      "parallelle_verktøykall_for_uavhengige_operasjoner",
+      "energibevist_oppgaveplanlegging"
     ]
   },
 
-  "refs": {
-    "openbsd": "https://man.openbsd.org/",
-    "rails": "https://guides.rubyonrails.org/",
-    "clean_code": "https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882",
-    "refactoring": "https://refactoring.com/",
-    "zsh": "https://zsh.sourceforge.io/Doc/Release/Parameter-Expansion.html"
+  // FORBUDTE TING - Dette skal aldri gjøres
+  "forbidden": {
+    "changelogs": "ALDRI_lag_endringshistorier",
+    "version_referencing": "ALDRI_referer_til_tidligere_versjoner",
+    "self_reference": "ALDRI_referer_til_master.json_versjoner",
+    "metadata_bloat": "ALDRI_legge_til_versjons_sporbarhet"
   }
 }

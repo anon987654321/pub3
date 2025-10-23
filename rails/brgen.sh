@@ -2,6 +2,7 @@
 set -euo pipefail
 
 # Brgen core setup: Multi-tenant social and marketplace platform with Mapbox, live search, infinite scroll, and anonymous features on OpenBSD 7.5, unprivileged user
+readonly VERSION="1.0.0"
 APP_NAME="brgen"
 BASE_DIR="/home/brgen"
 
