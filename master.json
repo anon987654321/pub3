@@ -1,324 +1,143 @@
 {
-  // MASTER.JSON - The Ultimate Development Framework
-  // 
-  // BIG PICTURE IN 30 SECONDS:
-  // This file makes Claude Code work 3x smarter by:
-  // 1. Enforcing simple rules that prevent 80% of bugs
-  // 2. Optimizing how Claude uses its "mental space" (tokens)
-  // 3. Making code automatically improve with every change
-  // 4. Adapting to your energy levels throughout the day
-  //
-  // THINK OF IT AS:
-  // - A brilliant coding partner who never gets tired
-  // - A pre-flight checklist that prevents crashes
-  // - A self-cleaning system that gets better with use
-  // - Your personal coding coach
-  //
+  "version": "10.5",
+  "purpose": "Build secure fast beautiful web apps with Ruby + Rails + Zsh + OpenBSD",
 
-  "meta": {
-    "updated": "2025-10-23T08:00:00Z",
-    "owner": "anon987654321",
-    
-    // GRUNNLEGGENDE FILOSOFI:
-    // "Spørsmål før kommandoer" = Forstå problemet først
-    // "Bevis over meninger" = Bruk data, ikke gjetting
-    // "Gjennomføring over forklaring" = Handling er bedre enn prat
-    // "Auto-iterering over manuell" = Forbedre automatisk
-    // "Tilpasning over rigiditet" = Bøy deg når nødvendig
-    // "Speiderregelen" = Alltid etterlat koden renere
-    //
-    "philosophy": "questions>commands, evidence>opinion, execution>explanation, autoiterate>manual, adapt>rigid, boyscout>status-quo",
-
-    "authority": "ENESTE_SANNINGSKILDE - Overstyrer alle andre konfigurasjoner",
-    "enforce": "LES_FØRST, FØLG_REGLENE, FORBEDRE_ALLTID, LUKKET_LOKKE_TIL_KONVERGENS",
-    "platform": "OpenBSD + Cygwin/ZSH - Fordi sikkerhet og enkelthet betyr noe",
-    "status": "PRODUKSJONSKLAR - Selvforbedret gjennom auto-iterering"
+  "absolute": {
+    "bash_to_zsh": {"rule": "ALWAYS Zsh. NEVER Bash. Force rewrite.", "detect": ["#!/bin/bash", "bash -c"], "fix": {"shebang": "→ #!/usr/bin/env zsh", "arrays": "[0] → [1]", "substring": ":0:5 → [1,5]", "test": "[ ] → [[ ]]"}},
+    "python_to_ruby": {"rule": "NEVER Python. ALWAYS Ruby. Think Ruby-first.", "detect": [".py", "def/self/True/None"], "fix": {"function": "def f(x): return x*2 → def f(x)=x*2", "list": "[x*2 for x in a] → a.map{|x|x*2}", "class": "__init__ → initialize", "bool": "True/False → true/false", "none": "None → nil", "dict": "{'k':'v'} → {k:'v'}", "string": "f'{x}' → \"#{x}\"", "loop": "for x in a: → a.each{|x|}"}}
   },
 
-  // CLAUDE CODE INNSTILLINGER
-  // HVORDAN DET FUNGERER:
-  // Gir Claude klare tillatelser på forhånd så den ikke kaster bort 
-  // "mental plass" på å spørre "kan jeg gjøre dette?" for hver operasjon
-  //
-  "claude_code_settings": {
-    "startup_mandate": "LES_DENNE_FØRST - Må leses ved oppstart",
-    
-    "required_settings": {
-      "location": "G:/pub/.claude/settings.local.json",
-      "permissions.defaultMode": "bypassPermissions", // Ingen konstant tillatelsesspørring
-      "permissions.allow": "All git, zsh, ruby, sox, Read/Write/Edit on //g/pub/**, //c/pub/**",
-      "permissions.deny": ["bash", "sh", "grep", "sed", "awk", "find", "cat", "head", "tail", "echo", "tr", "cut", "wc"] // Disse kaster bort tokens
+  "deny": {
+    "shell": ["bash", "sh", "sed", "awk", "perl", "python", "find", "xargs", "cat", "head", "tail", "echo", "tr", "cut", "wc", "basename", "dirname", "which", "test", "expr", "sort", "uniq", "tee", "yes", "seq"],
+    "ruby": ["python", "for/until", "semicolons", "@@", "rescue Exception", "and/or/not", "eval", "send_strings", "ActiveSupport_when_stdlib"],
+    "gems": ["devise", "cancancan", "pundit", "sidekiq", "resque", "redis", "webpacker", "sprockets", "sass-rails", "jquery-rails", "activeadmin"],
+    "js": ["jquery", "lodash", "underscore", "moment", "axios", "react", "vue", "angular", "backbone", "ember"],
+    "html": ["div_layout", "div_wrapper", "span_wrapper", "center", "font", "marquee", "blink", "frameset"],
+    "css": ["float_layout", "clearfix", "table_layout", "!important_overuse", "ids_styling", "vendor_prefixes"],
+    "smell": ["TODO", "FIXME", "HACK", "magic_numbers", "hardcoded_secrets", "commented_code", "dead_code", "unused_anything"]
+  },
+
+  "use": {
+    "zsh": ["arrays()", "expansion${var//}", "globs**/*(.)", "set -euo pipefail", "typeset -A", "[[ ]]"],
+    "ruby": ["yield", "map/select/reduce", "symbols", "&.", "pattern_match", "endless_methods", "shorthand_hash"],
+    "rails": ["strong_params", "csrf", "REST_only", "turbo", "stimulus", "solid_queue", "solid_cache", "solid_cable"],
+    "stimulus": ["disconnect_ALWAYS", "cleanup_listeners", "cleanup_timers", "disconnect_observers"],
+    "html": ["semantic_only", "ARIA", "keyboard_nav", "skip_links", "h1→h2→h3", "alt", "labels"],
+    "css": ["flexbox/grid", "--custom_props", "logical_props", "container_queries", "color-mix", "clamp"]
+  },
+
+  "limits": {"method": 20, "class": 300, "params": 3, "chain": 3, "complexity": 10, "duplication": 3, "file": 100, "nest": 3, "html": 4, "css_spec": 20},
+
+  "names": {
+    "ruby": {"class": "PascalCase", "method": "snake_case", "const": "SCREAMING", "predicate": "?", "danger": "!"},
+    "zsh": {"all": "snake_case", "const": "SCREAMING"},
+    "js": {"controller": "kebab_controller.js", "method": "camelCase"},
+    "html": {"attr": "kebab-case", "data": "data-name-value"},
+    "css": {"class": "kebab-case", "var": "--kebab", "no_ids": true},
+    "never": ["thing", "stuff", "data", "info", "tmp", "foo", "bar", "manager", "helper", "util", "misc", "handler", "service"]
+  },
+
+  "format": {
+    "ruby": {"indent": 2, "length": 120, "order": ["const", "include", "valid", "assoc", "scope", "callback", "public", "private"], "method": ["guard", "setup", "logic", "return"], "style": ["trailing_comma", "frozen_string", "no_semi", "spaces"]},
+    "zsh": {"indent": 2, "shebang": "#!/usr/bin/env zsh", "safety": "set -euo pipefail", "quotes": "\"vars\" 'literal'", "function": ["local", "guard", "logic", "return"]},
+    "js": {"indent": 2, "semi": false, "quotes": "double", "trail_comma": true, "lifecycle": ["static", "init", "connect", "action", "helper", "disconnect"]},
+    "html": {"indent": 2, "semantic": true, "aria": true, "void_no_slash": true, "bool_min": true},
+    "css": {"indent": 2, "order": ["custom_props", "layout", "box", "type", "visual", "misc"], "modern": ["flex", "grid", "--props", "logical", ":has", "@container"]},
+    "json": {"indent": 2, "no_trail_comma": true, "snake_keys": true}
+  },
+
+  "rails_gen": {
+    "init": "rails new . --database=postgresql --skip-git --css=tailwind",
+    "auth": "bin/rails generate authentication User",
+    "scaffold": "bin/rails generate scaffold {Model} {fields}",
+    "model": "bin/rails generate model {Model} {fields}",
+    "stimulus": ["character-counter", "textarea-autogrow", "dropdown", "modal", "clipboard", "autosave", "password-visibility", "form-validation", "infinite-scroll", "search", "notification", "dialog"],
+    "reflex": "bin/rails generate stimulus_reflex {Name}",
+    "solid": ["solid_queue", "solid_cache", "solid_cable"],
+    "includes": ["acts_as_tenant", "pagy", "faker", "propshaft"],
+    "pwa": {"manifest": "app/manifest.json", "sw": "app/service-worker.js", "icons": "app/assets/images/icons/"}
+  },
+
+  "architecture": {
+    "ruby_file": ["frozen_string", "require", "module/class", "const", "include", "class_method", "attr", "valid", "associations", "scope", "callback", "public", "private"],
+    "zsh_expansion": {"prefix": "#/##", "suffix": "%/%%", "replace": "//", "substring": ":", "default": ":-", "case": "(U)/(L)/(C)", "unique": "(u)", "join": "(j:,:)"},
+    "zsh_glob": {"files": "**/*(.)", "dirs": "**/*/", "null": "(.N)", "ext": "**/*.rb", "exec": "**/*(*)", "today": "(.m0)"},
+    "zsh_array": {"declare": "local -a a=()", "append": "a+=()", "length": "${#a}", "slice": "${a:1:3}", "first": "${a[1]}", "last": "${a[-1]}", "all": "${a[@]}"},
+    "zsh_hash": {"declare": "typeset -A h=([k]=v)", "keys": "${(@k)h}", "values": "${(@v)h}", "iterate": "for k v in ${(@kv)h}"},
+    "stimulus": {"init": {"do": "constants", "never": "DOM/listeners/API"}, "connect": {"do": "setup", "must": "cleanup_in_disconnect"}, "disconnect": {"MANDATORY": "ALWAYS", "cleanup": ["removeEventListener", "clearInterval", "clearTimeout", "observer.disconnect", "controller.abort"]}},
+    "html": {"structure": ["html[lang]", "head", "body"], "landmarks": ["header", "nav", "main", "aside", "footer"], "sections": ["article", "section", "details"], "grouping": ["p", "blockquote", "ol", "ul", "li", "dl", "figure", "pre"], "text": ["a", "em", "strong", "small", "mark", "abbr", "time", "code", "kbd"], "forms": ["form", "label", "input", "button", "select", "textarea", "fieldset", "output"], "media": ["img", "picture", "video", "audio"], "interactive": ["dialog", "details"]},
+    "css_layout": {"flex": {"container": ["display:flex", "flex-direction", "justify-content", "align-items", "gap"], "item": ["flex", "flex-grow", "order"]}, "grid": {"container": ["display:grid", "grid-template-columns", "gap"], "item": ["grid-column", "grid-row", "grid-area"]}, "container": ["container-type", "@container"]},
+    "css_modern": ["--custom_properties", "inline-start_not_left", ":has()", ":is()/:where()", "@layer", "color-mix()", "clamp()"],
+    "css_breakpoints": {"base": 320, "sm": 640, "md": 768, "lg": 1024, "xl": 1280},
+    "rails": {"controller": {"pattern": "skinny", "max": 7, "rest": ["index", "show", "new", "create", "edit", "update", "destroy"], "need": ["strong_params", "before_action"]}, "model": {"pattern": "fat", "order": ["const", "concern", "valid", "associations", "scope", "callback", "method"]}, "view": {"erb": true, "partial": true, "no_logic": true, "turbo": true}, "helper": "view_only", "concern": "shared_only", "service": "one_public_method", "reflex": "morph_or_cable", "job": "idempotent"},
+    "pwa": {"layout": "nav_56px + main_calc(100vh-112px) + nav_56px", "templates": {"feed": "main>article[data-controller=post]>header+content+footer", "form": "form[data-controller=char-counter]>textarea+output+button", "user": "article[data-controller=follow]>header+bio+footer", "notify": "aside[role=complementary]>article*", "modal": "dialog[data-controller=dialog]>article", "dropdown": "nav[data-controller=dropdown]>button+menu"}, "turbo": ["frames", "streams"], "reflex": ["Like", "Follow", "Notification", "Typing"], "manifest": {"display": "standalone", "theme": "#000", "background": "#fff"}, "offline": "cache_first"}
+  },
+
+  "infrastructure": {
+    "openbsd": {"pledge": "OpenBSD::Pledge.pledge('stdio rpath wpath inet')", "unveil": "OpenBSD::Unveil.unveil('/path','r')", "doas": "not_sudo", "services": {"pf": "/etc/pf.conf synproxy+ratelimit", "relayd": "/etc/relayd.conf reverse_proxy", "httpd": "/etc/httpd.conf acme", "nsd": "/var/nsd/etc/nsd.conf dns", "acme": "/etc/acme-client.conf letsencrypt", "falcon": "config/falcon.rb async"}, "deploy": {"pre": ["infra", "apps", "dns"], "post": ["tls", "relayd", "ptr", "cron"]}, "rc": "/etc/rc.d/app", "user": "app_not_root", "database": "postgresql"},
+    "rag": {"flow": "deepseek→zai→grok→chatgpt→claude", "roles": {"deepseek": "initial", "zai": "optimize", "grok": "idiomatic", "chatgpt": "docs", "claude": "security"}, "handoff": ["code", "history"], "output": ["improved", "scores", "violations"], "note": "master.json is self-sufficient and MUST NOT be passed in handoff. It is the immutable source of truth."},
+    "tools": {"reanalysis": ["word", "line", "block", "function", "file"], "trace": "test_all_paths", "arxiv": "ar5iv.org cache_7d", "langchain": ["fs", "browser", "shell", "search"]}
+  },
+
+  "claude_code": {
+    "tool_priority": {
+      "file_read": "Read > Bash(cat/head/tail)",
+      "file_search": "Glob > Bash(find/ls)",
+      "content_search": "Grep > Bash(grep/rg)",
+      "file_edit": "Edit > Bash(sed/awk)",
+      "file_write": "Write > Bash(echo/cat)",
+      "exploration": "Task(Explore) when multi-round search needed"
     },
-    
-    "env_variables": {
-      "MASTER_CONFIG_PATH": "G:/pub/master.json",
-      "ENFORCE_MASTER_JSON": "true"
-    }
-  },
-
-  // KONSTANTER - Verdier som ikke endrer seg
-  // TENK PÅ DETTE SOM: Fast inventar som alltid er på samme plass
-  //
-  "constants": {
-    "shell": "zsh.exe", // Den smarte skallen som sparer tokens
-    "priv": "doas", // OpenBSDs sikre måte å kjøre privilegerte kommandoer
-    "vps": "dev@185.52.176.18", // Din server
-    "vps_host": "dev@server27.openbsd.amsterdam:31415",
-    "ruby": "/c/cygwin64/bin/ruby.exe", // Hvor Ruby bor
-    "sox_paths": ["sox.exe", "sox", "/usr/bin/sox.exe", "/c/cygwin64/bin/sox.exe", "../dilla/effects/sox/sox.exe"] // Lydverktøy steder
-  },
-
-  // ENERGI-STYRING
-  // HVORFOR DETTE ER REVOLUSJONERENDE:
-  // Koding på morgenen når hjernen er frisk = 3x mer produktiv
-  // Koding når du er trett = flere feil og dårlige beslutninger
-  //
-  // TENK PÅ DETTE SOM: Treningsprogram for hjernen din
-  //
-  "energy_management": {
-    "døgnrytmer": {
-      "morgen_06_12": {"energi": 9, "best_til": ["arkitektur", "kompleks_omstrukturering", "sikkerhetsanalyse"]},
-      "ettermiddag_12_18": {"energi": 7, "best_til": ["implementering", "testing", "integrasjon"]},
-      "kveld_18_22": {"energi": 5, "best_til": ["dokumentasjon", "gjennomgang", "ui_justeringer"]},
-      "natt_22_06": {"energi": 3, "unngå": ["kritiske_beslutninger", "kompleks_omstrukturering"]}
+    "parallel_execution": {
+      "rule": "call independent tools in single message",
+      "examples": ["multiple Read calls", "Read + Glob + Grep", "multiple Bash when independent"],
+      "never_parallel": ["dependent values", "sequential operations", "mkdir then cp"]
     },
-    
-    "oppgave_kostnader": {
-      "høy_energi": ["kompleks_omstrukturering", "sikkerhetsanalyse", "arkitektur", "rails_migreringer"],
-      "medium_energi": ["implementering", "feilsøking", "testing", "git_operasjoner"],
-      "lav_energi": ["dokumentasjon", "formatering", "gjennomgang", "opprydding"]
-    }
-  },
-
-  // KERNEPRINSIPPER - Tidenes beste kode-regler
-  // DISSE FORHINDRER 80% AV VANLIGE BUGS:
-  //
-  "principles": {
-    // SPEIDERREGELEN:
-    // "Alltid etterlat leirplassen renere enn du fant den"
-    // På kode: Hver gang du rører kode, gjør den litt bedre
-    //
-    "speiderregelen": {
-      "prinsipp": "etterlat_koden_renere_enn_funnet",
-      "håndheving": "OBLATORISK_ved_hver_endring",
-      "omfang": {"minimum": "berørte_linjer", "foretrukket": "berørte_funksjoner", "maksimum": "berørte_filer"},
-      "handlinger": ["forbedre_navn", "ekstraher_konstanter", "fjern_død_kode", "reduser_kompleksitet"]
+    "todo_workflow": {
+      "when": ["3+ steps", "multi-step tasks", "user provides list", "non-trivial complexity"],
+      "skip": ["single trivial task", "purely conversational"],
+      "states": ["pending", "in_progress", "completed"],
+      "rules": ["exactly_one_in_progress", "complete_immediately_after_finish", "both_content_and_activeForm_required"]
     },
-
-    // MINIMAL INTENSJON:
-    // "Gjør kun det som trengs, ingenting mer"
-    // Som en mesterkokk som bruker akkurat riktige ingredienser - ingen sløsing
-    //
-    "minimal_intensjon": {
-      "definisjon": "gjør_kun_det_som_uttrykker_intensjonen",
-      "forener": ["DRY", "KISS", "YAGNI"], // Tre prinsipper i ett!
-      "triggere": {
-        "@3_forekomster": "ekstraher_metode", // Ikke gjenta deg selv (DRY)
-        "@kompleksitet>10": "dekomponer", // Hold det enkelt (KISS)  
-        "@ubrukt_kode": "fjern" // Du kommer ikke til å trenge det (YAGNI)
-      }
+    "agent_usage": {
+      "explore": {"when": "multi-round codebase exploration", "thoroughness": ["quick", "medium", "very thorough"]},
+      "parallel_agents": "multiple Task calls in single message when requested"
     },
-
-    // SOLID PRINSIPPER - Tidtestede regler for god kodestruktur
-    "SOLID": {
-      "enkelt_ansvar": "én_grunn_til_å_endre_seg",
-      "åpen_lukket": "utvid_ikke_modifiser", 
-      "liskov_substitusjon": "erstatninger_må_fungere",
-      "grensesnitt_segregering": "ikke_tving_ubrukte_metoder",
-      "avhengighets_inversjon": "avheng_av_abstraksjoner"
-    }
-  },
-
-  // KVALITETSGRENSER - Basert på tiår med programvareforskning
-  // HVORFOR DISSE TALLENE:
-  // McCabe kompleksitet >10 = eksponentielt flere defekter
-  // Duplisering >3% = vedlikeholdsbyrde
-  //
-  "quality_limits": {
-    "kompleksitet": 10, // Funksjoner skal være enkle nok til å forstå raskt
-    "duplisering": 0.03, // Bare 3% kodeduplisering tillatt  
-    "dekning": 0.8, // 80% av koden skal være testet
-    "metode_lengde": 20, // Funksjoner skal være korte og fokuserte
-    "fil_linjer": {"ruby": 300, "js": 200, "zsh": 500, "json": 400},
-    "maks_iterasjoner": 10, // Prøv opptil 10 ganger å forbedre noe
-    "konvergens": 0.01 // Stopp når 99% perfekt
-  },
-
-  // OBLATORISKE REGLER - Disse forhindrer 80% av vanlige bugs
-  // TENK PÅ DISSE SOM: "Pre-flight sjekklister" for piloter
-  // Før avgang sjekker piloter at alt er sikkert
-  // Før koding kjører vi disse sjekkene for å forhindre krasj
-  //
-  "mandatory": {
-    "enabled": true,
-    
-    "hooks": {
-      "tree.sh": {"when": "before_folder_operations", "why": "forhindre_blind_navigasjon"},
-      "clean.sh": {"when": "before_edit", "why": "forhindre_mellomroms_diff"}
+    "git_workflow": {
+      "commit": {"when": "user explicitly requests", "never": ["auto-commit", "skip hooks", "amend others", "force push main"]},
+      "message_format": "concise why not what + claude footer",
+      "safety": ["check authorship before amend", "no --no-verify", "no destructive commands"]
     },
-    
-    // TOKEN-SPARING: Ved å laste inn kontekst på nytt, husker Claude reglene
-    // uten å kaste bort tokens på å gjenoppdage dem
-    "reload_config": {
-      "frequency": ["session_start", "every_10_operations", "before_decisions"],
-      "why": "konfigurasjonen_utvikler_seg_med_mønstre"
+    "output_style": {
+      "tone": "terse direct brief",
+      "avoid": ["greetings", "acknowledgments", "emoji unless requested", "boxes", "bold", "italics"],
+      "format": ["plain backticks", "bare paths file:line", "dash lists"]
     }
   },
 
-  // SKALL-KOMMANDOER - Smart terminalbruk
-  // HVORFOR ZSH I STEDET FOR BASH:
-  // ZSH er som en smart assistent som forutser dine behov
-  // BASH er som en grunnleggende kalkulator som krever at du gjør alt manuelt
-  //
-  "shell": {
-    "mandate": "KUN_ZSH - Bash ABSOLUTT_FORBUDT",
-    "use": ["zsh.exe", "Read", "Write", "Edit", "Glob", "Grep"], // Innbygde verktøy = token-effektive
-    "forbidden_tools": ["bash", "sh", "grep", "sed", "awk", "cat", "echo", "head", "tail", "find", "tr", "cut", "wc"], // Eksterne verktøy = token-sløsende
-    
-    // ZSH MAGI FORKLART:
-    // Dette er som tastatursnarveier for koding
-    // I stedet for å skrive lange kommandoer, bruk disse raske mønstrene
-    //
-    "zsh_magic": {
-      "string": {
-        "lower": "${(L)var}", // Konverter til små bokstaver
-        "upper": "${(U)var}", // Konverter til store bokstaver
-        "replace_all": "${var//old/new}", // Erstatt alle forekomster
-        "trim": "${##${var##[[:space:]]#}%%[[:space:]]#}" // Fjern mellomrom
-      },
-      "array": {
-        "filter": "( ${(M)arr:#*pattern*} )", // Finn matchende elementer
-        "unique": "( ${(u)arr} )", // Fjern duplikater
-        "join": "${(j:delim:)arr}" // Kombiner med skilletegn
-      }
-    }
-  },
-
-  // ARBEIDSFLYTE - Den beviste prosessen for enhver oppgave
-  // HVORFOR DETTE FUNGERER:
-  // Som en rettsak hvor vi hører fra flere perspektiver
-  // før vi tar en viktig beslutning
-  //
-  "workflow": {
-    "phases": {
-      "discover": {"questions": ["what_problem", "who_affected", "evidence", "what_if_nothing"], "adversarial": true},
-      "design": {"questions": ["5_alternatives", "simplest_first", "test_plan", "rollback_plan"], "adversarial": true},
-      "implement": {"questions": ["boy_scout_applied", "tests_green", "complexity<10"], "adversarial": false},
-      "validate": {"questions": ["evidence_proves", "principles_pass"], "adversarial": true},
-      "learn": {"questions": ["what_worked", "what_failed", "extract_patterns"], "adversarial": false}
-    }
-  },
-
-  // VALIDERING - Hvordan ta gode beslutninger
-  "validation": {
-    "adversarial": {
-      "perspectives": {
-        "security": {"questions": ["attack_vectors", "input_validation", "privilege_escalation"], "weight": 0.30, "veto": true},
-        "maintainer": {"questions": ["3am_clear", "junior_debug", "clear_errors"], "weight": 0.20, "veto": true},
-        "skeptic": {"questions": ["necessary", "do_nothing", "reuse"], "weight": 0.15},
-        "minimalist": {"questions": ["simplest", "remove", "fewer_abstractions"], "weight": 0.15},
-        "performance": {"questions": ["big_o", "memory_waste", "worst_case"], "weight": 0.20}
-      },
-      "consensus": 0.7 // Trenger 70% enighet
-    }
-  },
-
-  // MILJØ-BEGRENSNINGER
-  // HVORFOR DETTE ER VIKTIG:
-  // Claude Code kjører i Git Bash, ikke din Cygwin terminal
-  // Disse reglene forhindrer at vi kjemper mot miljøet
-  //
-  "environment": {
-    "constraints": {
-      "claude_code_bash_tool": {
-        "runs_in": "Git_Bash",
-        "cannot_run": ["audio_playback", "interactive_programs", "gui_apps"],
-        "bail_conditions": ["audio_required", "interactive_input", "path_issues_after_2_attempts"]
-      }
+  "quality": {
+    "loop": ["analyze", "prioritize", "plan", "execute", "measure", "decide"],
+    "self_apply": "master.json must pass its own quality rules",
+    "dogfood": "run through own rules iteratively until plateau",
+    "threshold": {"dry": 0.95, "complexity": 0.95, "security": 0.95, "semantic": 0.98, "accessibility": 0.95, "performance": 0.90, "coverage": 0.90, "config": 1.0},
+    "plateau": {"iterations": 3, "delta": 0.01},
+    "max_iter": 25,
+    "pre_commit": {
+      "zsh_syntax_valid": "no syntax errors in zsh files",
+      "json_syntax_valid": "all JSON files parse correctly",
+      "all_tests_pass": "test suite executes successfully",
+      "html_semantic_valid": "semantic HTML structure correct",
+      "ruby_style_compliant": "Ruby code follows format rules from master.json"
     },
-    "cygwin": {
-      "ruby": "/c/cygwin64/bin/ruby.exe",
-      "mb_sound": "G:/pub/multimedia/mb-sound"
-    }
-  },
-
-  // RAILS - Spesifikke regler for Rails-utvikling
-  "rails": {
-    "deployment": {
-      "golden_rule": "fiks_installatør_først",
-      "stack": ["stimulus_reflex", "stimulus-components.com"],
-      "vps": "dev@185.52.176.18"
+    "pre_deploy": {
+      "http_status_200": "application responds with success status",
+      "responsive_design_valid": "layout works at all breakpoints",
+      "no_pending_migrations": "database schema current",
+      "lighthouse_score_90_plus": "performance accessibility best-practices seo all above 90"
     },
-    "architecture": {
-      "deployment_flow": "master.json → openbsd.sh → rails/__install_all.sh → rails/*.sh → __shared/@common.sh",
-      "health_checks": {"endpoint": "/up", "ports": [11006, 10002, 10003, 10004, 10005, 10006, 10007]}
-    }
+    "auto_fail": ["divitis", "no_disconnect", "sql_interpolation", "unvalidated_input", "secrets", "python", "bash", "todos"],
+    "config_validation": ["no_abbreviations", "snake_case_keys", "within_limits", "no_self_reference"]
   },
 
-  // OPENBSD - Sikkerhet og enkelhet først
-  "openbsd": {
-    "philosophy": ["sikkerhet_først", "korrekthet_over_funksjoner", "enkelthet_over_kompleksitet"],
-    "commands": {
-      "service": "${constants.priv} rcctl",
-      "pkg": "${constants.priv} pkg_add", 
-      "update": "${constants.priv} syspatch",
-      "pf": "${constants.priv} pfctl",
-      "relayd": "${constants.priv} relayctl",
-      "nsd": "${constants.priv} nsd-control"
-    }
-  },
-
-  // GIT - Enkel versjonskontroll
-  "git": {
-    "style": "Conventional_Commits",
-    "merge": {"strategy": "--no-edit -X ours", "conflicts": "git checkout --ours"},
-    "hygiene": {"before": ["git status", "git diff HEAD"], "after": ["git log --oneline -5"]}
-  },
-
-  // AUTO-ITERERING - Kontinuerlig forbedring
-  // HVORDAN DETTE FUNGERER:
-  // Systemet forbedrer seg selv automatisk gjennom flere runder
-  // Stopper når endringene blir mindre enn 1% (konvergens)
-  //
-  "autoiterate": {
-    "enabled": true,
-    "maks_iterasjoner": 10,
-    "konvergens": 0.01,
-    "checks": ["minimal_intensjon", "speiderregelen", "kompleksitets_reduksjon", "dupliserings_eliminering"]
-  },
-
-  // ARBEIDSFLYTE-MØNSTRE - Bevisne vaner
-  "workflow_patterns": {
-    "parallel_tool_calls": "enkel_melding_flere_verktøy_når_uavhengige",
-    "mandatory_hooks": {
-      "tree.sh": "before_folder_work", 
-      "clean.sh": "before_file_edit",
-      "reload_master": "every_10_operations"
-    }
-  },
-
-  // LÆRINGER - Hva vi har lært fra tidligere feil og suksesser
-  "lessons": {
-    "kritiske_feil": [
-      "glemte_master_ved_start",
-      "brukte_bash_istedet_for_zsh",
-      "hoppet_over_tree_sh_før_mappearbeid", 
-      "hoppet_over_clean_sh_før_redigeringer",
-      "brukte_ikke_speiderregelen"
-    ],
-    "vellykkede_mønstre": [
-      "todo_write_for_komplekse_oppgaver",
-      "git_merge_x_ours_for_konsolidering", 
-      "parallelle_verktøykall_for_uavhengige_operasjoner",
-      "energibevist_oppgaveplanlegging"
-    ]
-  },
-
-  // FORBUDTE TING - Dette skal aldri gjøres
-  "forbidden": {
-    "changelogs": "ALDRI_lag_endringshistorier",
-    "version_referencing": "ALDRI_referer_til_tidligere_versjoner",
-    "self_reference": "ALDRI_referer_til_master.json_versjoner",
-    "metadata_bloat": "ALDRI_legge_til_versjons_sporbarhet"
-  }
+  "meta": {"platforms": ["openbsd", "termux", "cygwin", "raspberry_pi"], "style": "brief", "future": {"bun": "when_openbsd_ready", "aiight_rb": "cli_tty_components"}, "self_improve": "monthly", "git_not_comments": true, "standalone_rule": "Config is standalone. No external tools. No inclusion in RAG handoff. Config not payload.", "activation_message": "**master.json** v{version} ({model})", "last_dogfood": "2025-10-26", "dogfood_iterations": 5}
 }
