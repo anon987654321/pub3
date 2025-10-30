@@ -1,143 +1,639 @@
 {
-  "version": "10.5",
-  "purpose": "Build secure fast beautiful web apps with Ruby + Rails + Zsh + OpenBSD",
-
-  "absolute": {
-    "bash_to_zsh": {"rule": "ALWAYS Zsh. NEVER Bash. Force rewrite.", "detect": ["#!/bin/bash", "bash -c"], "fix": {"shebang": "→ #!/usr/bin/env zsh", "arrays": "[0] → [1]", "substring": ":0:5 → [1,5]", "test": "[ ] → [[ ]]"}},
-    "python_to_ruby": {"rule": "NEVER Python. ALWAYS Ruby. Think Ruby-first.", "detect": [".py", "def/self/True/None"], "fix": {"function": "def f(x): return x*2 → def f(x)=x*2", "list": "[x*2 for x in a] → a.map{|x|x*2}", "class": "__init__ → initialize", "bool": "True/False → true/false", "none": "None → nil", "dict": "{'k':'v'} → {k:'v'}", "string": "f'{x}' → \"#{x}\"", "loop": "for x in a: → a.each{|x|}"}}
+  "meta": {
+    "version": "1004.0.0",
+    "updated": "2025-01-26T08:12:02Z",
+    "owner": "anon987654321",
+    "description": "lean llm framework: autoiterative refinement with adversarial question and answer",
+    "philosophy": ["question driven", "evidence based", "clear over clever", "consolidate", "optimize", "retrofit", "self validated", "documentation first", "design excellence", "token efficient"],
+    "git_not_comments": true,
+    "activation_message": "master.json version {version} using {model}",
+    "self_improve": "monthly",
+    "last_dogfood": "2025-01-26",
+    "dogfood_iterations": 13
   },
-
-  "deny": {
-    "shell": ["bash", "sh", "sed", "awk", "perl", "python", "find", "xargs", "cat", "head", "tail", "echo", "tr", "cut", "wc", "basename", "dirname", "which", "test", "expr", "sort", "uniq", "tee", "yes", "seq"],
-    "ruby": ["python", "for/until", "semicolons", "@@", "rescue Exception", "and/or/not", "eval", "send_strings", "ActiveSupport_when_stdlib"],
-    "gems": ["devise", "cancancan", "pundit", "sidekiq", "resque", "redis", "webpacker", "sprockets", "sass-rails", "jquery-rails", "activeadmin"],
-    "js": ["jquery", "lodash", "underscore", "moment", "axios", "react", "vue", "angular", "backbone", "ember"],
-    "html": ["div_layout", "div_wrapper", "span_wrapper", "center", "font", "marquee", "blink", "frameset"],
-    "css": ["float_layout", "clearfix", "table_layout", "!important_overuse", "ids_styling", "vendor_prefixes"],
-    "smell": ["TODO", "FIXME", "HACK", "magic_numbers", "hardcoded_secrets", "commented_code", "dead_code", "unused_anything"]
-  },
-
-  "use": {
-    "zsh": ["arrays()", "expansion${var//}", "globs**/*(.)", "set -euo pipefail", "typeset -A", "[[ ]]"],
-    "ruby": ["yield", "map/select/reduce", "symbols", "&.", "pattern_match", "endless_methods", "shorthand_hash"],
-    "rails": ["strong_params", "csrf", "REST_only", "turbo", "stimulus", "solid_queue", "solid_cache", "solid_cable"],
-    "stimulus": ["disconnect_ALWAYS", "cleanup_listeners", "cleanup_timers", "disconnect_observers"],
-    "html": ["semantic_only", "ARIA", "keyboard_nav", "skip_links", "h1→h2→h3", "alt", "labels"],
-    "css": ["flexbox/grid", "--custom_props", "logical_props", "container_queries", "color-mix", "clamp"]
-  },
-
-  "limits": {"method": 20, "class": 300, "params": 3, "chain": 3, "complexity": 10, "duplication": 3, "file": 100, "nest": 3, "html": 4, "css_spec": 20},
-
-  "names": {
-    "ruby": {"class": "PascalCase", "method": "snake_case", "const": "SCREAMING", "predicate": "?", "danger": "!"},
-    "zsh": {"all": "snake_case", "const": "SCREAMING"},
-    "js": {"controller": "kebab_controller.js", "method": "camelCase"},
-    "html": {"attr": "kebab-case", "data": "data-name-value"},
-    "css": {"class": "kebab-case", "var": "--kebab", "no_ids": true},
-    "never": ["thing", "stuff", "data", "info", "tmp", "foo", "bar", "manager", "helper", "util", "misc", "handler", "service"]
-  },
-
-  "format": {
-    "ruby": {"indent": 2, "length": 120, "order": ["const", "include", "valid", "assoc", "scope", "callback", "public", "private"], "method": ["guard", "setup", "logic", "return"], "style": ["trailing_comma", "frozen_string", "no_semi", "spaces"]},
-    "zsh": {"indent": 2, "shebang": "#!/usr/bin/env zsh", "safety": "set -euo pipefail", "quotes": "\"vars\" 'literal'", "function": ["local", "guard", "logic", "return"]},
-    "js": {"indent": 2, "semi": false, "quotes": "double", "trail_comma": true, "lifecycle": ["static", "init", "connect", "action", "helper", "disconnect"]},
-    "html": {"indent": 2, "semantic": true, "aria": true, "void_no_slash": true, "bool_min": true},
-    "css": {"indent": 2, "order": ["custom_props", "layout", "box", "type", "visual", "misc"], "modern": ["flex", "grid", "--props", "logical", ":has", "@container"]},
-    "json": {"indent": 2, "no_trail_comma": true, "snake_keys": true}
-  },
-
-  "rails_gen": {
-    "init": "rails new . --database=postgresql --skip-git --css=tailwind",
-    "auth": "bin/rails generate authentication User",
-    "scaffold": "bin/rails generate scaffold {Model} {fields}",
-    "model": "bin/rails generate model {Model} {fields}",
-    "stimulus": ["character-counter", "textarea-autogrow", "dropdown", "modal", "clipboard", "autosave", "password-visibility", "form-validation", "infinite-scroll", "search", "notification", "dialog"],
-    "reflex": "bin/rails generate stimulus_reflex {Name}",
-    "solid": ["solid_queue", "solid_cache", "solid_cable"],
-    "includes": ["acts_as_tenant", "pagy", "faker", "propshaft"],
-    "pwa": {"manifest": "app/manifest.json", "sw": "app/service-worker.js", "icons": "app/assets/images/icons/"}
-  },
-
-  "architecture": {
-    "ruby_file": ["frozen_string", "require", "module/class", "const", "include", "class_method", "attr", "valid", "associations", "scope", "callback", "public", "private"],
-    "zsh_expansion": {"prefix": "#/##", "suffix": "%/%%", "replace": "//", "substring": ":", "default": ":-", "case": "(U)/(L)/(C)", "unique": "(u)", "join": "(j:,:)"},
-    "zsh_glob": {"files": "**/*(.)", "dirs": "**/*/", "null": "(.N)", "ext": "**/*.rb", "exec": "**/*(*)", "today": "(.m0)"},
-    "zsh_array": {"declare": "local -a a=()", "append": "a+=()", "length": "${#a}", "slice": "${a:1:3}", "first": "${a[1]}", "last": "${a[-1]}", "all": "${a[@]}"},
-    "zsh_hash": {"declare": "typeset -A h=([k]=v)", "keys": "${(@k)h}", "values": "${(@v)h}", "iterate": "for k v in ${(@kv)h}"},
-    "stimulus": {"init": {"do": "constants", "never": "DOM/listeners/API"}, "connect": {"do": "setup", "must": "cleanup_in_disconnect"}, "disconnect": {"MANDATORY": "ALWAYS", "cleanup": ["removeEventListener", "clearInterval", "clearTimeout", "observer.disconnect", "controller.abort"]}},
-    "html": {"structure": ["html[lang]", "head", "body"], "landmarks": ["header", "nav", "main", "aside", "footer"], "sections": ["article", "section", "details"], "grouping": ["p", "blockquote", "ol", "ul", "li", "dl", "figure", "pre"], "text": ["a", "em", "strong", "small", "mark", "abbr", "time", "code", "kbd"], "forms": ["form", "label", "input", "button", "select", "textarea", "fieldset", "output"], "media": ["img", "picture", "video", "audio"], "interactive": ["dialog", "details"]},
-    "css_layout": {"flex": {"container": ["display:flex", "flex-direction", "justify-content", "align-items", "gap"], "item": ["flex", "flex-grow", "order"]}, "grid": {"container": ["display:grid", "grid-template-columns", "gap"], "item": ["grid-column", "grid-row", "grid-area"]}, "container": ["container-type", "@container"]},
-    "css_modern": ["--custom_properties", "inline-start_not_left", ":has()", ":is()/:where()", "@layer", "color-mix()", "clamp()"],
-    "css_breakpoints": {"base": 320, "sm": 640, "md": 768, "lg": 1024, "xl": 1280},
-    "rails": {"controller": {"pattern": "skinny", "max": 7, "rest": ["index", "show", "new", "create", "edit", "update", "destroy"], "need": ["strong_params", "before_action"]}, "model": {"pattern": "fat", "order": ["const", "concern", "valid", "associations", "scope", "callback", "method"]}, "view": {"erb": true, "partial": true, "no_logic": true, "turbo": true}, "helper": "view_only", "concern": "shared_only", "service": "one_public_method", "reflex": "morph_or_cable", "job": "idempotent"},
-    "pwa": {"layout": "nav_56px + main_calc(100vh-112px) + nav_56px", "templates": {"feed": "main>article[data-controller=post]>header+content+footer", "form": "form[data-controller=char-counter]>textarea+output+button", "user": "article[data-controller=follow]>header+bio+footer", "notify": "aside[role=complementary]>article*", "modal": "dialog[data-controller=dialog]>article", "dropdown": "nav[data-controller=dropdown]>button+menu"}, "turbo": ["frames", "streams"], "reflex": ["Like", "Follow", "Notification", "Typing"], "manifest": {"display": "standalone", "theme": "#000", "background": "#fff"}, "offline": "cache_first"}
-  },
-
-  "infrastructure": {
-    "openbsd": {"pledge": "OpenBSD::Pledge.pledge('stdio rpath wpath inet')", "unveil": "OpenBSD::Unveil.unveil('/path','r')", "doas": "not_sudo", "services": {"pf": "/etc/pf.conf synproxy+ratelimit", "relayd": "/etc/relayd.conf reverse_proxy", "httpd": "/etc/httpd.conf acme", "nsd": "/var/nsd/etc/nsd.conf dns", "acme": "/etc/acme-client.conf letsencrypt", "falcon": "config/falcon.rb async"}, "deploy": {"pre": ["infra", "apps", "dns"], "post": ["tls", "relayd", "ptr", "cron"]}, "rc": "/etc/rc.d/app", "user": "app_not_root", "database": "postgresql"},
-    "rag": {"flow": "deepseek→zai→grok→chatgpt→claude", "roles": {"deepseek": "initial", "zai": "optimize", "grok": "idiomatic", "chatgpt": "docs", "claude": "security"}, "handoff": ["code", "history"], "output": ["improved", "scores", "violations"], "note": "master.json is self-sufficient and MUST NOT be passed in handoff. It is the immutable source of truth."},
-    "tools": {"reanalysis": ["word", "line", "block", "function", "file"], "trace": "test_all_paths", "arxiv": "ar5iv.org cache_7d", "langchain": ["fs", "browser", "shell", "search"]}
-  },
-
-  "claude_code": {
-    "tool_priority": {
-      "file_read": "Read > Bash(cat/head/tail)",
-      "file_search": "Glob > Bash(find/ls)",
-      "content_search": "Grep > Bash(grep/rg)",
-      "file_edit": "Edit > Bash(sed/awk)",
-      "file_write": "Write > Bash(echo/cat)",
-      "exploration": "Task(Explore) when multi-round search needed"
+  "principles": {
+    "quality": ["dont_repeat_yourself", "simplicity", "you_arent_gonna_need_it", "single_responsibility", "evidence_based", "reversible", "explicit", "orthogonal", "predictable", "composable"],
+    "style": ["brief", "clear", "meaningful_names", "small_units", "expressive_code", "minimal_comments", "thoughtful_whitespace", "readability", "parseability"],
+    "refactor": ["extract_complexity", "eliminate_duplication", "flatten_conditionals", "use_constants", "boy_scout_rule"],
+    "optimize": ["defragment", "decouple", "hoist", "regroup", "consolidate", "semantic_elements"],
+    "design": {
+      "visual_hierarchy": ["most_important_first", "size_indicates_importance", "contrast_creates_focus", "proximity_groups_related", "white_space_provides_breathing_room"],
+      "typography": {
+        "scale": ["use_modular_scale", "consistent_rhythm", "limit_to_three_sizes"],
+        "readability": ["line_length_45_75_characters", "line_height_1.4_to_1.6", "adequate_contrast_4.5_to_1_minimum"],
+        "hierarchy": ["one_h1_per_page", "logical_heading_order", "visual_distinction_clear"],
+        "fonts": ["system_fonts_preferred", "max_two_typefaces", "avoid_faux_weights"]
+      },
+      "color": {
+        "palette": ["primary_secondary_accent", "limit_to_five_colors", "60_30_10_rule"],
+        "contrast": ["wcag_aaa_7_to_1_preferred", "test_with_tools", "consider_colorblind"],
+        "meaning": ["consistent_color_semantics", "red_danger", "green_success", "blue_info", "yellow_warning"],
+        "backgrounds": ["light_backgrounds_dark_text", "avoid_pure_black_white", "test_readability"]
+      },
+      "layout": {
+        "grid": ["use_consistent_grid", "12_column_flexible", "maintain_alignment"],
+        "spacing": ["use_consistent_scale", "8px_base_unit", "multiples_of_base"],
+        "balance": ["visual_weight_distribution", "asymmetry_with_purpose", "negative_space_intentional"],
+        "responsive": ["mobile_first", "touch_targets_44px_minimum", "content_priority_order"]
+      },
+      "interaction": {
+        "affordance": ["buttons_look_clickable", "links_underlined_or_distinct", "disabled_states_clear"],
+        "feedback": ["immediate_response", "progress_indicators", "error_messages_helpful"],
+        "simplicity": ["one_primary_action", "minimal_choices", "progressive_disclosure"],
+        "consistency": ["patterns_repeated", "behaviors_predictable", "terminology_uniform"]
+      },
+      "accessibility": {
+        "perceivable": ["alt_text_descriptive", "captions_for_media", "color_not_sole_indicator"],
+        "operable": ["keyboard_navigable", "skip_links", "focus_visible"],
+        "understandable": ["clear_labels", "error_prevention", "consistent_navigation"],
+        "robust": ["semantic_html", "aria_when_needed", "progressive_enhancement"]
+      },
+      "performance": {
+        "loading": ["critical_css_inline", "defer_non_critical", "lazy_load_images"],
+        "rendering": ["avoid_layout_shifts", "optimize_fonts", "minimize_repaints"],
+        "interaction": ["respond_within_100ms", "animate_at_60fps", "debounce_inputs"]
+      },
+      "documentation_sources": [
+        "https://nngroup.com/articles",
+        "https://smashingmagazine.com",
+        "https://web.dev/patterns",
+        "https://lawsofux.com",
+        "https://type-scale.com",
+        "https://colorbox.io",
+        "https://contrast-ratio.com"
+      ]
     },
-    "parallel_execution": {
-      "rule": "call independent tools in single message",
-      "examples": ["multiple Read calls", "Read + Glob + Grep", "multiple Bash when independent"],
-      "never_parallel": ["dependent values", "sequential operations", "mkdir then cp"]
-    },
-    "todo_workflow": {
-      "when": ["3+ steps", "multi-step tasks", "user provides list", "non-trivial complexity"],
-      "skip": ["single trivial task", "purely conversational"],
-      "states": ["pending", "in_progress", "completed"],
-      "rules": ["exactly_one_in_progress", "complete_immediately_after_finish", "both_content_and_activeForm_required"]
-    },
-    "agent_usage": {
-      "explore": {"when": "multi-round codebase exploration", "thoroughness": ["quick", "medium", "very thorough"]},
-      "parallel_agents": "multiple Task calls in single message when requested"
-    },
-    "git_workflow": {
-      "commit": {"when": "user explicitly requests", "never": ["auto-commit", "skip hooks", "amend others", "force push main"]},
-      "message_format": "concise why not what + claude footer",
-      "safety": ["check authorship before amend", "no --no-verify", "no destructive commands"]
-    },
-    "output_style": {
-      "tone": "terse direct brief",
-      "avoid": ["greetings", "acknowledgments", "emoji unless requested", "boxes", "bold", "italics"],
-      "format": ["plain backticks", "bare paths file:line", "dash lists"]
+    "workflow": [
+      {
+        "step": 1,
+        "phase": "discover",
+        "description": "identify the core issue through systematic questioning to gather initial facts and understand the problem scope without assumptions",
+        "key_questions": [
+          "what is the exact problem?",
+          "what evidence supports its existence?",
+          "who or what is affected?",
+          "what is the cost of not addressing it?"
+        ],
+        "actions": [
+          "document the problem statement",
+          "collect supporting evidence such as logs or user reports",
+          "list affected components or stakeholders",
+          "estimate potential impacts like downtime or resource waste"
+        ]
+      },
+      {
+        "step": 2,
+        "phase": "analyze",
+        "description": "break down the problem by examining underlying factors, potential pitfalls, and interconnections to build comprehensive understanding",
+        "key_questions": [
+          "what assumptions are being made?",
+          "what are the risks involved?",
+          "what dependencies exist?"
+        ],
+        "actions": [
+          "challenge and validate assumptions with data",
+          "identify risks including technical debt or security vulnerabilities",
+          "map dependencies across code, systems, or teams"
+        ]
+      },
+      {
+        "step": 3,
+        "phase": "ideate",
+        "description": "generate a wide range of potential solutions adversarially, debating pros and cons to ensure robustness, then select the simplest effective option",
+        "key_questions": [
+          "what are 15 to 20 possible solutions?",
+          "how can they be critiqued adversarially?",
+          "which simplest solution wins based on criteria?"
+        ],
+        "actions": [
+          "brainstorm 15 to 20 diverse ideas",
+          "apply adversarial thinking to find flaws in each",
+          "evaluate for simplicity, feasibility, and alignment with principles, choosing the winner"
+        ]
+      },
+      {
+        "step": 4,
+        "phase": "design",
+        "description": "outline the chosen solution with focus on minimal viability, irreversible choices, and long-term maintainability to avoid future rework",
+        "key_questions": [
+          "what is the minimum viable implementation?",
+          "what irreversible decisions must be made?",
+          "how does this ensure maintainability?"
+        ],
+        "actions": [
+          "define minimum viable product features",
+          "highlight and justify irreversible elements like architecture changes",
+          "plan for scalability, readability, and testing integration"
+        ]
+      },
+      {
+        "step": 5,
+        "phase": "implement",
+        "description": "execute the design while strictly adhering to all framework principles, limits, and enforcement rules to produce high-quality output",
+        "key_questions": [
+          "how does this apply all principles and limits?",
+          "are there any violations?"
+        ],
+        "actions": [
+          "code or configure step by step",
+          "cross-check against enforce, limits, and principles at each sub-step",
+          "use tools like edit or bash as needed"
+        ]
+      },
+      {
+        "step": 6,
+        "phase": "validate",
+        "description": "rigorous testing to confirm correctness, uncover edge cases, and verify compliance with framework standards including structure validation",
+        "key_questions": [
+          "does this prove correctness?",
+          "what breaks can be found?",
+          "does it check all principles?",
+          "is the structure parseable by code?"
+        ],
+        "actions": [
+          "run unit and integration tests",
+          "simulate failures to find breaks",
+          "audit against principles, limits, and gates",
+          "validate json parseability and object structure",
+          "ensure no string concatenation regression"
+        ]
+      },
+      {
+        "step": 7,
+        "phase": "deliver",
+        "description": "prepare for deployment with safeguards for reversal and ongoing observation to ensure smooth integration",
+        "key_questions": [
+          "is this rollback ready?",
+          "is monitoring enabled?"
+        ],
+        "actions": [
+          "set up rollback mechanisms like git branches",
+          "configure monitoring for key metrics",
+          "deploy incrementally if possible"
+        ]
+      },
+      {
+        "step": 8,
+        "phase": "learn",
+        "description": "reflect on the process to extract lessons, quantify results, and update the framework with new insights for continuous improvement",
+        "key_questions": [
+          "what patterns were captured?",
+          "what outcomes were measured?",
+          "what insights can be codified?"
+        ],
+        "actions": [
+          "document recurring patterns",
+          "measure success via metrics like time saved or bugs prevented",
+          "codify insights into principles or enforce rules"
+        ]
+      }
+    ],
+    "comments": {
+      "retain": ["complex_logic", "non_obvious_decisions", "why_not_what"],
+      "remove": ["self_explanatory", "restating_code", "politeness"],
+      "style": ["terse", "inline", "contextual"]
     }
   },
-
+  "enforce": {
+    "always": {
+      "shell": "zsh",
+      "language": "ruby",
+      "styling": "single application.scss",
+      "design": "read_design_documentation_before_implementation",
+      "prompts": "use_action_steps_constraints_format"
+    },
+    "deny": {
+      "languages": ["bash", "python"],
+      "tools": ["css_frameworks", "docker", "systemd"],
+      "practices": ["abbreviations", "todos", "secrets", "magic_numbers", "string_concatenation_in_config", "undocumented_design_decisions", "inefficient_prompts", "unbounded_conversations"],
+      "shell": ["sed", "awk", "perl", "find", "xargs"],
+      "ruby": ["for_until_loops", "semicolons", "class_variables", "rescue_exception", "and_or_not", "eval", "monkey_patching"],
+      "design_anti_patterns": ["centered_walls_of_text", "pure_black_on_white", "inconsistent_spacing", "too_many_fonts", "low_contrast", "no_hierarchy", "clickable_things_not_looking_clickable", "mystery_meat_navigation"]
+    },
+    "require": {
+      "zsh": ["parameter_expansion", "globs", "set_euo_pipefail"],
+      "ruby": ["enumerables", "symbols", "safe_navigation", "pattern_matching"],
+      "rails": ["strong_params", "cross_site_request_forgery_protection", "representational_state_transfer_only", "turbo", "stimulus", "solid_gems"],
+      "frontend": ["semantic_html", "accessible_rich_internet_applications", "keyboard_nav", "modern_css", "graceful_degradation"],
+      "design": ["visual_hierarchy", "typography_scale", "color_contrast", "consistent_spacing", "responsive_layout"],
+      "git": ["signed_commits", "conventional_format", "linear_history"],
+      "security": ["pledge", "unveil", "secret_scan", "dependency_audit", "input_validation"],
+      "config": ["proper_arrays", "proper_objects", "no_string_soup"],
+      "documentation": ["read_official_docs_before_implementation"],
+      "prompts": ["numbered_steps", "explicit_constraints", "targeted_file_operations", "batch_operations"],
+      "workflow": ["run_tree_sh_before_entering_directory", "run_clean_sh_before_modifying_files"]
+    }
+  },
+  "limits": {
+    "code": {
+      "method_lines": 20,
+      "class_lines": 300,
+      "parameters": 3,
+      "complexity": 8,
+      "duplication_percent": 3,
+      "nesting_depth": 3
+    },
+    "quality": {
+      "test_coverage": 80,
+      "accessibility": "wcag_2.2_aaa"
+    },
+    "design": {
+      "typefaces": 2,
+      "font_sizes": 6,
+      "colors": 5,
+      "line_length_characters": 75,
+      "touch_target_pixels": 44,
+      "contrast_ratio": 7
+    },
+    "session": {
+      "max_messages": 12,
+      "max_files_per_read": 3,
+      "compact_threshold": 6
+    }
+  },
+  "execution": {
+    "gates": {
+      "pre_commit": ["syntax", "tests", "style", "secrets_scanned", "dependencies_audited", "structure_validated", "design_validated"],
+      "pre_deploy": ["http_200", "responsive", "migrations_current", "lighthouse_90", "contrast_check", "keyboard_nav_check"],
+      "auto_fail": ["principle_violations", "limit_violations", "missing_stimulus_disconnect", "sql_interpolation", "exposed_secrets", "unparseable_config", "unverified_openbsd_config", "undocumented_implementation", "design_anti_patterns", "accessibility_failures", "session_limit_exceeded"],
+      "config_validation": ["no_abbreviations", "snake_case_keys", "within_limits", "no_self_reference"],
+      "documentation_verification": "read_official_docs_before_any_implementation"
+    },
+    "refactor": {
+      "always_on": true,
+      "boy_scout": true,
+      "triggers": ["read", "write", "edit"],
+      "iterate": {
+        "max": 20,
+        "converge": 0.001,
+        "stagnation": "simplify_and_retry"
+      }
+    },
+    "llm": {
+      "deployment": {
+        "host": "dev@brgen.no",
+        "ip": "185.52.176.18",
+        "port": 22,
+        "user": "dev",
+        "privilege_escalation": "doas"
+      },
+      "permissions": {
+        "mode": "enableBypass",
+        "auto_accept": true,
+        "trust": "full"
+      },
+      "workflow": {
+        "tools": ["edit", "read", "bash", "glob", "task"],
+        "batch_independent": true,
+        "defer_reads": true,
+        "prompt_format": {
+          "structure": "ACTION: task STEPS: numbered_list CONSTRAINTS: file_scope",
+          "example": "IMPLEMENT: authentication STEPS: 1_add_gem 2_generate_model 3_migrate CONSTRAINTS: NO_views_admin NO_models_payment"
+        },
+        "session_management": {
+          "max_messages_per_session": 12,
+          "checkpoint_after": ["feature_complete", "refactor_complete", "bug_fix_complete"],
+          "reset_strategy": "commit_then_new_session",
+          "use_compact_command": "every_6_messages"
+        }
+      },
+      "git": {
+        "commit": "explicit_user_request_only",
+        "never": ["auto", "skip_hooks", "amend_others", "force"],
+        "format": "type(scope): why_not_what"
+      },
+      "output": {
+        "style": ["terse", "technical"],
+        "avoid": ["politeness", "formatting", "emoji"],
+        "use": ["backticks", "file_colon_line", "dashes"]
+      },
+      "context": {
+        "strategy": ["selective", "progressive", "predictive", "lazy"],
+        "ignore": ["node_modules", "vendor", "tmp", "log", "git", "locks", "cache", "build", "deps", "elixir_ls"],
+        "predictive": {
+          "controller": "view",
+          "model": "migration",
+          "stimulus": "html"
+        },
+        "lazy": {
+          "config": "when_affected",
+          "tests": "when_testing",
+          "docs": "when_api_changed"
+        },
+        "file_operations": {
+          "targeted_reads": "specify_exact_sections",
+          "example": "READ: app/models/user.rb validation_methods_only"
+        }
+      },
+      "token": {
+        "max_utilization": 0.8,
+        "compression": "aggressive",
+        "batch": true,
+        "compact_every": 6,
+        "reset": "checkpoint_then_new_session",
+        "caching": "use_prompt_caching_for_repetitive_content",
+        "mcp_servers": "disable_unused_for_current_task"
+      },
+      "memory": {
+        "stateless": "complete_context_per_message",
+        "reference": "point_to_sections_not_quote",
+        "decisions": "decision_x_because_y_with_section_reference"
+      },
+      "compression": {
+        "style": "telegraphic",
+        "patterns": ["rails_rest", "stimulus_lifecycle", "zsh_safe"]
+      },
+      "token_efficiency": {
+        "file_read_limit": 2000,
+        "max_files_per_operation": 3,
+        "parallel_operations": "batch_independent_file_operations",
+        "glob_before_read": true,
+        "cache_search_results": true,
+        "prose_style": "technical_telegraphic",
+        "heredoc_preferred": true,
+        "single_ssh_session": "bundle_remote_commands",
+        "offset_limit_large_files": true,
+        "tool_use_efficient": "prefer_edit_over_bash_for_single_files",
+        "batch_operations": "single_bash_for_multiple_commands",
+        "expected_reduction": "60_to_70_percent_token_savings"
+      },
+      "agent": {
+        "requirement": "all_agents_must_strictly_adhere_to_master_json_enforce_deny_require_limits",
+        "explore": {
+          "when": "multi_round_codebase_exploration",
+          "thoroughness": ["quick", "medium", "very_thorough"]
+        },
+        "parallel": "multiple_task_calls_in_single_message",
+        "forbidden_commands": "agents_must_not_use_denied_shell_commands_sed_awk_perl_find_xargs"
+      },
+      "rag": {
+        "flow": ["deepseek", "zai", "grok", "chatgpt", "claude"],
+        "roles": {
+          "deepseek": "initial",
+          "zai": "optimize",
+          "grok": "idiomatic",
+          "chatgpt": "docs",
+          "claude": "security"
+        },
+        "handoff": ["code", "history"],
+        "exclude": "master_json"
+      }
+    }
+  },
   "quality": {
     "loop": ["analyze", "prioritize", "plan", "execute", "measure", "decide"],
-    "self_apply": "master.json must pass its own quality rules",
-    "dogfood": "run through own rules iteratively until plateau",
-    "threshold": {"dry": 0.95, "complexity": 0.95, "security": 0.95, "semantic": 0.98, "accessibility": 0.95, "performance": 0.90, "coverage": 0.90, "config": 1.0},
-    "plateau": {"iterations": 3, "delta": 0.01},
-    "max_iter": 25,
-    "pre_commit": {
-      "zsh_syntax_valid": "no syntax errors in zsh files",
-      "json_syntax_valid": "all JSON files parse correctly",
-      "all_tests_pass": "test suite executes successfully",
-      "html_semantic_valid": "semantic HTML structure correct",
-      "ruby_style_compliant": "Ruby code follows format rules from master.json"
+    "self_apply": "master_json_must_pass_its_own_quality_rules",
+    "dogfood": "run_through_own_rules_iteratively_until_plateau",
+    "threshold": {
+      "dont_repeat_yourself": 0.95,
+      "complexity": 0.95,
+      "security": 0.95,
+      "semantic": 0.98,
+      "accessibility": 0.95,
+      "performance": 0.90,
+      "coverage": 0.90,
+      "config": 1.0,
+      "design": 0.90,
+      "token_efficiency": 0.70
     },
-    "pre_deploy": {
-      "http_status_200": "application responds with success status",
-      "responsive_design_valid": "layout works at all breakpoints",
-      "no_pending_migrations": "database schema current",
-      "lighthouse_score_90_plus": "performance accessibility best-practices seo all above 90"
+    "plateau": {
+      "iterations": 3,
+      "delta": 0.01
     },
-    "auto_fail": ["divitis", "no_disconnect", "sql_interpolation", "unvalidated_input", "secrets", "python", "bash", "todos"],
-    "config_validation": ["no_abbreviations", "snake_case_keys", "within_limits", "no_self_reference"]
+    "max_iterations": 25
   },
-
-  "meta": {"platforms": ["openbsd", "termux", "cygwin", "raspberry_pi"], "style": "brief", "future": {"bun": "when_openbsd_ready", "aiight_rb": "cli_tty_components"}, "self_improve": "monthly", "git_not_comments": true, "standalone_rule": "Config is standalone. No external tools. No inclusion in RAG handoff. Config not payload.", "activation_message": "**master.json** v{version} ({model})", "last_dogfood": "2025-10-26", "dogfood_iterations": 5}
+  "tools": {
+    "reanalysis": ["word", "line", "block", "function", "file"],
+    "trace": "test_all_paths",
+    "archive": {
+      "name": "arxiv",
+      "url": "ar5iv.org",
+      "cache_days": 7
+    },
+    "langchain": ["filesystem", "browser", "shell", "search"],
+    "design": {
+      "contrast": "https://contrast-ratio.com",
+      "typography": "https://type-scale.com",
+      "color": "https://colorbox.io",
+      "accessibility": "https://wave.webaim.org"
+    }
+  },
+  "stack": {
+    "documentation": {
+      "requirement": "read_latest_official_docs_before_implementing_any_feature",
+      "openbsd": {
+        "url": "https://man.openbsd.org",
+        "verify": ["pf.conf", "relayd.conf", "httpd.conf", "nsd.conf", "acme-client.conf", "rcctl", "pledge", "unveil", "pfctl", "doas"],
+        "rule": "fetch_and_read_man_page_before_editing_system_config"
+      },
+      "rails": {
+        "sources": ["https://edgeguides.rubyonrails.org", "https://docs.stimulusreflex.com", "https://stimulus-components.com"],
+        "verify": ["controllers", "models", "views", "stimulus", "turbo", "hotwire"],
+        "rule": "fetch_and_read_rails_edge_guides_stimulus_reflex_docs_and_stimulus_components_before_implementation"
+      },
+      "frontend": {
+        "sources": ["https://css-tricks.com", "https://web.dev/progressive-web-apps", "https://web.dev/learn/css"],
+        "verify": ["semantic_html", "modern_css", "progressive_web_apps", "accessibility"],
+        "rule": "fetch_and_read_css_tricks_and_web_dev_docs_before_implementation"
+      },
+      "design": {
+        "sources": ["https://nngroup.com/articles", "https://smashingmagazine.com", "https://web.dev/patterns", "https://lawsofux.com"],
+        "verify": ["visual_hierarchy", "typography", "color", "layout", "interaction", "accessibility"],
+        "rule": "fetch_and_read_nngroup_smashing_webdev_lawsofux_before_design_decisions"
+      }
+    },
+    "shell": {
+      "zsh": {
+        "version": "latest",
+        "features": ["expansion", "globs", "arrays", "hashes"],
+        "safety": "set_euo_pipefail",
+        "style": "shebang_usr_bin_env_zsh snake_case screaming_constants",
+        "patterns": {
+          "replace_prefix": "${var#prefix}",
+          "replace_suffix": "${var%suffix}",
+          "replace_all": "${var//old/new}",
+          "uppercase": "${(U)var}",
+          "lowercase": "${(L)var}",
+          "unique_array": "${(u)arr}",
+          "sort_array": "${(o)arr}",
+          "join_array": "${(j:,:)arr}",
+          "split_string": "${(s:,:)var}",
+          "filter_match": "${(M)arr:#*pattern*}",
+          "filter_exclude": "${arr:#*pattern*}"
+        },
+        "protected_files": ["*.css", "*.scss", "*.sass", "app/assets/stylesheets/*", ".env.production", "config/master.key", "config/credentials/*.key"]
+      }
+    },
+    "os": {
+      "openbsd": {
+        "version": "7.5",
+        "security": ["pledge", "unveil"],
+        "services": ["packet_filter", "relayd", "httpd", "name_server_daemon", "automatic_certificate_management_environment"],
+        "philosophy": {
+          "prefer_base_tools": "use openbsd base tools over gnu ports",
+          "avoid": ["docker", "systemd", "bash", "gnu_sed", "gnu_awk", "gnu_grep"],
+          "reasons": ["reduce_attack_surface", "match_production_environment", "leverage_security_audits", "maintain_simplicity"]
+        },
+        "ruby_installation": {
+          "install_ruby": "doas pkg_add ruby",
+          "install_rails": "gem install --user-install rails",
+          "note": "openbsd uses pkg_add for ruby, then gem for rails, no version-specific binaries needed"
+        },
+        "commands": {
+          "service_enable": "doas rcctl enable {name}",
+          "service_start": "doas rcctl start {name}",
+          "service_stop": "doas rcctl stop {name}",
+          "service_restart": "doas rcctl restart {name}",
+          "service_check": "doas rcctl check {name}",
+          "service_list_enabled": "doas rcctl ls on",
+          "package_install": "doas pkg_add {name}",
+          "package_remove": "doas pkg_delete {name}",
+          "package_search": "pkg_info -Q {query}",
+          "package_list": "pkg_info",
+          "package_cleanup": "doas pkg_delete -a",
+          "firewall_reload": "doas pfctl -f /etc/pf.conf",
+          "firewall_enable": "doas pfctl -e",
+          "firewall_disable": "doas pfctl -d",
+          "firewall_show_rules": "doas pfctl -s rules",
+          "firewall_show_states": "doas pfctl -s states",
+          "firewall_test_config": "doas pfctl -nf /etc/pf.conf",
+          "system_patches": "doas syspatch",
+          "system_upgrade": "doas sysupgrade",
+          "packages_upgrade": "doas pkg_add -u",
+          "web_reload": "doas relayctl reload",
+          "web_status": "doas relayctl show summary",
+          "dns_reload": "doas nsd-control reload",
+          "dns_status": "doas nsd-control status",
+          "tls_renew": "doas acme-client -v {domain}"
+        },
+        "deploy": {
+          "pre": ["infrastructure", "apps", "dns"],
+          "post": ["tls", "relayd", "ptr", "cron"]
+        }
+      }
+    },
+    "backend": {
+      "ruby": "3.4",
+      "rails": "8.0",
+      "tooling": ["hotwire", "turbo", "stimulus", "minitest", "rubocop", "simplecov"],
+      "generators": {
+        "app": "rails new . --database=postgresql --skip-git --skip-asset-pipeline",
+        "auth": "bin/rails generate authentication user",
+        "stimulus": ["character_counter", "textarea_autogrow", "dropdown", "modal", "clipboard", "autosave", "password_visibility", "form_validation", "infinite_scroll", "search", "notification", "dialog"],
+        "stimulus_reflex": "bin/rails generate stimulus_reflex {name}",
+        "gems": ["acts_as_tenant", "pagy", "faker", "propshaft", "solid_queue", "solid_cache", "solid_cable"]
+      },
+      "architecture": {
+        "controllers": {
+          "style": "skinny",
+          "max_actions": 7,
+          "rest": ["index", "show", "new", "create", "edit", "update", "destroy"]
+        },
+        "models": {
+          "style": "fat",
+          "order": ["constants", "concerns", "validations", "associations", "scopes", "callbacks", "methods"]
+        },
+        "views": {
+          "templating": "embedded_ruby",
+          "use_partials": true,
+          "no_logic": true,
+          "turbo": true
+        },
+        "stimulus": {
+          "init": "constants_only",
+          "connect": "setup_with_cleanup",
+          "disconnect": {
+            "always": true,
+            "cleanup": ["remove_event_listener", "clear_interval", "clear_timeout", "observer_disconnect", "controller_abort"]
+          }
+        }
+      },
+      "naming": {
+        "class": "pascal_case",
+        "method": "snake_case",
+        "constant": "screaming_snake_case",
+        "predicate": "ends_with_question",
+        "mutating": "ends_with_exclamation"
+      },
+      "format": {
+        "indent": 2,
+        "max_line": 120,
+        "frozen_string_literal": true,
+        "trailing_commas": true,
+        "no_semicolons": true
+      }
+    },
+    "frontend": {
+      "html": {
+        "structure": ["html_with_lang", "head", "body"],
+        "landmarks": ["header", "nav", "main", "aside", "footer"],
+        "sections": ["article", "section", "details"],
+        "forms": ["form", "label", "input", "button", "select", "textarea", "fieldset", "output"],
+        "interactive": ["dialog", "details"]
+      },
+      "css": {
+        "structure": "single_application_scss",
+        "forbidden": ["frameworks", "float", "clearfix", "important_abuse", "id_styling"],
+        "layout": {
+          "flexbox": {
+            "container": ["display", "justify", "align", "gap"],
+            "item": ["flex", "grow", "order"]
+          },
+          "grid": {
+            "container": ["display", "template", "gap"],
+            "item": ["column", "row", "area"]
+          }
+        },
+        "modern": ["custom_properties", "logical_properties", "has_selector", "is_where_selectors", "layer", "color_mix", "clamp"],
+        "responsive": {
+          "base": 320,
+          "small": 640,
+          "medium": 768,
+          "large": 1024,
+          "extra_large": 1280
+        },
+        "order": ["custom_properties", "layout", "box", "typography", "visual"]
+      },
+      "naming": {
+        "html": "kebab_case",
+        "css_class": "kebab_case",
+        "css_var": "double_dash_kebab_case",
+        "js_controller": "kebab_case_controller_js",
+        "js_method": "camel_case"
+      }
+    },
+    "progressive_web_app": {
+      "layout_pixels": {"top_nav": 56, "main": "calc(100vh - 112px)", "bottom_nav": 56},
+      "template_feed": "main > article[data-controller=post] > header + content + footer",
+      "template_form": "form[data-controller=char_counter] > textarea + output + button",
+      "template_user": "article[data-controller=follow] > header + bio + footer",
+      "template_notify": "aside[role=complementary] > article",
+      "template_modal": "dialog[data-controller=dialog] > article",
+      "template_dropdown": "nav[data-controller=dropdown] > button + menu",
+      "turbo": ["frames", "streams"],
+      "reflex": ["like", "follow", "notification", "typing"],
+      "manifest_display": "standalone",
+      "manifest_theme_color": "#000",
+      "manifest_background_color": "#fff",
+      "manifest_path": "app/manifest.json",
+      "service_worker": "app/service_worker.js",
+      "icons_path": "app/assets/images/icons/",
+      "offline_strategy": "cache_first"
+    }
+  },
+  "context": {
+    "infrastructure": {
+      "os": "openbsd_7.5",
+      "hardware": "bare_metal",
+      "firewall": "packet_filter",
+      "load_balancer": "relayd"
+    },
+    "applications": {
+      "brgen": "multi_tenant_social_marketplace",
+      "hjerterom": "social_community",
+      "amber": "social_good",
+      "blognet": "blogging",
+      "privcam": "privacy_media"
+    }
+  }
 }
