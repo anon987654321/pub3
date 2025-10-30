@@ -9,7 +9,9 @@ BASE_DIR="/home/brgen"
 
 APP_DIR="${BASE_DIR}/app"
 BRGEN_IP="185.52.176.18"
-source "./__shared/@common.sh"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+source "${SCRIPT_DIR
 log "Adding Playlist features to existing Brgen app (User model from brgen.sh)"
 
 # Navigate to existing brgen app (created by brgen.sh with Devise already configured)
@@ -41,5 +43,4 @@ bin/rails generate model PlaylistTrack playlist:references track:references posi
 bin/rails generate scaffold Track title:string artist:string album:string duration:integer audio_file:attachment user:references
 bin/rails db:migrate
 log "Brgen Playlist features added to existing app."
-log "Run: bin/rails server -p 11006"
-
+log "Run: bin/rails server -p 11006"\/__shared\/@common.sh"}

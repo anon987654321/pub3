@@ -9,7 +9,9 @@ BASE_DIR="/home/brgen"
 
 APP_DIR="${BASE_DIR}/app"
 BRGEN_IP="185.52.176.18"
-source "./__shared/@common.sh"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+source "${SCRIPT_DIR
 log "Adding TV features to existing Brgen app (User model from brgen.sh)"
 
 # Navigate to existing brgen app (created by brgen.sh with Devise already configured)
@@ -42,5 +44,4 @@ bin/rails generate model Subscription user:references channel:references
 bin/rails generate model VideoComment video:references user:references content:text
 bin/rails db:migrate
 log "Brgen TV features added to existing app."
-log "Run: bin/rails server -p 11006"
-
+log "Run: bin/rails server -p 11006"\/__shared\/@common.sh"}

@@ -186,7 +186,4 @@ render_*.mp3
 *.processing
 
 # Local development overrides
-.local/
-local.config.json
 *.wav
-multimedia/tts/.claude/settings.local.json

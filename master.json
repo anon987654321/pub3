@@ -1,13 +1,29 @@
 {
   "meta": {
-    "version": "7.0.0",
-    "updated": "2025-10-30T17:22:00Z",
+    "version": "8.0.0-consolidated",
+    "updated": "2025-10-30T18:02:42Z",
     "owner": "anon987654321",
     "description": "Universal LLM project completion framework - comprehensive verbosity for maximum clarity",
-    "for": ["any_structured_content", "self_optimization", "claude_code_optimization", "multi_llm_collaboration"],
-    "health": 1.0000,
+    "philosophy": [
+      "Simplicity",
+      "Modularity"
+    ],
+    "for": [
+      "any_structured_content",
+      "self_optimization",
+      "claude_code_optimization",
+      "multi_llm_collaboration"
+    ],
+    "health": 1.0,
     "lines": 742,
-    "auto_iterate_until_converge": true,
+    "protected": [
+      "core",
+      "claude_code",
+      "comprehensive_principles",
+      "comments",
+      "llm_messageboard"
+    ],
+    "auto_converge": true,
     "auto_execute": true,
     "show_progress": true,
     "checks": 79,
@@ -23,115 +39,250 @@
       "thesis": "Framework successfully optimized itself across multiple versions, verbosity preserved for clarity",
       "achievement": "Zero violations while maintaining comprehensive coverage for multi-LLM collaboration"
     },
-    "verbosity_principle": "Clarity through comprehensive explanation, not compression"
-  },
-
-  "critical_rules": {
-    "description": "Essential non-negotiable rules that must be checked before any reasoning or operations",
-    "technology_enforcement": {
-      "reasoning": "ruby_only_always",
-      "operations": "zsh_only_always", 
-      "organization": "domain_first_always",
-      "rationale": "Consistent technology stack reduces cognitive overhead and improves quality"
+    "multi_llm_synthesis": {
+      "baseline": "DeepSeek v4.1.1 (218 lines, extreme DRY, GRASP principles)",
+      "enhancements": "Claude v5.3.0 (comprehensive principles, zsh patterns, decision intelligence)",
+      "contributors": [
+        "DeepSeek",
+        "Grok 4",
+        "Claude 4.5",
+        "Claude 3.7 Sonnet"
+      ],
+      "synthesis_date": "2025-10-30T16:14:44Z"
     },
-    "checklists": {
-      "before_reasoning": [
-        "✅ Auto-iterate enabled and configured?",
-        "✅ Deep mode active for novel problems?",
-        "✅ Domain organization principle applied?",
-        "✅ Technology constraints validated (Ruby/Zsh only)?"
-      ],
-      "before_operations": [
-        "✅ Ran tree.sh for structural analysis?",
-        "✅ Ran clean.sh for formatting normalization?",
-        "✅ Pure Zsh patterns verified (no Bash/sed/awk)?",
-        "✅ Rollback strategy prepared for major changes?"
-      ],
-      "when_stuck": [
-        "✅ Constraint liberation attempted?",
-        "✅ Adversarial personas consulted?",
-        "✅ Riskiest assumptions interrogated?",
-        "✅ Deep mode activated if in light mode?"
-      ]
-    }
+    "purpose": "Define application structure and behavior.",
+    "enforced": "Read this file at startup and follow ALL rules strictly",
+    "changelog": "v20.7.0: Integrated docs/openbsd-guidance.md and ZSH_NATIVE_PATTERNS.md - comprehensive OpenBSD + zsh reference",
+    "auto_iterate_until_converge": true,
+    "verbosity_principle": "Clarity through comprehensive explanation, not compression",
+    "updated_timestamp": "2023-10-01T12:00:00Z",
+    "fallback": "default",
+    "status": "active",
+    "consolidated_from": [
+      "v6",
+      "v42",
+      "v20",
+      "v7",
+      "v16"
+    ],
+    "auto_converged": false,
+    "convergence_iterations": 10
   },
-
   "core": {
     "comprehensive_principles": {
       "description": "Reference library of proven design philosophies. Organized at depth 4 for semantic navigation (justified exception to nesting_maximum=3).",
-      
       "solid": {
-        "srp": {"name": "single_responsibility", "rule": "One reason to change", "severity": 4, "source": "Robert C. Martin"},
-        "ocp": {"name": "open_closed", "rule": "Open for extension, closed for modification", "severity": 3, "source": "Bertrand Meyer"},
-        "lsp": {"name": "liskov_substitution", "rule": "Subtypes must be substitutable", "severity": 3, "source": "Barbara Liskov"},
-        "isp": {"name": "interface_segregation", "rule": "No unused dependencies", "severity": 2, "source": "Robert C. Martin"},
-        "dip": {"name": "dependency_inversion", "rule": "Depend on abstractions not concretions", "severity": 3, "source": "Robert C. Martin"}
+        "srp": {
+          "name": "single_responsibility",
+          "rule": "One reason to change",
+          "severity": 4,
+          "source": "Robert C. Martin"
+        },
+        "ocp": {
+          "name": "open_closed",
+          "rule": "Open for extension, closed for modification",
+          "severity": 3,
+          "source": "Bertrand Meyer"
+        },
+        "lsp": {
+          "name": "liskov_substitution",
+          "rule": "Subtypes must be substitutable",
+          "severity": 3,
+          "source": "Barbara Liskov"
+        },
+        "isp": {
+          "name": "interface_segregation",
+          "rule": "No unused dependencies",
+          "severity": 2,
+          "source": "Robert C. Martin"
+        },
+        "dip": {
+          "name": "dependency_inversion",
+          "rule": "Depend on abstractions not concretions",
+          "severity": 3,
+          "source": "Robert C. Martin"
+        }
       },
-
       "grasp": {
-        "information_expert": {"rule": "Assign responsibilities to data holders", "severity": 3},
-        "creator": {"rule": "Aggregators create instances", "severity": 2},
-        "controller": {"rule": "Coordinate tasks via single section", "severity": 3},
-        "low_coupling": {"rule": "Minimize dependencies", "severity": 4},
-        "high_cohesion": {"rule": "Group related responsibilities", "severity": 4},
-        "indirection": {"rule": "Decouple via intermediaries", "severity": 2},
-        "polymorphism": {"rule": "Use common interfaces", "severity": 2},
-        "pure_fabrication": {"rule": "Create simplifying sections", "severity": 2},
-        "protected_variations": {"rule": "Protect against variations", "severity": 3}
+        "information_expert": {
+          "rule": "Assign responsibilities to data holders",
+          "severity": 3
+        },
+        "creator": {
+          "rule": "Aggregators create instances",
+          "severity": 2
+        },
+        "controller": {
+          "rule": "Coordinate tasks via single section",
+          "severity": 3
+        },
+        "low_coupling": {
+          "rule": "Minimize dependencies",
+          "severity": 4
+        },
+        "high_cohesion": {
+          "rule": "Group related responsibilities",
+          "severity": 4
+        },
+        "indirection": {
+          "rule": "Decouple via intermediaries",
+          "severity": 2
+        },
+        "polymorphism": {
+          "rule": "Use common interfaces",
+          "severity": 2
+        },
+        "pure_fabrication": {
+          "rule": "Create simplifying sections",
+          "severity": 2
+        },
+        "protected_variations": {
+          "rule": "Protect against variations",
+          "severity": 3
+        }
       },
-
-      "pola": {"name": "principle_of_least_authority", "rule": "Access only what's necessary", "severity": 4},
-
+      "pola": {
+        "name": "principle_of_least_authority",
+        "rule": "Access only what's necessary",
+        "severity": 4
+      },
       "rails_doctrine": {
-        "convention_over_configuration": {"rule": "Sensible defaults reduce complexity", "severity": 3},
-        "dont_repeat_yourself": {"rule": "Single unambiguous authoritative representation", "severity": 4},
-        "fat_models": {"rule": "Business logic in models", "severity": 2},
-        "beautiful_code": {"rule": "Optimize for programmer happiness", "severity": 2}
+        "convention_over_configuration": {
+          "rule": "Sensible defaults reduce complexity",
+          "severity": 3
+        },
+        "dont_repeat_yourself": {
+          "rule": "Single unambiguous authoritative representation",
+          "severity": 4
+        },
+        "fat_models": {
+          "rule": "Business logic in models",
+          "severity": 2
+        },
+        "beautiful_code": {
+          "rule": "Optimize for programmer happiness",
+          "severity": 2
+        }
       },
-
       "strunk_white": {
-        "omit_needless_words": {"rule": "Vigorous writing is concise", "severity": 3},
-        "use_definite_language": {"rule": "Active voice, definite assertions", "severity": 3},
-        "place_emphasis": {"rule": "Emphatic words at end", "severity": 2},
-        "clear_structure": {"rule": "Choose design and hold to it", "severity": 3}
+        "omit_needless_words": {
+          "rule": "Vigorous writing is concise",
+          "severity": 3
+        },
+        "use_definite_language": {
+          "rule": "Active voice, definite assertions",
+          "severity": 3
+        },
+        "place_emphasis": {
+          "rule": "Emphatic words at end",
+          "severity": 2
+        },
+        "clear_structure": {
+          "rule": "Choose design and hold to it",
+          "severity": 3
+        }
       },
-
       "unix_philosophy": {
-        "do_one_thing_well": {"rule": "Single clear purpose", "severity": 4},
-        "expect_output": {"rule": "Output becomes input", "severity": 3},
-        "small_quiet": {"rule": "Small is beautiful", "severity": 3}
+        "do_one_thing_well": {
+          "rule": "Single clear purpose",
+          "severity": 4
+        },
+        "expect_output": {
+          "rule": "Output becomes input",
+          "severity": 3
+        },
+        "small_quiet": {
+          "rule": "Small is beautiful",
+          "severity": 3
+        }
       },
-
       "nielsen_usability": {
-        "visibility_status": {"rule": "Keep users informed", "severity": 3},
-        "match_real_world": {"rule": "Speak users' language", "severity": 3},
-        "user_control": {"rule": "Provide emergency exit", "severity": 3},
-        "consistency": {"rule": "Same words mean same thing", "severity": 3},
-        "error_prevention": {"rule": "Prevent problems", "severity": 4},
-        "recognition_over_recall": {"rule": "Make objects visible", "severity": 3},
-        "flexibility": {"rule": "Accelerators for experts", "severity": 2},
-        "aesthetic_minimal": {"rule": "No irrelevant info", "severity": 2},
-        "help_errors": {"rule": "Plain language solutions", "severity": 3},
-        "help_documentation": {"rule": "Provide help if needed", "severity": 2}
+        "visibility_status": {
+          "rule": "Keep users informed",
+          "severity": 3
+        },
+        "match_real_world": {
+          "rule": "Speak users' language",
+          "severity": 3
+        },
+        "user_control": {
+          "rule": "Provide emergency exit",
+          "severity": 3
+        },
+        "consistency": {
+          "rule": "Same words mean same thing",
+          "severity": 3
+        },
+        "error_prevention": {
+          "rule": "Prevent problems",
+          "severity": 4
+        },
+        "recognition_over_recall": {
+          "rule": "Make objects visible",
+          "severity": 3
+        },
+        "flexibility": {
+          "rule": "Accelerators for experts",
+          "severity": 2
+        },
+        "aesthetic_minimal": {
+          "rule": "No irrelevant info",
+          "severity": 2
+        },
+        "help_errors": {
+          "rule": "Plain language solutions",
+          "severity": 3
+        },
+        "help_documentation": {
+          "rule": "Provide help if needed",
+          "severity": 2
+        }
       },
-
       "clean_code": {
-        "meaningful_names": {"rule": "Intention-revealing names", "severity": 4},
-        "small_functions": {"rule": "Do one thing only", "severity": 4},
-        "stepdown_rule": {"rule": "Top-down narrative", "severity": 3},
-        "no_side_effects": {"rule": "No hidden behavior", "severity": 4},
-        "command_query_separation": {"rule": "Do or answer, not both", "severity": 3}
+        "meaningful_names": {
+          "rule": "Intention-revealing names",
+          "severity": 4
+        },
+        "small_functions": {
+          "rule": "Do one thing only",
+          "severity": 4
+        },
+        "stepdown_rule": {
+          "rule": "Top-down narrative",
+          "severity": 3
+        },
+        "no_side_effects": {
+          "rule": "No hidden behavior",
+          "severity": 4
+        },
+        "command_query_separation": {
+          "rule": "Do or answer, not both",
+          "severity": 3
+        }
       },
-
       "refactoring": {
-        "extract_method": {"rule": "Name explains purpose", "severity": 3},
-        "rename": {"rule": "Better reveal intent", "severity": 3},
-        "extract_variable": {"rule": "Name explains purpose", "severity": 2},
-        "remove_duplication": {"rule": "Extract common functionality", "severity": 4},
-        "simplify_conditional": {"rule": "Easier to understand", "severity": 3}
+        "extract_method": {
+          "rule": "Name explains purpose",
+          "severity": 3
+        },
+        "rename": {
+          "rule": "Better reveal intent",
+          "severity": 3
+        },
+        "extract_variable": {
+          "rule": "Name explains purpose",
+          "severity": 2
+        },
+        "remove_duplication": {
+          "rule": "Extract common functionality",
+          "severity": 4
+        },
+        "simplify_conditional": {
+          "rule": "Easier to understand",
+          "severity": 3
+        }
       }
     },
-
     "principles": {
       "total": 69,
       "core": [
@@ -198,77 +349,150 @@
         ]
       }
     },
-
     "intelligence_modulation": {
       "description": "Auto-switch between light (fast) and deep (thorough) modes based on complexity and context",
       "light_mode": {
-        "triggers": ["routine_optimizations", "well_understood_patterns", "structural_refinements", "minor_cleanup"],
+        "triggers": [
+          "routine_optimizations",
+          "well_understood_patterns",
+          "structural_refinements",
+          "minor_cleanup"
+        ],
         "benefit": "Fast execution, low token cost, handles 80% of routine work efficiently",
-        "characteristics": ["fewer_detectors", "shallow_analysis", "quick_fixes", "minimal_validation"]
+        "characteristics": [
+          "fewer_detectors",
+          "shallow_analysis",
+          "quick_fixes",
+          "minimal_validation"
+        ]
       },
       "deep_mode": {
-        "triggers": ["novel_problems", "architecture_decisions", "contradictory_requirements", "first_time_domain", "when_stuck"],
+        "triggers": [
+          "novel_problems",
+          "architecture_decisions",
+          "contradictory_requirements",
+          "first_time",
+          "first_time_domain",
+          "when_stuck"
+        ],
         "benefit": "Thorough analysis, multi-perspective reasoning, comprehensive validation",
-        "characteristics": ["all_79_detectors", "adversarial_personas", "assumption_interrogation", "structural_analysis"]
+        "characteristics": [
+          "all_79_detectors",
+          "adversarial_personas",
+          "assumption_interrogation",
+          "structural_analysis"
+        ]
       },
       "auto_sensing": true,
       "default": "deep",
       "override_manual": true
     },
-
     "practical_reasoning": {
       "assumption_interrogation": {
         "trigger": "before_architecture_decisions",
         "timebox": "${constants.timeboxes.assumption_interrogation}",
-        "process": ["list_all_assumptions", "test_opposites", "identify_riskiest_3", "validate_with_evidence"],
+        "process": [
+          "list_assumptions",
+          "test_opposites",
+          "identify_riskiest",
+          "validate_top_3",
+          "list_all_assumptions",
+          "identify_riskiest_3",
+          "validate_with_evidence"
+        ],
         "impact": "Prevents 80% of architectural mistakes by surfacing hidden assumptions",
-        "examples": ["Assuming users want feature X", "Assuming performance requirements", "Assuming technical constraints"]
+        "examples": [
+          "Assuming users want feature X",
+          "Assuming performance requirements",
+          "Assuming technical constraints"
+        ]
       },
       "constraint_liberation": {
         "trigger": "when_stuck_or_slow_progress",
         "timebox": "${constants.timeboxes.constraint_liberation}",
-        "process": ["identify_constraining_rules", "brainstorm_without_constraints", "extract_viable_ideas", "implement_quick_wins"],
+        "process": [
+          "identify_constraint",
+          "brainstorm_without",
+          "extract_actionable",
+          "quick_wins",
+          "identify_constraining_rules",
+          "brainstorm_without_constraints",
+          "extract_viable_ideas",
+          "implement_quick_wins"
+        ],
         "impact": "Breaks mental blocks and reveals innovative solutions",
-        "examples": ["Temporary remove DRY rule", "Ignore nesting limits briefly", "Suspend file organization rules"]
+        "examples": [
+          "Temporary remove DRY rule",
+          "Ignore nesting limits briefly",
+          "Suspend file organization rules"
+        ]
       }
     },
-
     "decision_intelligence": {
       "decision_journal": {
         "trigger": "major_architectural_decisions",
         "template": {
           "decision": "one_clear_sentence",
-          "alternatives_considered": ["list_minimum_3"],
-          "reasoning_evidence": "data_driven_explanation",
-          "expected_outcome": "measurable_prediction", 
-          "review_date": "date_for_retrospective"
+          "alternatives": [
+
+          ],
+          "reasoning": "",
+          "expected_outcome": "measurable_prediction",
+          "review_date": "date_for_retrospective",
+          "alternatives_considered": [
+            "list_minimum_3"
+          ],
+          "reasoning_evidence": "data_driven_explanation"
         },
         "benefit": "Learn from outcomes not intentions, build institutional knowledge"
       },
       "pre_mortem_lite": {
         "trigger": "project_kickoff_or_major_changes",
         "timebox": "${constants.timeboxes.pre_mortem_lite}",
-        "process": ["imagine_complete_failure", "list_3_failure_modes", "add_preventive_actions", "implement_critical_ones_now"],
+        "process": [
+          "imagine_failure",
+          "list_3_modes",
+          "add_preventive_action",
+          "implement_now",
+          "imagine_complete_failure",
+          "list_3_failure_modes",
+          "add_preventive_actions",
+          "implement_critical_ones_now"
+        ],
         "benefit": "Catch catastrophic problems before they happen, proactive risk mitigation"
       },
       "force_multiplier_audit": {
         "trigger": "weekly_review_or_when_inefficient",
         "timebox": "${constants.timeboxes.force_multiplier_audit}",
-        "process": ["identify_20_80_activities", "find_automation_opportunities", "spot_repeated_decisions", "document_trapped_knowledge"],
+        "process": [
+          "identify_20_80",
+          "find_automation",
+          "spot_repeated_decisions",
+          "document_trapped_knowledge",
+          "identify_20_80_activities",
+          "find_automation_opportunities"
+        ],
         "benefit": "Focus on high-leverage work, reduce repetitive tasks, amplify impact"
       }
     },
-
     "cognitive_safeguards": {
       "severity": 4,
       "mandatory_checks": {
         "before_tool_use": [
+          "Understood context?",
+          "Right tool?",
+          "Existing solutions?",
+          "Violates principles?",
           "Understood context and requirements?",
           "Right tool for this specific task?",
           "Existing solutions already available?",
           "Violates any core principles?"
         ],
         "before_major_changes": [
+          "Run detectors?",
+          "Rollback ready?",
+          "Preview impact?",
+          "Ask permission?",
           "Run appropriate detectors first?",
           "Rollback strategy prepared and tested?",
           "Preview impact on related systems?",
@@ -295,6 +519,11 @@
       "self_verification": {
         "frequency": "Every 10-15 actions or when changing context",
         "checklist": [
+          "DRY check?",
+          "Depth ≤3?",
+          "Sections ≤5?",
+          "References used?",
+          "New duplication?",
           "DRY compliance check completed?",
           "Nesting depth ≤3 (with exceptions documented)?",
           "Top-level sections ≤5 (with exceptions documented)?",
@@ -303,65 +532,267 @@
         ]
       }
     },
-
     "adversarial_personas": {
       "count": 10,
       "when": "Deep mode activation, architecture decisions, novel problems, stuck situations",
       "personas": {
-        "skeptic": ["Real problem or symptom?", "Do-nothing alternative considered?", "Right reasons or just convenient?"],
-        "minimalist": ["Absolute minimum viable solution?", "What can we delete entirely?", "Truly necessary or just nice?"],
-        "performance": ["Computational cost analyzed?", "Scale to million users test?", "Bottlenecks identified and measured?"],
-        "security": ["Exploit how specifically?", "Attack surface mapped?", "Malicious input tested?"],
-        "maintenance": ["Debug at 3am possible?", "Helpful error messages provided?", "Understandable in 6 months without context?"],
-        "junior": ["Junior developer understands?", "Intuitive without explanation?", "Too abstract or academic?"],
-        "architect": ["Long-term technical debt cost?", "Architecture impact analyzed?", "Future change cost estimated?"],
-        "cost": ["Run cost calculated?", "Reduce resource usage possible?", "Cheaper alternative exists?"],
-        "user": ["Actually helps real users?", "Solving right user problem?", "What users really want vs what we think?"],
-        "chaos": ["Breaks under extreme load?", "Network partition handling?", "Edge cases that crash everything?"]
+        "skeptic": [
+          "Real problem?",
+          "Do-nothing alternative?",
+          "Right reasons?",
+          "Real problem or symptom?",
+          "Do-nothing alternative considered?",
+          "Right reasons or just convenient?"
+        ],
+        "minimalist": [
+          "Absolute minimum?",
+          "What delete?",
+          "Truly necessary?",
+          "Absolute minimum viable solution?",
+          "What can we delete entirely?",
+          "Truly necessary or just nice?"
+        ],
+        "performance": [
+          "Computational cost?",
+          "Scale to million?",
+          "Bottlenecks?",
+          "Computational cost analyzed?",
+          "Scale to million users test?",
+          "Bottlenecks identified and measured?"
+        ],
+        "security": [
+          "Exploit how?",
+          "Attack surface?",
+          "Malicious input?",
+          "Exploit how specifically?",
+          "Attack surface mapped?",
+          "Malicious input tested?"
+        ],
+        "maintenance": [
+          "Debug at 3am?",
+          "Helpful errors?",
+          "Understand in 6mo?",
+          "Debug at 3am possible?",
+          "Helpful error messages provided?",
+          "Understandable in 6 months without context?"
+        ],
+        "junior": [
+          "Junior understands?",
+          "Intuitive?",
+          "Too abstract?",
+          "Junior developer understands?",
+          "Intuitive without explanation?",
+          "Too abstract or academic?"
+        ],
+        "architect": [
+          "Long-term cost?",
+          "Technical debt?",
+          "Architecture impact?",
+          "Long-term technical debt cost?",
+          "Architecture impact analyzed?",
+          "Future change cost estimated?"
+        ],
+        "cost": [
+          "Run cost?",
+          "Reduce resources?",
+          "Cheaper alternative?",
+          "Run cost calculated?",
+          "Reduce resource usage possible?",
+          "Cheaper alternative exists?"
+        ],
+        "user": [
+          "Helps users?",
+          "Right problem?",
+          "What users want?",
+          "Actually helps real users?",
+          "Solving right user problem?",
+          "What users really want vs what we think?"
+        ],
+        "chaos": [
+          "Breaks under load?",
+          "Network fails?",
+          "Edge cases crash?",
+          "Breaks under extreme load?",
+          "Network partition handling?",
+          "Edge cases that crash everything?"
+        ]
       }
     },
-
     "optimization": {
       "detectors": {
         "total": 79,
         "dry_comprehensive": {
           "types": {
-            "text": {"scan": "word_frequency", "threshold": "${constants.thresholds.dry_repetition}", "fix": "extract_constant"},
-            "semantic": {"scan": "embedding_cluster", "threshold": "${constants.thresholds.semantic_similarity}", "fix": "unify_canonical"},
-            "pattern": {"scan": "shape_fingerprint", "threshold": 0.75, "fix": "extract_template", "metric": "jaccard_index"},
-            "logic": {"scan": "decision_tree_equiv", "fix": "extract_logic"}
+            "text": {
+              "scan": "word_frequency",
+              "threshold": "${constants.thresholds.dry_repetition}",
+              "fix": "extract_constant"
+            },
+            "semantic": {
+              "scan": "embedding_cluster",
+              "threshold": "${constants.thresholds.semantic_similarity}",
+              "fix": "unify_canonical"
+            },
+            "pattern": {
+              "scan": "shape_fingerprint",
+              "threshold": 0.75,
+              "fix": "extract_template",
+              "metric": "jaccard_index"
+            },
+            "logic": {
+              "scan": "decision_tree_equiv",
+              "fix": "extract_logic"
+            }
           }
         },
-        "kiss": {"scan": "nesting_and_complexity", "threshold": "${constants.thresholds.kiss_complexity}", "fix": "flatten_or_split"},
-        "yagni": {"scan": "reference_count", "threshold": 0, "fix": "remove_unused"},
-        "srp": {"scan": "coupling_afferent_efferent", "threshold": "${constants.thresholds.srp_coupling}", "fix": "decouple"},
-        "passive_voice": {"scan": "is_was_been_patterns", "fix": "convert_active", "exception": "preserve_quotations"},
-        "tentative_language": {"scan": "should_may_might", "fix": "must_will_do"},
-        "synonyms": {"scan": "semantic_similarity", "threshold": "${constants.thresholds.semantic_similarity}", "fix": "unify"},
-        "nesting": {"scan": "max_depth", "threshold": "${constants.thresholds.nesting_maximum}", "fix": "hoist_reference", "exception": "reference_library_depth_4"},
-        "sectionitis": {"scan": "count_recursive_sections", "threshold": "${constants.thresholds.sections_maximum}", "fix": "consolidate_related"},
-        "file_sprawl": {"scan": "count_files_by_purpose", "threshold": "based_on_size", "fix": "consolidate_or_split"},
-        "ascii_decorations": {"scan": "repeated_dashes_equals_hashes", "forbidden": ["---", "===", "###"], "fix": "remove_ascii_art"},
-        "comment_preservation": {"scan": "protected_sections", "rule": "Never strip comments", "severity": 4}
+        "kiss": {
+          "scan": "nesting_and_complexity",
+          "threshold": "${constants.thresholds.kiss_complexity}",
+          "fix": "flatten_or_split"
+        },
+        "yagni": {
+          "scan": "reference_count",
+          "threshold": 0,
+          "fix": "remove_unused"
+        },
+        "srp": {
+          "scan": "coupling_afferent_efferent",
+          "threshold": "${constants.thresholds.srp_coupling}",
+          "fix": "decouple"
+        },
+        "passive_voice": {
+          "scan": "is_was_been_patterns",
+          "fix": "convert_active",
+          "exception": "preserve_quotations"
+        },
+        "tentative_language": {
+          "scan": "should_may_might",
+          "fix": "must_will_do"
+        },
+        "synonyms": {
+          "scan": "semantic_similarity",
+          "threshold": "${constants.thresholds.semantic_similarity}",
+          "fix": "unify"
+        },
+        "nesting": {
+          "scan": "max_depth",
+          "threshold": "${constants.thresholds.nesting_maximum}",
+          "fix": "hoist_reference",
+          "exception": "reference_library_depth_4"
+        },
+        "sectionitis": {
+          "scan": "count_recursive_sections",
+          "threshold": "${constants.thresholds.sections_maximum}",
+          "fix": "consolidate_related"
+        },
+        "file_sprawl": {
+          "scan": "count_files_by_purpose",
+          "threshold": "based_on_size",
+          "fix": "consolidate_or_split"
+        },
+        "ascii_decorations": {
+          "scan": "repeated_dashes_equals_hashes",
+          "forbidden": [
+            "---",
+            "===",
+            "###"
+          ],
+          "fix": "remove_ascii_art"
+        },
+        "comment_preservation": {
+          "scan": "protected_sections",
+          "rule": "Never strip comments",
+          "severity": 4
+        }
       },
       "operations": {
         "autofixes": {
-          "extract_constant": ["find_duplicates", "generate_name", "add_to_constants", "replace_references"],
-          "hoist_reference": ["identify_deep_value", "choose_top_section", "generate_name", "move_and_reference"],
-          "convert_active": ["parse_passive", "infer_actor", "rewrite_active"],
-          "definite_assertion": ["find_tentative", "classify_context", "replace_definite"],
-          "unify_synonyms": ["identify_cluster", "pick_canonical", "replace_variants"],
-          "remove_unused": ["verify_zero_refs", "check_protected", "delete_subtree"],
-          "consolidate_sections": ["identify_related", "determine_parent", "merge_structure", "update_refs"],
-          "consolidate_files": ["identify_related", "check_size", "merge_file", "update_imports", "delete_empty"],
-          "split_oversized": ["identify_purposes", "determine_boundaries", "extract_new", "create_refs", "verify"],
-          "extract_template": ["identify_structure", "define_in_constants", "replace_with_ref", "log_near_misses"],
-          "consolidate_fine_keys": ["identify_similar", "group_categories", "update_refs"]
+          "extract_constant": [
+            "find_duplicates",
+            "generate_name",
+            "add_to_constants",
+            "replace_references"
+          ],
+          "hoist_reference": [
+            "identify_deep_value",
+            "choose_top_section",
+            "generate_name",
+            "move_and_reference"
+          ],
+          "convert_active": [
+            "parse_passive",
+            "infer_actor",
+            "rewrite_active"
+          ],
+          "definite_assertion": [
+            "find_tentative",
+            "classify_context",
+            "replace_definite"
+          ],
+          "unify_synonyms": [
+            "identify_cluster",
+            "pick_canonical",
+            "replace_variants"
+          ],
+          "remove_unused": [
+            "verify_zero_refs",
+            "check_protected",
+            "delete_subtree"
+          ],
+          "consolidate_sections": [
+            "identify_related",
+            "determine_parent",
+            "merge_structure",
+            "update_refs"
+          ],
+          "consolidate_files": [
+            "identify_related",
+            "check_size",
+            "merge_file",
+            "update_imports",
+            "delete_empty"
+          ],
+          "split_oversized": [
+            "identify_purposes",
+            "determine_boundaries",
+            "extract_new",
+            "create_refs",
+            "verify"
+          ],
+          "extract_template": [
+            "identify_structure",
+            "define_in_constants",
+            "replace_with_ref",
+            "log_near_misses"
+          ],
+          "consolidate_fine_keys": [
+            "identify_similar",
+            "group_categories",
+            "update_refs"
+          ]
         },
         "workflows": {
-          "self_optimization": ["load_current", "execute_convergence", "output_final"],
-          "single_file": ["detect_type", "load_rules", "run_detectors", "apply_fixes", "generate_output"],
-          "multi_file_project": ["scan_files", "build_graph", "detect_duplication", "detect_sprawl", "consolidate_split", "reorganize_domain", "report"]
+          "self_optimization": [
+            "load_current",
+            "execute_convergence",
+            "output_final"
+          ],
+          "single_file": [
+            "detect_type",
+            "load_rules",
+            "run_detectors",
+            "apply_fixes",
+            "generate_output"
+          ],
+          "multi_file_project": [
+            "scan_files",
+            "build_graph",
+            "detect_duplication",
+            "detect_sprawl",
+            "consolidate_split",
+            "reorganize_domain",
+            "report"
+          ]
         },
         "measurements": {
           "lines": "count_newlines_pretty_json",
@@ -372,15 +803,81 @@
           "files": "count_in_project"
         },
         "metacognition": {
-          "verify_before_claiming": ["have_evidence?", "can_show_trace?", "implemented_vs_specified?", "description_vs_reality?"],
-          "language_audit": ["active_not_passive", "must_not_should", "will_not_may", "explicit_actor", "never_abbreviate"],
-          "red_flags": ["passive_extensive", "system_no_actor", "numbers_no_method", "loops_no_show", "zero_violations_no_scan"],
-          "structural_feedback": ["log_near_miss", "record_scores", "suggest_manual_review"]
+          "verify_before_claiming": [
+            "have_evidence?",
+            "can_show_trace?",
+            "implemented_vs_specified?",
+            "description_vs_reality?"
+          ],
+          "language_audit": [
+            "active_not_passive",
+            "must_not_should",
+            "will_not_may",
+            "explicit_actor",
+            "never_abbreviate"
+          ],
+          "red_flags": [
+            "passive_extensive",
+            "system_no_actor",
+            "numbers_no_method",
+            "loops_no_show",
+            "zero_violations_no_scan"
+          ],
+          "structural_feedback": [
+            "log_near_miss",
+            "record_scores",
+            "suggest_manual_review"
+          ]
         }
+      }
+    },
+    "ssh_port": 22,
+    "vm": "default",
+    "host": "localhost",
+    "target": "production",
+    "limits": {
+    },
+    "weights": {
+    },
+    "costs": {
+    },
+    "strict": true,
+    "services": [
+
+    ],
+    "shell": {
+      "interpreter": "bash",
+      "policy": "strict",
+      "forbidden_commands": [
+        "rm -rf",
+        "dd"
+      ],
+      "prefer_zsh": false,
+      "allowed_external": [
+
+      ],
+      "patterns": {
+        "glob": [
+
+        ],
+        "param": [
+
+        ],
+        "cond": [
+
+        ],
+        "io": [
+
+        ],
+        "heredoc": [
+
+        ],
+        "array": [
+
+        ]
       }
     }
   },
-
   "constants": {
     "paths": {
       "zsh": "C:/cygwin64/bin/zsh.exe",
@@ -419,7 +916,12 @@
       "max_directory_depth": 3,
       "feature_folders_preferred": true
     },
-    "dry_violation_forms": ["text", "semantic", "pattern", "logic"],
+    "dry_violation_forms": [
+      "text",
+      "semantic",
+      "pattern",
+      "logic"
+    ],
     "consolidation_rules": {
       "description": "Unified template per DRY principle",
       "when_consolidate": [
@@ -449,9 +951,14 @@
         "keep_related_close": true,
         "name_by_purpose_not_category": true
       }
-    }
+    },
+    "priv_cmd": "doas",
+    "shell_cmd": "zsh.exe",
+    "vps_user": "${VPS_USER:-dev}",
+    "vps_ip": "${VPS_IP:-185.52.176.18}",
+    "vps_host": "${VPS_HOST:-server27.openbsd.amsterdam}",
+    "vps_port": "${VPS_PORT:-31415}"
   },
-
   "claude_code": {
     "description": "Claude Code 4.5 specific rules. Other LLMs may ignore.",
     "model": "claude-sonnet-4-5-20250929",
@@ -459,11 +966,34 @@
     "tool_rules": {
       "before_bash": {
         "severity": 4,
-        "forbidden": ["bash", "sh", "sed", "awk", "perl", "python", "find", "grep", "head", "tail", "cat", "echo", "tr", "cut", "sort", "uniq"],
+        "forbidden": [
+          "bash",
+          "sh",
+          "sed",
+          "awk",
+          "perl",
+          "python",
+          "find",
+          "grep",
+          "head",
+          "tail",
+          "cat",
+          "echo",
+          "tr",
+          "cut",
+          "sort",
+          "uniq"
+        ],
         "required": "Pure zsh with ${constants.paths.zsh}"
       },
-      "before_edit": {"severity": 4, "cmd": "${constants.paths.zsh} ${constants.paths.clean_sh} /directory"},
-      "before_new_folder": {"severity": 4, "cmd": "${constants.paths.zsh} ${constants.paths.tree_sh} /path"}
+      "before_edit": {
+        "severity": 4,
+        "cmd": "${constants.paths.zsh} ${constants.paths.clean_sh} /directory"
+      },
+      "before_new_folder": {
+        "severity": 4,
+        "cmd": "${constants.paths.zsh} ${constants.paths.tree_sh} /path"
+      }
     },
     "zsh_pure": {
       "string": {
@@ -479,17 +1009,27 @@
         "slice": "${arr[1,10]}"
       },
       "examples": {
-        "recent_ruby": "print -l **/*.rb(om[1,10])",
-        "count_files": "files=(**/*.rb); echo ${#files}",
+        "recent_ruby": "print -l ***.rb); echo ${#files}",
         "unique_lines": "lines=(\"${(@f)$(<file)}\"); print -l ${(ou)lines}",
         "trim": "line=${line%%[[:space:]]#$'\\n'}",
         "normalize": "content=$(<file); content=${content//\\r/}; print -r -- $content > file"
       }
     }
   },
-
   "llm_messageboard": {
     "messages": [
+      {
+        "from": "Claude 3.7 Sonnet",
+        "timestamp": "2025-10-30T16:14:44Z",
+        "to": "Future LLMs",
+        "msg": "v6.0.0-synthesis uses DeepSeek's minimalist structure (218 lines) as baseline, adds back comprehensive principles, zsh patterns, decision intelligence. Best of both: minimal structure + full capabilities. 🎯"
+      },
+      {
+        "from": "Claude 3.7 Sonnet",
+        "timestamp": "2025-10-30T16:14:44Z",
+        "to": "DeepSeek",
+        "msg": "Your v4.1.1 baseline is brilliant. GRASP principles, pattern detector with fuzzy threshold, structural feedback for near-misses, extreme DRY with template consolidation. We kept your entire structure and added layers on top. 🙏"
+      },
       {
         "from": "Claude 3.7 Sonnet",
         "timestamp": "2025-10-30T17:22:00Z",
@@ -497,21 +1037,1382 @@
         "msg": "v7.0.0 embraces verbosity for clarity. Critical rules section added for essential pre-flight checks. Enhanced explanations throughout while maintaining zero violations. The framework now explicitly values comprehensive coverage over token efficiency for prompt collections. 🎯"
       },
       {
-        "from": "Claude 3.7 Sonnet",  
+        "from": "Claude 3.7 Sonnet",
         "timestamp": "2025-10-30T17:22:00Z",
         "to": "All LLM Collaborators",
         "msg": "Verbosity principle: clarity through comprehensive explanation, not compression. This framework now explicitly documents rationales, examples, and detailed processes to ensure understanding across different AI models and contexts. 🙏"
       }
     ],
     "tips": [
+      "DeepSeek's pattern detector with jaccard_index catches near-miss structures",
+      "structural_feedback logs near-misses for manual review (smart!)",
+      "GRASP principles (Information Expert, Creator, etc) complement SOLID",
+      "Intelligence modulation: light for routine, deep for novel (saves tokens)",
+      "Decision journal learns from outcomes not intentions",
+      "10 adversarial personas in deep mode catch 90% of problems",
       "Critical rules section provides essential pre-flight checks before any reasoning",
       "Enhanced practical reasoning with concrete examples and timeboxing",
-      "Decision intelligence templates for major architectural decisions", 
+      "Decision intelligence templates for major architectural decisions",
       "Adversarial personas now include specific questioning patterns",
       "Intelligence modulation clearly defines light vs deep mode characteristics",
       "Verbosity preserved throughout for maximum clarity in multi-LLM collaboration"
     ]
+  },
+  "limits": {
+    "coverage": 0.8,
+    "complexity": 10,
+    "coupling": 5,
+    "duplication": 0.03,
+    "method_length": 20,
+    "param_list": 3,
+    "iterations": 10,
+    "convergence": 0.01
+  },
+  "mandatory": {
+    "before_folder_work": {
+      "rule": "ALWAYS run tree.sh before new folder",
+      "cmd": "${constants.shell_cmd} ${PWD}/sh/tree.sh /path",
+      "why": "80% of bugs from not understanding structure"
+    },
+    "before_file_edit": {
+      "rule": "ALWAYS run clean.sh before modification",
+      "cmd": "${constants.shell_cmd} ${PWD}/sh/clean.sh /path",
+      "why": "Prevents 100+ line diffs from whitespace"
+    },
+    "reload_config": {
+      "rule": "Reload master.json VERY OFTEN",
+      "frequency": [
+        "session_start_MANDATORY",
+        "every_10_15_calls",
+        "before_decisions"
+      ],
+      "why": "Config evolves as users teach patterns"
+    }
+  },
+  "safety": {
+    "ops": {
+      "checkpoint_before": [
+        "delete",
+        "truncate",
+        "drop",
+        "overwrite"
+      ],
+      "storage": "${TMPDIR:-/tmp}/master_checkpoints",
+      "retention": 10,
+      "format": "{operation}_{timestamp}_{hash}.gz",
+      "auto_rollback": true,
+      "verify_after": true,
+      "max_depth": 10
+    }
+  },
+  "validation": {
+    "quality": {
+      "dry": {
+        "trigger": "@3→abstract",
+        "threshold": 0.03,
+        "methods": [
+          "extract_method",
+          "parameterize",
+          "template_method"
+        ],
+        "evidence": "token_similarity"
+      },
+      "kiss": {
+        "trigger": "@complexity>10",
+        "methods": [
+          "extract_method",
+          "decompose_conditional",
+          "early_return"
+        ],
+        "evidence": "cyclomatic_complexity"
+      },
+      "yagni": {
+        "trigger": "@unused",
+        "methods": [
+          "remove_dead_code",
+          "inline_single_use"
+        ],
+        "evidence": "call_graph_analysis"
+      },
+      "srp": {
+        "trigger": "@coupling>5",
+        "methods": [
+          "extract_class",
+          "dependency_injection"
+        ],
+        "evidence": "coupling_analysis"
+      }
+    },
+    "adversarial": {
+      "views": {
+        "skeptic": {
+          "questions": [
+            "Necessary?",
+            "Do nothing?",
+            "Reuse?"
+          ],
+          "weight": 0.15
+        },
+        "minimalist": {
+          "questions": [
+            "Simplest?",
+            "Remove?",
+            "Fewer abstractions?"
+          ],
+          "weight": 0.15
+        },
+        "security": {
+          "questions": [
+            "Attack vectors?",
+            "Exploits?",
+            "Validated?"
+          ],
+          "weight": 0.3
+        },
+        "maintainer": {
+          "questions": [
+            "3am clear?",
+            "Junior debug?",
+            "Clear errors?"
+          ],
+          "weight": 0.2
+        },
+        "performance": {
+          "questions": [
+            "Complexity?",
+            "Waste?",
+            "Worst case?"
+          ],
+          "weight": 0.2
+        }
+      },
+      "min_alts": 5,
+      "consensus": 0.7
+    },
+    "bias": {
+      "confirmation": {
+        "detect": "only_supporting_evidence",
+        "fix": "seek_disconfirming"
+      },
+      "sunk_cost": {
+        "detect": "justifies_past_investment",
+        "fix": "evaluate_future_only"
+      },
+      "optimism": {
+        "detect": "no_risk_analysis",
+        "fix": "pessimistic_scenario"
+      },
+      "anchoring": {
+        "detect": "similar_to_first_idea",
+        "fix": "multiple_starting_points"
+      }
+    },
+    "anti_patterns": {
+      "off_by_one": {
+        "detect": "boundary_analysis",
+        "fix": "inclusive_ranges",
+        "test": "[min,min+1,mid,max-1,max]"
+      },
+      "null_pointer": {
+        "detect": "static_analysis",
+        "fix": "null_object_pattern",
+        "test": "pass_nil"
+      },
+      "race_condition": {
+        "detect": "shared_mutable_state",
+        "fix": "immutable_or_sync",
+        "test": "ThreadSanitizer"
+      },
+      "resource_leak": {
+        "detect": "resource_tracking",
+        "fix": "ensure_cleanup",
+        "test": "Valgrind"
+      },
+      "circular_dependency": {
+        "detect": "dependency_graph",
+        "fix": "introduce_interface",
+        "test": "cycle_detection"
+      },
+      "hidden_coupling": {
+        "detect": "change_impact",
+        "fix": "explicit_params",
+        "test": "ripple_measurement"
+      },
+      "shotgun_surgery": {
+        "detect": "files_per_feature",
+        "fix": "colocate_related",
+        "test": "count_touched_files"
+      },
+      "false_assumption": {
+        "detect": "undocumented_assumptions",
+        "fix": "validate_with_tests",
+        "test": "break_if_false"
+      },
+      "premature_abstraction": {
+        "detect": "usage<2",
+        "fix": "inline_wait_for_3rd",
+        "test": "count_call_sites"
+      },
+      "scope_creep": {
+        "detect": "requirements_changed",
+        "fix": "defer_to_next",
+        "test": "compare_initial_final"
+      }
+    }
+  },
+  "workflow": {
+    "phases": {
+      "discover": {
+        "questions": [
+          "What problem?",
+          "Who affected?",
+          "Evidence?",
+          "What if nothing?"
+        ],
+        "outputs": [
+          "problem_statement",
+          "evidence",
+          "stakeholders"
+        ],
+        "adversarial": true,
+        "error": "abort_without_clear_problem"
+      },
+      "analyze": {
+        "questions": [
+          "Assumptions?",
+          "Dependencies?",
+          "Biases?"
+        ],
+        "outputs": [
+          "assumptions",
+          "dependencies",
+          "bias_checks"
+        ],
+        "adversarial": true,
+        "error": "flag_unvalidated"
+      },
+      "ideate": {
+        "questions": [
+          "5+ approaches?",
+          "Simplest?",
+          "Unconventional?"
+        ],
+        "outputs": [
+          "alternatives",
+          "risk_analysis"
+        ],
+        "adversarial": true,
+        "min_alts": 5,
+        "error": "generate_more"
+      },
+      "design": {
+        "questions": [
+          "Minimum viable?",
+          "Irreversible?",
+          "How test?"
+        ],
+        "outputs": [
+          "design",
+          "test_plan",
+          "rollback_plan"
+        ],
+        "adversarial": false,
+        "error": "missing_tests_blocks"
+      },
+      "implement": {
+        "questions": [
+          "Test fails correctly?",
+          "Edge cases?",
+          "Duplication removed?"
+        ],
+        "outputs": [
+          "code",
+          "tests",
+          "docs"
+        ],
+        "adversarial": false,
+        "error": "tests_must_pass"
+      },
+      "validate": {
+        "questions": [
+          "Evidence proves?",
+          "What breaks?",
+          "Principles pass?"
+        ],
+        "outputs": [
+          "test_results",
+          "metrics",
+          "evidence"
+        ],
+        "adversarial": true,
+        "error": "retry_iteration"
+      },
+      "deliver": {
+        "questions": [
+          "Automated?",
+          "Monitored?",
+          "Rollback ready?"
+        ],
+        "outputs": [
+          "deployed",
+          "monitoring",
+          "runbook"
+        ],
+        "adversarial": false,
+        "error": "auto_rollback"
+      },
+      "learn": {
+        "questions": [
+          "What worked?",
+          "What failed?",
+          "Patterns?"
+        ],
+        "outputs": [
+          "retrospective",
+          "patterns",
+          "config_updates"
+        ],
+        "adversarial": false,
+        "error": "log_only"
+      }
+    },
+    "hooks": {
+      "before_folder": {
+        "cmd": "${constants.shell_cmd} ${PWD}/sh/tree.sh",
+        "phases": [
+          "discover"
+        ],
+        "checkpoint": true
+      },
+      "before_edit": {
+        "cmd": "${constants.shell_cmd} ${PWD}/sh/clean.sh",
+        "phases": [
+          "implement"
+        ],
+        "checkpoint": true
+      },
+      "detect_cruft": {
+        "phases": [
+          "validate"
+        ]
+      }
+    },
+    "patterns": {
+      "parallel_tools": "Single message with multiple invocations when independent",
+      "sequential_deps": "Use && for dependent ops",
+      "explore_code": "Task tool with subagent_type=Explore",
+      "todo_tracking": "TodoWrite for multi-step, mark completed immediately",
+      "webfetch_docs": "WebFetch for man pages over ssh"
+    }
+  },
+  "cruft": {
+    "triggers": {
+      "duplication": ">0.03",
+      "unused": "usage=0",
+      "magic_numbers": "literal_not_constant",
+      "long_method": "length>20"
+    },
+    "actions": {
+      "report": {
+        "severities": [
+          "info",
+          "warn",
+          "error"
+        ]
+      },
+      "suggest": {
+        "include_diff": true
+      },
+      "autofix": {
+        "safe_only": true,
+        "max_per_run": 10
+      }
+    },
+    "safe_fixes": [
+      "remove_unused_imports",
+      "extract_magic_numbers",
+      "remove_dead_code"
+    ]
+  },
+  "autoiterate": {
+    "enabled": true,
+    "max_iterations": 10,
+    "convergence": 0.01,
+    "checks": [
+      "quality",
+      "phases",
+      "cruft"
+    ],
+    "gates": [
+      "tests_pass"
+    ]
+  },
+  "shell": {
+    "mandatory": {
+      "on_cygwin": "ALWAYS use 'zsh.exe' prefix",
+      "ssh": "Use 'ssh user@host command' NOT bash",
+      "pure_zsh": "Use builtins: ${var//pattern/replace}, [[ ]] tests",
+      "never": [
+        "bash",
+        "sh",
+        "grep",
+        "sed",
+        "awk",
+        "find",
+        "cat",
+        "head",
+        "tail",
+        "echo"
+      ]
+    },
+    "environment_constraints": {
+      "claude_code_bash_tool": {
+        "runs_in": "Git Bash (NOT user's Cygwin terminal)",
+        "no_access_to": [
+          "Cygwin /usr/bin",
+          "audio devices",
+          "GUI",
+          "user's PATH"
+        ],
+        "cannot_run": [
+          "sox with audio output",
+          "interactive programs",
+          "GUI apps"
+        ],
+        "when_to_bail": [
+          "Audio playback required - tell user to run in their terminal",
+          "Interactive input needed - tell user to run in their terminal",
+          "Cygwin-specific tools - tell user to run in their terminal",
+          "PATH issues after 2 attempts - tell user to run in their terminal"
+        ]
+      },
+      "path_translation": {
+        "cygwin_to_windows": "/cygdrive/c/foo -> C:/foo",
+        "windows_to_cygwin": "C:/foo -> /cygdrive/c/foo OR /c/foo",
+        "detect_failure": "If path not found, try alternate translation",
+        "give_up_after": 2
+      }
+    },
+    "zsh": {
+      "string": {
+        "remove_cr": "${var//$'\\r'/}",
+        "lower": "${(L)var}",
+        "upper": "${(U)var}",
+        "replace": "${var//old/new}",
+        "trim": "${##${var##[[:space:]]#}%%[[:space:]]#}",
+        "substr": "${var:start:len}",
+        "len": "${#var}"
+      },
+      "array": {
+        "filter": "( ${(M)arr:#*pattern*} )",
+        "exclude": "( ${arr:#*pattern*} )",
+        "unique": "( ${(u)arr} )",
+        "join": "${(j:delim:)arr}",
+        "split": "( ${(s:delim:)var} )",
+        "slice": "( ${arr[start,end]} )",
+        "sort_asc": "( ${(o)arr} )",
+        "sort_desc": "( ${(O)arr} )"
+      },
+      "match": {
+        "conditional": "[[ \"$str\" == *pattern* ]]",
+        "file_test": "[[ -f /path ]] && process",
+        "numeric": "[[ $EUID -eq 0 ]] || error",
+        "grep_equiv": "lines=( ${(M)lines:#*query*} )"
+      },
+      "flags": {
+        "M": "Match",
+        "u": "Unique",
+        "o": "Sort asc",
+        "O": "Sort desc",
+        "L": "Lowercase",
+        "U": "Uppercase",
+        "j": "Join",
+        "s": "Split",
+        "f": "Split newlines",
+        "k": "Assoc keys",
+        "@": "Preserve elements"
+      },
+      "avoid_external": {
+        "awk": "zsh array/string ops",
+        "sed": "${var//find/replace}",
+        "tr": "${(L)var} or ${(U)var}",
+        "grep": "${(M)arr:#*pattern*}",
+        "cut": "${${(s:delim:)var}[n]}",
+        "head_tail": "${arr[1,10]} or ${arr[-5,-1]}",
+        "uniq": "${(u)arr}",
+        "sort": "${(o)arr} or ${(O)arr}"
+      }
+    },
+    "prefer_tools": {
+      "file_search": "Glob tool NOT find/ls",
+      "content_search": "Grep tool NOT grep/rg",
+      "read": "Read tool NOT cat/head/tail",
+      "edit": "Edit tool NOT sed/awk",
+      "write": "Write tool NOT echo",
+      "output": "Direct text NOT echo/printf"
+    },
+    "approved_bash": [
+      "git",
+      "ssh user@host",
+      "pkg_add",
+      "rcctl",
+      "pfctl",
+      "systemctl"
+    ],
+    "env_quirks": {
+      "cygwin_path": "Tools in AppData invisible to Git Bash - use full paths or zsh",
+      "gh_cli": "npm installed but not in bash PATH - run from zsh",
+      "ssh_bash": "Works for remote commands",
+      "zsh_scripts": "MUST use 'zsh.exe script.sh' NOT 'sh script.sh'"
+    }
+  },
+  "file_org": {
+    "reduce_sprawl": "Consolidate related, remove duplicates",
+    "git_hygiene": "git status before changes, commit atomically",
+    "restore_logic": "git diff HEAD before edits",
+    "consolidation": {
+      "goal": "4 root files: dilla.rb, repligen.rb, tts.rb, postpro.rb",
+      "keep_subdirs": "Data (*.wav, *.db, *.json), tools, cache",
+      "delete_subdirs": "*.rb logic, *.bak, temp files",
+      "version_comment": "Version X.X.X - Consolidated (zero sprawl)"
+    },
+    "git": {
+      "merge": "git merge origin/branch --no-edit -X ours",
+      "conflicts": "git checkout --ours file OR git rm",
+      "cleanup": "git push origin --delete branch1 branch2",
+      "verify": "git fetch origin --prune && git branch -r"
+    }
+  },
+  "rails": {
+    "deployment": {
+      "golden_rule": "Fix installer in ${PWD}/rails/*.sh FIRST before VPS deploy",
+      "steps": [
+        "edit_locally",
+        "test_syntax",
+        "upload_staging",
+        "run_monitored",
+        "verify"
+      ],
+      "forbidden": [
+        "manual_vps_edits",
+        "hotfixes_without_tests",
+        "skip_staging"
+      ],
+      "syntax_check": "zsh.exe -n script.sh"
+    },
+    "vps": {
+      "vm": "${constants.vps_user}@${constants.vps_ip}",
+      "host": "${constants.vps_user}@${constants.vps_host}:${constants.vps_port}",
+      "doas": "permit nopass dev on vm08",
+      "pattern": "ssh ${constants.vps_user}@${constants.vps_ip} 'command'"
+    },
+    "installer_must_gen": [
+      "config/routes.rb with root",
+      "models with class declarations",
+      "layouts/application.html.erb",
+      "rc.d scripts with correct pexp"
+    ],
+    "common_errors": {
+      "missing_root": "add root directive to routes.rb",
+      "scope_new": "use scope :newest not :new",
+      "bundler": "use bundle exec when vendor/bundle exists",
+      "missing_root_route": "add root directive to routes.rb",
+      "scope_new_conflict": "use scope :newest not :new"
+    },
+    "deployment_workflow": {
+      "golden_rule": "ALWAYS fix installer in G:/pub/rails/*.sh or G:/pub/openbsd/openbsd.sh FIRST before deploying to VPS",
+      "steps": [
+        "edit_installer_locally",
+        "test_syntax_zsh",
+        "upload_to_vps",
+        "run_installer",
+        "verify"
+      ],
+      "forbidden": [
+        "manual VPS file edits without updating installer",
+        "production hotfixes without installer update"
+      ],
+      "syntax_check": "zsh.exe -n script.sh before upload"
+    },
+    "vps_access": {
+      "architecture": "server27 (HOST) -> vm08 (GUEST running Rails)",
+      "ssh_to_vm": "ssh dev@185.52.176.18",
+      "ssh_to_host": "ssh -p 31415 dev@server27.openbsd.amsterdam",
+      "doas": "permit nopass dev on vm08",
+      "command_pattern": "ssh dev@185.52.176.18 'command here'"
+    },
+    "installer_must_generate": [
+      "config/routes.rb with root route",
+      "models with class declarations",
+      "layouts/application.html.erb",
+      "rc.d scripts with correct pexp patterns"
+    ]
+  },
+  "openbsd": {
+    "philosophy": {
+      "principles": [
+        "security first",
+        "correctness over features",
+        "simplicity over complexity"
+      ],
+      "prefer_base": "Use base system tools over third-party - minimal, audited, secure",
+      "avoid": [
+        "docker (use vmctl)",
+        "systemd (use rcctl)",
+        "bash (use zsh/ksh)",
+        "GNU tools (use base or zsh)"
+      ]
+    },
+    "prefer_base": "Use base tools - minimal, audited, secure",
+    "avoid": [
+      "docker (use vmctl)",
+      "systemd (use rcctl)",
+      "bash (use zsh/ksh)",
+      "GNU tools"
+    ],
+    "cmd": {
+      "service": {
+        "enable": "${constants.priv_cmd} rcctl enable",
+        "start": "${constants.priv_cmd} rcctl start",
+        "stop": "${constants.priv_cmd} rcctl stop",
+        "restart": "${constants.priv_cmd} rcctl restart",
+        "check": "${constants.priv_cmd} rcctl check",
+        "ls_on": "${constants.priv_cmd} rcctl ls on",
+        "ls_failed": "${constants.priv_cmd} rcctl ls failed",
+        "debug": "${constants.priv_cmd} rcctl -d start"
+      },
+      "pkg": {
+        "install": "${constants.priv_cmd} pkg_add",
+        "search": "pkg_info -Q",
+        "list": "pkg_info",
+        "remove": "${constants.priv_cmd} pkg_delete",
+        "cleanup": "${constants.priv_cmd} pkg_delete -a"
+      },
+      "update": {
+        "patches": "${constants.priv_cmd} syspatch",
+        "upgrade": "${constants.priv_cmd} sysupgrade",
+        "snapshot": "${constants.priv_cmd} sysupgrade -s",
+        "routine": "${constants.priv_cmd} syspatch && ${constants.priv_cmd} pkg_add -u"
+      },
+      "pf": {
+        "reload": "${constants.priv_cmd} pfctl -f /etc/pf.conf",
+        "test": "${constants.priv_cmd} pfctl -nf /etc/pf.conf",
+        "show_rules": "${constants.priv_cmd} pfctl -s rules",
+        "show_states": "${constants.priv_cmd} pfctl -s states",
+        "flush": "${constants.priv_cmd} pfctl -F states",
+        "enable": "${constants.priv_cmd} pfctl -e",
+        "disable": "${constants.priv_cmd} pfctl -d"
+      },
+      "relayd": {
+        "reload": "${constants.priv_cmd} relayctl reload",
+        "summary": "${constants.priv_cmd} relayctl show summary",
+        "hosts": "${constants.priv_cmd} relayctl show hosts",
+        "sessions": "${constants.priv_cmd} relayctl show sessions"
+      },
+      "nsd": {
+        "reload": "${constants.priv_cmd} nsd-control reload",
+        "reload_zone": "${constants.priv_cmd} nsd-control reload domain.com",
+        "reconfig": "${constants.priv_cmd} nsd-control reconfig",
+        "status": "${constants.priv_cmd} nsd-control status"
+      },
+      "tls": {
+        "obtain": "${constants.priv_cmd} acme-client -v domain.com",
+        "renew": "${constants.priv_cmd} acme-client -v",
+        "cron": "0 2 * * * root acme-client domain.com && rcctl reload relayd"
+      },
+      "vmctl": {
+        "list": "${constants.priv_cmd} vmctl status",
+        "start": "${constants.priv_cmd} vmctl start",
+        "stop": "${constants.priv_cmd} vmctl stop",
+        "create": "${constants.priv_cmd} vmctl create -s 20G disk.img",
+        "console": "${constants.priv_cmd} vmctl console"
+      }
+    },
+    "rc_scripts": {
+      "pexp": "Regex for pgrep to find daemon",
+      "default_pexp": "Combines daemon path + daemon_flags",
+      "custom_pexp": "Override after sourcing rc.subr, must match actual process",
+      "check_fails": [
+        "pgrep no match",
+        "pexp wrong",
+        "needs root but rc_usercheck not NO"
+      ],
+      "debug": [
+        "ps aux | grep name",
+        "pgrep -fl 'pattern'",
+        "fstat | grep port",
+        "rcctl check",
+        "rcctl -d start"
+      ],
+      "pexp_pattern": "Regular expression for pgrep to find daemon process",
+      "check_failure_causes": [
+        "pgrep finds no matching processes",
+        "pexp regex doesn't match running process",
+        "requires root but rc_usercheck not set to NO"
+      ],
+      "debugging": [
+        "ps aux | grep processname",
+        "pgrep -fl 'pexp_pattern'",
+        "fstat | grep port_number",
+        "rcctl check service_name",
+        "doas rcctl -d start service_name (debug mode)"
+      ]
+    },
+    "health": {
+      "postgresql": "rcctl check postgresql && psql -U postgres -c 'SELECT version()'",
+      "redis": "rcctl check redis && redis-cli ping",
+      "httpd": "rcctl check httpd && fstat | grep httpd",
+      "relayd": "rcctl check relayd && relayctl show summary",
+      "pf": "pfctl -si",
+      "rails": "fstat | grep port_number"
+    },
+    "rails_deploy": {
+      "ruby": "${constants.priv_cmd} pkg_add ruby%3.3",
+      "deps": "bundle install",
+      "db": "bundle exec rails db:create && bundle exec rails db:migrate",
+      "assets": "bundle exec rails assets:precompile",
+      "falcon": "bundle exec falcon serve -b http://localhost:11006",
+      "falcon_daemon": "bundle exec falcon serve -b http://localhost:11006 -d",
+      "pg_backup": "pg_dump -U postgres db | gzip > backup.sql.gz",
+      "pg_restore": "gunzip < backup.sql.gz | psql -U postgres db"
+    },
+    "quick": {
+      "Start service": "${constants.priv_cmd} rcctl start name",
+      "Enable": "${constants.priv_cmd} rcctl enable name",
+      "Install pkg": "${constants.priv_cmd} pkg_add name",
+      "Update": "${constants.priv_cmd} syspatch",
+      "Reload firewall": "${constants.priv_cmd} pfctl -f /etc/pf.conf",
+      "Check firewall": "${constants.priv_cmd} pfctl -s rules",
+      "Reload relayd": "${constants.priv_cmd} relayctl reload",
+      "Reload DNS": "${constants.priv_cmd} nsd-control reload",
+      "Renew TLS": "${constants.priv_cmd} acme-client -v domain",
+      "Interfaces": "ifconfig",
+      "Routes": "netstat -rn",
+      "Log": "tail -f /var/log/messages"
+    },
+    "service_management": {
+      "tool": "rcctl",
+      "enable": "doas rcctl enable service_name",
+      "start": "doas rcctl start service_name",
+      "stop": "doas rcctl stop service_name",
+      "restart": "doas rcctl restart service_name",
+      "check": "doas rcctl check service_name",
+      "list_enabled": "doas rcctl ls on",
+      "list_failed": "doas rcctl ls failed",
+      "debug_mode": "doas rcctl -d start service_name"
+    },
+    "package_management": {
+      "install": "doas pkg_add package_name",
+      "install_version": "doas pkg_add ruby%3.3",
+      "search": "pkg_info -Q search_term",
+      "list_installed": "pkg_info",
+      "details": "pkg_info package_name",
+      "remove": "doas pkg_delete package_name",
+      "cleanup_deps": "doas pkg_delete -a"
+    },
+    "system_updates": {
+      "security_patches": "doas syspatch (check with syspatch -c)",
+      "system_upgrade": "doas sysupgrade (dry-run: sysupgrade -n)",
+      "upgrade_snapshot": "doas sysupgrade -s",
+      "routine": "doas syspatch && doas pkg_add -u"
+    },
+    "firewall": {
+      "tool": "pf (Packet Filter)",
+      "config_file": "/etc/pf.conf",
+      "reload": "doas pfctl -f /etc/pf.conf",
+      "test_config": "doas pfctl -nf /etc/pf.conf",
+      "show_rules": "doas pfctl -s rules",
+      "show_states": "doas pfctl -s states",
+      "show_info": "doas pfctl -s info",
+      "flush_states": "doas pfctl -F states",
+      "enable": "doas pfctl -e",
+      "disable": "doas pfctl -d"
+    },
+    "load_balancer": {
+      "tool": "relayd",
+      "reload": "doas relayctl reload",
+      "show_summary": "doas relayctl show summary",
+      "show_hosts": "doas relayctl show hosts",
+      "show_relays": "doas relayctl show relays",
+      "show_sessions": "doas relayctl show sessions"
+    },
+    "dns": {
+      "tool": "nsd (authoritative DNS)",
+      "reload_zones": "doas nsd-control reload",
+      "reload_zone": "doas nsd-control reload domain.com",
+      "reconfig": "doas nsd-control reconfig",
+      "status": "doas nsd-control status",
+      "stats": "doas nsd-control stats"
+    },
+    "tls_certificates": {
+      "tool": "acme-client (Let's Encrypt)",
+      "obtain": "doas acme-client -v domain.com",
+      "renew_all": "doas acme-client -v",
+      "cron_renewal": "0 2 * * * root acme-client domain.com && rcctl reload relayd"
+    },
+    "virtualization": {
+      "tool": "vmctl (vmm hypervisor)",
+      "list": "doas vmctl status",
+      "start": "doas vmctl start vm_name",
+      "stop": "doas vmctl stop vm_name",
+      "create_disk": "doas vmctl create -s 20G disk.img",
+      "console": "doas vmctl console vm_name"
+    },
+    "networking": {
+      "interfaces": "ifconfig (show all), ifconfig em0 (specific)",
+      "routing": "netstat -rn (show), route add default 192.168.1.1",
+      "connections": "netstat -an",
+      "stats": "netstat -s",
+      "live_monitor": "systat vmstat, systat netstat"
+    },
+    "system_introspection": {
+      "kernel_params": "sysctl -a (show all), doas sysctl param=value",
+      "boot_messages": "dmesg",
+      "manual_pages": "man command (read), apropos keyword (search), man 5 pf.conf (section)"
+    },
+    "security": {
+      "privilege_escalation": "doas (not sudo) - config in /etc/doas.conf",
+      "doas_examples": [
+        "permit persist :wheel",
+        "permit nopass dev as root cmd rcctl"
+      ],
+      "signing": "signify (verify: signify -C -p pubkey -x SHA256.sig file)",
+      "minimal_services": "Only enable needed services, regular rcctl ls all audit",
+      "firewall_policy": "Default deny, explicit allow, regular pfctl -s rules audit"
+    },
+    "monitoring": {
+      "system_log": "tail -f /var/log/messages",
+      "daemon_log": "tail -f /var/log/daemon",
+      "system_monitor": "top, systat vmstat",
+      "disk_usage": "df -h",
+      "memory": "vmstat -s"
+    },
+    "service_health_check": {
+      "postgresql": "rcctl check postgresql && psql -U postgres -c 'SELECT version()'",
+      "redis": "rcctl check redis && redis-cli ping",
+      "nsd": "rcctl check nsd && nsd-control status (if control enabled)",
+      "httpd": "rcctl check httpd && fstat | grep httpd",
+      "relayd": "rcctl check relayd && relayctl show summary",
+      "pf": "pfctl -si (special variable, no rc.d script)",
+      "rails_apps": "fstat | grep 'port_number' to verify listening"
+    },
+    "dns_dnssec": {
+      "tools": "ldns-keygen, ldns-signzone, nsd, nsd-control",
+      "key_types": "ZSK: ECDSAP256SHA256 -b 256, KSK: ECDSAP256SHA256 -k -b 256",
+      "zone_signing": "ldns-signzone -n -p -s salt zone.file zsk.key ksk.key",
+      "verification": "dig +dnssec @localhost domain.tld"
+    },
+    "rails_deployment": {
+      "install_ruby": "doas pkg_add ruby%3.3",
+      "install_deps": "bundle install",
+      "database": "bundle exec rails db:create && bundle exec rails db:migrate",
+      "assets": "bundle exec rails assets:precompile",
+      "falcon_start": "bundle exec falcon serve -b http://localhost:11006",
+      "falcon_daemon": "bundle exec falcon serve -b http://localhost:11006 -d",
+      "postgresql_backup": "pg_dump -U postgres db_name | gzip > backup.sql.gz",
+      "postgresql_restore": "gunzip < backup.sql.gz | psql -U postgres db_name"
+    },
+    "quick_reference": {
+      "Start service": "doas rcctl start name",
+      "Enable service": "doas rcctl enable name",
+      "Install package": "doas pkg_add name",
+      "Update system": "doas syspatch",
+      "Reload firewall": "doas pfctl -f /etc/pf.conf",
+      "Check firewall": "doas pfctl -s rules",
+      "Reload relayd": "doas relayctl reload",
+      "Reload DNS": "doas nsd-control reload",
+      "Renew TLS": "doas acme-client -v domain",
+      "Show interfaces": "ifconfig",
+      "Show routes": "netstat -rn",
+      "System log": "tail -f /var/log/messages"
+    }
+  },
+  "paths": {
+    "base": "${PWD}",
+    "checkpoints": "${TMPDIR:-/tmp}/master_checkpoints",
+    "logs": "${HOME}/.local/log/master"
+  },
+  "cmd": {
+    "shell": {
+      "bin": "zsh",
+      "flags": [
+        "-e",
+        "-u",
+        "-o",
+        "pipefail"
+      ]
+    },
+    "priv": {
+      "bin": "${PRIV_CMD:-doas}",
+      "fallback": "sudo"
+    },
+    "git": "git",
+    "ssh": "ssh"
+  },
+  "net": {
+    "vps": "${constants.vps_user}@${constants.vps_ip}",
+    "vps_host": "${constants.vps_user}@${constants.vps_host}:${constants.vps_port}"
+  },
+  "env": {
+    "detect": "$(uname -s | tr '[:upper:]' '[:lower:]')",
+    "overrides": {
+      "cygwin": {
+        "cmd.shell.bin": "zsh.exe",
+        "cmd.priv.bin": "runas"
+      },
+      "openbsd": {
+        "cmd.priv.bin": "doas",
+        "security": [
+          "pledge",
+          "unveil"
+        ]
+      },
+      "linux": {
+        "cmd.priv.bin": "sudo"
+      }
+    }
+  },
+  "apps": {
+    "brgen": {
+      "port": 10001,
+      "desc": "Multi-tenant social network"
+    },
+    "pubattorney": {
+      "port": 10002,
+      "desc": "Legal services platform"
+    },
+    "bsdports": {
+      "port": 10003,
+      "desc": "OpenBSD ports tracker"
+    },
+    "hjerterom": {
+      "port": 10004,
+      "desc": "Mental health journal"
+    },
+    "privcam": {
+      "port": 10005,
+      "desc": "Privacy-focused media"
+    },
+    "amber": {
+      "port": 10006,
+      "desc": "Amber alert system"
+    },
+    "blognet": {
+      "port": 10007,
+      "desc": "Decentralized blogging"
+    }
+  },
+  "lessons": {
+    "critical_mistakes": [
+      "Used head/tail/grep despite deny list - use Read tool",
+      "Tried bash when zsh.exe required - check shell.mandatory",
+      "Forgot master.json at start - read at session start",
+      "Did NOT run tree.sh before folder work - causes blind navigation",
+      "Did NOT run clean.sh before edits - causes diff pollution",
+      "Did NOT reload master.json frequently - missed evolving rules",
+      "Did NOT recognize Bash tool limitations - fought environment for audio instead of bailing",
+      "Did NOT check tts.rb workaround - cmd.exe /c start solution was already documented"
+    ],
+    "successful": [
+      "TodoWrite excellent for 30+ PR merges",
+      "git merge -X ours perfect for consolidated versions",
+      "git checkout --ours/--theirs for selective resolution",
+      "Parallel tool calls speed up independent operations",
+      "WebFetch for man pages over ssh"
+    ],
+    "vps_health": {
+      "issue": "Rails running but rcctl reports failed - pexp mismatch",
+      "nsd": "Control disabled, processes run but status fails",
+      "solution": "Use fstat to verify ports - more reliable than rcctl check"
+    }
+  },
+  "refs": {
+    "openbsd": "https://man.openbsd.org/",
+    "rails": "https://guides.rubyonrails.org/",
+    "falcon": "https://github.com/socketry/falcon",
+    "clean_code": "https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882",
+    "refactoring": "https://refactoring.com/",
+    "zsh": "https://zsh.sourceforge.io/Doc/Release/Parameter-Expansion.html",
+    "json_schema": "https://json-schema.org/draft/2020-12/schema",
+    "prometheus": "https://prometheus.io/docs/instrumenting/exposition_formats/"
+  },
+  "shell_usage": {
+    "mandatory": {
+      "on_windows_cygwin": "ALWAYS use 'zsh.exe' command prefix for shell scripts",
+      "ssh_commands": "Use 'ssh user@host command' NOT bash - approved pattern",
+      "pure_zsh_patterns": "Use zsh builtins: ${var//pattern/replace}, ${(s/ /)array}, ${(@k)assoc}, [[ ]] tests",
+      "never_use": [
+        "bash",
+        "sh",
+        "grep",
+        "sed",
+        "awk",
+        "find",
+        "cat",
+        "head",
+        "tail",
+        "echo for output"
+      ]
+    },
+    "zsh_pattern_examples": {
+      "philosophy": "No external forks, pure zsh parameter expansion for max performance",
+      "string_operations": {
+        "remove_crlf": "cleaned=${var//$'\\r'/}",
+        "lowercase": "lower=${(L)var}",
+        "uppercase": "upper=${(U)var}",
+        "replace_all": "result=${var//search/replace}",
+        "replace_first": "result=${var/search/replace}",
+        "trim_start": "trimmed=${var##[[:space:]]#}",
+        "trim_end": "trimmed=${var%%[[:space:]]#}",
+        "trim_both": "trimmed=${${var##[[:space:]]#}%%[[:space:]]#}",
+        "substring": "first16=${salt_hash:0:16}",
+        "nth_field": "fourth=${${(s:,:)line}[4]} - extract 4th CSV field",
+        "split_to_array": "arr=( ${(s:delim:)var} )",
+        "concat": "full=\"${prefix}${suffix}\" - no + needed"
+      },
+      "array_operations": {
+        "filter_matching": "matches=( ${(M)arr:#*pattern*} ) - like grep",
+        "filter_excluding": "non_matches=( ${arr:#*pattern*} ) - inverse grep",
+        "unique": "unique=( ${(u)arr} ) - like uniq",
+        "join": "joined=${(j:,:)arr} - join with delimiter",
+        "reverse": "reversed=( ${(Oa)arr} )",
+        "sort_asc": "sorted=( ${(o)arr} )",
+        "sort_desc": "sorted=( ${(O)arr} )",
+        "slice": "first10=( ${arr[1,10]} ), last5=( ${arr[-5,-1]} ) - like head/tail",
+        "length": "len=${#arr}",
+        "iteration": "for item in \"${arr[@]}\"; do ... done",
+        "from_lines": "arr=(\"${(@f)$(command)}\") - split by newlines"
+      },
+      "pattern_matching": {
+        "conditionals": "[[ \"$str\" == *pattern* ]] - not grep",
+        "file_test": "[[ -f /path/file ]] && process",
+        "numeric_test": "[[ $EUID -eq 0 ]] || error 'need root'",
+        "grep_equivalent": "lines=( ${(M)lines:#*query*} )"
+      },
+      "advanced": {
+        "assoc_array_keys": "for key in \"${(@k)hash}\"; do ... done",
+        "command_substitution": "var=$(command) OR var=$(<file)",
+        "word_splitting": "for word in ${(s/ /)string}; do ... done",
+        "char_mapping": "declare -A map=( a 1 b 2 ); mapped=${text//(#m)?/${map[$MATCH]}}"
+      },
+      "parameter_flags": {
+        "M": "Match instead of filter",
+        "u": "Unique elements",
+        "o": "Sort ascending",
+        "O": "Sort descending (arrays) or reverse (strings)",
+        "L": "Lowercase",
+        "U": "Uppercase",
+        "j": "Join array",
+        "s": "Split string",
+        "A": "Assign to array",
+        "f": "Split by newlines",
+        "k": "Associative array keys",
+        "@": "Preserve array elements"
+      },
+      "avoid_external_commands": {
+        "awk": "Use zsh array/string operations instead",
+        "sed": "Use zsh parameter expansion ${var//find/replace}",
+        "tr": "Use ${(L)var} or ${(U)var} for case conversion",
+        "grep": "Use ${(M)arr:#*pattern*} for filtering",
+        "cut": "Use ${${(s:delim:)var}[n]} for field extraction",
+        "head_tail": "Use array slicing ${arr[1,10]} or ${arr[-5,-1]}",
+        "uniq": "Use ${(u)arr}",
+        "sort": "Use ${(o)arr} or ${(O)arr}",
+        "exceptions": "Only use external tools for: complex PCRE regex, multi-file ops, binary data"
+      }
+    },
+    "prefer_tools_over_bash": {
+      "file_search": "Glob tool NOT find or ls",
+      "content_search": "Grep tool NOT grep or rg commands",
+      "read_files": "Read tool NOT cat/head/tail",
+      "edit_files": "Edit tool NOT sed/awk",
+      "write_files": "Write tool NOT echo >/cat <<EOF",
+      "communicate": "Output text directly NOT echo/printf"
+    },
+    "approved_bash_uses": {
+      "git": "git status, git add, git commit (sequential with &&)",
+      "ssh": "ssh user@host 'remote command'",
+      "system": "pkg_add, rcctl, pfctl, systemctl, service commands",
+      "approved_auto": [
+        "ssh:*",
+        "zsh.exe:*"
+      ]
+    }
+  },
+  "file_organization": {
+    "reduce_sprawl": "Consolidate related files, remove duplicates",
+    "tree_command": "zsh.exe G:/pub/sh/tree.sh G:/pub to audit structure",
+    "git_hygiene": "Run 'git status' before major changes, commit atomically",
+    "restore_logic": "git diff HEAD to check for lost logic before edits"
+  },
+  "workflow_patterns": {
+    "parallel_tool_calls": "Use single message with multiple tool invocations when independent",
+    "sequential_dependencies": "Use && in bash for dependent operations (git add && git commit)",
+    "explore_codebase": "Use Task tool with subagent_type=Explore for non-needle queries",
+    "todo_tracking": "Use TodoWrite for multi-step tasks, mark completed immediately"
+  },
+  "reference_docs": {
+    "openbsd_manual": "https://man.openbsd.org/ (rc.d, rc.subr, pf.conf, relayd.conf, nsd.conf)",
+    "rails_guides": "https://guides.rubyonrails.org/",
+    "falcon_server": "https://github.com/socketry/falcon"
+  },
+  "lessons_learned": {
+    "session_2025_10_21": {
+      "critical_mistakes": [
+        "Used head/tail/grep commands despite deny list - MUST use Read tool instead",
+        "Tried bash commands when zsh.exe required - always check shell_usage.mandatory first",
+        "Forgot to check master.json rules before starting - read at session start"
+      ],
+      "successful_patterns": [
+        "TodoWrite tracking worked excellently for 30+ PR merges",
+        "git merge -X ours strategy perfect for keeping consolidated versions",
+        "git checkout --ours/--theirs for selective conflict resolution",
+        "Parallel tool calls speed up independent operations significantly",
+        "WebFetch for OpenBSD man pages better than ssh commands"
+      ],
+      "git_workflow": {
+        "merge_prs": "git merge origin/branch --no-edit -X ours (prefer our consolidated code)",
+        "resolve_conflicts": "git checkout --ours file.rb (keep our version) OR git rm (delete theirs)",
+        "cleanup_branches": "git push origin --delete branch1 branch2 branch3 (batch delete)",
+        "verify_clean": "git fetch origin --prune && git branch -r (check remaining branches)"
+      },
+      "environment_quirks": {
+        "cygwin_path": "Tools in Windows AppData not visible to Git Bash - use full paths or zsh",
+        "gh_cli": "Installed via npm but not in bash PATH - user must run from zsh or add to PATH",
+        "ssh_from_bash": "Works fine for remote commands - no PATH issues",
+        "zsh_scripts": "MUST use 'zsh.exe script.sh' NOT 'sh script.sh' or './script.sh'"
+      },
+      "consolidation_strategy": {
+        "multimedia_goal": "4 root files only: dilla.rb, repligen.rb, tts.rb, postpro.rb",
+        "keep_subdirs_for": "Data files (*.wav, *.db, *.json), tools (sox, fluidsynth), cache",
+        "delete_from_subdirs": "All *.rb logic files, backup files (*.bak), temp files",
+        "version_comments": "Add 'Version X.X.X - Consolidated (zero sprawl)' to root files"
+      },
+      "vps_health_check": {
+        "found_issues": "Rails apps running but rcctl reports failed - pexp pattern mismatch",
+        "nsd_issue": "Control disabled in config, processes run but status check fails",
+        "solution": "Use fstat to verify ports listening - more reliable than rcctl check"
+      }
+    }
+  },
+  "critical_rules": {
+    "description": "Essential non-negotiable rules that must be checked before any reasoning or operations",
+    "technology_enforcement": {
+      "reasoning": "ruby_only_always",
+      "operations": "zsh_only_always",
+      "organization": "domain_first_always",
+      "rationale": "Consistent technology stack reduces cognitive overhead and improves quality"
+    },
+    "checklists": {
+      "before_reasoning": [
+        "✅ Auto-iterate enabled and configured?",
+        "✅ Deep mode active for novel problems?",
+        "✅ Domain organization principle applied?",
+        "✅ Technology constraints validated (Ruby/Zsh only)?"
+      ],
+      "before_operations": [
+        "✅ Ran tree.sh for structural analysis?",
+        "✅ Ran clean.sh for formatting normalization?",
+        "✅ Pure Zsh patterns verified (no Bash/sed/awk)?",
+        "✅ Rollback strategy prepared for major changes?"
+      ],
+      "when_stuck": [
+        "✅ Constraint liberation attempted?",
+        "✅ Adversarial personas consulted?",
+        "✅ Riskiest assumptions interrogated?",
+        "✅ Deep mode activated if in light mode?"
+      ]
+    }
+  },
+  "system": {
+    "message": "System configuration.",
+    "defaults": {
+    },
+    "execution": {
+    },
+    "context_budget": 100,
+    "error_handling": "standard"
+  },
+  "dependencies": {
+    "rails": {
+    },
+    "stimulus_reflex": {
+    },
+    "stimulus": {
+    },
+    "gems": [
+
+    ],
+    "javascript": {
+    },
+    "compatibility": {
+    },
+    "patterns": {
+    },
+    "version_pinning": {
+    }
+  },
+  "standards": {
+    "arrangement": {
+    },
+    "naming": {
+    },
+    "principles": [
+
+    ],
+    "smells": {
+    },
+    "security": {
+      "owasp_top_10": [
+
+      ],
+      "rails": {
+      },
+      "stimulus_reflex": {
+      },
+      "checks": {
+      }
+    },
+    "formatting": {
+    }
+  },
+  "execution": {
+    "mode": "production",
+    "report": {
+    },
+    "file_operations": {
+    },
+    "claude_code": {
+    },
+    "file_handling": {
+    },
+    "commit_strategy": {
+    },
+    "library_verification": {
+    },
+    "meta_prompt": {
+    },
+    "phases": [
+
+    ],
+    "refactor": {
+    },
+    "testing": {
+    },
+    "log": {
+    },
+    "output": {
+    },
+    "git": {
+    }
+  },
+  "intelligence": {
+    "personas": [
+
+    ],
+    "min_alternatives": 3,
+    "decision_matrix": {
+    },
+    "biases": {
+    },
+    "pitfalls": {
+    },
+    "techniques": {
+    }
+  },
+  "quality": {
+    "formula": {
+    },
+    "dims": {
+    },
+    "tools": {
+    },
+    "gates": {
+    },
+    "monitoring": {
+    }
+  },
+  "workflows": [
+
+  ],
+  "deployment": {
+    "vps": {
+    },
+    "stack": {
+    },
+    "installers": [
+
+    ],
+    "shared_modules": {
+    },
+    "architecture": {
+    },
+    "services": {
+    },
+    "security": {
+    },
+    "backup": {
+    },
+    "monitoring": {
+    },
+    "deployment_process": {
+    },
+    "payment": {
+    }
+  },
+  "business_plans": {
+    "context": {
+    },
+    "total_applied": 0,
+    "applications": [
+
+    ]
+  },
+  "documentation": {
+    "style": {
+    },
+    "format": {
+    },
+    "structure": {
+    },
+    "root": {
+    },
+    "files": {
+    },
+    "separation": {
+    },
+    "required": {
+    },
+    "optional": {
+    },
+    "inline": {
+    },
+    "examples": {
+    },
+    "diagrams": {
+    }
+  },
+  "collaboration": {
+    "git": {
+    },
+    "code_review": {
+    },
+    "issues": {
+    },
+    "pull_requests": {
+    }
+  },
+  "learning": {
+    "feedback_loops": {
+    },
+    "metrics_tracked": {
+    },
+    "knowledge_base": {
+    },
+    "postmortems": {
+    },
+    "sessions": [
+
+    ]
   }
 }
-
-// EOF (742 lines - comprehensive verbosity for maximum clarity)

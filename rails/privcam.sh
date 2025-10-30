@@ -5,9 +5,10 @@ set -euo pipefail
 APP_NAME="privcam"
 
 BASE_DIR="/home/dev/rails"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 BRGEN_IP="46.23.95.45"
-source "./__shared/@common.sh"
+source "${SCRIPT_DIR}/__shared/@common.sh"
 log "Starting Privcam setup"
 
 setup_full_app "$APP_NAME"
