@@ -1,7 +1,8 @@
 # frozen_string_literal: true
-
 module Assistants
+
   class OffensiveOperations
+
     # Helper methods for various activities (simulated implementations)
     module Helpers
       def save_video(video, path); "Video saved to #{path}"; end

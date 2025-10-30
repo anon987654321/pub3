@@ -2,12 +2,11 @@
 set -euo pipefail
 
 setopt nullglob extendedglob
-
 # Swaps out words in files or renames them.
+
 # Usage: ./replace.sh [-f] <old> <new> [folder]
 
 #
-
 # Pure zsh approach:
 
 # - Added missing -uo pipefail
@@ -19,24 +18,24 @@ setopt nullglob extendedglob
 # - [[ ]] for all conditionals
 
 is_filename=false
+
 if [[ "$1" == "-f" ]]; then
 
   is_filename=true
-
   shift
 
 fi
 
 old_str="$1"
+
 new_str="$2"
 
 folder="${3:-.}"
-
 # Validation
+
 if [[ -z "$old_str" || -z "$new_str" ]]; then
 
   printf "Error: old and new strings required\n"
-
   printf "Usage: ./replace.sh [-f] <old> <new> [folder]\n"
 
   exit 1
@@ -44,17 +43,17 @@ if [[ -z "$old_str" || -z "$new_str" ]]; then
 fi
 
 if [[ ! -d "$folder" ]]; then
+
   printf "Error: '%s' is not a directory\n" "$folder"
 
   exit 1
-
 fi
 
 for file in "$folder"/**/*(.N); do
+
   if "$is_filename"; then
 
     # Rename files: use pure zsh parameter expansion
-
     new_file="${file//$old_str/$new_str}"
 
     if [[ "$file" != "$new_file" && ! -e "$new_file" ]]; then
@@ -90,20 +89,20 @@ for file in "$folder"/**/*(.N); do
       if [[ "$content" == *"$old_str"* ]]; then
 
         # Replace using pure zsh parameter expansion (global replace)
+
         local new_content="${content//$old_str/$new_str}"
 
         # Only write if content changed
         if [[ "$content" != "$new_content" ]]; then
 
           # Create backup
-
           cp "$file" "$file.bak" 2>/dev/null || echo "Backup failed: $file"
 
           # Write new content
+
           printf "%s" "$new_content" > "$file" 2>/dev/null
 
           if [[ $? -eq 0 ]]; then
-
             echo "Updated: $file"
 
           else
@@ -125,3 +124,4 @@ for file in "$folder"/**/*(.N); do
   fi
 
 done
+

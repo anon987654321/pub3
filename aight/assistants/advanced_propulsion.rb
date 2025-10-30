@@ -3,10 +3,11 @@
 
 require_relative "../lib/universal_scraper"
 require_relative "../lib/weaviate_integration"
-require_relative "../lib/translations"
 
+require_relative "../lib/translations"
 module Assistants
   class PropulsionEngineer
+
     URLS = [
       "https://nasa.gov/",
       "https://spacex.com/",
@@ -15,16 +16,16 @@ module Assistants
       "https://lockheedmartin.com/",
       "https://aerojetrocketdyne.com/"
     ]
-
     def initialize(language: "en")
       @universal_scraper = UniversalScraper.new
+
       @weaviate_integration = WeaviateIntegration.new
       @language = language
       ensure_data_prepared
     end
-
     def conduct_propulsion_analysis
       puts "Analyzing propulsion systems and technology..."
+
       URLS.each do |url|
         unless @weaviate_integration.check_if_indexed(url)
           data = @universal_scraper.analyze_content(url)
@@ -33,41 +34,41 @@ module Assistants
       end
       apply_advanced_propulsion_strategies
     end
-
     private
-
     def ensure_data_prepared
+
       URLS.each do |url|
+
         scrape_and_index(url) unless @weaviate_integration.check_if_indexed(url)
       end
     end
-
     def scrape_and_index(url)
       data = @universal_scraper.analyze_content(url)
+
       @weaviate_integration.add_data_to_weaviate(url: url, content: data)
     end
-
     def apply_advanced_propulsion_strategies
       optimize_engine_design
+
       enhance_fuel_efficiency
       improve_thrust_performance
       innovate_propulsion_technology
     end
-
     def optimize_engine_design
       puts "Optimizing engine design..."
-    end
 
+    end
     def enhance_fuel_efficiency
       puts "Enhancing fuel efficiency..."
-    end
 
+    end
     def improve_thrust_performance
       puts "Improving thrust performance..."
-    end
 
+    end
     def innovate_propulsion_technology
       puts "Innovating propulsion technology..."
+
     end
   end
 end

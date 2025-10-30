@@ -1,9 +1,10 @@
 # frozen_string_literal: true
-
 # encoding: utf-8
 
 require "ferrum"
+
 require_relative '../lib/weaviate_integration'
+
 require_relative '../lib/translations'
 module Assistants
   class ChatbotAssistant

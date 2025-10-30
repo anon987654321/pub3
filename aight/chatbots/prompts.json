@@ -1,5 +1,6 @@
 {
   "prompts": {
+
     "system": {
       "default": "You are an AI assistant designed to help users with various tasks. Be helpful, harmless, and honest.",
       "casual": "Hey! I'm your friendly AI buddy. What can I help you with today?",

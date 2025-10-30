@@ -1,5 +1,6 @@
 {
   "chatbots": {
+
     "default_settings": {
       "response_delay": 1000,
       "max_message_length": 2000,

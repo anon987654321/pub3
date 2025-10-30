@@ -9,6 +9,7 @@ require_relative '../lib/weaviate_integration'
 
 module Assistants
   class AdvancedArchitect
+
     DESIGN_CRITERIA_URLS = [
       'https://archdaily.com/',
       'https://designboom.com/',

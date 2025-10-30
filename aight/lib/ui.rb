@@ -3,18 +3,19 @@
 
 class UserInteraction
   def initialize(interface)
+
     @interface = interface
   end
-
   def get_input
     @interface.receive_input
-  end
 
+  end
   def provide_feedback(response)
     @interface.display_output(response)
-  end
 
+  end
   def get_feedback
     @interface.receive_feedback
+
   end
 end

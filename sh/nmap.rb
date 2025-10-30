@@ -2,7 +2,6 @@
 # nmap.rb - Network security scanner with sensible defaults
 
 #
-
 # Installation:
 
 #   OpenBSD: `doas pkg_add nmap ruby--3.2; gem install ruby-nmap`
@@ -122,13 +121,13 @@
 #   [DEBUG] Oct 06 18:00:10 nmap[1234]: cleanup.info: Temp file removed
 
 require "nmap/xml"
+
 require "tempfile"
 
 # Lock script for security (OpenBSD only)
 # Why: Restricts access to files and network
 
 if RUBY_PLATFORM.include?("openbsd")
-
   begin
 
     require "pledge"
@@ -150,17 +149,17 @@ if RUBY_PLATFORM.include?("openbsd")
 end
 
 $verbose = ARGV.include?("--verbose")
+
 $lang = ARGV.find { |arg| arg.start_with?("--lang=") }&.split("=")&.last || "english"
 
 $lang = $lang.downcase
-
 $prompt = ARGV.include?("--prompt")
 
 # Log to syslog (OpenBSD) or stdout (Cygwin/Termux)
+
 # Why: Tracks actions for debugging
 
 def log(message, facility = "validate", level = "info")
-
   timestamp = Time.now.strftime("%b %d %H:%M:%S")
 
   hostname = `hostname`.chomp
@@ -184,10 +183,10 @@ def log(message, facility = "validate", level = "info")
 end
 
 # Translations for English and Norwegian
+
 # Why: Provides clear messages in chosen language
 
 TRANSLATIONS = {
-
   "english" => {
 
     title: "Network security scanner",
@@ -411,10 +410,10 @@ TRANSLATIONS = {
 }
 
 # Validate language
+
 # Why: Ensures valid language choice
 
 unless TRANSLATIONS.key?($lang)
-
   log "Invalid language. Use --lang=english or --lang=norwegian", "validate", "error"
 
   abort "Error: Invalid language. Use --lang=english or --lang=norwegian"
@@ -424,10 +423,10 @@ end
 T = TRANSLATIONS[$lang]
 
 # Prompt for input
+
 # Why: Gets user input like IP address
 
 def prompt(msg)
-
   print "#{msg}: "
 
   gets.chomp
@@ -435,19 +434,19 @@ def prompt(msg)
 end
 
 # Validate target
+
 # Why: Ensures address is valid
 
 def valid_target?(target)
-
   target =~ /^(?:(?:[0-9]{1,3}\.){3}[0-9]{1,3}|(?:[a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+)$/
 
 end
 
 # Check dependencies
+
 # Why: Confirms nmap and doas availability
 
 def check_requirements
-
   log T[:debug_nmap_check], "validate", "info"
 
   unless system("which nmap > /dev/null 2>&1")
@@ -479,10 +478,10 @@ def check_requirements
 end
 
 # Perform scan
+
 # Why: Scans for open ports, services, vulnerabilities
 
 def scan(target, severity, attack_type)
-
   log T[:debug_validating_target].call(target), "validate", "info"
 
   unless valid_target?(target)
@@ -496,15 +495,15 @@ def scan(target, severity, attack_type)
   check_requirements
 
   # Setup temp file
+
   xml = Tempfile.new(["nmap", ".xml"])
 
   log T[:debug_temp_file].call(xml.path), "setup", "info"
-
   # Build scan arguments
+
   args = { output_xml: xml.path, targets: target }
 
   if $prompt
-
     case severity
 
     when "low"
@@ -578,11 +577,11 @@ def scan(target, severity, attack_type)
   end
 
   log T[:debug_args].call(args.inspect), "setup", "info"
+
   # Run scan
+
   begin
-
     puts $prompt ? T[:scanning_with].call(target, severity.capitalize, attack_type.capitalize) : T[:scanning].call(target)
-
     log T[:debug_scan_start], "scan", "info"
 
     start = Time.now
@@ -616,10 +615,10 @@ def scan(target, severity, attack_type)
     log T[:debug_scan_duration].call(duration), "scan", "info"
 
     # Parse results
+
     log T[:debug_parse_xml], "parse", "info"
 
     unless File.exist?(xml.path) && File.size?(xml.path)
-
       log T[:no_results], "parse", "error"
 
       abort T[:no_results]
@@ -687,10 +686,10 @@ def scan(target, severity, attack_type)
     puts T[:scan_completed].call(duration)
 
   # Cleanup
+
   rescue StandardError => e
 
     log T[:unexpected_error].call(e.message), "error", "error"
-
     abort T[:unexpected_error].call(e.message)
 
   ensure
@@ -706,10 +705,10 @@ def scan(target, severity, attack_type)
 end
 
 # Main script
+
 # Why: Gets target and runs scan
 
 if ARGV.include?("--help")
-
   puts <<~HELP
 
     #{T[:title]}
@@ -751,10 +750,10 @@ if ARGV.include?("--help")
 end
 
 puts T[:title]
+
 target = prompt(T[:prompt_target])
 
 if target.empty?
-
   log T[:no_target], "validate", "error"
 
   abort T[:no_target]
@@ -762,10 +761,10 @@ if target.empty?
 end
 
 # Optional prompts
+
 if $prompt
 
   puts T[:severity_title]
-
   puts "  #{T[:severity_low]}"
 
   puts "  #{T[:severity_medium]}"
@@ -815,4 +814,6 @@ else
 end
 
 # Run scan
+
 scan(target, severity, attack_type)
+

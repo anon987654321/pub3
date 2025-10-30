@@ -5,28 +5,27 @@ set -euo pipefail
 # Usage: ./showp.sh
 
 #
-
 # Pure zsh: ${PWD##*/} instead of basename
 
 root="${PWD##*/}"
+
 date=$(date +"%Y-%m-%d_%H%M%S")
 
 output="$HOME/OUTPUT_${root}_${date}.md"
-
 {
+
   for file in **/*(-.N); do
 
     if [[ "$file" == "$output" ]]; then
-
       continue
 
     fi
 
     # Pure zsh: pattern matching instead of grep
+
     local file_type=$(file -b "$file" 2>/dev/null)
 
     if [[ "$file_type" == *text* ]]; then
-
       echo "## \`${file#./}\`"
 
       echo '```'
@@ -52,3 +51,4 @@ if [[ $? -ne 0 ]]; then
 fi
 
 echo "Saved: $output"
+

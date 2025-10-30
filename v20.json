@@ -1,0 +1,666 @@
+{
+  "meta": {
+
+    "version": "v20.7.0",
+
+    "updated": "2025-10-21T20:00:00Z",
+
+    "purpose": "Primary Claude Code instruction manifest - replaces CLAUDE.md",
+
+    "enforced": "Read this file at startup and follow ALL rules strictly",
+
+    "changelog": "v20.7.0: Integrated docs/openbsd-guidance.md and ZSH_NATIVE_PATTERNS.md - comprehensive OpenBSD + zsh reference"
+
+  },
+
+  "shell_usage": {
+    "mandatory": {
+
+      "on_windows_cygwin": "ALWAYS use 'zsh.exe' command prefix for shell scripts",
+
+      "ssh_commands": "Use 'ssh user@host command' NOT bash - approved pattern",
+
+      "pure_zsh_patterns": "Use zsh builtins: ${var//pattern/replace}, ${(s/ /)array}, ${(@k)assoc}, [[ ]] tests",
+
+      "never_use": ["bash", "sh", "grep", "sed", "awk", "find", "cat", "head", "tail", "echo for output"]
+
+    },
+
+    "zsh_pattern_examples": {
+
+      "philosophy": "No external forks, pure zsh parameter expansion for max performance",
+
+      "string_operations": {
+
+        "remove_crlf": "cleaned=${var//$'\\r'/}",
+
+        "lowercase": "lower=${(L)var}",
+
+        "uppercase": "upper=${(U)var}",
+
+        "replace_all": "result=${var//search/replace}",
+
+        "replace_first": "result=${var/search/replace}",
+
+        "trim_start": "trimmed=${var##[[:space:]]#}",
+
+        "trim_end": "trimmed=${var%%[[:space:]]#}",
+
+        "trim_both": "trimmed=${${var##[[:space:]]#}%%[[:space:]]#}",
+
+        "substring": "first16=${salt_hash:0:16}",
+
+        "nth_field": "fourth=${${(s:,:)line}[4]} - extract 4th CSV field",
+
+        "split_to_array": "arr=( ${(s:delim:)var} )",
+
+        "concat": "full=\"${prefix}${suffix}\" - no + needed"
+
+      },
+
+      "array_operations": {
+
+        "filter_matching": "matches=( ${(M)arr:#*pattern*} ) - like grep",
+
+        "filter_excluding": "non_matches=( ${arr:#*pattern*} ) - inverse grep",
+
+        "unique": "unique=( ${(u)arr} ) - like uniq",
+
+        "join": "joined=${(j:,:)arr} - join with delimiter",
+
+        "reverse": "reversed=( ${(Oa)arr} )",
+
+        "sort_asc": "sorted=( ${(o)arr} )",
+
+        "sort_desc": "sorted=( ${(O)arr} )",
+
+        "slice": "first10=( ${arr[1,10]} ), last5=( ${arr[-5,-1]} ) - like head/tail",
+
+        "length": "len=${#arr}",
+
+        "iteration": "for item in \"${arr[@]}\"; do ... done",
+
+        "from_lines": "arr=(\"${(@f)$(command)}\") - split by newlines"
+
+      },
+
+      "pattern_matching": {
+
+        "conditionals": "[[ \"$str\" == *pattern* ]] - not grep",
+
+        "file_test": "[[ -f /path/file ]] && process",
+
+        "numeric_test": "[[ $EUID -eq 0 ]] || error 'need root'",
+
+        "grep_equivalent": "lines=( ${(M)lines:#*query*} )"
+
+      },
+
+      "advanced": {
+
+        "assoc_array_keys": "for key in \"${(@k)hash}\"; do ... done",
+
+        "command_substitution": "var=$(command) OR var=$(<file)",
+
+        "word_splitting": "for word in ${(s/ /)string}; do ... done",
+
+        "char_mapping": "declare -A map=( a 1 b 2 ); mapped=${text//(#m)?/${map[$MATCH]}}"
+
+      },
+
+      "parameter_flags": {
+
+        "M": "Match instead of filter",
+
+        "u": "Unique elements",
+
+        "o": "Sort ascending",
+
+        "O": "Sort descending (arrays) or reverse (strings)",
+
+        "L": "Lowercase",
+
+        "U": "Uppercase",
+
+        "j": "Join array",
+
+        "s": "Split string",
+
+        "A": "Assign to array",
+
+        "f": "Split by newlines",
+
+        "k": "Associative array keys",
+
+        "@": "Preserve array elements"
+
+      },
+
+      "avoid_external_commands": {
+
+        "awk": "Use zsh array/string operations instead",
+
+        "sed": "Use zsh parameter expansion ${var//find/replace}",
+
+        "tr": "Use ${(L)var} or ${(U)var} for case conversion",
+
+        "grep": "Use ${(M)arr:#*pattern*} for filtering",
+
+        "cut": "Use ${${(s:delim:)var}[n]} for field extraction",
+
+        "head_tail": "Use array slicing ${arr[1,10]} or ${arr[-5,-1]}",
+
+        "uniq": "Use ${(u)arr}",
+
+        "sort": "Use ${(o)arr} or ${(O)arr}",
+
+        "exceptions": "Only use external tools for: complex PCRE regex, multi-file ops, binary data"
+
+      }
+
+    },
+
+    "prefer_tools_over_bash": {
+
+      "file_search": "Glob tool NOT find or ls",
+
+      "content_search": "Grep tool NOT grep or rg commands",
+
+      "read_files": "Read tool NOT cat/head/tail",
+
+      "edit_files": "Edit tool NOT sed/awk",
+
+      "write_files": "Write tool NOT echo >/cat <<EOF",
+
+      "communicate": "Output text directly NOT echo/printf"
+
+    },
+
+    "approved_bash_uses": {
+
+      "git": "git status, git add, git commit (sequential with &&)",
+
+      "ssh": "ssh user@host 'remote command'",
+
+      "system": "pkg_add, rcctl, pfctl, systemctl, service commands",
+
+      "approved_auto": ["ssh:*", "zsh.exe:*"]
+
+    }
+
+  },
+
+  "rails": {
+    "deployment_workflow": {
+
+      "golden_rule": "ALWAYS fix installer in G:/pub/rails/*.sh or G:/pub/openbsd/openbsd.sh FIRST before deploying to VPS",
+
+      "steps": ["edit_installer_locally", "test_syntax_zsh", "upload_to_vps", "run_installer", "verify"],
+
+      "forbidden": ["manual VPS file edits without updating installer", "production hotfixes without installer update"],
+
+      "syntax_check": "zsh.exe -n script.sh before upload"
+
+    },
+
+    "vps_access": {
+
+      "architecture": "server27 (HOST) -> vm08 (GUEST running Rails)",
+
+      "ssh_to_vm": "ssh dev@185.52.176.18",
+
+      "ssh_to_host": "ssh -p 31415 dev@server27.openbsd.amsterdam",
+
+      "doas": "permit nopass dev on vm08",
+
+      "command_pattern": "ssh dev@185.52.176.18 'command here'"
+
+    },
+
+    "installer_must_generate": [
+
+      "config/routes.rb with root route",
+
+      "models with class declarations",
+
+      "layouts/application.html.erb",
+
+      "rc.d scripts with correct pexp patterns"
+
+    ],
+
+    "common_errors": {
+
+      "missing_root_route": "add root directive to routes.rb",
+
+      "scope_new_conflict": "use scope :newest not :new",
+
+      "bundler": "use bundle exec when vendor/bundle exists"
+
+    }
+
+  },
+
+  "openbsd": {
+    "philosophy": {
+
+      "principles": ["security first", "correctness over features", "simplicity over complexity"],
+
+      "prefer_base": "Use base system tools over third-party - minimal, audited, secure",
+
+      "avoid": ["docker (use vmctl)", "systemd (use rcctl)", "bash (use zsh/ksh)", "GNU tools (use base or zsh)"]
+
+    },
+
+    "service_management": {
+
+      "tool": "rcctl",
+
+      "enable": "doas rcctl enable service_name",
+
+      "start": "doas rcctl start service_name",
+
+      "stop": "doas rcctl stop service_name",
+
+      "restart": "doas rcctl restart service_name",
+
+      "check": "doas rcctl check service_name",
+
+      "list_enabled": "doas rcctl ls on",
+
+      "list_failed": "doas rcctl ls failed",
+
+      "debug_mode": "doas rcctl -d start service_name"
+
+    },
+
+    "package_management": {
+
+      "install": "doas pkg_add package_name",
+
+      "install_version": "doas pkg_add ruby%3.3",
+
+      "search": "pkg_info -Q search_term",
+
+      "list_installed": "pkg_info",
+
+      "details": "pkg_info package_name",
+
+      "remove": "doas pkg_delete package_name",
+
+      "cleanup_deps": "doas pkg_delete -a"
+
+    },
+
+    "system_updates": {
+
+      "security_patches": "doas syspatch (check with syspatch -c)",
+
+      "system_upgrade": "doas sysupgrade (dry-run: sysupgrade -n)",
+
+      "upgrade_snapshot": "doas sysupgrade -s",
+
+      "routine": "doas syspatch && doas pkg_add -u"
+
+    },
+
+    "firewall": {
+
+      "tool": "pf (Packet Filter)",
+
+      "config_file": "/etc/pf.conf",
+
+      "reload": "doas pfctl -f /etc/pf.conf",
+
+      "test_config": "doas pfctl -nf /etc/pf.conf",
+
+      "show_rules": "doas pfctl -s rules",
+
+      "show_states": "doas pfctl -s states",
+
+      "show_info": "doas pfctl -s info",
+
+      "flush_states": "doas pfctl -F states",
+
+      "enable": "doas pfctl -e",
+
+      "disable": "doas pfctl -d"
+
+    },
+
+    "load_balancer": {
+
+      "tool": "relayd",
+
+      "reload": "doas relayctl reload",
+
+      "show_summary": "doas relayctl show summary",
+
+      "show_hosts": "doas relayctl show hosts",
+
+      "show_relays": "doas relayctl show relays",
+
+      "show_sessions": "doas relayctl show sessions"
+
+    },
+
+    "dns": {
+
+      "tool": "nsd (authoritative DNS)",
+
+      "reload_zones": "doas nsd-control reload",
+
+      "reload_zone": "doas nsd-control reload domain.com",
+
+      "reconfig": "doas nsd-control reconfig",
+
+      "status": "doas nsd-control status",
+
+      "stats": "doas nsd-control stats"
+
+    },
+
+    "tls_certificates": {
+
+      "tool": "acme-client (Let's Encrypt)",
+
+      "obtain": "doas acme-client -v domain.com",
+
+      "renew_all": "doas acme-client -v",
+
+      "cron_renewal": "0 2 * * * root acme-client domain.com && rcctl reload relayd"
+
+    },
+
+    "virtualization": {
+
+      "tool": "vmctl (vmm hypervisor)",
+
+      "list": "doas vmctl status",
+
+      "start": "doas vmctl start vm_name",
+
+      "stop": "doas vmctl stop vm_name",
+
+      "create_disk": "doas vmctl create -s 20G disk.img",
+
+      "console": "doas vmctl console vm_name"
+
+    },
+
+    "networking": {
+
+      "interfaces": "ifconfig (show all), ifconfig em0 (specific)",
+
+      "routing": "netstat -rn (show), route add default 192.168.1.1",
+
+      "connections": "netstat -an",
+
+      "stats": "netstat -s",
+
+      "live_monitor": "systat vmstat, systat netstat"
+
+    },
+
+    "system_introspection": {
+
+      "kernel_params": "sysctl -a (show all), doas sysctl param=value",
+
+      "boot_messages": "dmesg",
+
+      "manual_pages": "man command (read), apropos keyword (search), man 5 pf.conf (section)"
+
+    },
+
+    "security": {
+
+      "privilege_escalation": "doas (not sudo) - config in /etc/doas.conf",
+
+      "doas_examples": ["permit persist :wheel", "permit nopass dev as root cmd rcctl"],
+
+      "signing": "signify (verify: signify -C -p pubkey -x SHA256.sig file)",
+
+      "minimal_services": "Only enable needed services, regular rcctl ls all audit",
+
+      "firewall_policy": "Default deny, explicit allow, regular pfctl -s rules audit"
+
+    },
+
+    "monitoring": {
+
+      "system_log": "tail -f /var/log/messages",
+
+      "daemon_log": "tail -f /var/log/daemon",
+
+      "system_monitor": "top, systat vmstat",
+
+      "disk_usage": "df -h",
+
+      "memory": "vmstat -s"
+
+    },
+
+    "rc_scripts": {
+
+      "pexp_pattern": "Regular expression for pgrep to find daemon process",
+
+      "default_pexp": "Combines daemon path + daemon_flags",
+
+      "custom_pexp": "Override after sourcing rc.subr, must match actual process",
+
+      "check_failure_causes": [
+
+        "pgrep finds no matching processes",
+
+        "pexp regex doesn't match running process",
+
+        "requires root but rc_usercheck not set to NO"
+
+      ],
+
+      "debugging": [
+
+        "ps aux | grep processname",
+
+        "pgrep -fl 'pexp_pattern'",
+
+        "fstat | grep port_number",
+
+        "rcctl check service_name",
+
+        "doas rcctl -d start service_name (debug mode)"
+
+      ]
+
+    },
+
+    "service_health_check": {
+
+      "postgresql": "rcctl check postgresql && psql -U postgres -c 'SELECT version()'",
+
+      "redis": "rcctl check redis && redis-cli ping",
+
+      "nsd": "rcctl check nsd && nsd-control status (if control enabled)",
+
+      "httpd": "rcctl check httpd && fstat | grep httpd",
+
+      "relayd": "rcctl check relayd && relayctl show summary",
+
+      "pf": "pfctl -si (special variable, no rc.d script)",
+
+      "rails_apps": "fstat | grep 'port_number' to verify listening"
+
+    },
+
+    "dns_dnssec": {
+
+      "tools": "ldns-keygen, ldns-signzone, nsd, nsd-control",
+
+      "key_types": "ZSK: ECDSAP256SHA256 -b 256, KSK: ECDSAP256SHA256 -k -b 256",
+
+      "zone_signing": "ldns-signzone -n -p -s salt zone.file zsk.key ksk.key",
+
+      "verification": "dig +dnssec @localhost domain.tld"
+
+    },
+
+    "rails_deployment": {
+
+      "install_ruby": "doas pkg_add ruby%3.3",
+
+      "install_deps": "bundle install",
+
+      "database": "bundle exec rails db:create && bundle exec rails db:migrate",
+
+      "assets": "bundle exec rails assets:precompile",
+
+      "falcon_start": "bundle exec falcon serve -b http://localhost:11006",
+
+      "falcon_daemon": "bundle exec falcon serve -b http://localhost:11006 -d",
+
+      "postgresql_backup": "pg_dump -U postgres db_name | gzip > backup.sql.gz",
+
+      "postgresql_restore": "gunzip < backup.sql.gz | psql -U postgres db_name"
+
+    },
+
+    "quick_reference": {
+
+      "Start service": "doas rcctl start name",
+
+      "Enable service": "doas rcctl enable name",
+
+      "Install package": "doas pkg_add name",
+
+      "Update system": "doas syspatch",
+
+      "Reload firewall": "doas pfctl -f /etc/pf.conf",
+
+      "Check firewall": "doas pfctl -s rules",
+
+      "Reload relayd": "doas relayctl reload",
+
+      "Reload DNS": "doas nsd-control reload",
+
+      "Renew TLS": "doas acme-client -v domain",
+
+      "Show interfaces": "ifconfig",
+
+      "Show routes": "netstat -rn",
+
+      "System log": "tail -f /var/log/messages"
+
+    }
+
+  },
+
+  "file_organization": {
+    "reduce_sprawl": "Consolidate related files, remove duplicates",
+
+    "tree_command": "zsh.exe G:/pub/sh/tree.sh G:/pub to audit structure",
+
+    "git_hygiene": "Run 'git status' before major changes, commit atomically",
+
+    "restore_logic": "git diff HEAD to check for lost logic before edits"
+
+  },
+
+  "workflow_patterns": {
+    "parallel_tool_calls": "Use single message with multiple tool invocations when independent",
+
+    "sequential_dependencies": "Use && in bash for dependent operations (git add && git commit)",
+
+    "explore_codebase": "Use Task tool with subagent_type=Explore for non-needle queries",
+
+    "todo_tracking": "Use TodoWrite for multi-step tasks, mark completed immediately"
+
+  },
+
+  "reference_docs": {
+    "openbsd_manual": "https://man.openbsd.org/ (rc.d, rc.subr, pf.conf, relayd.conf, nsd.conf)",
+
+    "rails_guides": "https://guides.rubyonrails.org/",
+
+    "falcon_server": "https://github.com/socketry/falcon"
+
+  },
+
+  "lessons_learned": {
+    "session_2025_10_21": {
+
+      "critical_mistakes": [
+
+        "Used head/tail/grep commands despite deny list - MUST use Read tool instead",
+
+        "Tried bash commands when zsh.exe required - always check shell_usage.mandatory first",
+
+        "Forgot to check master.json rules before starting - read at session start"
+
+      ],
+
+      "successful_patterns": [
+
+        "TodoWrite tracking worked excellently for 30+ PR merges",
+
+        "git merge -X ours strategy perfect for keeping consolidated versions",
+
+        "git checkout --ours/--theirs for selective conflict resolution",
+
+        "Parallel tool calls speed up independent operations significantly",
+
+        "WebFetch for OpenBSD man pages better than ssh commands"
+
+      ],
+
+      "git_workflow": {
+
+        "merge_prs": "git merge origin/branch --no-edit -X ours (prefer our consolidated code)",
+
+        "resolve_conflicts": "git checkout --ours file.rb (keep our version) OR git rm (delete theirs)",
+
+        "cleanup_branches": "git push origin --delete branch1 branch2 branch3 (batch delete)",
+
+        "verify_clean": "git fetch origin --prune && git branch -r (check remaining branches)"
+
+      },
+
+      "environment_quirks": {
+
+        "cygwin_path": "Tools in Windows AppData not visible to Git Bash - use full paths or zsh",
+
+        "gh_cli": "Installed via npm but not in bash PATH - user must run from zsh or add to PATH",
+
+        "ssh_from_bash": "Works fine for remote commands - no PATH issues",
+
+        "zsh_scripts": "MUST use 'zsh.exe script.sh' NOT 'sh script.sh' or './script.sh'"
+
+      },
+
+      "consolidation_strategy": {
+
+        "multimedia_goal": "4 root files only: dilla.rb, repligen.rb, tts.rb, postpro.rb",
+
+        "keep_subdirs_for": "Data files (*.wav, *.db, *.json), tools (sox, fluidsynth), cache",
+
+        "delete_from_subdirs": "All *.rb logic files, backup files (*.bak), temp files",
+
+        "version_comments": "Add 'Version X.X.X - Consolidated (zero sprawl)' to root files"
+
+      },
+
+      "vps_health_check": {
+
+        "found_issues": "Rails apps running but rcctl reports failed - pexp pattern mismatch",
+
+        "nsd_issue": "Control disabled in config, processes run but status check fails",
+
+        "solution": "Use fstat to verify ports listening - more reliable than rcctl check"
+
+      }
+
+    }
+
+  }
+
+}
+

@@ -1,9 +1,10 @@
 # frozen_string_literal: true
-
 # encoding: utf-8
 
 require_relative '../chatbots'
+
 module Assistants
+
   class SnapChatAssistant < ChatbotAssistant
     def initialize(openai_api_key)
       super(openai_api_key)

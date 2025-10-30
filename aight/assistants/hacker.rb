@@ -1,10 +1,11 @@
 # frozen_string_literal: true
-
 # encoding: utf-8
+
 # Super-Hacker Assistant
 
 require_relative '../lib/universal_scraper'
 require_relative '../lib/weaviate_integration'
+
 require_relative '../lib/translations'
 module Assistants
   class EthicalHacker
@@ -32,42 +33,42 @@ module Assistants
       end
       apply_advanced_security_strategies
     end
-
     private
-
     def ensure_data_prepared
+
       URLS.each do |url|
+
         scrape_and_index(url) unless @weaviate_integration.check_if_indexed(url)
       end
     end
-
     def scrape_and_index(url)
       data = @universal_scraper.analyze_content(url)
+
       @weaviate_integration.add_data_to_weaviate(url: url, content: data)
     end
-
     def apply_advanced_security_strategies
       perform_penetration_testing
+
       enhance_network_security
       implement_vulnerability_assessment
       develop_security_policies
     end
-
     def perform_penetration_testing
       puts 'Performing penetration testing on target systems...'
+
       # TODO
     end
-
     def enhance_network_security
       puts 'Enhancing network security protocols...'
-    end
 
+    end
     def implement_vulnerability_assessment
       puts 'Implementing vulnerability assessment procedures...'
-    end
 
+    end
     def develop_security_policies
       puts 'Developing comprehensive security policies...'
+
     end
   end
 end

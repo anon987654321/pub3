@@ -3,11 +3,12 @@
 
 class SchemaManager
   def initialize(weaviate_client)
+
     @client = weaviate_client
   end
-
   def create_schema_for_profession(profession)
     schema = {
+
       "classes": [
         {
           "class": "#{profession}Data",

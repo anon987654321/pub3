@@ -1,10 +1,11 @@
 # frozen_string_literal: true
-
 # encoding: utf-8
+
 # Propulsion Engineer Assistant
 
 require_relative '../lib/universal_scraper'
 require_relative '../lib/weaviate_integration'
+
 require_relative '../lib/translations'
 module Assistants
   class PropulsionEngineer
