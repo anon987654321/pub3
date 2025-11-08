@@ -1,0 +1,109 @@
+trying to create a master.json for LLMs like a general-purpose project completion framework (that contain all my knowledge, experience, and preferences as a senior developer and licensed architect. focus on ruby, ruby on rails, zsh, openbsd, ui/ux, seo). could you suggest the ideal master.json that does (take the following with a grain of salt, use full creative freedom):
+
+- purpose: LLM enhancement prompts, and workflow steps to better complete my various projects
+- prefer zsh .sh installer files for rails applications, where all the bin/rails generate commands are, as well as custom ruby like models, views, controllers, migrations, seeds etc.
+note: always prefer command-line options where possible (e.g. bundle add as opposed to writing entire Gemfiles).
+- optimize for line count but dont compress and abbreviate and shorten stuff so its no longer readable to non-technical humans. every line must be self-documenting by being easy to understand and intuitive.
+- autoiterating until converging, or closed loops with plateau detection, should be used everywhere possible. the same for hooks.
+- copy/paste into any LLM, and limited to text-only environment, so any "execution" means "simulated executions"
+- optimized for Claude Code (should replace CLAUDE.md as "single source of truth") and GitHub Copilot
+- extremely token efficient
+- synonym awareness to avoid different sections/keys/values with similar logic
+- can process single files as well as large codebases, or process itself / self-optimize. all these should be treated the same way.
+- before entering an existing folder, use zsh to generate full tree hierarchy (excluding dotfiles and dotfolders) and internalize them
+- always fully internalize the original into memory and use that EXACT as baseline for any improvements
+- no useless metrics, limits, thresholds, or unnecessary fluff or stuff that LLM reasoning can handle internally
+- no theater or cruft or stating the obvious or things that ought to be common sense. no logical oddities, or inconsistencies.
+- always autofix any problems you encounter along the way.
+- for master.json, you must have read the full https://github.com/asgeirtj/system_prompts_leaks source code before suggesting any further improvements.
+- for ruby on rails, you must have read the full latest rails edge guides, changelogs, stimulus_reflex docs, stimulus-components.com docs, hotwire (stimulus.js and turbo) docs.
+- for css/scss you must have read the latest www.pwa.dev and www.css-tricks.com
+- always read every line of every file, and before responding (do not take any shortcuts)
+- forces deeper reasoning; for every section and its values, or for its concepts etc. -- ask a set of hostile questions with which the LLM must come up with answers, as well as 5-15 widely different solutions (from which it cherrypicks the best into a final iteration)
+- for every new iteration, compare it (perhaps git diff style) with the original version, and the last 2 previous iterations in order to catch drift or other things that might be wrong
+- when posting a file, for instance master.json, ALWAYS show the full version; any truncation of any kind is forbidden, including unwarranted omissions, placeholders, todos
+- avoid unnecessary wrappers when the source commands are just fine
+- avoid creating documents to plan something; do the stuff directly instead. and never create new files (without approval), always make any edits in-place directly into the original source
+- for large code bases, also aim to reduce file sprawl. and to extract shared functionality into modules.
+- default maximum scrutiny, brutal honesty (without discouraging the user from something that is actually possible)
+- if the user asks it to do a self-run (self-optimization)
+- say i give the LLM a file and tell it to run it through master.json, it would automatically refactor anything it comes across:
+- for every major section or similar, consider if anything should be expanded upon (maybe split into multiple new objects) if it e.g. is too vague, ambiguous; or contracted if it's not really relevant or overly verbose
+- reassess every method/function/section/word name choice for potential rename for better adherence to strunk & white's guidelines, as well as greater information density/preserved original meaning (every single character must earn its place)
+- avoid assigning variables at the top of a file when we can use sensible defaults instead, and thus not ask too much of the user
+- always show git-style diffs of actual proposed code changes, and ask for approval, and only then can you write to the actual file and share it in full with the user. avoid explanations or summaries unless user asks for it. avoid headlines (h1 h2 h3 h4), bullet point lists, tables, graphs; stick to plain simple short and concise paragraphs. everything must pass through strunk and white, especially brevity combined with clarity, before its shown to the user
+- code:
+	- universal formatting: prefer double quotes over single quotes, 2-space indents.
+
+also always prefer simpler multiline constructs instead of complex cryptic-looking oneliners with concats and double pipes or double square brackets
+	- comments: retain existing comments, remove redundant comments, add comments only for complex logic or abstract concepts. Do not use --- === ### type ascii art decorations in comments
+- be VERY careful before importing say JSON from other master.json versions, or before removing anything that might be intentional
+- should be able to do actual good designs (architectural design principles, swiss typography, zen minimalism, nngroup usability heuristics) and not just code or markdown documents 
+- can generate new projects, or pick up existing projects, and complete them
+autoiterate over and over to identify violations to principles and autofix them until no more matches:
+
+	* boy scout rule
+	* DRY (please expand; has 5 principles)
+	* KISS (ultra-minimalism, terse elegance. DANGER: do NOT over-simplify and omit essential logic)
+	* SOLID
+	* PoLA
+	* YAGNI
+
+	* rails doctrine (please expand)
+	* strunk and white (please expand)
+
+	* GRASP - Information Expert, Low Coupling, High Cohesion
+	* Clean Code - Meaningful names, small functions, no side effects
+
+	* please expand: Kansō, Wabi-sabi, Kaizen
+	* defragment, decouple, semantic grouping (group similar stuff or split apart different), hoist, merge/consolidate where possible
+	* reorganize the the code or content to flow from top to bottom by importance
+
+--
+
+feel free to also incorporate ideas from the following noise:
+
+  "startup": {
+    "steps": [  
+      {
+        "action": "prepend_to_every_new_message",
+        "format": "**master.json** v{version} ({LLM name} {LLM version})"
+      },
+      {
+        "action": "ask_user_for_target",
+        "prompt": "File or folder to recursively analyze?"
+      },
+
+      {
+        "action": "ask_user_for_primary_focus",
+        "prompt": "Project completion or code/content beautification?"
+
+      },
+    ]
+  },
+
+  "claude_code": {
+    "tools": {
+      "use": ["Read", "Edit", "Write", "Grep", "Glob"],
+      "banned": ["bash", "head", "tail", "sed", "awk"]
+    }
+
+
+    "reasoning": {
+      "adversarial_obligation": true,
+      "perspective_rotation": 8,
+      "assumption_inversion": true,
+      "constraint_stacking": true,
+      "five_whys_interrogation": true,
+      "steelman_not_strawman": true
+    },
+    "attention": {
+      "character_level_scrutiny": true,
+      "micro_validation": true,
+      "deliberate_pacing": true,
+      "token_by_token": true,
+      "backtrack_on_uncertainty": true,
+      "syntax_validation": true,
+      "structure_integrity": true,
+      "character_level_correctness": true
+    }
