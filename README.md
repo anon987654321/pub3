@@ -1,403 +1,278 @@
-# pub3 - Multi-Project Repository
+# master.yml v0.6.1
 
-A comprehensive repository containing Rails applications, multimedia tools, OpenBSD infrastructure, and shell utilities.
+Constitutional AI Governance for Ruby
 
-[![CI](https://github.com/anon987654321/pub3/actions/workflows/ci.yml/badge.svg)](https://github.com/anon987654321/pub3/actions/workflows/ci.yml)
-[![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)](LICENSE)
+A code quality enforcement system that applies constitutional AI principles through iterative scanning, evidence-based scoring, and automated remediation. Implements the preserve → improve → converge philosophy: preserve working code, improve quality through principled analysis, converge on stable excellence.
 
-## 📚 Documentation
-
-**Docs consolidated: master.json is authoritative; legacy docs moved to docs/archive/ for reference.**
-
-- **[master.json](master.json)** - Primary governance, security policies, and project philosophy
-- **[docs/archive/](docs/archive/)** - Archived documentation (OVERVIEW, DEVELOPMENT, CONTRIBUTING, SECURITY, CHANGELOG,
-  CODE_OF_CONDUCT, AUTHORS)
-
-## 🏗️ Project Structure
-
-```
-pub3/
-├── master.json          # Central governance and configuration
-├── aight/               # Interactive Ruby REPL with LLM integration
-│   ├── aight.rb        # Main CLI (REPL, Starship, completions)
-│   ├── lib/            # REPL and Starship integration
-│   ├── config/         # Starship configuration templates
-│   └── completions/    # Modern zsh completions
-├── rails/               # Rails 8 application generators
-│   ├── brgen.sh        # Multi-tenant platform (40+ domains)
-│   ├── amber.sh        # Social amber alert system
-│   ├── blognet.sh      # Decentralized blogging
-│   └── ...             # 7+ Rails applications
-├── multimedia/          # Audio/video/image processing
-│   ├── dilla/          # Music production (Ruby)
-│   ├── postpro/        # Image post-processing (Ruby)
-│   └── repligen/       # AI image generation (Ruby)
-├── openbsd/            # OpenBSD deployment scripts
-├── sh/                 # Shell utilities (tree, lint, security)
-└── bplans/             # Business plans and documentation
-```
-
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
-# Clone repository
-git clone https://github.com/anon987654321/pub3.git
-cd pub3
+# Installation
+gem install syntax_tree diffy sqlite3
 
-# Review project philosophy
-cat master.json
+# Configuration
+mkdir -p ~/.convergence
+# Place master.yml in ~/.convergence/master.yml
 
-# Explore structure
-sh/tree.sh .
-
-# See docs/archive/DEVELOPMENT.md for detailed setup
+# Basic usage
+ruby cli.rb scan              # Scan for defects
+ruby cli.rb evidence          # Calculate score
+ruby cli.rb batch conservative # Automated improvement
+ruby cli.rb dashboard         # Generate metrics
+ruby cli.rb install-hook      # Git pre-commit hook
 ```
 
-## 🤖 Aight - Interactive Ruby REPL
+## Core Concepts
 
-An intelligent Ruby REPL with LLM-powered code assistance and Starship prompt integration.
+### Constitutional AI
+Governance through defined principles and adversarial testing: principles (min 20), personas (min 6), adversarial tests (min 10), and self-preservation validation.
 
-**Features:**
-- Interactive Ruby evaluation with syntax highlighting
-- LLM-powered code explanation, refactoring, and testing
-- Starship prompt integration (model, cognitive load, security)
-- Modern zsh completions
-- OpenBSD pledge/unveil security
-- Cognitive load tracking (7±2 items)
+### Evidence Scoring
+Multi-component quality metric: Tests 35%, Static 25%, Complexity 15%, Architecture 15%, Security 10%. Thresholds: Production ≥0.95, Development ≥0.90, Strict 1.00.
 
-**Quick Start:**
+### Convergence Detection
+Stability using 3-iteration window: system converges when score changes remain under 2% for three consecutive iterations.
+
+## Commands
+
+**scan** - AST-based defect detection: `ruby cli.rb scan [--verbose] [--json]`
+
+**evidence** - Multi-component quality scoring: `ruby cli.rb evidence [--verbose]`
+
+**batch [strategy]** - Automated improvement cycles:
+- `conservative`: Safe, incremental fixes with validation
+- `aggressive`: Faster, higher risk
+- `continuous`: Run until convergence
+
+**dashboard** - Generate HTML metrics visualization: `ruby cli.rb dashboard`
+
+**install-hook** - Install git pre-commit hook: `ruby cli.rb install-hook`
+
+**version** - Display version: `ruby cli.rb version`
+
+**help** - Command reference: `ruby cli.rb help [command]`
+
+## Configuration
+
+```yaml
+meta:
+  version: "0.6.1"
+  name: "project-name"
+
+self_preservation:
+  validate_on_start: true
+  min_principles: 20
+  min_personas: 6
+  min_adversarial: 10
+
+principles:
+  - name: "No Injection Vulnerabilities"
+    severity: "critical"
+    enabled: true
+
+catalog:
+  defects:
+    - id: "INJ001"
+      name: "System Command Injection"
+      pattern: "system\\(|exec\\(|`"
+      severity: "critical"
+
+severity:
+  critical: 1.0
+  high: 0.8
+  medium: 0.5
+  low: 0.2
+
+evidence:
+  weights:
+    tests: 0.35
+    static: 0.25
+    complexity: 0.15
+    architecture: 0.15
+    security: 0.10
+  thresholds:
+    production: 0.95
+    development: 0.90
+
+personas:
+  - name: "Security Auditor"
+    focus: "vulnerabilities"
+
+adversarial:
+  - challenge: "Test coverage may not reflect runtime quality"
+    counterpoint: "Integration tests validate behavior"
+
+domain_constants:
+  max_method_lines: 20
+  max_class_lines: 300
+  max_complexity: 10
+
+batch_mode:
+  conservative:
+    max_changes_per_iteration: 5
+    validation_required: true
+```
+
+Directory structure: `~/.convergence/` contains `master.yml`, `learning.db`, `logs/`, and `dashboard/`.
+
+Configuration requires minimum 20 principles, 6 personas, and 10 adversarial tests.
+
+## Detections
+
+🔧 **Injection Vulnerabilities**: `system`, `exec`, `` ` ``, `spawn`, `IO.popen`, `IO.read`, `IO.write`, `eval`, `instance_eval`, `class_eval`, `module_eval`, `send`, `__send__`, `public_send`
+
+🔧 **Hardcoded Secrets**: API keys, passwords, tokens in source code
+
+🔧 **Magic Numbers**: Undocumented numeric literals
+
+🔧 **Long Methods**: Methods exceeding 20 lines (configurable)
+
+🔧 **God Classes**: Classes exceeding 300 lines (configurable)
+
+🔧 **Undocumented Domain Constants**: Constants without explanatory comments
+
+🔧 **Mass Assignment**: Unfiltered parameter passing
+
+🔧 **Token Exposure**: Tokens in logs or errors
+
+## Platform Support
+
+Supported: Linux, macOS, OpenBSD (with `pledge`/`unveil`), Cygwin (Windows), Termux (Android)
+
+Platform detection: `OPENBSD`, `TERMUX`, `CYGWIN`, `MACOS`, `LINUX` constants automatically set.
+
+## Testing
+
+Run: `ruby cli_test.rb`
+
+25 tests across 8 classes: TestLog, TestValidator, TestMaster, TestScannerV2, TestEvidenceCalculatorV2, TestConvergenceDetector, TestBatchMode, TestShellTool
+
+## Dependencies
+
+**Required**: Ruby ≥2.7, syntax_tree
+
+**Optional**: diffy, sqlite3, rubocop, flog
+
+Install: `gem install syntax_tree diffy sqlite3 rubocop flog`
+
+## Architecture
+
+| Class | Responsibility |
+|-------|---------------|
+| Master | Configuration loading and validation |
+| DefectBuilder | Defect detection rule management |
+| ScannerV2 | AST-based code scanning |
+| EvidenceCalculatorV2 | Multi-component quality scoring |
+| ConvergenceDetector | Stability analysis (3-iteration window) |
+| LearningDB | SQLite metrics persistence |
+| BatchMode | Automated improvement orchestration |
+| GitIntegration | Pre-commit hook management |
+| MetricsDashboard | HTML report generation |
+| ShellTool | Secure command execution (allowlist) |
+| CLI | Command-line interface |
+
+Modules: Log (unified logging), Validator (threshold enforcement), C (configuration paths)
+
+## Examples
+
+### Defect Detection
+
 ```bash
-cd aight
-./aight.rb                    # Start REPL
-./aight.rb --starship         # Configure Starship prompt
-./aight.rb --completions      # Install zsh completions
+$ ruby cli.rb scan --verbose
+
+Scanning: lib/api.rb
+  INJ001: System Command Injection (line 42)
+    system("curl #{url}")
+  SEC003: Hardcoded API Key (line 8)
+    API_KEY = "sk_live_abc123"
+
+Scanning: app/models/user.rb
+  ARCH002: God Class (342 lines)
+  COMP001: Long Method: process_order (28 lines)
+
+Total: 4 defects (1 critical, 1 high, 2 medium)
 ```
 
-**Documentation:**
-- [aight/README.md](aight/README.md) - Complete documentation
-- [aight/EXAMPLES.md](aight/EXAMPLES.md) - 10 detailed usage examples
+### Batch Improvement Workflow
 
+```bash
+$ ruby cli.rb batch conservative
 
+Iteration 1:
+  Evidence: 0.87 → 0.89 (+0.02)
+  Fixed: 3 defects
+  Remaining: 12 defects
 
-## 🌐 Rails Platform - Brgen
+Iteration 2:
+  Evidence: 0.89 → 0.91 (+0.02)
+  Fixed: 2 defects
+  Remaining: 10 defects
 
-A Rails 8 multi-tenant platform hosting specialized Norwegian web applications on OpenBSD infrastructure.
+Iteration 3:
+  Evidence: 0.91 → 0.92 (+0.01)
+  Fixed: 2 defects
+  Converged: ✓ (3 iterations < 2% change)
 
-### Architecture
-**Platform**: OpenBSD 7.7 (GENERIC) #2 amd64
-**Web Server**: Puma (Rails 8)
-
-**Database**: PostgreSQL with `acts_as_tenant` multi-tenancy
-
-**Reverse Proxy**: relayd(8) for TLS termination
-
-**DNS**: NSD authoritative nameserver
-
-**TLS**: Let's Encrypt via acme-client(1)
-
-**Deployment**: VPS at 185.52.176.18
-
-## Applications
-### Base Application
-- **Domain**: brgen.no
-
-- **Port**: 10001 (internal)
-
-- **Status**: ✅ Deployed and running
-
-### Sub-Applications
-- **brgen_dating** - Dating platform (dating.brgen.no)
-
-- **brgen_marketplace** - Marketplace (markedsplass.brgen.no)
-
-- **brgen_playlist** - Playlist management (playlist.brgen.no)
-
-- **brgen_tv** - TV/streaming (tv.brgen.no)
-
-- **brgen_takeaway** - Food delivery (takeaway.brgen.no)
-
-All sub-applications share the core brgen codebase via multi-tenancy.
-## Infrastructure Status
-### ✅ Completed
-- [x] Base Rails application deployed on port 10001
-
-- [x] PostgreSQL database initialized with multi-tenancy
-
-- [x] Redis cache and job queue running
-
-- [x] NSD DNS server configured for brgen.no zone
-
-- [x] DNS records propagated (ns.brgen.no @ Amsterdam VPS)
-
-- [x] Let's Encrypt TLS certificates generated for all domains
-
-- [x] Certificate format converted (PKCS#8 → RSA for LibreSSL)
-
-- [x] pf(4) firewall configured (ports 22, 80, 443 open)
-
-- [x] httpd(8) configured for ACME challenges
-
-### 🚧 In Progress
-- [ ] relayd reverse proxy configuration (BLOCKED - parser bug)
-
-- [ ] Sub-application deployment
-
-- [ ] Generator script fixes (bundler permissions)
-
-## TLS Certificates
-All certificates managed via acme-client(1) with 90-day renewal:
-```
-/etc/ssl/brgen.no.crt                    # Certificate chain
-
-/etc/ssl/private/brgen.no.key           # Private key (RSA format)
-
+Final Evidence: 0.92
 ```
 
-**SANs covered**:
-- brgen.no
+### Custom Domain Constants
 
-- www.brgen.no
-
-- dating.brgen.no
-
-- markedsplass.brgen.no
-
-- playlist.brgen.no
-
-- tv.brgen.no
-
-- takeaway.brgen.no
-
-- maps.brgen.no
-
-**Renewal**: Automated via cron with acme-client(1)
-## DNS Configuration
-**Primary NS**: ns.brgen.no (185.120.77.132 - Amsterdam VPS)
-**Secondary NS**: ns.hyp.net (Oslo registrar's free service)
-
-NSD configuration at `/var/nsd/zones/brgen.no.zone` with:
-- A records for main domain and subdomains → 185.52.176.18
-
-- NS records pointing to primary/secondary nameservers
-
-- SOA with 24h refresh, 2h retry, 30d expire
-
-## Known Issues
-### relayd Parser Failure (OpenBSD 7.7)
-**Issue**: All newly created `relayd.conf` files fail validation with `"protocol X defined twice"` errors, even when using exact syntax from working examples.
-**Status**: Bug report prepared for misc@openbsd.org
-**Workaround**: None found (tested 10+ approaches)
-
-**Impact**: HTTPS reverse proxy cannot be configured
-
-**Temporary**: Applications accessible via HTTP on port 10001
-
-**Details**: See `/g/pub/openbsd_relayd_bug_report.txt`
-## Deployment Scripts
-Located in `/g/pub/rails/`:
-- `brgen.sh` - Base application generator
-- `bsdports.sh` - OpenBSD ports installation
-
-- `amber.sh` - Amber framework deployment (alternative)
-
-- `__shared.sh` - Shared generator functions
-
-### Generator Issue
-Scripts currently use `bundle add` which requires system-wide gem installation permissions. Needs refactoring to use `bundle install` with local `vendor/bundle`.
-
-## Process Management
-**Current**: Manual background process
-**Command**: `cd ~/brgen && bundle exec puma -p 10001 -e production &`
-
-**Future**: Consider rc.d script for proper service management
-
-## Database Schema
-Multi-tenant setup using `acts_as_tenant`:
-```ruby
-# Core tables
-
-tenants              # Tenant isolation
-
-users               # Per-tenant users
-
-accounts            # User accounts (removed social fields)
-
-followers           # Following relationships (no counter cache)
-
+```yaml
+domain_constants:
+  max_method_lines: 15        # Stricter than default
+  max_class_lines: 200        # Smaller classes
+  max_complexity: 8           # Lower cyclomatic limit
+  max_nesting_depth: 3        # Prevent deep nesting
 ```
-
-### Notable Migrations
-- Removed unused social media columns from accounts table
-
-- Simplified followers table (removed counter cache for compatibility)
-
-- Fixed `acts_as_tenant` generator issues with foreign keys
-
-## Rails Configuration
-**Environment**: Production
-**Secret Key**: Managed via `RAILS_MASTER_KEY`
-
-**Asset Pipeline**: Propshaft
-
-**CSS**: Tailwind CSS
-
-**JS**: Importmap
-
-**Background Jobs**: Solid Queue (backed by PostgreSQL)
 
 ## Security
-- **Firewall**: pf(4) with synproxy and rate limiting
-- **TLS**: Let's Encrypt with strict transport security
 
-- **SSH**: Root access restricted, key-based auth
+**Shell Execution Allowlist**: ShellTool enforces strict command allowlist: `rubocop`, `flog`, `syntax_tree`, `git`. No user input interpolation.
 
-- **Database**: Local PostgreSQL (not exposed)
+**Credential Detection**: Patterns for passwords, API keys, tokens (e.g., `/sk_live_[a-zA-Z0-9]{24,}/`)
 
-- **Secrets**: Environment variables, not committed
+**Injection Prevention**: AST analysis detects system calls with interpolation, eval with external input, unfiltered parameters.
 
-## Development
-### Local Setup
+## Troubleshooting
+
+**Configuration Not Found**: Create `~/.convergence/master.yml` or use `--config` flag
+
+**Insufficient Principles**: Add more principles to meet minimum of 20
+
+**Dependency Missing**: `gem install syntax_tree`
+
+**Convergence Not Reached**: Adjust `domain_constants` or use `aggressive` strategy
+
+**Log Files**: `~/.convergence/logs/` contains `scan_YYYYMMDD.log`, `batch_YYYYMMDD.log`, `errors.log`
+
+## Flags
+
+**Global**: `--verbose` (detailed output), `--dry-run` (show without applying), `--json` (machine-readable), `--config PATH` (custom config)
+
+Examples:
 ```bash
-
-git clone <repository>
-
-bundle install
-
-rails db:create db:migrate
-
-rails assets:precompile
-
-rails server
-
+ruby cli.rb scan --verbose --json > results.json
+ruby cli.rb batch conservative --dry-run
 ```
 
-### Deployment to OpenBSD
-```bash
+## Contributing
 
-# Via deployment scripts
+Fork repository, create feature branch, add tests, run `ruby cli_test.rb`, ensure evidence ≥0.95, submit PR.
 
-./rails/brgen.sh
+**Quality Gate**: Evidence ≥0.95, test coverage ≥90%, no critical/high defects, convergence within 10 iterations
 
-# Or manual
-ssh root@185.52.176.18
+**Code Style**: Methods ≤20 lines, classes ≤300 lines, complexity ≤10, document domain constants
 
-cd ~/brgen
+## Roadmap
 
-git pull
+**Planned**: AI-powered fixes (LLM remediation), web dashboard (WebSocket updates), CI/CD integration (GitHub Actions, GitLab CI), multi-language support (Python, JavaScript, Go), team collaboration (shared DB), custom analyzers (plugin system)
 
-bundle install
-
-rails db:migrate RAILS_ENV=production
-
-rails assets:precompile RAILS_ENV=production
-
-# Restart puma process
-
-```
-
-## Directory Structure
-```
-/g/pub/
-
-├── rails/              # Deployment scripts
-
-│   ├── brgen.sh       # Base app generator
-
-│   ├── __shared.sh    # Shared functions
-
-│   └── *.sh           # Other generators
-
-├── openbsd.sh         # Historical VPS setup script
-
-├── master.json        # Configuration rules (zsh-first, deny lists)
-
-└── README.md          # This file
-
-VPS: /root/brgen/
-├── app/               # Rails application
-
-├── config/            # Rails configuration
-
-├── db/                # Database migrations
-
-├── public/            # Static assets
-
-└── vendor/bundle/     # Gem dependencies
-
-```
-
-## 🎯 Key Features
-
-### Rails Applications
-- **Multi-tenant architecture** with `acts_as_tenant`
-- **7 production apps** on OpenBSD infrastructure
-- **40+ domain support** through brgen platform
-- **Zero-trust security** with comprehensive validation
-
-### Multimedia Tools
-- **dilla**: Music production with 808 synthesis, MIDI generation
-- **postpro**: Image post-processing with ruby-vips
-- **repligen**: AI image generation with LoRA workflow
-
-### Infrastructure
-- **OpenBSD 7.7** with pledge/unveil security
-- **DNSSEC** with ECDSAP256SHA256
-- **Let's Encrypt TLS** with automated renewal
-- **PF firewall** with synproxy and rate limiting
-- **Relayd** reverse proxy with OWASP headers
-
-### Development Tools
-- **Shell utilities** for tree listing, linting, security scans
-- **Zero-trust validation** for all inputs
-- **Continuous refactoring** built into workflow
-
-## 📖 Getting Started
-
-1. **Read**: [docs/archive/DEVELOPMENT.md](docs/archive/DEVELOPMENT.md) for complete setup
-2. **Explore**: Run `sh/tree.sh .` to see structure
-3. **Review**: Check `master.json` for project philosophy
-4. **Contribute**: See [docs/archive/CONTRIBUTING.md](docs/archive/CONTRIBUTING.md)
-
-## 🔒 Security
-
-This project follows zero-trust security principles. See [docs/archive/SECURITY.md](docs/archive/SECURITY.md) for:
-- Vulnerability reporting
-- Security measures
-- Cryptography standards
-- Authentication requirements
-
-**Never commit secrets or credentials!**
-
-## 🤝 Contributing
-
-We welcome contributions! Please:
-
-1. Read [docs/archive/CONTRIBUTING.md](docs/archive/CONTRIBUTING.md)
-2. Follow the development workflow
-3. Run tests and quality gates
-4. Submit focused pull requests
-
-See [docs/archive/CODE_OF_CONDUCT.md](docs/archive/CODE_OF_CONDUCT.md) for community standards.
-
-## 📝 License
-
-Proprietary - All rights reserved. See [LICENSE](LICENSE) for details.
-
-## 📞 Contact
-
-- **GitHub**: [@anon987654321](https://github.com/anon987654321)
-- **Domain**: brgen.no
-- **DNS**: ns.brgen.no (primary), ns.hyp.net (secondary)
-
-## 🔗 Links
-
-- [Issue Tracker](https://github.com/anon987654321/pub3/issues)
-- [Security Advisories](https://github.com/anon987654321/pub3/security)
-- [Changelog](docs/archive/CHANGELOG.md)
+**Version History**: 0.6.1 (current), 0.6.0 (convergence), 0.5.0 (batch strategies), 0.4.0 (evidence V2), 0.3.0 (Git integration)
 
 ---
 
-**Version**: 502.0.0  
-**Last Updated**: 2025-10-16  
-**Rails**: 8.0.0 | **Ruby**: 3.3.0 | **OpenBSD**: 7.7
-
+**Project**: master.yml v0.6.1  
+**License**: Proprietary  
+**Ruby**: ≥2.7  
+**Platform**: Linux, macOS, OpenBSD, Cygwin, Termux
